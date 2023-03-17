@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.reprezen.swaggerparser.test.OverlayAdapterTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-03-17T11:43:00" hostname="DESKTOP-3NQTJFE" time="0.061">
+  <properties/>
+  <testcase name="testMapAdapter" classname="com.reprezen.swaggerparser.test.OverlayAdapterTests" time="0.013"/>
+  <testcase name="testListAdapter" classname="com.reprezen.swaggerparser.test.OverlayAdapterTests" time="0.012"/>
+  <testcase name="testFieldAdapter" classname="com.reprezen.swaggerparser.test.OverlayAdapterTests" time="0.012"/>
+  <testcase name="testReferences" classname="com.reprezen.swaggerparser.test.OverlayAdapterTests" time="0.012"/>
+  <testcase name="testPropertiesAdapter" classname="com.reprezen.swaggerparser.test.OverlayAdapterTests" time="0.011"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

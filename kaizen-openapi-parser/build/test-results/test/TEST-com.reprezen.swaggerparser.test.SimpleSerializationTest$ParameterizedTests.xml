@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.reprezen.swaggerparser.test.SimpleSerializationTest$ParameterizedTests" tests="12" skipped="0" failures="0" errors="0" timestamp="2023-03-17T11:43:01" hostname="DESKTOP-3NQTJFE" time="2.719">
+  <properties/>
+  <testcase name="serializeExample[0: {1}]" classname="com.reprezen.swaggerparser.test.SimpleSerializationTest$ParameterizedTests" time="0.276"/>
+  <testcase name="serializeExample[1: {1}]" classname="com.reprezen.swaggerparser.test.SimpleSerializationTest$ParameterizedTests" time="0.258"/>
+  <testcase name="serializeExample[2: {1}]" classname="com.reprezen.swaggerparser.test.SimpleSerializationTest$ParameterizedTests" time="0.0"/>
+  <testcase name="serializeExample[3: {1}]" classname="com.reprezen.swaggerparser.test.SimpleSerializationTest$ParameterizedTests" time="0.0"/>
+  <testcase name="serializeExample[4: {1}]" classname="com.reprezen.swaggerparser.test.SimpleSerializationTest$ParameterizedTests" time="0.271"/>
+  <testcase name="serializeExample[5: {1}]" classname="com.reprezen.swaggerparser.test.SimpleSerializationTest$ParameterizedTests" time="0.257"/>
+  <testcase name="serializeExample[6: {1}]" classname="com.reprezen.swaggerparser.test.SimpleSerializationTest$ParameterizedTests" time="0.264"/>
+  <testcase name="serializeExample[7: {1}]" classname="com.reprezen.swaggerparser.test.SimpleSerializationTest$ParameterizedTests" time="0.256"/>
+  <testcase name="serializeExample[8: {1}]" classname="com.reprezen.swaggerparser.test.SimpleSerializationTest$ParameterizedTests" time="0.243"/>
+  <testcase name="serializeExample[9: {1}]" classname="com.reprezen.swaggerparser.test.SimpleSerializationTest$ParameterizedTests" time="0.262"/>
+  <testcase name="serializeExample[10: {1}]" classname="com.reprezen.swaggerparser.test.SimpleSerializationTest$ParameterizedTests" time="0.267"/>
+  <testcase name="serializeExample[11: {1}]" classname="com.reprezen.swaggerparser.test.SimpleSerializationTest$ParameterizedTests" time="0.363"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
