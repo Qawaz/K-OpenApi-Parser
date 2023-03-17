@@ -4,7 +4,7 @@
 
 ## Overview ##
 
-The K OpenApi Parser is a Java-based validating
+The K OpenApi Parser is a kotlin-based validating
 parser for OpenAPI 3.0 offering full compliance with the
 [OpenAPI 3.0 Specification](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md),
 and a highly uniform read/write programming API.
@@ -14,7 +14,7 @@ REST API descriptions.
 
 Feature highlights of K OpenAPI Parser include:
 * **High Performance** - Informal testing shows a 3x-4x performance
-  improvement over the current Java Swagger 2.0 parser. This is
+  improvement over the current kotlin Swagger 2.0 parser. This is
   largely attributable to a design based on adapting Jackson
   `JsonNode` objects, rather than deserializing to internal POJOs.
   
@@ -90,7 +90,7 @@ model, and the treatment of references.
 
     Many more tests are required!
 
-* Few JavaDocs exist at present, unfortunately. There's an open issue
+* Few kotlin Docs exist at present, unfortunately. There's an open issue
   to correct that.
 
 ### Packages

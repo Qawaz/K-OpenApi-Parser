@@ -2,8 +2,8 @@
 
 ## Build
 
-K-OpenAPI-Parser requires a Java 8 JDK, and will require changes 
-to build on later Java versions. All the software currently resides 
+K-OpenAPI-Parser requires a kotlin 8 JDK, and will require changes 
+to build on later kotlin versions. All the software currently resides 
 in a single Eclipse/Maven project located in `K-openapi-parser`.
 
 From this directory, you can use:
@@ -36,7 +36,7 @@ mvn test -P gen
 ```
 Code generation takes place during the maven `generate-sources` phase, preceding compilation. The `gen` profile is disabled by default, so unless you specifically activate it, your build will use existing sources, without regeneration.
 
-The generator makes use of a Java parser to parse existing source files before regenerating them. This is so that class members that are *not* marked with the `@Generated` annotation can be preserved during regeneration. If this parse fails for whatever reason, the overall build will be interrupted at that point and will fail. To recover from this scenario, you can check out the most recently checked-in files from your git working tree and then retry. To ensure that this will be possible as you make your own changes to the code it is recommended that you ALWAYS check in parseable copies of the generated sources after regeneration, before you begin any customization of those sources (adding non-generated members or replacements for nonrmally-generated members).
+The generator makes use of a kotlin parser to parse existing source files before regenerating them. This is so that class members that are *not* marked with the `@Generated` annotation can be preserved during regeneration. If this parse fails for whatever reason, the overall build will be interrupted at that point and will fail. To recover from this scenario, you can check out the most recently checked-in files from your git working tree and then retry. To ensure that this will be possible as you make your own changes to the code it is recommended that you ALWAYS check in parseable copies of the generated sources after regeneration, before you begin any customization of those sources (adding non-generated members or replacements for nonrmally-generated members).
 
 
 ## Learn About the APIs
