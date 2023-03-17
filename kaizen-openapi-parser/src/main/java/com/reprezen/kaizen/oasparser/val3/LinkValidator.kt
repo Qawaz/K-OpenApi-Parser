@@ -1,0 +1,119 @@
+/*******************************************************************************
+ * Copyright (c) 2017 ModelSolv, Inc. and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * ModelSolv, Inc. - initial API and implementation and/or initial documentation
+ */
+package com.reprezen.kaizen.oasparser.val3
+
+import com.reprezen.jsonoverlay.Overlay
+import com.reprezen.kaizen.oasparser.model3.*
+import com.reprezen.kaizen.oasparser.ovl3.LinkImpl
+import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.`val`.ValidationResults
+import com.reprezen.kaizen.oasparser.`val`.msg.Messages.Companion.msg
+
+class LinkValidator : ObjectValidatorBase<Link>() {
+    override fun runObjectValidations() {
+        // TODO: Validate operationRef value (why didn't they must make it a ref
+        // object???!)
+        val link = value.getOverlay() as Link
+        validateStringField(LinkImpl.F_description, false)
+        val op = checkValidOperation(link)
+        op?.let { checkParameters(link, it) }
+        val requestBody: Overlay<Any> = validateField<Any>(LinkImpl.F_requestBody, false, Any::class.java, null)
+        checkRequestBody(requestBody)
+        validateField<Server>(LinkImpl.F_server, false, Server::class.java, ServerValidator())
+        validateExtensions(link.extensions)
+    }
+
+    private fun checkValidOperation(link: Link): Operation? {
+        val opId = link.operationId
+        val operationRef = link.operationRef
+        var op: Operation? = null
+        if (opId == null && operationRef == null) {
+            results.addError(msg(OpenApi3Messages.NoOpIdNoOpRefInLink), value)
+        } else if (opId != null && operationRef != null) {
+            results.addError(msg(OpenApi3Messages.OpIdAndOpRefInLink), value)
+        }
+        if (opId != null) {
+            op = findOperationById(Overlay.of(link).getModel<OpenApi3>(), opId)
+            if (op == null) {
+                results.addError(msg(OpenApi3Messages.OpIdNotFound, opId), value)
+            }
+        }
+        val relativePath = getRelativePath(operationRef, results)
+        if (relativePath != null) {
+            op = findOperationByPath(Overlay.of(link).getModel<OpenApi3>(), relativePath, results)
+            if (op == null) {
+                results.addError(msg(OpenApi3Messages.OpPathNotFound, operationRef), value)
+            }
+        }
+        return op
+    }
+
+    private fun checkParameters(link: Link, op: Operation) {
+        // TODO Q: parameter name is not sufficient to identify param in
+        // operation; will
+        // allow if it's unique, warn if
+        // it's not
+        val opParamCounts = getParamNameCounts(op.parameters)
+        val params = link.parameters
+        for (paramName in params.keys) {
+            val count = opParamCounts[paramName]!!
+            if (count == 0) {
+                results.addError(msg(OpenApi3Messages.BadLinkParam, paramName), Overlay.of(params, paramName))
+            } else if (count > 1) {
+                results.addWarning(msg(OpenApi3Messages.AmbigLinkParam, paramName), Overlay.of(params, paramName))
+            }
+        }
+    }
+
+    private fun findOperationById(model: OpenApi3, operationId: String): Operation? {
+        for (path in model.getPaths().values) {
+            for (op in path.operations.values) {
+                if (operationId == op.operationId) {
+                    return op
+                }
+            }
+        }
+        return null
+    }
+
+    private fun findOperationByPath(model: OpenApi3, relativePath: String, results: ValidationResults): Operation? {
+        val path: Path = model.getPath(relativePath)
+        return if (path != null) path.getGet(false) else null
+    }
+
+    private fun getRelativePath(operationRef: String?, results: ValidationResults): String? {
+        // TODO Q: will braces be pct-encoded as required for URIs?
+        if (operationRef != null) {
+            results.addWarning(msg(OpenApi3Messages.OperationRefUnSupp), value)
+        }
+        return null
+    }
+
+    private fun getParamNameCounts(parameters: Collection<Parameter>): Map<String, Int> {
+        val counts: MutableMap<String, Int> = HashMap()
+        for (parameter in parameters) {
+            val name = parameter.name
+            if (counts.containsKey(name)) {
+                counts[name] = 1 + counts[name]!!
+            } else {
+                counts[name] = 1
+            }
+        }
+        return counts
+    }
+
+    private fun checkRequestBody(rbField: Overlay<Any>?) {
+        if (rbField != null && rbField.isPresent && rbField.get() is String) {
+            // TODO if this looks like it's meant to be an expression, check that it's a
+            // valid one, and warn if not
+        }
+    }
+}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.reprezen.swaggerparser.test.ExampleTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-03-17T11:42:52" hostname="DESKTOP-3NQTJFE" time="0.021">
+<testsuite name="com.reprezen.swaggerparser.test.ExampleTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-03-17T12:54:07" hostname="DESKTOP-3NQTJFE" time="0.013">
   <properties/>
-  <testcase name="testExample" classname="com.reprezen.swaggerparser.test.ExampleTest" time="0.02"/>
+  <testcase name="testExample" classname="com.reprezen.swaggerparser.test.ExampleTest" time="0.012"/>
   <testcase name="testExamples" classname="com.reprezen.swaggerparser.test.ExampleTest" time="0.001"/>
   <testcase name="testValidate" classname="com.reprezen.swaggerparser.test.ExampleTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>

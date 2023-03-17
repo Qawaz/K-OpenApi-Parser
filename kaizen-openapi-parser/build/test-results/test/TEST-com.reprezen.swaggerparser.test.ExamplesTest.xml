@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.reprezen.swaggerparser.test.ExamplesTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2023-03-17T11:42:55" hostname="DESKTOP-3NQTJFE" time="4.781">
+<testsuite name="com.reprezen.swaggerparser.test.ExamplesTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2023-03-17T12:54:08" hostname="DESKTOP-3NQTJFE" time="1.692">
   <properties/>
-  <testcase name="exampleCanBeParsed[0: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.678"/>
-  <testcase name="exampleCanBeParsed[1: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.424"/>
+  <testcase name="exampleCanBeParsed[0: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.414"/>
+  <testcase name="exampleCanBeParsed[1: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.138"/>
   <testcase name="exampleCanBeParsed[2: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.0"/>
   <testcase name="exampleCanBeParsed[3: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.0"/>
-  <testcase name="exampleCanBeParsed[4: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.457"/>
-  <testcase name="exampleCanBeParsed[5: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.415"/>
-  <testcase name="exampleCanBeParsed[6: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.461"/>
-  <testcase name="exampleCanBeParsed[7: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.48"/>
-  <testcase name="exampleCanBeParsed[8: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.394"/>
-  <testcase name="exampleCanBeParsed[9: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.599"/>
-  <testcase name="exampleCanBeParsed[10: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.411"/>
-  <testcase name="exampleCanBeParsed[11: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.46"/>
+  <testcase name="exampleCanBeParsed[4: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.147"/>
+  <testcase name="exampleCanBeParsed[5: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.148"/>
+  <testcase name="exampleCanBeParsed[6: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.143"/>
+  <testcase name="exampleCanBeParsed[7: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.134"/>
+  <testcase name="exampleCanBeParsed[8: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.137"/>
+  <testcase name="exampleCanBeParsed[9: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.153"/>
+  <testcase name="exampleCanBeParsed[10: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.139"/>
+  <testcase name="exampleCanBeParsed[11: {1}]" classname="com.reprezen.swaggerparser.test.ExamplesTest" time="0.139"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.reprezen.kaizen.oasparser.val3.ParameterValidatorTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-03-17T11:42:52" hostname="DESKTOP-3NQTJFE" time="0.288">
+<testsuite name="com.reprezen.kaizen.oasparser.val3.ParameterValidatorTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-03-17T12:54:07" hostname="DESKTOP-3NQTJFE" time="0.309">
   <properties/>
-  <testcase name="shouldAllow_HybridPathParam" classname="com.reprezen.kaizen.oasparser.val3.ParameterValidatorTest" time="0.254"/>
+  <testcase name="shouldAllow_HybridPathParam" classname="com.reprezen.kaizen.oasparser.val3.ParameterValidatorTest" time="0.26"/>
   <testcase name="shouldPass_OnValidParam" classname="com.reprezen.kaizen.oasparser.val3.ParameterValidatorTest" time="0.006"/>
-  <testcase name="shouldFail_OnInvalidParam" classname="com.reprezen.kaizen.oasparser.val3.ParameterValidatorTest" time="0.013"/>
-  <testcase name="shouldAllow_MultiHybridPathParam" classname="com.reprezen.kaizen.oasparser.val3.ParameterValidatorTest" time="0.006"/>
-  <testcase name="shouldFail_OnPathParamNotRequired" classname="com.reprezen.kaizen.oasparser.val3.ParameterValidatorTest" time="0.007"/>
+  <testcase name="shouldFail_OnInvalidParam" classname="com.reprezen.kaizen.oasparser.val3.ParameterValidatorTest" time="0.03"/>
+  <testcase name="shouldAllow_MultiHybridPathParam" classname="com.reprezen.kaizen.oasparser.val3.ParameterValidatorTest" time="0.007"/>
+  <testcase name="shouldFail_OnPathParamNotRequired" classname="com.reprezen.kaizen.oasparser.val3.ParameterValidatorTest" time="0.005"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
