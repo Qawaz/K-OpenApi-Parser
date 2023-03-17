@@ -1,10 +1,10 @@
-# Getting Started with KaiZen OpenAPI Parser
+# Getting Started with K OpenAPI Parser
 
 ## Build
 
-KaiZen-OpenAPI-Parser requires a Java 8 JDK, and will require changes 
+K-OpenAPI-Parser requires a Java 8 JDK, and will require changes 
 to build on later Java versions. All the software currently resides 
-in a single Eclipse/Maven project located in `kaizen-openapi-parser`.
+in a single Eclipse/Maven project located in `K-openapi-parser`.
 
 From this directory, you can use:
 * `mvn package` to build locally
@@ -24,7 +24,7 @@ severe for unauthenticated requests.
 
 ### Regenerating Code
 
-The KaiZen parser uses JsonOverlay to generate interfaces and implementation classes for
+The K parser uses its own framework to generate interfaces and implementation classes for
 all OpenAPI object types, based on information provided in a
 YAML-based DSL (`types3.yaml`). The git repo always contains
 up-to-date copies of all these generated sources, but if you ever want
