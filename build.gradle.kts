@@ -1,14 +1,14 @@
 plugins {
     java
-    kotlin("jvm").version("1.8.0")
+    kotlin("jvm")
 }
 
 dependencies {
 
-    val jacksonVersion = "2.9.8"
-    val jsonOverlayVersion = "4.0.4"
+    val jacksonVersion = property("jackson.version") as String
 
-    implementation("com.reprezen.jsonoverlay:jsonoverlay:$jsonOverlayVersion")
+    implementation(project(":json-overlay"))
+
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     implementation("javax.mail:javax.mail-api:1.6.1")

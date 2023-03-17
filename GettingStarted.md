@@ -1,4 +1,4 @@
-# Getting Started with K OpenAPI Parser
+# Getting Started with K [build.gradle.kts](..%2F..%2F..%2FJVM%2FStringsTranslator%2Ftranslator%2Fbuild.gradle.kts)OpenAPI Parser
 
 ## Build
 
