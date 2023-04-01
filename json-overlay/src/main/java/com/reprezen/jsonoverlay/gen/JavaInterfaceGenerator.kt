@@ -59,20 +59,26 @@ class JavaInterfaceGenerator : TypeGenerator {
         when(field.structure){
             TypeData.Structure.scalar -> {
                 for(method in getScalarMethods(field)){
-                    methods.addMember(method).comment(if(first) field.name else "")
+                    methods.addMember(method).also {
+                        if (first) it.comment(field.name)
+                    }
                     first = false
                 }
             }
             TypeData.Structure.collection -> {
                 for (method in getCollectionMethods(field)) {
-                    methods.addMember(method).comment(if(first) field.name else "")
+                    methods.addMember(method).also {
+                        if (first) it.comment(field.name)
+                    }
                     first = false
 
                 }
             }
             TypeData.Structure.map -> {
                 for (method in getMapMethods(field)) {
-                    methods.addMember(method).comment(if(first) field.name else "")
+                    methods.addMember(method).also {
+                        if (first) it.comment(field.name)
+                    }
                     first = false
                 }
             }

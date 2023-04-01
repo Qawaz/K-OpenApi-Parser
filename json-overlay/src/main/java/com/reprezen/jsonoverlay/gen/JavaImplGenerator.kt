@@ -6,6 +6,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.TypeDeclaration
 import com.reprezen.jsonoverlay.*
 import java.io.File
+import java.util.regex.Pattern
 import java.util.stream.Collectors
 
 class JavaImplGenerator : TypeGenerator {
@@ -156,21 +157,27 @@ class JavaImplGenerator : TypeGenerator {
         when (field.structure) {
             TypeData.Structure.scalar -> {
                 for (method in getScalarMethods(field)) {
-                    methods.addMember(method).override().comment(if (first) field.name else "")
+                    methods.addMember(method).override().also {
+                        if (first) it.comment(field.name)
+                    }
                     first = false
                 }
             }
 
             TypeData.Structure.collection -> {
                 for (method in getCollectionMethods(field)) {
-                    methods.addMember(method).override().comment(if (first) field.name else "")
+                    methods.addMember(method).override().also {
+                        if (first) it.comment(field.name)
+                    }
                     first = false
                 }
             }
 
             TypeData.Structure.map -> {
                 for (method in getMapMethods(field)) {
-                    methods.addMember(method).override().comment(if (first) field.name else "")
+                    methods.addMember(method).override().also {
+                        if (first) it.comment(field.name)
+                    }
                     first = false
                 }
             }
@@ -236,7 +243,7 @@ class JavaImplGenerator : TypeGenerator {
         )
         methods.addMember(
             """
-            public boolean has ${f.plural}() {
+            public boolean has${f.plural}() {
                 return _isPresent("${f.propertyName}");
             }
             """
@@ -264,14 +271,14 @@ class JavaImplGenerator : TypeGenerator {
         )
         methods.addMember(
             """
-            public void add ${f.name}(${f.type} ${f.lcName}) {
+            public void add${f.name}(${f.type} ${f.lcName}) {
                 _add("${f.propertyName}", ${f.lcName}, ${f.type}.class);
             }
         """
         )
         methods.addMember(
             """
-            public void insert ${f.name}(int index, ${f.type} ${f.lcName}) {
+            public void insert${f.name}(int index, ${f.type} ${f.lcName}) {
                 _insert("${f.propertyName}", index, ${f.lcName}, ${f.type}.class);
             }
         """
@@ -279,7 +286,7 @@ class JavaImplGenerator : TypeGenerator {
 
         methods.addMember(
             """
-            public void remove ${f.name}(int index) {
+            public void remove${f.name}(int index) {
                 _remove("${f.propertyName}", index, ${f.type}.class);
             }
             """
@@ -307,14 +314,14 @@ class JavaImplGenerator : TypeGenerator {
 
         methods.addMember(
             """
-            public boolean has ${f.plural}() {
+            public boolean has${f.plural}() {
                 return _isPresent("${f.propertyName}");
             }
             """
         )
         methods.addMember(
             """
-            public boolean has ${f.name}(String ${f.keyName}) {
+            public boolean has${f.name}(String ${f.keyName}) {
                 return _getMap("${f.propertyName}", ${f.type}.class).containsKey(${f.keyName});
             }
         """
@@ -342,7 +349,7 @@ class JavaImplGenerator : TypeGenerator {
         )
         methods.addMember(
             """
-            public void remove ${f.name}(String ${f.keyName}) {
+            public void remove${f.name}(String ${f.keyName}) {
                 _remove("${f.propertyName}", ${f.keyName}, ${f.type}.class);
             }
         """
@@ -355,7 +362,7 @@ class JavaImplGenerator : TypeGenerator {
         type.fields.values.filter { !it.isNoImpl }.forEach { f ->
             members.add(
                 SimpleJavaGenerator.Member(
-                    """public static final String F_ ${f.propertyName} = "${f.propertyName}";"""
+                    """public static final String F_${f.propertyName} = "${f.propertyName}";"""
                 )
             )
         }
@@ -388,8 +395,8 @@ class JavaImplGenerator : TypeGenerator {
             }
 
             TypeData.Structure.map -> {
-                val pat = if (f.keyPattern !== null) f.keyPattern.replace("\\\\", "\\\\\\\\") else "null"
-                """_createMap("${f.propertyName}", "${f.parentPath}", ${f.implType}.factory, $pat);"""
+                val pat = f.keyPattern?.replace("\\\\", "\\\\\\\\")?.let { "\"$it\"" } ?: "null"
+                "_createMap(\"${f.propertyName}\", \"${f.parentPath}\", ${f.implType}.factory, $pat);"
             }
         }
     }

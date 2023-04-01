@@ -148,8 +148,8 @@ public class SimpleJavaGenerator {
 			try {
 				this.declaration = JavaParser.parseBodyDeclaration(code);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				System.out.println(code);
+				System.out.println("MESSAGE :" + e.getMessage());
+				System.out.println("CODE :" + code);
 			}
 			// this(JavaParser.parseBodyDeclaration(code));
 		}
