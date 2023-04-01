@@ -15,8 +15,6 @@ package com.reprezen.jsonoverlay.gen;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,15 +34,15 @@ import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.github.javaparser.JavaParser;
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.BodyDeclaration;
-import com.github.javaparser.ast.body.ConstructorDeclaration;
-import com.github.javaparser.ast.body.FieldDeclaration;
-import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.body.TypeDeclaration;
-import com.github.javaparser.ast.comments.Comment;
-import com.github.javaparser.ast.expr.AnnotationExpr;
+//import com.github.javaparser.JavaParser;
+//import com.github.javaparser.ast.CompilationUnit;
+//import com.github.javaparser.ast.body.BodyDeclaration;
+//import com.github.javaparser.ast.body.ConstructorDeclaration;
+//import com.github.javaparser.ast.body.FieldDeclaration;
+//import com.github.javaparser.ast.body.MethodDeclaration;
+//import com.github.javaparser.ast.body.TypeDeclaration;
+//import com.github.javaparser.ast.comments.Comment;
+//import com.github.javaparser.ast.expr.AnnotationExpr;
 import com.reprezen.jsonoverlay.BooleanOverlay;
 import com.reprezen.jsonoverlay.Builder;
 import com.reprezen.jsonoverlay.EnumOverlay;
@@ -62,7 +60,6 @@ import com.reprezen.jsonoverlay.PrimitiveOverlay;
 import com.reprezen.jsonoverlay.PropertiesOverlay;
 import com.reprezen.jsonoverlay.ReferenceManager;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.gen.SimpleJavaGenerator.Member;
 import com.reprezen.jsonoverlay.gen.TypeData.Field;
 import com.reprezen.jsonoverlay.gen.TypeData.Type;
 
@@ -83,7 +80,11 @@ public abstract class TypeGenerator {
         this.preserve = preserve;
     }
 
-    protected abstract TypeDeclaration<?> getTypeDeclaration(Type type, String suffix);
+    public interface TypeDec {
+
+    }
+
+    protected abstract TypeDec getTypeDeclaration(Type type, String suffix);
 
     public void generate(Type type) throws IOException {
         String filename = String.format("%s%s.java", type.getName(), suffix);
@@ -93,13 +94,8 @@ public abstract class TypeGenerator {
     }
 
     protected void generateToFile(File javaFile, Type type) throws IOException {
-        CompilationUnit existing = preserve && javaFile.exists() ? tryParse(javaFile) : null;
-        TypeDeclaration<?> declaration = getTypeDeclaration(type, suffix);
+        TypeDec declaration = getTypeDeclaration(type, suffix);
         SimpleJavaGenerator gen = new SimpleJavaGenerator(getPackage(), declaration);
-        if (existing != null) {
-            copyFileComment(gen, existing);
-            addManualMembers(gen, existing);
-        }
         requireTypes(getImports(type));
         if (needIntfImports()) {
             gen.addImport(intfPackage + ".*");
@@ -237,13 +233,13 @@ public abstract class TypeGenerator {
             }
         }
         members.addAll(getOtherMembers(type));
-        for (Member member : members) {
+        for (ClassMember member : members) {
             maybeRename(member, type.getRenames());
         }
         gen.addGeneratedMembers(members);
     }
 
-    private void maybeRename(Member member, Map<String, String> renames) {
+    private void maybeRename(ClassMember member, Map<String, String> renames) {
         String name = member.getName();
         if (name != null && renames.containsKey(name)) {
             member.rename(name, renames.get(name));
@@ -254,49 +250,49 @@ public abstract class TypeGenerator {
         return false;
     }
 
-    private CompilationUnit tryParse(File file) {
-        try {
-            return JavaParser.parse(file);
-        } catch (IOException e) {
-            System.err.println("ABORTING AFTER PARTIAL GENERATION!");
-            System.err.printf(
-                    "Parsing of file %s failed; so generation cannot continue without destroying manual code.\n", file);
-            System.err.println("Please restore generated code artifacts to a known good state before regenerating");
-            System.err.println("Parse Error:");
-            e.printStackTrace();
-            System.exit(1);
-            return null;
-        }
-    }
-
-    private void copyFileComment(SimpleJavaGenerator gen, CompilationUnit existing) {
-        Optional<Comment> fileComment = existing.getComment();
-        if (fileComment.isPresent()) {
-            gen.setFileComment(fileComment.get().toString());
-        }
-    }
-
-    private void addManualMembers(SimpleJavaGenerator gen, CompilationUnit existing) {
-        for (TypeDeclaration<?> type : existing.getTypes()) {
-            for (BodyDeclaration<?> member : type.getMembers()) {
-                if (member instanceof MethodDeclaration || member instanceof FieldDeclaration
-                        || member instanceof ConstructorDeclaration) {
-                    if (!isGenerated(member)) {
-                        gen.addMember(new Member(member));
-                    }
-                }
-            }
-        }
-    }
-
-    private boolean isGenerated(BodyDeclaration<?> node) {
-        for (AnnotationExpr annotation : node.getAnnotations()) {
-            if (annotation.getName().toString().equals("Generated")) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    private CompilationUnit tryParse(File file) {
+//        try {
+//            return JavaParser.parse(file);
+//        } catch (IOException e) {
+//            System.err.println("ABORTING AFTER PARTIAL GENERATION!");
+//            System.err.printf(
+//                    "Parsing of file %s failed; so generation cannot continue without destroying manual code.\n", file);
+//            System.err.println("Please restore generated code artifacts to a known good state before regenerating");
+//            System.err.println("Parse Error:");
+//            e.printStackTrace();
+//            System.exit(1);
+//            return null;
+//        }
+//    }
+//
+//    private void copyFileComment(SimpleJavaGenerator gen, CompilationUnit existing) {
+//        Optional<Comment> fileComment = existing.getComment();
+//        if (fileComment.isPresent()) {
+//            gen.setFileComment(fileComment.get().toString());
+//        }
+//    }
+//
+//    private void addManualMembers(SimpleJavaGenerator gen, CompilationUnit existing) {
+//        for (TypeDeclaration<?> type : existing.getTypes()) {
+//            for (BodyDeclaration<?> member : type.getMembers()) {
+//                if (member instanceof MethodDeclaration || member instanceof FieldDeclaration
+//                        || member instanceof ConstructorDeclaration) {
+//                    if (!isGenerated(member)) {
+//                        gen.addMember(new Member(member));
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    private boolean isGenerated(BodyDeclaration<?> node) {
+//        for (AnnotationExpr annotation : node.getAnnotations()) {
+//            if (annotation.getName().toString().equals("Generated")) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     protected Members getConstructors(Type type) {
         return new Members();
@@ -314,15 +310,15 @@ public abstract class TypeGenerator {
         return new Members();
     }
 
-    protected static class Members extends ArrayList<Member> {
+    protected static class Members extends ArrayList<ClassMember> {
 
         private static final long serialVersionUID = 1L;
 
-        public Member addMember(String code) {
-            return addMember(new Member(code));
+        public ClassMember addMember(String code) {
+            return addMember(new ClassMember(code));
         }
 
-        public Member addMember(Member member) {
+        public ClassMember addMember(ClassMember member) {
             add(member);
             return member;
         }

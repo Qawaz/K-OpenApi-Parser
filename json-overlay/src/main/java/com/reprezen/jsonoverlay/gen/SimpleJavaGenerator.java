@@ -21,32 +21,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
-import javax.annotation.Generated;
-
-import com.github.javaparser.JavaParser;
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.body.BodyDeclaration;
-import com.github.javaparser.ast.body.ConstructorDeclaration;
-import com.github.javaparser.ast.body.FieldDeclaration;
-import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.body.TypeDeclaration;
-import com.github.javaparser.ast.body.VariableDeclarator;
-import com.github.javaparser.ast.comments.JavadocComment;
-import com.github.javaparser.ast.expr.Expression;
+//import com.github.javaparser.JavaParser;
+//import com.github.javaparser.ast.CompilationUnit;
+//import com.github.javaparser.ast.NodeList;
+//import com.github.javaparser.ast.body.BodyDeclaration;
+//import com.github.javaparser.ast.body.ConstructorDeclaration;
+//import com.github.javaparser.ast.body.FieldDeclaration;
+//import com.github.javaparser.ast.body.MethodDeclaration;
+//import com.github.javaparser.ast.body.TypeDeclaration;
+//import com.github.javaparser.ast.body.VariableDeclarator;
+//import com.github.javaparser.ast.comments.JavadocComment;
+//import com.github.javaparser.ast.expr.Expression;
 
 public class SimpleJavaGenerator {
 
 	private String pkg;
 	private Set<String> imports = new HashSet<>();
-	private TypeDeclaration<?> type;
-	private List<Member> members = new ArrayList<>();
+	private TypeGenerator.TypeDec type;
+	private List<ClassMember> members = new ArrayList<>();
 	private String fileComment;
 	private static int indentation = 4;
 
-	public SimpleJavaGenerator(String pkg, TypeDeclaration<?> type) {
+	public SimpleJavaGenerator(String pkg, TypeGenerator.TypeDec type) {
 		this.pkg = pkg;
 		this.type = type;
 	}
@@ -67,20 +64,20 @@ public class SimpleJavaGenerator {
 		SimpleJavaGenerator.indentation = indentation;
 	}
 
-	public Collection<Member> getMembers() {
+	public Collection<ClassMember> getMembers() {
 		return members;
 	}
 
-	public void addMember(Member member) {
+	public void addMember(ClassMember member) {
 		members.add(member);
 	}
 
-	public void addMembers(Collection<Member> members) {
+	public void addMembers(Collection<ClassMember> members) {
 		this.members.addAll(members);
 	}
 
-	public void addGeneratedMembers(Collection<Member> members) {
-		for (Member member : members) {
+	public void addGeneratedMembers(Collection<ClassMember> members) {
+		for (ClassMember member : members) {
 			this.members.add(member.generated());
 		}
 	}
@@ -105,15 +102,15 @@ public class SimpleJavaGenerator {
 			cu.addImport(imp);
 		}
 		cu.addType(type);
-		for (Member member : gatherFinalMembers(members, cu)) {
+		for (ClassMember member : gatherFinalMembers(members, cu)) {
 			type.addMember(member.getDeclaration());
 		}
 		return cu.toString();
 	}
 
-	private Collection<Member> gatherFinalMembers(List<Member> members, CompilationUnit cu) {
-		Map<String, Member> memberMap = new LinkedHashMap<>();
-		for (Member member : members) {
+	private Collection<ClassMember> gatherFinalMembers(List<ClassMember> members, CompilationUnit cu) {
+		Map<String, ClassMember> memberMap = new LinkedHashMap<>();
+		for (ClassMember member : members) {
 			String key = member.getKey();
 			if (!memberMap.containsKey(key)) {
 				memberMap.put(key, member);
@@ -137,96 +134,4 @@ public class SimpleJavaGenerator {
 		return memberMap.values();
 	}
 
-	public static class Member {
-		protected BodyDeclaration<?> declaration;
-
-		public Member(BodyDeclaration<?> declaration) {
-			this.declaration = declaration;
-		}
-
-		public Member(String code) {
-			try {
-				this.declaration = JavaParser.parseBodyDeclaration(code);
-			} catch (Exception e) {
-				System.out.println("MESSAGE :" + e.getMessage());
-				System.out.println("CODE :" + code);
-			}
-			// this(JavaParser.parseBodyDeclaration(code));
-		}
-
-		public Member generated() {
-			declaration.addSingleMemberAnnotation(Generated.class, "\"" + CodeGenerator.class.getName() + "\"");
-			return this;
-		}
-
-		public Member comment(String comment) {
-			if (comment != null) {
-				declaration.setLineComment(comment);
-			} else {
-				declaration.removeComment();
-			}
-			return this;
-		}
-
-		public Member override() {
-			declaration.addMarkerAnnotation(Override.class);
-			return this;
-		}
-
-		public Member rename(String from, String to) {
-			if (declaration instanceof MethodDeclaration) {
-				((MethodDeclaration) declaration).setName(to);
-			} else if (declaration instanceof FieldDeclaration) {
-				for (VariableDeclarator var : ((FieldDeclaration) declaration).getVariables()) {
-					if (var.getName().getIdentifier().equals(from)) {
-						var.setName(to);
-						break;
-					}
-				}
-			}
-			return this;
-		}
-
-		public BodyDeclaration<?> getDeclaration() {
-			return declaration;
-		}
-
-		public String getKey() {
-			if (declaration instanceof FieldDeclaration) {
-				FieldDeclaration field = (FieldDeclaration) declaration;
-				if (field.getVariables().size() != 1) {
-					throw new RuntimeException(
-							"Multiple fields in a single manual field declaration is not yet supported: "
-									+ field.toString());
-				}
-				return "F:" + field.getVariable(0).getNameAsString();
-			} else if (declaration instanceof MethodDeclaration) {
-				MethodDeclaration method = (MethodDeclaration) declaration;
-				return "M:" + method.getNameAsString() + ":" + method.getParameters().stream()
-						.map(p -> p.getType().toString()).collect(Collectors.joining(","));
-			} else if (declaration instanceof ConstructorDeclaration) {
-				ConstructorDeclaration constructor = (ConstructorDeclaration) declaration;
-				return "C:" + constructor.getParameters().stream().map(p -> p.getType().toString())
-						.collect(Collectors.joining(","));
-			}
-			throw new RuntimeException(
-					"Unsupported manual member type encountered: " + declaration.getClass().getName());
-		}
-
-		public String format() {
-			return declaration.toString();
-		}
-
-		public String getName() {
-			if (declaration instanceof MethodDeclaration) {
-				return ((MethodDeclaration) declaration).getNameAsString();
-			} else if (declaration instanceof FieldDeclaration) {
-				NodeList<VariableDeclarator> vars = ((FieldDeclaration) declaration).getVariables();
-				if (vars.size() == 1) {
-					return vars.get(0).getNameAsString();
-				}
-			}
-			return null;
-		}
-	}
 }

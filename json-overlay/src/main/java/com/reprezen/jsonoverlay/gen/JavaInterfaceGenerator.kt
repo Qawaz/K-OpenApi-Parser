@@ -1,9 +1,5 @@
 package com.reprezen.jsonoverlay.gen
 
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
-import com.github.javaparser.ast.body.EnumConstantDeclaration
-import com.github.javaparser.ast.body.EnumDeclaration
-import com.github.javaparser.ast.body.TypeDeclaration
 import com.reprezen.jsonoverlay.gen.TypeData.Field
 import java.io.File
 
@@ -15,13 +11,15 @@ class JavaInterfaceGenerator : TypeGenerator {
         return intfPackage
     }
 
-    override fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDeclaration<*> {
-        val decl = if(type.enumValues.isEmpty()) ClassOrInterfaceDeclaration() else EnumDeclaration()
-        decl.setName(type.name)
-        decl.setPublic(true)
+    override fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDec {
+        val decl = if(type.enumValues.isEmpty()) ClassOrInterfaceDeclaration(type.name,
+            isInterface = true,
+            isPublic = true
+        ) else EnumDeclaration(
+            type.name,isPublic = true
+        )
         when(decl){
             is ClassOrInterfaceDeclaration -> {
-                decl.setInterface(true)
 
                 decl.addExtendedType(getSuperType(type))
                 requireTypes(getSuperType(type))
@@ -37,7 +35,7 @@ class JavaInterfaceGenerator : TypeGenerator {
             }
             is EnumDeclaration -> {
                 for(enumValue in type.enumValues){
-                    decl.addEntry(EnumConstantDeclaration().setName(enumValue))
+                    decl.addEntry(enumValue)
                 }
             }
         }

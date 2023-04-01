@@ -2,11 +2,8 @@ package com.reprezen.jsonoverlay.gen
 
 import com.fasterxml.jackson.core.JsonPointer
 import com.fasterxml.jackson.databind.JsonNode
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
-import com.github.javaparser.ast.body.TypeDeclaration
 import com.reprezen.jsonoverlay.*
 import java.io.File
-import java.util.regex.Pattern
 import java.util.stream.Collectors
 
 class JavaImplGenerator : TypeGenerator {
@@ -35,7 +32,7 @@ class JavaImplGenerator : TypeGenerator {
         val members = Members()
         if (isEnum(type)) {
             members.add(
-                SimpleJavaGenerator.Member(
+                ClassMember(
                     """
             @Override
             protected Class<${type.name}> getEnumClass() {
@@ -61,7 +58,7 @@ class JavaImplGenerator : TypeGenerator {
             }
         }
         members.add(
-            SimpleJavaGenerator.Member(
+            ClassMember(
                 """
             @Override
             protected OverlayFactory <? > _getFactory() {
@@ -74,11 +71,12 @@ class JavaImplGenerator : TypeGenerator {
         return members
     }
 
-    override fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDeclaration<*> {
-        val decl = ClassOrInterfaceDeclaration()
-        decl.setInterface(false)
-        decl.setPublic(true)
-        decl.setName(type.name + suffix)
+    override fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDec {
+        val decl = ClassOrInterfaceDeclaration(
+            name = type.name + suffix,
+            isInterface = false,
+            isPublic = true
+        )
         if (isEnum(type)) {
             requireTypes(EnumOverlay::class.java)
             decl.addExtendedType("""EnumOverlay<${type.name}>""")
@@ -361,7 +359,7 @@ class JavaImplGenerator : TypeGenerator {
         val members = Members()
         type.fields.values.filter { !it.isNoImpl }.forEach { f ->
             members.add(
-                SimpleJavaGenerator.Member(
+                ClassMember(
                     """public static final String F_${f.propertyName} = "${f.propertyName}";"""
                 )
             )
@@ -369,11 +367,11 @@ class JavaImplGenerator : TypeGenerator {
         return members
     }
 
-    private fun getElaborateJsonMethod(type: TypeData.Type): SimpleJavaGenerator.Member {
+    private fun getElaborateJsonMethod(type: TypeData.Type): ClassMember {
         val elaborateStatement = type.fields.values.filter { !it.isNoImpl }.joinToString("\n") {
             getElaborateStatement(it)
         }
-        return SimpleJavaGenerator.Member(
+        return ClassMember(
             """
         protected void _elaborateJson() {
             super._elaborateJson();
@@ -401,9 +399,9 @@ class JavaImplGenerator : TypeGenerator {
         }
     }
 
-    private fun getEnumFactoryMember(type: TypeData.Type): SimpleJavaGenerator.Member {
+    private fun getEnumFactoryMember(type: TypeData.Type): ClassMember {
         requireTypes(OverlayFactory::class.java, JsonOverlay::class.java, JsonNode::class.java, ReferenceManager::class.java)
-        return SimpleJavaGenerator.Member(
+        return ClassMember(
             """
         public static OverlayFactory < ${type.name} > factory = new OverlayFactory <${type.name}>() {
         @Override
@@ -432,7 +430,7 @@ class JavaImplGenerator : TypeGenerator {
         return members
     }
 
-    private fun getFactoryMember(type: TypeData.Type): SimpleJavaGenerator.Member {
+    private fun getFactoryMember(type: TypeData.Type): ClassMember {
         requireTypes(OverlayFactory::class.java, JsonNode::class.java, ReferenceManager::class.java, JsonOverlay::class.java)
         val _createSubTypesImpl = if (getSubTypes(type).isEmpty()) {
             "overlay = new ${type.implType}(${type.lcName}, parent, refMgr);"
@@ -450,7 +448,7 @@ class JavaImplGenerator : TypeGenerator {
                 ".json"
             )
         }
-        return SimpleJavaGenerator.Member(
+        return ClassMember(
             """
         public static OverlayFactory < ${type.name} > factory = new OverlayFactory <${type.name}>(){
         @Override
@@ -504,10 +502,10 @@ class JavaImplGenerator : TypeGenerator {
     private fun getValueSubtypeSelector(
         t: TypeData.Type,
         subTypes: Collection<TypeData.Type>
-    ): SimpleJavaGenerator.Member {
+    ): ClassMember {
         val switchExpr = """${t.lcName}.getClass().getSimpleName()"""
         val subTypeSwitch = getSubtypeSwitch(t, subTypes, switchExpr) { it.name }
-        return SimpleJavaGenerator.Member(
+        return ClassMember(
             """
         private static Class < ? extends ${t.name} > getSubtypeOf(${t.name} ${t.lcName}) {
             $subTypeSwitch
@@ -519,11 +517,11 @@ class JavaImplGenerator : TypeGenerator {
     private fun getJsonSubtypeSelector(
         t: TypeData.Type,
         subTypes: Collection<TypeData.Type>
-    ): SimpleJavaGenerator.Member {
+    ): ClassMember {
         requireTypes(JsonPointer::class.java, Collectors::class.java)
         val switchExpr = """json.at(JsonPointer.compile("/${t.discriminator}")).asText()"""
         val subTypeSwitch = getSubtypeSwitch(t, subTypes, switchExpr) { it.discriminatorValue }
-        return SimpleJavaGenerator.Member(
+        return ClassMember(
             """
         private static Class < ? extends ${t.name} > getSubtypeOf(JsonNode json) {
             $subTypeSwitch

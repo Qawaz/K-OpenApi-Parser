@@ -21,10 +21,10 @@ object GenOpenApi3 {
                 "-t", "src/main/java/com/reprezen/kaizen/oasparser/types3.yaml",  //
                 "-p", "com.reprezen.kaizen.oasparser",  //
                 "-d", "src/main/java/com/reprezen/kaizen/oasparser",  //
-                "-i", "model3",  //
-                "-I", "model3",  //
-                "-c", "ovl3",  //
-                "-C", "ovl3"
+                "-i", "kmodel3",  //
+                "-I", "kmodel3",  //
+                "-c", "kovl3",  //
+                "-C", "kovl3"
             )
         )
     }
