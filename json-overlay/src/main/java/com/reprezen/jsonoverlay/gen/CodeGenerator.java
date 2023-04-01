@@ -63,10 +63,10 @@ public class CodeGenerator {
 		String implPackage = getImplPackage();
 		for (Type type : typeData.getTypes()) {
 			if (type.isNoGen()) {
-				return;.
+				return;
 
 			}
-			new InterfaceGenerator(intfDir, intfPackage, implPackage, "", opts.preserve).generate(type);
+			new JavaInterfaceGenerator(intfDir, intfPackage, implPackage, "", opts.preserve).generate(type);
 		}
 	}
 
@@ -78,7 +78,7 @@ public class CodeGenerator {
 			if (type.isNoGen()) {
 				return;
 			}
-			new ImplGenerator(implDir, intfPackage, implPackage, opts.classSuffix, opts.preserve).generate(type);
+			new JavaImplGenerator(implDir, intfPackage, implPackage, opts.classSuffix, opts.preserve).generate(type);
 		}
 	}
 
