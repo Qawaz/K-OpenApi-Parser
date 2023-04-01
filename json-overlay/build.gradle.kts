@@ -19,6 +19,7 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     implementation("com.github.javaparser:javaparser-core:3.5.7")
     implementation("javax.annotation:javax.annotation-api:1.3.2")
+    implementation("org.eclipse.xtend:org.eclipse.xtend.lib:2.17.1")
     testImplementation("junit:junit:4.12")
 
 }

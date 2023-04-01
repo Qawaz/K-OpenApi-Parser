@@ -62,19 +62,19 @@ public class ReferenceTests extends Assert {
 	private void checkScalarsSharing(Scalars s, boolean sharedRoot, boolean sharedValues) {
 		Scalars s1 = model.getScalar("s1");
 		if (sharedRoot) {
-			assertTrue("Scalars objects should be shared", s1 == s);
+			assertSame("Scalars objects should be shared", s1, s);
 		} else if (sharedValues) {
-			assertTrue("String value should be shared", s1.getStringValue() == s.getStringValue());
+			assertSame("String value should be shared", s1.getStringValue(), s.getStringValue());
 		}
 	}
 
 	@Test
 	public void checkRecursion() {
-		assertTrue(model.getScalar("s6").getEmbeddedScalars() == model.getScalar("s5"));
-		assertTrue(model.getScalar("s7").getEmbeddedScalars() == model.getScalar("s7"));
-		assertTrue(model.getScalar("s8a").getEmbeddedScalars() == model.getScalar("s8b"));
-		assertTrue(model.getScalar("s8b").getEmbeddedScalars() == model.getScalar("s8a"));
-		assertTrue(model.getScalar("ext1") == model.getScalar("ext2"));
+		assertSame(model.getScalar("s6").getEmbeddedScalars(), model.getScalar("s5"));
+		assertSame(model.getScalar("s7").getEmbeddedScalars(), model.getScalar("s7"));
+		assertSame(model.getScalar("s8a").getEmbeddedScalars(), model.getScalar("s8b"));
+		assertSame(model.getScalar("s8b").getEmbeddedScalars(), model.getScalar("s8a"));
+		assertSame(model.getScalar("ext1"), model.getScalar("ext2"));
 	}
 
 	@Test
@@ -93,26 +93,26 @@ public class ReferenceTests extends Assert {
 
 	@Test
 	public void testRoots() {
-		assertTrue(model == Overlay.of(model).getRoot());
-		assertTrue(model == Overlay.of(model.getScalar("s1")).getRoot());
+		assertSame(model, Overlay.of(model).getRoot());
+		assertSame(model, Overlay.of(model.getScalar("s1")).getRoot());
 		Scalars ext1 = model.getScalar("ext1");
-		assertTrue(ext1 == Overlay.of(ext1).getRoot());
-		assertTrue(model == Overlay.of(model.getScalar("s3")).getRoot());
+		assertSame(ext1, Overlay.of(ext1).getRoot());
+		assertSame(model, Overlay.of(model.getScalar("s3")).getRoot());
 
-		assertTrue(model == Overlay.of(model).getModel());
-		assertTrue(model == Overlay.of(model.getScalar("s1")).getModel());
+		assertSame(model, Overlay.of(model).getModel());
+		assertSame(model, Overlay.of(model.getScalar("s1")).getModel());
 		assertNull(Overlay.of(ext1).getModel());
-		assertTrue(model == Overlay.of(model.getScalar("s3")).getModel());
+		assertSame(model, Overlay.of(model.getScalar("s3")).getModel());
 	}
 
 	@Test
 	public void testFind() {
-		assertTrue(model.getScalar("s1") == Overlay.of(model).find("/scalars/s1"));
-		assertTrue(model.getScalar("s3") == Overlay.of(model).find("/scalars/s1"));
-		assertTrue(model.getScalar("s3") == Overlay.of(model).find("/scalars/s3"));
-		assertTrue(model.getScalar("ext1") == Overlay.of(model).find("/scalars/ext1"));
-		assertTrue(model.getScalar("ext2") == Overlay.of(model).find("/scalars/ext1"));
-		assertTrue(model.getScalar("ext3") == Overlay.of(model).find("/scalars/s1"));
+		assertSame(model.getScalar("s1"), Overlay.of(model).find("/scalars/s1"));
+		assertSame(model.getScalar("s3"), Overlay.of(model).find("/scalars/s1"));
+		assertSame(model.getScalar("s3"), Overlay.of(model).find("/scalars/s3"));
+		assertSame(model.getScalar("ext1"), Overlay.of(model).find("/scalars/ext1"));
+		assertSame(model.getScalar("ext2"), Overlay.of(model).find("/scalars/ext1"));
+		assertSame(model.getScalar("ext3"), Overlay.of(model).find("/scalars/s1"));
 	}
 
 	@Test

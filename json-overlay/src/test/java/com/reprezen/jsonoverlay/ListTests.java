@@ -80,17 +80,16 @@ public class ListTests extends Assert {
 			checkValueAt(overlay, i, i);
 		}
 		ListOverlay<Integer> copy = (ListOverlay<Integer>) overlay._copy();
-		assertFalse("Copy operation should create different object", overlay == copy);
+		assertNotSame("Copy operation should create different object", overlay, copy);
 		assertEquals(overlay, copy);
 		for (int i = 0; i < overlay.size(); i++) {
-			assertFalse("Copy operation should create copies of list overlay items",
-					overlay._getOverlay(i) == copy._getOverlay(i));
+			assertNotSame("Copy operation should create copies of list overlay items", overlay._getOverlay(i), copy._getOverlay(i));
 		}
 		copy = (ListOverlay<Integer>) overlay.factory.create(overlay._toJson(), null, refMgr);
 		assertEquals(overlay._get(), copy._get());
-		assertTrue(overlay == overlay._getRoot());
+		assertSame(overlay, overlay._getRoot());
 		JsonOverlay<Integer> itemOverlay = overlay._getOverlay(0);
-		assertTrue(overlay == itemOverlay._getRoot());
+		assertSame(overlay, itemOverlay._getRoot());
 		assertNull(Overlay.of(overlay).getModel());
 	}
 

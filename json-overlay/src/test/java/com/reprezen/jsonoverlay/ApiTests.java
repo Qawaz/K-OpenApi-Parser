@@ -96,19 +96,19 @@ public class ApiTests extends Assert {
 
 	@Test
 	public void testRoot() {
-		assertTrue(model == Overlay.of(model).getRoot());
-		assertTrue(model == Overlay.of(model, "description", String.class).getRoot());
-		assertTrue(model == Overlay.of(model, "integers", ListOverlay.class).getRoot());
-		assertTrue(model == Overlay.of(model, "namedIntegers", MapOverlay.class).getRoot());
-		assertTrue(model == Overlay.of(model.getEntries(), "A").getRoot());
-		assertTrue(model == Overlay.of(model.getItems(), 0).getRoot());
+		assertSame(model, Overlay.of(model).getRoot());
+		assertSame(model, Overlay.of(model, "description", String.class).getRoot());
+		assertSame(model, Overlay.of(model, "integers", ListOverlay.class).getRoot());
+		assertSame(model, Overlay.of(model, "namedIntegers", MapOverlay.class).getRoot());
+		assertSame(model, Overlay.of(model.getEntries(), "A").getRoot());
+		assertSame(model, Overlay.of(model.getItems(), 0).getRoot());
 
-		assertTrue(model == Overlay.of(model).getModel());
-		assertTrue(model == Overlay.of(model, "description", String.class).getModel());
-		assertTrue(model == Overlay.of(model, "integers", ListOverlay.class).getModel());
-		assertTrue(model == Overlay.of(model, "namedIntegers", MapOverlay.class).getModel());
-		assertTrue(model == Overlay.of(model.getEntries(), "A").getModel());
-		assertTrue(model == Overlay.of(model.getItems(), 0).getModel());
+		assertSame(model, Overlay.of(model).getModel());
+		assertSame(model, Overlay.of(model, "description", String.class).getModel());
+		assertSame(model, Overlay.of(model, "integers", ListOverlay.class).getModel());
+		assertSame(model, Overlay.of(model, "namedIntegers", MapOverlay.class).getModel());
+		assertSame(model, Overlay.of(model.getEntries(), "A").getModel());
+		assertSame(model, Overlay.of(model.getItems(), 0).getModel());
 	}
 
 	@Test
@@ -125,15 +125,12 @@ public class ApiTests extends Assert {
 		checkScalarFind("width", Integer.class, "/width");
 		checkScalarFind("width", Integer.class, "/width");
 		checkScalarFind("color", Color.class, "/color");
-		assertTrue(Overlay.of(model.getItems(), 0).getOverlay() == Overlay.of(model).find("/items/0"));
-		assertTrue(Overlay.of(model.getItems(), 1).getOverlay() == Overlay.of(model).find("/items/1"));
-		assertFalse(Overlay.of(model.getItems(), 1).getOverlay() == Overlay.of(model).find("/items/0"));
-		assertTrue(
-				Overlay.of(model.getNamedIntegers(), "I").getOverlay() == Overlay.of(model).find("/namedIntegers/I"));
-		assertTrue(
-				Overlay.of(model.getNamedIntegers(), "II").getOverlay() == Overlay.of(model).find("/namedIntegers/II"));
-		assertFalse(
-				Overlay.of(model.getNamedIntegers(), "I").getOverlay() == Overlay.of(model).find("/namedIntegers/II"));
+		assertSame(Overlay.of(model.getItems(), 0).getOverlay(), Overlay.of(model).find("/items/0"));
+		assertSame(Overlay.of(model.getItems(), 1).getOverlay(), Overlay.of(model).find("/items/1"));
+		assertNotSame(Overlay.of(model.getItems(), 1).getOverlay(), Overlay.of(model).find("/items/0"));
+		assertSame(Overlay.of(model.getNamedIntegers(), "I").getOverlay(), Overlay.of(model).find("/namedIntegers/I"));
+		assertSame(Overlay.of(model.getNamedIntegers(), "II").getOverlay(), Overlay.of(model).find("/namedIntegers/II"));
+		assertNotSame(Overlay.of(model.getNamedIntegers(), "I").getOverlay(), Overlay.of(model).find("/namedIntegers/II"));
 	}
 
 	@Test
@@ -182,6 +179,6 @@ public class ApiTests extends Assert {
 	}
 
 	private <V> void checkScalarFind(String field, Class<V> fieldType, String path) {
-		assertTrue(Overlay.of(model, field, fieldType).getOverlay() == Overlay.of(model).find(path));
+		assertSame(Overlay.of(model, field, fieldType).getOverlay(), Overlay.of(model).find(path));
 	}
 }

@@ -77,14 +77,14 @@ public abstract class ScalarTestBase<V> extends Assert {
 	@Test
 	public void testRoot() {
 		JsonOverlay<V> ovl = factory.create(value, null, refMgr);
-		assertTrue(ovl == ovl._getRoot());
+		assertSame(ovl, ovl._getRoot());
 		assertNull(Overlay.of(ovl).getModel());
 	}
 
 	@Test
 	public void testPathFromRoot() {
 		JsonOverlay<V> ovl = factory.create(value, null, refMgr);
-		assertEquals(null, Overlay.of(ovl).getPathFromRoot());
+		assertNull(Overlay.of(ovl).getPathFromRoot());
 	}
 
 	@Test
@@ -102,7 +102,7 @@ public abstract class ScalarTestBase<V> extends Assert {
 
 	public void testCopy(JsonOverlay<V> ovl) {
 		JsonOverlay<V> copy = ovl._copy();
-		assertFalse("Copy operation should yield different object", ovl == copy);
+		assertNotSame("Copy operation should yield different object", ovl, copy);
 		assertEquals(ovl, copy);
 		assertEquals(ovl._get(), copy._get());
 	}

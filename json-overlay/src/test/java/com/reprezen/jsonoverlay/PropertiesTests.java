@@ -51,9 +51,9 @@ public class PropertiesTests extends Assert {
 		assertEquals(Integer.valueOf(10), foo.getNumField());
 		foo.setStringField(null);
 		assertNull(foo.getStringField());
-		assertTrue(foo == foo._getRoot());
+		assertSame(foo, foo._getRoot());
 		JsonOverlay<String> stringOverlay = foo._getOverlay("stringField", String.class);
-		assertTrue(foo == stringOverlay._getRoot());
+		assertSame(foo, stringOverlay._getRoot());
 		assertNull(Overlay.of(foo).getModel());
 	}
 
@@ -88,11 +88,10 @@ public class PropertiesTests extends Assert {
 		assertEquals(Maps.toMap(Arrays.asList("x-a"), s -> 1), foo.getRootMap());
 		checkPropertyNames(foo, "num", "list", "string", "map", "x-a");
 		Foo copy = (Foo) foo._copy();
-		assertFalse("Copy operation should create different object", foo == copy);
+		assertNotSame("Copy operation should create different object", foo, copy);
 		assertEquals(foo, copy);
 		for (String name : foo._getPropertyNames()) {
-			assertFalse("Copy operation should create copy of each property value",
-					foo._getOverlay(name) == copy._getOverlay(name));
+			assertNotSame("Copy operation should create copy of each property value", foo._getOverlay(name), copy._getOverlay(name));
 		}
 		// foo2 has same content as foo, but numField comes last instead of
 		// first
