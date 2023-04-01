@@ -8,7 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d55a8c6a-af6b-48df-a7d6-a3559c3cc6b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/MapTests.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/PropertiesTests.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -16,7 +16,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/MapTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/PropertiesTests.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +121,7 @@
       <command value="gradle init" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.MapTests">
+  <component name="RunManager" selected="Gradle.PropertiesTests">
     <configuration name="CodeGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="19" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -161,28 +161,6 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="KaiZen-OpenApi-Parser:json-overlay [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/json-overlay" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
-      <method v="2" />
-    </configuration>
     <configuration name="MapTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -197,6 +175,30 @@
             <option value=":json-overlay:test" />
             <option value="--tests" />
             <option value="&quot;com.reprezen.jsonoverlay.MapTests&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="PropertiesTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":json-overlay:test" />
+            <option value="--tests" />
+            <option value="&quot;com.reprezen.jsonoverlay.PropertiesTests&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -269,17 +271,17 @@
     <list>
       <item itemvalue="Gradle.ApiTests" />
       <item itemvalue="Gradle.MapTests" />
-      <item itemvalue="Gradle.KaiZen-OpenApi-Parser:json-overlay [build]" />
+      <item itemvalue="Gradle.PropertiesTests" />
       <item itemvalue="Gradle.Tests in 'com.reprezen'" />
       <item itemvalue="Gradle.Tests in 'KOpenAPIParser.json-overlay.test'" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.PropertiesTests" />
         <item itemvalue="Gradle.MapTests" />
         <item itemvalue="Gradle.Tests in 'KOpenAPIParser.json-overlay.test'" />
         <item itemvalue="Gradle.ApiTests" />
         <item itemvalue="Application.CodeGenerator" />
-        <item itemvalue="Gradle.KaiZen-OpenApi-Parser:json-overlay [build]" />
       </list>
     </recent_temporary>
   </component>
