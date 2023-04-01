@@ -1,21 +1,22 @@
 /*********************************************************************
-*  Copyright (c) 2017 ModelSolv, Inc. and others.
-*
-* This program and the accompanying materials are made
-* available under the terms of the Eclipse Public License 2.0
-* which is available at https://www.eclipse.org/legal/epl-2.0/
-*
-* SPDX-License-Identifier: EPL-2.0
+ *  Copyright (c) 2017 ModelSolv, Inc. and others.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  *  Contributors:
  *     ModelSolv, Inc. 
  *     - initial API and implementation and/or initial documentation
-**********************************************************************/
+ **********************************************************************/
 package com.reprezen.jsonoverlay.gen;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,268 +68,264 @@ import com.reprezen.jsonoverlay.gen.TypeData.Type;
 
 public abstract class TypeGenerator {
 
-	private File dir;
-	protected String intfPackage;
-	protected String implPackage;
-	protected String suffix;
-	private boolean preserve;
-	private Set<String> requiredTypes = new HashSet<>();
+    private File dir;
+    protected String intfPackage;
+    protected String implPackage;
+    protected String suffix;
+    private boolean preserve;
+    private Set<String> requiredTypes = new HashSet<>();
 
-	public TypeGenerator(File dir, String intfPackage, String implPackage, String suffix, boolean preserve) {
-		this.dir = dir;
-		this.intfPackage = intfPackage;
-		this.implPackage = implPackage;
-		this.suffix = suffix;
-		this.preserve = preserve;
-	}
+    public TypeGenerator(File dir, String intfPackage, String implPackage, String suffix, boolean preserve) {
+        this.dir = dir;
+        this.intfPackage = intfPackage;
+        this.implPackage = implPackage;
+        this.suffix = suffix;
+        this.preserve = preserve;
+    }
 
-	protected abstract TypeDeclaration<?> getTypeDeclaration(Type type, String suffix);
+    protected abstract TypeDeclaration<?> getTypeDeclaration(Type type, String suffix);
 
-	public void generate(Type type) throws IOException {
-		String filename = String.format("%s%s.java", type.getName(), suffix);
-		File javaFile = new File(dir, filename);
-		System.out.println("Generating " + javaFile.getCanonicalFile());
-		CompilationUnit existing = preserve && javaFile.exists() ? tryParse(javaFile) : null;
-		TypeDeclaration<?> declaration = getTypeDeclaration(type, suffix);
-		SimpleJavaGenerator gen = new SimpleJavaGenerator(getPackage(), declaration);
-		if (existing != null) {
-			copyFileComment(gen, existing);
-			addManualMembers(gen, existing);
-		}
-		requireTypes(getImports(type));
-		if (needIntfImports()) {
-			gen.addImport(intfPackage + ".*");
-		}
-		addGeneratedMembers(type, gen);
-		requireTypes(Generated.class);
-		resolveImports(type, gen);
+    public void generate(Type type) throws IOException {
+        String filename = String.format("%s%s.java", type.getName(), suffix);
+        File javaFile = new File(dir, filename);
+        System.out.println("Generating " + javaFile.getCanonicalFile());
+        generateToFile(javaFile, type);
+    }
 
-		Files.write(javaFile.toPath(), gen.format().getBytes(Charset.forName("UTF-8")));
-	}
+    protected void generateToFile(File javaFile, Type type) throws IOException {
+        CompilationUnit existing = preserve && javaFile.exists() ? tryParse(javaFile) : null;
+        TypeDeclaration<?> declaration = getTypeDeclaration(type, suffix);
+        SimpleJavaGenerator gen = new SimpleJavaGenerator(getPackage(), declaration);
+        if (existing != null) {
+            copyFileComment(gen, existing);
+            addManualMembers(gen, existing);
+        }
+        requireTypes(getImports(type));
+        if (needIntfImports()) {
+            gen.addImport(intfPackage + ".*");
+        }
+        addGeneratedMembers(type, gen);
+        requireTypes(Generated.class);
+        resolveImports(type, gen);
 
-	protected abstract String getPackage();
+        Files.writeString(javaFile.toPath(), gen.format());
+    }
 
-	protected abstract Collection<String> getImports(Type type);
+    protected abstract String getPackage();
 
-	protected boolean needIntfImports() {
-		return false;
-	}
+    protected abstract Collection<String> getImports(Type type);
 
-	protected void requireTypes(Class<?>... types) {
-		requireTypes(Stream.of(types).map(Class::getSimpleName).collect(Collectors.toList()));
-	}
+    protected boolean needIntfImports() {
+        return false;
+    }
 
-	protected void requireTypes(Type... types) {
-		requireTypes(Stream.of(types).map(Type::getName).collect(Collectors.toList()));
-	}
+    protected void requireTypes(Class<?>... types) {
+        requireTypes(Stream.of(types).map(Class::getSimpleName).collect(Collectors.toList()));
+    }
 
-	protected void requireTypes(String... types) {
-		requireTypes(Arrays.asList(types));
-	}
+    protected void requireTypes(Type... types) {
+        requireTypes(Stream.of(types).map(Type::getName).collect(Collectors.toList()));
+    }
 
-	protected void requireTypes(Collection<String> types) {
-		requiredTypes.addAll(types.stream().map(t -> t.contains("<") ? t.substring(0, t.indexOf("<")) : t)
-				.collect(Collectors.toList()));
-	}
+    protected void requireTypes(String... types) {
+        requireTypes(Arrays.asList(types));
+    }
 
-	private void resolveImports(Type type, SimpleJavaGenerator gen) {
-		Map<String, String> importMap = type.getTypeData().getImports();
-		Map<String, Type> typeMap = type.getTypeData().getTypeMap();
-		for (String requiredType : requiredTypes) {
-			gen.addImport(resolveImport(requiredType, typeMap, importMap));
-		}
-	}
+    protected void requireTypes(Collection<String> types) {
+        requiredTypes.addAll(types.stream().map(t -> t.contains("<") ? t.substring(0, t.indexOf("<")) : t)
+                .collect(Collectors.toList()));
+    }
 
-	private static Set<String> autoTypes = getAutoTypes();
+    private void resolveImports(Type type, SimpleJavaGenerator gen) {
+        Map<String, String> importMap = type.getTypeData().getImports();
+        Map<String, Type> typeMap = type.getTypeData().getTypeMap();
+        for (String requiredType : requiredTypes) {
+            gen.addImport(resolveImport(requiredType, typeMap, importMap));
+        }
+    }
 
-	private static Set<String> getAutoTypes() {
-		Set<String> results = new HashSet<>();
-		List<Class<?>> autos = Arrays.<Class<?>>asList(//
-				String.class, //
-				Integer.class, //
-				Number.class, //
-				Boolean.class, //
-				Primitive.class, //
-				Object.class);
-		for (Class<?> cls : autos) {
-			results.add(cls.getSimpleName());
-		}
-		return results;
-	}
+    private static Set<String> autoTypes = getAutoTypes();
 
-	private static Map<String, String> knownTypes = getKnownTypes();
+    private static Set<String> getAutoTypes() {
+        Set<String> results = new HashSet<>();
+        List<Class<?>> autos = Arrays.<Class<?>>asList(//
+                String.class, //
+                Integer.class, //
+                Number.class, //
+                Boolean.class, //
+                Primitive.class, //
+                Object.class);
+        for (Class<?> cls : autos) {
+            results.add(cls.getSimpleName());
+        }
+        return results;
+    }
 
-	private static Map<String, String> getKnownTypes() {
-		Map<String, String> results = new HashMap<>();
-		List<Class<?>> overlays = Arrays.<Class<?>>asList( //
-				Generated.class, //
-				List.class, //
-				Map.class, //
-				Optional.class, //
-				Collectors.class, //
-				JsonNode.class, //
-				ObjectNode.class, //
-				JsonNodeFactory.class, //
-				JsonPointer.class, //
-				IJsonOverlay.class, //
-				JsonOverlay.class, //
-				IModelPart.class, //
-				PropertiesOverlay.class, //
-				OverlayFactory.class, //
-				Builder.class, //
-				ReferenceManager.class, //
-				StringOverlay.class, //
-				IntegerOverlay.class, //
-				NumberOverlay.class, //
-				BooleanOverlay.class, //
-				EnumOverlay.class, //
-				PrimitiveOverlay.class, //
-				ObjectOverlay.class, //
-				ListOverlay.class, //
-				MapOverlay.class); //
-		for (Class<?> cls : overlays) {
-			results.put(cls.getSimpleName(), cls.getName().replaceAll("\\$", "."));
-		}
-		return results;
-	}
+    private static Map<String, String> knownTypes = getKnownTypes();
 
-	private String resolveImport(String type, Map<String, Type> typeMap, Map<String, String> importMap) {
-		if (importMap.containsKey(type)) {
-			String imp = importMap.get(type);
-			if (imp.equals("_intf")) {
-				return intfPackage + "." + type;
-			} else if (imp.equals("_impl")) {
-				return implPackage + "." + type;
-			} else {
-				return imp;
-			}
-		} else if (typeMap.containsKey(type)) {
-			// interface type
-			return intfPackage + "." + type;
-		} else if (!suffix.isEmpty() && type.endsWith(suffix)
-				&& typeMap.containsKey(type.substring(0, type.length() - suffix.length()))) {
-			// impl type
-			return implPackage + "." + type;
-		} else if (autoTypes.contains(type)) {
-			return null;
-		} else if (knownTypes.containsKey(type)) {
-			return knownTypes.get(type);
-		} else {
-			throw new RuntimeException("Unable to resolve import for type: " + type);
-		}
-	}
+    private static Map<String, String> getKnownTypes() {
+        Map<String, String> results = new HashMap<>();
+        List<Class<?>> overlays = Arrays.<Class<?>>asList( //
+                Generated.class, //
+                List.class, //
+                Map.class, //
+                Optional.class, //
+                Collectors.class, //
+                JsonNode.class, //
+                ObjectNode.class, //
+                JsonNodeFactory.class, //
+                JsonPointer.class, //
+                IJsonOverlay.class, //
+                JsonOverlay.class, //
+                IModelPart.class, //
+                PropertiesOverlay.class, //
+                OverlayFactory.class, //
+                Builder.class, //
+                ReferenceManager.class, //
+                StringOverlay.class, //
+                IntegerOverlay.class, //
+                NumberOverlay.class, //
+                BooleanOverlay.class, //
+                EnumOverlay.class, //
+                PrimitiveOverlay.class, //
+                ObjectOverlay.class, //
+                ListOverlay.class, //
+                MapOverlay.class); //
+        for (Class<?> cls : overlays) {
+            results.put(cls.getSimpleName(), cls.getName().replaceAll("\\$", "."));
+        }
+        return results;
+    }
 
-	protected void addGeneratedMembers(Type type, SimpleJavaGenerator gen) {
-		Members members = new Members();
-		members.addAll(getConstructors(type));
-		for (Field field : type.getFields().values()) {
-			if (!skipField(field)) {
-				members.addAll(getFieldMembers(field));
-			}
-		}
-		for (Field field : type.getFields().values()) {
-			if (!skipField(field)) {
-				members.addAll(getFieldMethods(field));
-			}
-		}
-		members.addAll(getOtherMembers(type));
-		for (Member member : members) {
-			maybeRename(member, type.getRenames());
-		}
-		gen.addGeneratedMembers(members);
-	}
+    private String resolveImport(String type, Map<String, Type> typeMap, Map<String, String> importMap) {
+        if (importMap.containsKey(type)) {
+            String imp = importMap.get(type);
+            if (imp.equals("_intf")) {
+                return intfPackage + "." + type;
+            } else if (imp.equals("_impl")) {
+                return implPackage + "." + type;
+            } else {
+                return imp;
+            }
+        } else if (typeMap.containsKey(type)) {
+            // interface type
+            return intfPackage + "." + type;
+        } else if (!suffix.isEmpty() && type.endsWith(suffix)
+                && typeMap.containsKey(type.substring(0, type.length() - suffix.length()))) {
+            // impl type
+            return implPackage + "." + type;
+        } else if (autoTypes.contains(type)) {
+            return null;
+        } else if (knownTypes.containsKey(type)) {
+            return knownTypes.get(type);
+        } else {
+            throw new RuntimeException("Unable to resolve import for type: " + type);
+        }
+    }
 
-	private void maybeRename(Member member, Map<String, String> renames) {
-		String name = member.getName();
-		if (name != null && renames.containsKey(name)) {
-			member.rename(name, renames.get(name));
-		}
-	}
+    protected void addGeneratedMembers(Type type, SimpleJavaGenerator gen) {
+        Members members = new Members();
+        members.addAll(getConstructors(type));
+        for (Field field : type.getFields().values()) {
+            if (!skipField(field)) {
+                members.addAll(getFieldMembers(field));
+            }
+        }
+        for (Field field : type.getFields().values()) {
+            if (!skipField(field)) {
+                members.addAll(getFieldMethods(field));
+            }
+        }
+        members.addAll(getOtherMembers(type));
+        for (Member member : members) {
+            maybeRename(member, type.getRenames());
+        }
+        gen.addGeneratedMembers(members);
+    }
 
-	protected boolean skipField(Field field) {
-		return false;
-	}
+    private void maybeRename(Member member, Map<String, String> renames) {
+        String name = member.getName();
+        if (name != null && renames.containsKey(name)) {
+            member.rename(name, renames.get(name));
+        }
+    }
 
-	private CompilationUnit tryParse(File file) {
-		try {
-			return JavaParser.parse(file);
-		} catch (IOException e) {
-			System.err.println("ABORTING AFTER PARTIAL GENERATION!");
-			System.err.printf(
-					"Parsing of file %s failed; so generation cannot continue without destroying manual code.\n", file);
-			System.err.println("Please restore generated code artifacts to a known good state before regenerating");
-			System.err.println("Parse Error:");
-			e.printStackTrace();
-			System.exit(1);
-			return null;
-		}
-	}
+    protected boolean skipField(Field field) {
+        return false;
+    }
 
-	private void copyFileComment(SimpleJavaGenerator gen, CompilationUnit existing) {
-		Optional<Comment> fileComment = existing.getComment();
-		if (fileComment.isPresent()) {
-			gen.setFileComment(fileComment.get().toString());
-		}
-	}
+    private CompilationUnit tryParse(File file) {
+        try {
+            return JavaParser.parse(file);
+        } catch (IOException e) {
+            System.err.println("ABORTING AFTER PARTIAL GENERATION!");
+            System.err.printf(
+                    "Parsing of file %s failed; so generation cannot continue without destroying manual code.\n", file);
+            System.err.println("Please restore generated code artifacts to a known good state before regenerating");
+            System.err.println("Parse Error:");
+            e.printStackTrace();
+            System.exit(1);
+            return null;
+        }
+    }
 
-	private void addManualMembers(SimpleJavaGenerator gen, CompilationUnit existing) {
-		for (TypeDeclaration<?> type : existing.getTypes()) {
-			for (BodyDeclaration<?> member : type.getMembers()) {
-				if (member instanceof MethodDeclaration || member instanceof FieldDeclaration
-						|| member instanceof ConstructorDeclaration) {
-					if (!isGenerated(member)) {
-						gen.addMember(new Member(member));
-					}
-				}
-			}
-		}
-	}
+    private void copyFileComment(SimpleJavaGenerator gen, CompilationUnit existing) {
+        Optional<Comment> fileComment = existing.getComment();
+        if (fileComment.isPresent()) {
+            gen.setFileComment(fileComment.get().toString());
+        }
+    }
 
-	private boolean isGenerated(BodyDeclaration<?> node) {
-		for (AnnotationExpr annotation : node.getAnnotations()) {
-			if (annotation.getName().toString().equals("Generated")) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private void addManualMembers(SimpleJavaGenerator gen, CompilationUnit existing) {
+        for (TypeDeclaration<?> type : existing.getTypes()) {
+            for (BodyDeclaration<?> member : type.getMembers()) {
+                if (member instanceof MethodDeclaration || member instanceof FieldDeclaration
+                        || member instanceof ConstructorDeclaration) {
+                    if (!isGenerated(member)) {
+                        gen.addMember(new Member(member));
+                    }
+                }
+            }
+        }
+    }
 
-	protected Members getConstructors(Type type) {
-		return new Members();
-	}
+    private boolean isGenerated(BodyDeclaration<?> node) {
+        for (AnnotationExpr annotation : node.getAnnotations()) {
+            if (annotation.getName().toString().equals("Generated")) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	protected Members getFieldMembers(Field field) {
-		return new Members();
-	}
+    protected Members getConstructors(Type type) {
+        return new Members();
+    }
 
-	protected Members getFieldMethods(Field field) {
-		return new Members();
-	}
+    protected Members getFieldMembers(Field field) {
+        return new Members();
+    }
 
-	protected Members getOtherMembers(Type type) {
-		return new Members();
-	}
+    protected Members getFieldMethods(Field field) {
+        return new Members();
+    }
 
-	protected Member addMember(BodyDeclaration<?> declaration, Collection<String> code) {
-		return addMember(declaration, null);
-	}
+    protected Members getOtherMembers(Type type) {
+        return new Members();
+    }
 
-	protected final Member addMember(BodyDeclaration<?> declaration) {
-		return addMember(declaration, null);
-	}
+    protected static class Members extends ArrayList<Member> {
 
-	protected static class Members extends ArrayList<Member> {
+        private static final long serialVersionUID = 1L;
 
-		private static final long serialVersionUID = 1L;
+        public Member addMember(String code) {
+            return addMember(new Member(code));
+        }
 
-		public Member addMember(String code) {
-			return addMember(new Member(code));
-		}
+        public Member addMember(Member member) {
+            add(member);
+            return member;
+        }
 
-		public Member addMember(Member member) {
-			add(member);
-			return member;
-		}
-
-	}
+    }
 }

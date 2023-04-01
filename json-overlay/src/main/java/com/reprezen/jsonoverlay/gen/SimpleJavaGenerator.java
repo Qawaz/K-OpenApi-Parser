@@ -131,7 +131,7 @@ public class SimpleJavaGenerator {
 				}
 				copy.setAnnotations(new NodeList<>());
 				Logger.getGlobal().warning(String.format("Suppressing already-present generated member in type %s: %s",
-						cu.getType(0).getNameAsString(), copy.toString()));
+						cu.getType(0).getNameAsString(), copy));
 			}
 		}
 		return memberMap.values();
