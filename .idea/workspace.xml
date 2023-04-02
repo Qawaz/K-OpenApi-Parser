@@ -8,6 +8,60 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d55a8c6a-af6b-48df-a7d6-a3559c3cc6b0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/GenOpenApi3.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/GenOpenApi3.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Callback.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Contact.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Discriminator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/EncodingProperty.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Example.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/ExternalDocs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Header.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/License.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Link.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/MediaType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/OAuthFlow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/OpenApi3.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Operation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Parameter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Path.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/RequestBody.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Response.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Schema.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/SecurityParameter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/SecurityRequirement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/SecurityScheme.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Server.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/ServerVariable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Tag.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kmodel3/Xml.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/CallbackImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/ContactImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/DiscriminatorImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/EncodingPropertyImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/ExampleImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/ExternalDocsImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/HeaderImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/InfoImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/LicenseImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/LinkImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/MediaTypeImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/OAuthFlowImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/OpenApi3Impl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/OperationImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/ParameterImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/PathImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/RequestBodyImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/ResponseImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/SchemaImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/SecurityParameterImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/SecurityRequirementImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/SecuritySchemeImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/ServerImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/ServerVariableImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/TagImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/kovl3/XmlImpl.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/val/ValidatorBase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/val/ValidatorBase.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
