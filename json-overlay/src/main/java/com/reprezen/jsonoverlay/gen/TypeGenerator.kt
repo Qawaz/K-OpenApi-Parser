@@ -22,8 +22,6 @@ import com.wakaztahir.kate.InputSourceStream
 import com.wakaztahir.kate.OutputDestinationStream
 import com.wakaztahir.kate.RelativeResourceEmbeddingManager
 import com.wakaztahir.kate.TemplateContext
-import com.wakaztahir.kate.parser.stream.EmbeddingManager
-import com.wakaztahir.kate.parser.stream.SourceStream
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
@@ -50,7 +48,7 @@ abstract class TypeGenerator(
         val filename = String.format("%s%s.java", type.name, suffix)
         val javaFile = File(dir, filename)
         println("Generating " + javaFile.canonicalFile)
-        generateWithTemplate(javaFile, type)
+        generateWithJavaTemplate(javaFile, type)
     }
 
     private fun getCompilationUnitFor(javaFile: File, type: TypeData.Type): CompilationUnit {
@@ -73,13 +71,13 @@ abstract class TypeGenerator(
     }
 
     @Throws(IOException::class)
-    protected fun generateWithTemplate(javaFile: File, type: TypeData.Type) {
+    protected fun generateWithJavaTemplate(javaFile: File, type: TypeData.Type) {
         val gen = getCompilationUnitFor(javaFile = javaFile, type = type)
         val obj = gen.toMutableKTEObject()
-        val resource = RelativeResourceEmbeddingManager("/")
+        val resource = RelativeResourceEmbeddingManager("/java")
         val context = TemplateContext(
             stream = InputSourceStream(
-                inputStream = resource.getStream(gen.type.templateResource),
+                inputStream = resource.getStream(gen.type.javaTemplateResource),
                 model = obj
             )
         )

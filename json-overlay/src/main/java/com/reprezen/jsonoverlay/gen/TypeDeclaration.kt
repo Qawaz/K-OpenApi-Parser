@@ -4,13 +4,12 @@ import com.wakaztahir.kate.model.BooleanValue
 import com.wakaztahir.kate.model.StringValue
 import com.wakaztahir.kate.model.model.KTEListImpl
 import com.wakaztahir.kate.model.model.MutableKTEObject
-import com.wakaztahir.kate.parser.stream.DestinationStream
 
 interface TypeDeclaration {
 
     val name: String
 
-    val templateResource : String
+    val javaTemplateResource : String
 
     fun addMember(member: ClassMember)
 
@@ -26,8 +25,8 @@ class ClassOrInterfaceDeclaration(
     val isPublic: Boolean
 ) : TypeDeclaration {
 
-    override val templateResource: String
-        get() = if(isInterface) "java/java_interface.kate" else "java/java_impl.kate"
+    override val javaTemplateResource: String
+        get() = if(isInterface) "java_interface.kate" else "java_impl.kate"
 
     val extended = mutableListOf<String>()
     val implemented = mutableListOf<String>()
@@ -74,8 +73,8 @@ class ClassOrInterfaceDeclaration(
 
 class EnumDeclaration(override val name: String, val isPublic: Boolean) : TypeDeclaration {
 
-    override val templateResource: String
-        get() = "java/java_enum.kate"
+    override val javaTemplateResource: String
+        get() = "java_enum.kate"
 
     private val entries = mutableListOf<String>()
     private val members = mutableListOf<ClassMember>()
