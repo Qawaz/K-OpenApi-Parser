@@ -14,8 +14,13 @@
 package com.reprezen.jsonoverlay.model
 
 import com.reprezen.jsonoverlay.gen.CodeGenerator
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.URL
+import java.nio.charset.StandardCharsets
 
 object GenTestModel {
+
     @Throws(Exception::class)
     @JvmStatic
     fun main(args: Array<String>) {
@@ -31,4 +36,15 @@ object GenTestModel {
             )
         )
     }
+
+    fun loadResourceFileAsURL(resourcePath: String): URL {
+        return object {}.javaClass.classLoader.getResource(resourcePath)!!
+    }
+
+    fun loadResourceFileAsString(resourcePath: String): String {
+        val inputStream = object {}.javaClass.classLoader.getResourceAsStream(resourcePath)!!
+        val reader = BufferedReader(InputStreamReader(inputStream, StandardCharsets.UTF_8))
+        return reader.readText()
+    }
+
 }

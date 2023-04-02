@@ -15,9 +15,7 @@ package com.reprezen.jsonoverlay;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -26,8 +24,7 @@ import org.junit.runners.Parameterized.Parameters;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.MissingNode;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+
 
 public class ScalarTests {
 
@@ -36,7 +33,7 @@ public class ScalarTests {
 
 		@Parameters
 		public static Collection<String> getValues() {
-			return Lists.newArrayList("hello", "");
+			return List.of("hello", "");
 		}
 
 		public StringTests(String value) {
@@ -55,7 +52,7 @@ public class ScalarTests {
 
 		@Parameters
 		public static Collection<Boolean> getValues() {
-			return Lists.newArrayList(true, false);
+			return List.of(true, false);
 		}
 
 		public BooleanTests(Boolean value) {
@@ -74,7 +71,7 @@ public class ScalarTests {
 
 		@Parameters
 		public static Collection<Integer> getValues() {
-			return Lists.newArrayList(0, 1, -1, Integer.MAX_VALUE, Integer.MIN_VALUE);
+			return List.of(0, 1, -1, Integer.MAX_VALUE, Integer.MIN_VALUE);
 		}
 
 		public IntegerTests(Integer value) {
@@ -93,7 +90,7 @@ public class ScalarTests {
 
 		@Parameters
 		public static Collection<Number> getValues() {
-			return Lists.newArrayList( //
+			return List.of( //
 					BigDecimal.ZERO, BigDecimal.ONE, new BigDecimal("-1"),
 					new BigDecimal("4323433423423423423424234234234234.342342313434253432342412342342342232"), //
 					BigInteger.ZERO, BigInteger.ONE, new BigInteger("-1"), //
@@ -145,7 +142,7 @@ public class ScalarTests {
 
 		@Parameters
 		public static Collection<Object> getValues() {
-			return Lists.newArrayList( //
+			return List.of( //
 					"hello", "", //
 					BigDecimal.ZERO, BigDecimal.ONE, new BigDecimal("-1"),
 					new BigDecimal("4323433423423423423424234234234234.342342313434253432342412342342342232"), //
@@ -184,11 +181,11 @@ public class ScalarTests {
 
 		@Parameters
 		public static Collection<Object> getValues() {
-			Map<String, Object> map = Maps.newHashMap();
+			Map<String, Object> map = new HashMap<>();
 			map.put("x", 1);
 			map.put("y", null);
 			map.put("z", Arrays.asList("a", "b", "c"));
-			return Lists.newArrayList("foo", 1, 1.0, Arrays.asList(0, 1, 2),
+			return List.of("foo", 1, 1.0, Arrays.asList(0, 1, 2),
 					Arrays.<Object>asList(3, "blah", Arrays.asList(1, 2, 3)), map);
 		}
 

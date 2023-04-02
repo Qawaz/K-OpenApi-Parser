@@ -21,11 +21,11 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.Optional;
 
+import com.reprezen.jsonoverlay.model.GenTestModel;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.google.common.io.Resources;
 import com.reprezen.jsonoverlay.model.TestModelParser;
 import com.reprezen.jsonoverlay.model.intf.Scalars;
 import com.reprezen.jsonoverlay.model.intf.TestModel;
@@ -35,7 +35,8 @@ public class LocationTests {
 	@Test
 	public void testYamlLocation() throws IOException {
 		Pair<JsonNode, Map<JsonPointer, PositionInfo>> result = new JsonLoader().loadWithLocations(
-				Resources.toString(Resources.getResource("locationsTest.yaml"), Charset.forName("utf8")));
+				GenTestModel.INSTANCE.loadResourceFileAsString("locationsTest.yaml")
+		);
 
 		Map<JsonPointer, PositionInfo> locations = result.getRight();
 
@@ -50,7 +51,7 @@ public class LocationTests {
 
 	@Test
 	public void testPositions() throws IOException {
-		TestModel model = TestModelParser.parse(Resources.getResource("refTest.yaml"));
+		TestModel model = TestModelParser.parse(GenTestModel.INSTANCE.loadResourceFileAsURL("refTest.yaml"));
 		checkPositions(model, 1, 1, 53, 35);
 		{
 			Overlay<StringOverlay> desc = Overlay.of(model, "description", StringOverlay.class);
@@ -81,7 +82,7 @@ public class LocationTests {
 	}
 
 	private <V, T extends IJsonOverlay<V>> void checkPositions(T overlay, int startLine, int startCol, int endLine,
-			int endCol) {
+															   int endCol) {
 		checkPositions(Overlay.of(overlay), startLine, startCol, endLine, endCol);
 	}
 

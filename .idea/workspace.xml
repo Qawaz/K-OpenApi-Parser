@@ -10,6 +10,10 @@
     <list default="true" id="d55a8c6a-af6b-48df-a7d6-a3559c3cc6b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/json-overlay/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/LocationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/LocationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/PropertiesTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/PropertiesTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/ScalarTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/ScalarTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/GenTestModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/GenTestModel.kt" afterDir="false" />
     </list>
     <list id="2db31701-028f-44e4-9104-20ae3599ae33" name="Revert Tests In Json Overlay" comment="" />
     <option name="SHOW_DIALOG" value="false" />

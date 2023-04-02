@@ -16,7 +16,6 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     implementation("javax.annotation:javax.annotation-api:1.3.2")
 
-    testImplementation("com.google.guava:guava:30.0-jre")
     testImplementation("junit:junit:4.13.1")
 
 }

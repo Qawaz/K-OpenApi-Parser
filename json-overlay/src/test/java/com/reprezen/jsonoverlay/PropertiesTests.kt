@@ -17,10 +17,11 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.JsonNodeFactory
 import com.fasterxml.jackson.databind.node.ObjectNode
-import com.google.common.collect.Queues
+
 import org.junit.Assert
 import org.junit.Test
 import java.util.*
+import kotlin.collections.ArrayDeque
 
 class PropertiesTests : Assert() {
     private val refMgr = ReferenceManager()
@@ -129,7 +130,7 @@ class PropertiesTests : Assert() {
     }
 
     private fun createFooWithJson(vararg values: Any): Foo {
-        val queue: Deque<Any> = Queues.newArrayDeque(Arrays.asList(*values))
+        val queue = ArrayDeque(listOf(*values))
         val json = jfac.objectNode()
         while (!queue.isEmpty()) {
             val value = queue.removeFirst()
@@ -148,7 +149,7 @@ class PropertiesTests : Assert() {
         return Foo.factory.create(json, null, refMgr) as Foo
     }
 
-    private fun gatherList(queue: Deque<Any>): ArrayNode {
+    private fun gatherList(queue: ArrayDeque<Any>): ArrayNode {
         val array = jfac.arrayNode()
         while (!queue.isEmpty()) {
             val value = queue.removeFirst()
@@ -160,7 +161,7 @@ class PropertiesTests : Assert() {
         return array
     }
 
-    private fun gatherMap(queue: Deque<Any>): ObjectNode {
+    private fun gatherMap(queue: ArrayDeque<Any>): ObjectNode {
         val map = jfac.objectNode()
         while (!queue.isEmpty()) {
             val key = queue.removeFirst()
