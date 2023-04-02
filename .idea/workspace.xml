@@ -7,7 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d55a8c6a-af6b-48df-a7d6-a3559c3cc6b0" name="Changes" comment="" />
+    <list default="true" id="d55a8c6a-af6b-48df-a7d6-a3559c3cc6b0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/build.gradle.kts" afterDir="false" />
+    </list>
     <list id="2db31701-028f-44e4-9104-20ae3599ae33" name="Revert Tests In Json Overlay" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +125,7 @@
       <command value="gradle init" />
     </option>
   </component>
-  <component name="RunManager" selected="Kotlin.GenTestModel">
+  <component name="RunManager" selected="Gradle.Tests in 'KOpenAPIParser.json-overlay.test'">
     <configuration name="GenTestModel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.reprezen.jsonoverlay.model.GenTestModel" />
       <module name="KOpenAPIParser.json-overlay.test" />
@@ -216,9 +219,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Tests in 'KOpenAPIParser.json-overlay.test'" />
         <item itemvalue="Kotlin.GenTestModel" />
         <item itemvalue="Application.GenTestModel" />
-        <item itemvalue="Gradle.Tests in 'KOpenAPIParser.json-overlay.test'" />
         <item itemvalue="Kotlin.GenOpenApi3" />
         <item itemvalue="Gradle.Tests in 'KOpenAPIParser.test'" />
       </list>
@@ -237,12 +240,6 @@
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="8bbda12c-8be0-4729-a3c7-24c6cce941ba" value="TOOL_WINDOW" />
-        <entry key="cd375fc9-eaab-4c53-92aa-9326006d7f29" value="TOOL_WINDOW" />
-      </map>
-    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="33cbf0d9-0314-40d4-9d9a-1909e538b9ef">
@@ -298,7 +295,19 @@
         </entry>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
         <entry key="cd375fc9-eaab-4c53-92aa-9326006d7f29">
