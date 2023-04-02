@@ -12,6 +12,7 @@ package com.reprezen.swaggerparser.test
 
 import com.google.common.io.Resources
 import com.reprezen.kaizen.oasparser.OpenApiParser
+import com.reprezen.kaizen.oasparser.getPathString
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import org.junit.Assert
 import org.junit.Test
@@ -24,8 +25,8 @@ class PathsTest {
         Assert.assertEquals(2, model.paths.size.toLong())
         Assert.assertTrue(model.hasPath("/"))
         Assert.assertTrue(model.hasPath("/v2"))
-        Assert.assertEquals("/", model.getPath("/").pathString)
-        Assert.assertEquals("/v2", model.getPath("/v2").pathString)
+        Assert.assertEquals("/", model.getPath("/").getPathString())
+        Assert.assertEquals("/v2", model.getPath("/v2").getPathString())
         Assert.assertNotNull(model.getPath("/"))
         Assert.assertNotNull(model.getPath("/v2"))
     }

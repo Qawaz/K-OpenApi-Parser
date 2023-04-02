@@ -35,15 +35,15 @@ import java.util.function.Predicate
  */
 @RunWith(Parameterized::class)
 class BigParseTest(
-    private val modelUrl : URL
+    private val modelUrl: URL
 ) : Assert() {
-//    @JvmField
+    //    @JvmField
 //    @Parameterized.Parameter
 //    var modelUrl: URL? = null
     @Test
     @Throws(Exception::class)
     fun test() {
-        val parsedYaml = Yaml().load<Any>(modelUrl!!.openStream())
+        val parsedYaml = Yaml().load<Any>(modelUrl.openStream())
         val tree = YAMLMapper().convertValue(parsedYaml, JsonNode::class.java)
         val model = OpenApiParser().parse(modelUrl, false) as OpenApi3
         val valueNodePredicate = Predicate { obj: JsonNode -> obj.isValueNode }
@@ -51,11 +51,14 @@ class BigParseTest(
             override fun run(node: JsonNode?, path: JsonPointer?) {
                 require(node != null && path != null)
                 val overlay = Overlay.find(model as JsonOverlay<*>, path)
-                val value = if (overlay != null) Overlay.get(overlay) else null
                 assertNotNull("No overlay object found for path: $path", overlay)
+                val value = Overlay.get(overlay)
                 val fromJson = getValue(node)
                 val msg = String.format(
-                    "Wrong overlay value for path '%s': expected '%s', got '%s'", path, fromJson,
+                    "Wrong overlay value for model '%s' and path '%s': expected '%s', got '%s'",
+                    modelUrl.path,
+                    path,
+                    fromJson,
                     value
                 )
                 assertEquals(msg, fromJson, value)
@@ -85,7 +88,7 @@ class BigParseTest(
             return listOf(
                 *arrayOf<Array<URL>>(
                     arrayOf<URL>(
-                        object{}.javaClass.getResource("/models/parseTest.yaml")!!
+                        object {}.javaClass.getResource("/models/parseTest.yaml")!!
                     )
                 )
             )

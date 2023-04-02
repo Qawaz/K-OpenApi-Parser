@@ -13,7 +13,9 @@ package com.reprezen.swaggerparser.test
 import com.google.common.collect.ImmutableMap
 import com.google.common.io.Resources
 import com.reprezen.kaizen.oasparser.OpenApiParser
+import com.reprezen.kaizen.oasparser.isValid
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
+import com.reprezen.kaizen.oasparser.validate
 import org.junit.Assert
 import org.junit.BeforeClass
 import org.junit.Test
@@ -53,7 +55,7 @@ class ExampleTest {
 
     @Test
     fun testValidate() {
-        Assert.assertTrue(model!!.isValid)
+        Assert.assertTrue(model!!.validate().isValid())
     }
 
     companion object {
