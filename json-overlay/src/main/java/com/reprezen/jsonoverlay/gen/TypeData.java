@@ -81,7 +81,6 @@ public class TypeData {
 		private Map<String, Collection<String>> imports = new HashMap<>();
 		private boolean noGen = false;
 		private String extensionOf;
-		private Map<String, String> renames = new HashMap<>();
 		@JsonProperty("abstract")
 		private boolean abstractType = false;
 		private String discriminator = null;
@@ -89,6 +88,9 @@ public class TypeData {
 		private List<String> enumValues = new ArrayList<>();
 
 		private TypeData typeData;
+
+		public Type() {
+		}
 
 		public void init(TypeData typeData) {
 			this.typeData = typeData;
@@ -148,10 +150,6 @@ public class TypeData {
 
 		public String getExtensionOf() {
 			return extensionOf;
-		}
-
-		public Map<String, String> getRenames() {
-			return renames;
 		}
 
 		public boolean isAbstract() {

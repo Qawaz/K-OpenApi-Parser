@@ -5,13 +5,13 @@ import java.io.File
 
 class JavaInterfaceGenerator : TypeGenerator {
 
-    constructor(dir: File, intfPackage: String, implPackage: String, suffix: String?, preserve: Boolean) : super(dir, intfPackage, implPackage, suffix, preserve)
+    constructor(dir: File, intfPackage: String, implPackage: String, suffix: String, preserve: Boolean) : super(dir, intfPackage, implPackage, suffix, preserve)
 
     override fun getPackage(): String {
         return intfPackage
     }
 
-    override fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDec {
+    override fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDeclaration {
         val decl = if(type.enumValues.isEmpty()) ClassOrInterfaceDeclaration(type.name,
             isInterface = true,
             isPublic = true
@@ -57,26 +57,23 @@ class JavaInterfaceGenerator : TypeGenerator {
         when(field.structure){
             TypeData.Structure.scalar -> {
                 for(method in getScalarMethods(field)){
-                    methods.addMember(method).also {
-                        if (first) it.comment(field.name)
-                    }
+                    if(first) method.comment(field.name)
+                    methods.add(method)
                     first = false
                 }
             }
             TypeData.Structure.collection -> {
                 for (method in getCollectionMethods(field)) {
-                    methods.addMember(method).also {
-                        if (first) it.comment(field.name)
-                    }
+                    if(first) method.comment(field.name)
+                    methods.add(method)
                     first = false
 
                 }
             }
             TypeData.Structure.map -> {
                 for (method in getMapMethods(field)) {
-                    methods.addMember(method).also {
-                        if (first) it.comment(field.name)
-                    }
+                    if(first) method.comment(field.name)
+                    methods.add(method)
                     first = false
                 }
             }
