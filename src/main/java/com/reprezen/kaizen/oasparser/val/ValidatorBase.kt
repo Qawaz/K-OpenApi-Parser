@@ -31,6 +31,7 @@ abstract class ValidatorBase<V> : Validator<V> {
         runValidations()
     }
 
+    @JvmName("validateOther")
     fun validate(value : Overlay<com.reprezen.kaizen.oasparser.kmodel3.OpenApi3>){
         TODO("Not yet implemented")
     }
