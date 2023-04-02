@@ -6,7 +6,7 @@
             @if(@var(index) != 0)
                 @var text = @var(text) @+ "\n"
             @endif
-            @var text = @var(text) @+ @var(elem) @+ ";"
+            @var text = "import " @+ @var(text) @+ @var(elem) @+ ";"
         @endfor
         @return @var(text)
     @end_function
