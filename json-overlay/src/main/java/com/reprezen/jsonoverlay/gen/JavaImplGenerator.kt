@@ -20,6 +20,10 @@ class JavaImplGenerator : TypeGenerator {
         return implPackage
     }
 
+    override fun skipField(field: TypeData.Field): Boolean {
+        return field.isNoImpl
+    }
+
     override fun getImports(type: TypeData.Type): MutableCollection<String> {
         return type.getRequiredImports("impl", "both")
     }
@@ -129,10 +133,6 @@ class JavaImplGenerator : TypeGenerator {
             |}""".trimMargin("|")
         )
         return members
-    }
-
-    override fun skipField(field: TypeData.Field): Boolean {
-        return field.isNoImpl
     }
 
     override fun getFieldMethods(field: TypeData.Field): Members {
@@ -316,7 +316,8 @@ class JavaImplGenerator : TypeGenerator {
             """protected void _elaborateJson() {
         |${"\t"}super._elaborateJson();
         |$elaborateStatement
-        |}""".trimMargin("|")).override()
+        |}""".trimMargin("|")
+        ).override()
     }
 
     private fun getElaborateStatement(f: TypeData.Field): String {
@@ -345,7 +346,7 @@ class JavaImplGenerator : TypeGenerator {
             ReferenceManager::class.java
         )
         return ClassMember(
-    """public static OverlayFactory<${type.name}> factory = new OverlayFactory<${type.name}>() {
+            """public static OverlayFactory<${type.name}> factory = new OverlayFactory<${type.name}>() {
         |
         |${"\t"}@Override
         |${"\t"}protected Class <? extends JsonOverlay<? super ${type.name}>> getOverlayClass() {
@@ -421,7 +422,7 @@ class JavaImplGenerator : TypeGenerator {
         |${"\t"}${"\t"}return castOverlay;
         |${"\t"}}
         |
-        |${"\t"}${getIsExtendedType(!getSubTypes(type).isEmpty()).replace("\n","\n\t")}
+        |${"\t"}${getIsExtendedType(!getSubTypes(type).isEmpty()).replace("\n", "\n\t")}
         |};""".trimMargin("|")
         )
     }

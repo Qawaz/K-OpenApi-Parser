@@ -87,7 +87,7 @@ class JavaInterfaceGenerator : TypeGenerator {
         if (f.structure === TypeData.Structure.scalar && !f.isScalarType) {
             methods.addMember("${f.type} get${f.name}(boolean elaborate);")
         }
-        if (f.type == "Boolean") {
+        if (f.isBoolean) {
             methods.addMember("boolean is${f.name}();")
         }
         methods.addMember("void set${f.name}(${f.type} ${f.lcName});")
