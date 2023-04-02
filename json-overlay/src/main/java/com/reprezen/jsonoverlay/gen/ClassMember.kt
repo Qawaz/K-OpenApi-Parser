@@ -25,16 +25,18 @@ class ClassMember(val code: String) {
         return this
     }
 
-    fun format(): String {
+    fun format(indentation: Int): String {
+        var indented = ""
+        repeat(indentation) { indented += "\t" }
         var formatted = ""
         if (comment != null) {
-            formatted += "// $comment\n"
+            formatted += "$indented// $comment\n"
         }
         if (annotations.size > 0) {
-            formatted += annotations.joinToString("\n")
+            formatted += annotations.joinToString("\n") { "$indented$it" }
             formatted += "\n"
         }
-        formatted += code
+        formatted += indented + code.replace("\n","\n$indented")
         return formatted
     }
 

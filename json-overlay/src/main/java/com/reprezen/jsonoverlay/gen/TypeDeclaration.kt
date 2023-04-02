@@ -3,7 +3,7 @@ package com.reprezen.jsonoverlay.gen
 interface TypeDeclaration {
     val name: String
     fun addMember(member: ClassMember)
-    fun format(): String
+    fun format(indentation: Int): String
 }
 
 class ClassOrInterfaceDeclaration(override val name: String, val isInterface: Boolean, val isPublic: Boolean) :
@@ -25,19 +25,21 @@ class ClassOrInterfaceDeclaration(override val name: String, val isInterface: Bo
         members.add(member)
     }
 
-    override fun format(): String {
+    override fun format(indentation: Int): String {
+        var indented = ""
+        repeat(indentation) { indented += "\t" }
         var formatted = if (isPublic) "public " else ""
         formatted += if (isInterface) "interface " else "class "
         formatted += "$name "
         if (extended.size > 0) {
-            formatted += "extends " + extended.joinToString(",") + " "
+            formatted += "extends " + extended.joinToString(", ") + " "
         }
         if (implemented.size > 0 && !isInterface) {
             formatted += "implements " + implemented.joinToString(",") + " "
         }
         formatted += "{\n\n"
-        formatted += members.joinToString("\n\n") { it.format() }
-        formatted += "\n\n}"
+        formatted += members.joinToString("\n\n") { it.format(indentation + 1) }
+        formatted += "\n}\n"
         return formatted
     }
 
@@ -56,13 +58,13 @@ class EnumDeclaration(override val name: String, val isPublic: Boolean) : TypeDe
         members.add(member)
     }
 
-    override fun format(): String {
+    override fun format(indentation: Int): String {
         var formatted = if (isPublic) "public enum " else "enum "
         formatted += "$name "
         formatted += "{\n\n"
         formatted += entries.joinToString("\n\t")
         formatted += ";\n\n"
-        formatted += members.joinToString("\n") { it.format() }
+        formatted += members.joinToString("\n") { it.format(indentation + 1) }
         formatted += "\n\n}"
         return formatted
     }

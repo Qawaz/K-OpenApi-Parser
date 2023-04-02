@@ -13,12 +13,13 @@ class CompilationUnit(private var packageDec: String, val type: TypeDeclaration)
     }
 
     fun format(): String {
+        val indentation = 0
         var formatted = packageDec
         if (imports.size > 0) {
             formatted += "\n\n"
             formatted += imports.joinToString("\n") { "import $it;" }
         }
-        formatted += "\n\n${type.format().replace("\n","\n    ")}"
+        formatted += "\n\n${type.format(indentation)}"
         return formatted
     }
 

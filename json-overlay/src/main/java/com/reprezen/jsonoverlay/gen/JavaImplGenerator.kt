@@ -35,7 +35,7 @@ class JavaImplGenerator : TypeGenerator {
                 ClassMember(
                     """@Override
             |protected Class<${type.name}> getEnumClass() {
-            |    return ${type.name}.class;
+            |${"\t"}return ${type.name}.class;
             |}"""
                 )
             )
@@ -47,17 +47,17 @@ class JavaImplGenerator : TypeGenerator {
             if (type.typeData.modelType !== null) {
                 members.addMember(
                     """@Override
-                    |public Class <? > _getModelType() {
-                    |    return ${type.typeData.modelType}.class;
-                    |} """
+                    |public Class <?> _getModelType() {
+                    |${"\t"}return ${type.typeData.modelType}.class;
+                    |} """.trimMargin("|")
                 )
             }
         }
         members.add(
             ClassMember(
                 """@Override
-            |protected OverlayFactory <? > _getFactory() {
-            |    return factory;
+            |protected OverlayFactory <?> _getFactory() {
+            |${"\t"}return factory;
             |}""".trimMargin("|")
             )
         )
@@ -101,13 +101,13 @@ class JavaImplGenerator : TypeGenerator {
         val factoryEx = if (type.extensionOf == null) "factory, " else ""
         members.addMember(
             """public ${type.implType}(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
-               |    super(json, parent, ${factoryEx}refMgr);
+               |${"\t"}super(json, parent, ${factoryEx}refMgr);
                |}""".trimMargin("|")
         )
         val factoryStr = if (type.extensionOf == null) "factory, " else ""
         members.addMember(
             """public ${type.implType}(${type.name} ${type.lcName}, JsonOverlay<?> parent, ReferenceManager refMgr) {
-                |   supr(${type.lcName}, parent, ${factoryStr}refMgr);
+                |${"\t"}super(${type.lcName}, parent, ${factoryStr}refMgr);
                 |}""".trimMargin("|")
         )
         return members
@@ -118,14 +118,14 @@ class JavaImplGenerator : TypeGenerator {
         requireTypes(Builder::class.java, OverlayFactory::class.java, IJsonOverlay::class.java)
         val createType = if (isEnum(type)) "IJsonOverlay<${type.name}>" else type.name
         members.addMember(
-            """public static < OV extends IJsonOverlay<?> > Builder < ${type.name} > builder(OV modelMember) {
-                |   return new Builder <${type.name}>(factory, modelMember);
+            """public static<OV extends IJsonOverlay<?>> Builder<${type.name}> builder(OV modelMember) {
+                |${"\t"}return new Builder <${type.name}>(factory, modelMember);
             |}""".trimMargin("|")
         )
         val notIsEnumTypeThen = if (!isEnum(type)) "(${type.name}) " else ""
         members.addMember(
-            """public static < OV extends IJsonOverlay<?> > $createType create (OV modelMember) {
-            |    return ${notIsEnumTypeThen}builder(modelMember).build();
+            """public static<OV extends IJsonOverlay<?>> $createType create (OV modelMember) {
+            |${"\t"}return ${notIsEnumTypeThen}builder(modelMember).build();
             |}""".trimMargin("|")
         )
         return members
@@ -170,27 +170,27 @@ class JavaImplGenerator : TypeGenerator {
         val methods = Members()
         methods.addMember(
             """public ${f.type} get${f.name}() {
-            |    return _get("${f.propertyName}", ${f.type}.class);
+            |${"\t"}return _get("${f.propertyName}", ${f.type}.class);
             |}""".trimMargin("|")
         )
         if (f.structure == TypeData.Structure.scalar && !f.isScalarType) {
             methods.addMember(
                 """public ${f.type} get${f.name}(boolean elaborate) {
-                |    return _get("${f.propertyName}", elaborate, ${f.type}.class);
+                |${"\t"}return _get("${f.propertyName}", elaborate, ${f.type}.class);
                 |}""".trimMargin("|")
             )
         }
         if (f.isBoolean) {
             methods.addMember(
                 """public boolean is${f.name}() {
-                |    Boolean bool = _get ("${f.propertyName}", Boolean.class);
-                |    return bool != null ? bool : ${f.boolDefault};
+                |${"\t"}Boolean bool = _get ("${f.propertyName}", Boolean.class);
+                |${"\t"}return bool != null ? bool : ${f.boolDefault};
                 |}""".trimMargin("|")
             )
         }
         methods.addMember(
             """public void set${f.name}(${f.type} ${f.lcName}) {
-        |    _setScalar("${f.propertyName}", ${f.lcName}, ${f.type}.class);
+        |${"\t"}_setScalar("${f.propertyName}", ${f.lcName}, ${f.type}.class);
         |}""".trimMargin("|")
         )
         return methods
@@ -201,49 +201,49 @@ class JavaImplGenerator : TypeGenerator {
         requireTypes(List::class.java, ListOverlay::class.java)
         val methods = Members()
         methods.addMember(
-            """public List < ${f.type} > get${f.plural}() {
-            |    return _getList("${f.propertyName}", ${f.type}.class);
+            """public List<${f.type}> get${f.plural}() {
+            |${"\t"}return _getList("${f.propertyName}", ${f.type}.class);
             |}""".trimMargin("|")
         )
         methods.addMember(
-            """public List < ${f.type} > get${f.plural}(boolean elaborate) {
-            |    return _getList("${f.propertyName}", elaborate, ${f.type}.class);
+            """public List<${f.type}> get${f.plural}(boolean elaborate) {
+            |${"\t"}return _getList("${f.propertyName}", elaborate, ${f.type}.class);
             |}""".trimMargin("|")
         )
         methods.addMember(
             """public boolean has${f.plural}() {
-            |    return _isPresent("${f.propertyName}");
+            |${"\t"}return _isPresent("${f.propertyName}");
             |}""".trimMargin("|")
         )
         methods.addMember(
             """public ${f.type} get${f.name}(int index) {
-            |    return _get("${f.propertyName}", index, ${f.type}.class);
+            |${"\t"}return _get("${f.propertyName}", index, ${f.type}.class);
             |}""".trimMargin("|")
         )
         methods.addMember(
-            """public void set${f.plural}(List < ${f.type} > ${f.lcPlural}) {
-            |    _setList("${f.propertyName}", ${f.lcPlural}, ${f.type}.class);
+            """public void set${f.plural}(List<${f.type}> ${f.lcPlural}) {
+            |${"\t"}_setList("${f.propertyName}", ${f.lcPlural}, ${f.type}.class);
             |}""".trimMargin("|")
         )
         methods.addMember(
             """public void set${f.name}(int index, ${f.type} ${f.lcName}) {
-            |    _set("${f.propertyName}", index, ${f.lcName}, ${f.type}.class);
+            |${"\t"}_set("${f.propertyName}", index, ${f.lcName}, ${f.type}.class);
             |}""".trimMargin("|")
         )
         methods.addMember(
             """public void add${f.name}(${f.type} ${f.lcName}) {
-            |    _add("${f.propertyName}", ${f.lcName}, ${f.type}.class);
+            |${"\t"}_add("${f.propertyName}", ${f.lcName}, ${f.type}.class);
             |}""".trimMargin("|")
         )
         methods.addMember(
             """public void insert${f.name}(int index, ${f.type} ${f.lcName}) {
-            |    _insert("${f.propertyName}", index, ${f.lcName}, ${f.type}.class);
+            |${"\t"}_insert("${f.propertyName}", index, ${f.lcName}, ${f.type}.class);
             |}""".trimMargin("|")
         )
 
         methods.addMember(
             """public void remove${f.name}(int index) {
-            |    _remove("${f.propertyName}", index, ${f.type}.class);
+            |${"\t"}_remove("${f.propertyName}", index, ${f.type}.class);
             |}""".trimMargin("|")
         )
         return methods
@@ -253,44 +253,44 @@ class JavaImplGenerator : TypeGenerator {
         requireTypes(Map::class.java, MapOverlay::class.java)
         val methods = Members()
         methods.addMember(
-            """public Map < String, ${f.type} > get${f.plural}() {
-            |    return _getMap("${f.propertyName}", ${f.type}.class);
+            """public Map<String, ${f.type}> get${f.plural}() {
+            |${"\t"}return _getMap("${f.propertyName}", ${f.type}.class);
             |}""".trimMargin("|")
         )
         methods.addMember(
-            """public Map < String, ${f.type} > get${f.plural}(boolean elaborate) {
-            |    return _getMap("${f.propertyName}", elaborate, ${f.type}.class);
+            """public Map<String, ${f.type}> get${f.plural}(boolean elaborate) {
+            |${"\t"}return _getMap("${f.propertyName}", elaborate, ${f.type}.class);
             |}""".trimMargin("|")
         )
 
         methods.addMember(
             """public boolean has${f.plural}() {
-            |    return _isPresent("${f.propertyName}");
+            |${"\t"}return _isPresent("${f.propertyName}");
             |}""".trimMargin("|")
         )
         methods.addMember(
             """public boolean has${f.name}(String ${f.keyName}) {
-            |    return _getMap("${f.propertyName}", ${f.type}.class).containsKey(${f.keyName});
+            |${"\t"}return _getMap("${f.propertyName}", ${f.type}.class).containsKey(${f.keyName});
             |}""".trimMargin("|")
         )
         methods.addMember(
             """public ${f.type} get${f.name}(String ${f.keyName}) {
-            |    return _get("${f.propertyName}", ${f.keyName}, ${f.type}.class);
+            |${"\t"}return _get("${f.propertyName}", ${f.keyName}, ${f.type}.class);
             |}""".trimMargin("|")
         )
         methods.addMember(
-            """public void set${f.plural}(Map < String, ${f.type} > ${f.lcPlural}) {
-            |    _setMap("${f.propertyName}", ${f.lcPlural}, ${f.type}.class);
+            """public void set${f.plural}(Map<String, ${f.type}> ${f.lcPlural}) {
+            |${"\t"}_setMap("${f.propertyName}", ${f.lcPlural}, ${f.type}.class);
             |}""".trimMargin("|")
         )
         methods.addMember(
             """public void set${f.name}(String ${f.keyName}, ${f.type} ${f.lcName}) {
-            |    _set("${f.propertyName}", ${f.keyName}, ${f.lcName}, ${f.type}.class);
+            |${"\t"}_set("${f.propertyName}", ${f.keyName}, ${f.lcName}, ${f.type}.class);
             |}""".trimMargin("|")
         )
         methods.addMember(
             """public void remove${f.name}(String ${f.keyName}) {
-            |    _remove("${f.propertyName}", ${f.keyName}, ${f.type}.class);
+            |${"\t"}_remove("${f.propertyName}", ${f.keyName}, ${f.type}.class);
             |}""".trimMargin("|")
         )
         return methods
@@ -310,12 +310,12 @@ class JavaImplGenerator : TypeGenerator {
 
     private fun getElaborateJsonMethod(type: TypeData.Type): ClassMember {
         val elaborateStatement = type.fields.values.filter { !it.isNoImpl }.joinToString("\n") {
-            getElaborateStatement(it)
+            "\t" + getElaborateStatement(it)
         }
         return ClassMember(
             """protected void _elaborateJson() {
-        |    super._elaborateJson();
-        |    $elaborateStatement
+        |${"\t"}super._elaborateJson();
+        |$elaborateStatement
         |}""".trimMargin("|")).override()
     }
 
@@ -345,21 +345,22 @@ class JavaImplGenerator : TypeGenerator {
             ReferenceManager::class.java
         )
         return ClassMember(
-    """public static OverlayFactory < ${type.name} > factory = new OverlayFactory <${type.name}>() {
-        |   @Override
-        |   protected Class <? extends JsonOverlay<? super ${type.name}>> getOverlayClass() {
-        |       return ${type.implType}.class;
-        |   }
-        |   
-        |   @Override
-        |   public JsonOverlay <${type.name}> _create(${type.name} ${type.lcName}, JsonOverlay<?> parent, ReferenceManager refMgr) {
-        |       return new ${type.implType}(${type.lcName}, parent, refMgr);
-        |   }
-        |   
-        |   @Override
-        |   public JsonOverlay <${type.name}> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
-        |       return new ${type.implType}(json, parent, refMgr);
-        |   }
+    """public static OverlayFactory<${type.name}> factory = new OverlayFactory<${type.name}>() {
+        |
+        |${"\t"}@Override
+        |${"\t"}protected Class <? extends JsonOverlay<? super ${type.name}>> getOverlayClass() {
+        |${"\t"}${"\t"}return ${type.implType}.class;
+        |${"\t"}}
+        |
+        |${"\t"}@Override
+        |${"\t"}public JsonOverlay <${type.name}> _create(${type.name} ${type.lcName}, JsonOverlay<?> parent, ReferenceManager refMgr) {
+        |${"\t"}${"\t"}return new ${type.implType}(${type.lcName}, parent, refMgr);
+        |${"\t"}}
+        |
+        |${"\t"}@Override
+        |${"\t"}public JsonOverlay <${type.name}> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
+        |${"\t"}   return new ${type.implType}(json, parent, refMgr);
+        |${"\t"}}
         |};""".trimMargin("|")
         )
     }
@@ -379,46 +380,48 @@ class JavaImplGenerator : TypeGenerator {
             JsonOverlay::class.java
         )
         val _createSubTypesImpl = if (getSubTypes(type).isEmpty()) {
-            "overlay = new ${type.implType}(${type.lcName}, parent, refMgr);"
+            "\toverlay = new ${type.implType}(${type.lcName}, parent, refMgr);"
         } else {
-            """Class < ? extends ${type.name} > subtype = getSubtypeOf(${type.lcName});${"\n"}""" + getSubtypeCreate(
+            """Class<? extends ${type.name}> subtype = getSubtypeOf(${type.lcName});${"\n"}""" + getSubtypeCreate(
                 type,
                 type.lcName
             )
         }
         val _createSubTypesImpl2 = if (getSubTypes(type).isEmpty()) {
-            "overlay = new ${type.implType}(json, parent, refMgr);"
+            "\toverlay = new ${type.implType}(json, parent, refMgr);"
         } else {
-            """Class < ? extends ${type.name} > subtype = getSubtypeOf(json);${"\n"}""" + getSubtypeCreate(
+            """Class<? extends ${type.name}> subtype = getSubtypeOf(json);${"\n"}""" + getSubtypeCreate(
                 type,
                 ".json"
             )
         }
         return ClassMember(
-            """public static OverlayFactory < ${type.name} > factory = new OverlayFactory <${type.name}>(){
-        |    @Override
-        |    protected Class <? extends JsonOverlay<? super ${type.name}>> getOverlayClass() {
-        |        return ${type.implType}.class;
-        |    }
+            """public static OverlayFactory<${type.name}> factory = new OverlayFactory<${type.name}>() {
         |
-        |    @Override
-        |    public JsonOverlay <${type.name}> _create(${type.name} ${type.lcName}, JsonOverlay<?> parent, ReferenceManager refMgr) {
-        |    JsonOverlay<?> overlay;
-        |    $_createSubTypesImpl
-        |    @SuppressWarnings("unchecked")
-        |    JsonOverlay < ${type.name} > castOverlay = (JsonOverlay < ${type.name} >) overlay;
-        |        return castOverlay;
-        |    }
+        |${"\t"}@Override
+        |${"\t"}protected Class<? extends JsonOverlay<? super ${type.name}>> getOverlayClass() {
+        |${"\t"}${"\t"}return ${type.implType}.class;
+        |${"\t"}}
         |
-        |    @Override
-        |    public JsonOverlay <${type.name}> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
-        |    JsonOverlay<?> overlay;
-        |    $_createSubTypesImpl2
-        |        @SuppressWarnings("unchecked")
-        |        JsonOverlay < ${type.name} > castOverlay = (JsonOverlay < ${type.name} >) overlay;
-        |        return castOverlay;
-        |    }
-        |${getIsExtendedType(!getSubTypes(type).isEmpty())}
+        |${"\t"}@Override
+        |${"\t"}public JsonOverlay<${type.name}> _create(${type.name} ${type.lcName}, JsonOverlay<?> parent, ReferenceManager refMgr) {
+        |${"\t"}${"\t"}JsonOverlay<?> overlay;
+        |${"\t"}$_createSubTypesImpl
+        |${"\t"}${"\t"}@SuppressWarnings("unchecked")
+        |${"\t"}${"\t"}JsonOverlay<${type.name}> castOverlay = (JsonOverlay<${type.name}>) overlay;
+        |${"\t"}${"\t"}return castOverlay;
+        |${"\t"}}
+        |
+        |${"\t"}@Override
+        |${"\t"}public JsonOverlay<${type.name}> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
+        |${"\t"}${"\t"}JsonOverlay<?> overlay;
+        |${"\t"}$_createSubTypesImpl2
+        |${"\t"}${"\t"}@SuppressWarnings("unchecked")
+        |${"\t"}${"\t"}JsonOverlay<${type.name}> castOverlay = (JsonOverlay<${type.name}>) overlay;
+        |${"\t"}${"\t"}return castOverlay;
+        |${"\t"}}
+        |
+        |${"\t"}${getIsExtendedType(!getSubTypes(type).isEmpty()).replace("\n","\n\t")}
         |};""".trimMargin("|")
         )
     }
@@ -437,7 +440,7 @@ class JavaImplGenerator : TypeGenerator {
     private fun getIsExtendedType(isExtended: Boolean): String {
         return """@Override
         |protected boolean isExtendedType() {
-        |    return ${if (isExtended) "true" else "false"};
+        |${"\t"}return ${if (isExtended) "true" else "false"};
         |}""".trimMargin("|")
     }
 
@@ -448,8 +451,8 @@ class JavaImplGenerator : TypeGenerator {
         val switchExpr = """${t.lcName}.getClass().getSimpleName()"""
         val subTypeSwitch = getSubtypeSwitch(t, subTypes, switchExpr) { it.name }
         return ClassMember(
-            """private static Class < ? extends ${t.name} > getSubtypeOf(${t.name} ${t.lcName}) {
-        |    $subTypeSwitch
+            """private static Class<? extends ${t.name}> getSubtypeOf(${t.name} ${t.lcName}) {
+        |${"\t"}$subTypeSwitch
         |}""".trimMargin("|")
         )
     }
@@ -462,8 +465,8 @@ class JavaImplGenerator : TypeGenerator {
         val switchExpr = """json.at(JsonPointer.compile("/${t.discriminator}")).asText()"""
         val subTypeSwitch = getSubtypeSwitch(t, subTypes, switchExpr) { it.discriminatorValue }
         return ClassMember(
-            """private static Class < ? extends ${t.name} > getSubtypeOf(JsonNode json) {
-        |    $subTypeSwitch
+            """private static Class<? extends ${t.name}> getSubtypeOf(JsonNode json) {
+        |${"\t"}$subTypeSwitch
         |}
         |""".trimMargin("|")
         )
@@ -480,9 +483,9 @@ class JavaImplGenerator : TypeGenerator {
                 "case \"${discFn(sub)}\":\n\treturn ${sub.name}.class;\n"
             }
             return """switch($switchExpr) {
-        |    $cases
-        |    default:
-        |        return null;
+        |${"\t"}$cases
+        |${"\t"}default:
+        |${"\t"}${"\t"}return null;
         |}""".trimMargin("|")
         }
     }
@@ -499,9 +502,9 @@ class JavaImplGenerator : TypeGenerator {
                         "overlay = ${sub.implType}.factory.create(${castArg0(sub, arg0)}, parent, refMgr);\nbreak;"
             }
             return """switch(subtype != null ? subtype . getSimpleName () : "") {
-            |    $cases
-            |    default:
-            |    overlay = new ${t.implType}(${castArg0(t, arg0)}, parent, refMgr);
+            |${"\t"}$cases
+            |${"\t"}default:
+            |${"\t"}overlay = new ${t.implType}(${castArg0(t, arg0)}, parent, refMgr);
             |}""".trimMargin("|")
         }
     }
