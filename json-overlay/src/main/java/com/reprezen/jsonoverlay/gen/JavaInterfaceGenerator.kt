@@ -11,7 +11,7 @@ class JavaInterfaceGenerator : TypeGenerator {
         return intfPackage
     }
 
-    override fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDeclaration {
+    override fun getTypeDeclaration(file: File, type: TypeData.Type, suffix: String?): TypeDeclaration {
         val decl = if(type.enumValues.isEmpty()) ClassOrInterfaceDeclaration(type.name,
             isInterface = true,
             isPublic = true

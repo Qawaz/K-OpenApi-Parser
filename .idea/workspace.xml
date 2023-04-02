@@ -8,12 +8,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d55a8c6a-af6b-48df-a7d6-a3559c3cc6b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/CodeGenerator.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/json-overlay/KOpenAPIParser.json-overlay.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/json-overlay/src/main/resources/java/imports.kate" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/json-overlay/src/main/resources/java/java_impl.kate" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/json-overlay/src/main/resources/java/java_interface.kate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/json-overlay/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/CodeGenerator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/GenTestModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/GenTestModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/GenOpenApi3.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/GenOpenApi3.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/CompilationUnit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/CompilationUnit.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/ImplGenerator.xtend" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/InterfaceGenerator.xtend" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/JavaImplGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/JavaImplGenerator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/JavaInterfaceGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/JavaInterfaceGenerator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/TypeDeclaration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/TypeDeclaration.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/TypeGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/TypeGenerator.kt" afterDir="false" />
     </list>
     <list id="2db31701-028f-44e4-9104-20ae3599ae33" name="Revert Tests In Json Overlay" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -111,17 +121,20 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "jdk.selected.JAVA_MODULE": "11",
-    "last_opened_file_path": "D:/Programming/Multiplatform/Libraries/KaiZen-OpenApi-Parser/src/main/java/com/reprezen/kaizen/oasparser/kovl3",
+    "last_opened_file_path": "D:/Programming/Multiplatform/Libraries/KaiZen-OpenApi-Parser/json-overlay/src/main/resources/java",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Programming\Multiplatform\Libraries\KaiZen-OpenApi-Parser\json-overlay\src\main\resources\java" />
       <recent name="D:\Programming\Multiplatform\Libraries\KaiZen-OpenApi-Parser\src\main\java\com\reprezen\kaizen\oasparser\kovl3" />
       <recent name="D:\Programming\Multiplatform\Libraries\KaiZen-OpenApi-Parser\src\main\java\com\reprezen\kaizen\oasparser\kmodel3" />
       <recent name="D:\Programming\Multiplatform\Libraries\KaiZen-OpenApi-Parser\json-overlay" />
       <recent name="D:\Programming\Multiplatform\Libraries\KaiZen-OpenApi-Parser" />
-      <recent name="D:\Programming\Multiplatform\Libraries\KaiZen-OpenApi-Parser\kaizen-openapi-parser\src\test\kotlin" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programming\Multiplatform\Libraries\KaiZen-OpenApi-Parser\json-overlay\src\main\resources\java" />
     </key>
     <key name="MoveInnerDialog.RECENTS_KEY">
       <recent name="com.reprezen.jsonoverlay.gen" />

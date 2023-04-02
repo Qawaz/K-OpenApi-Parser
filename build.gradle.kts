@@ -20,7 +20,20 @@ dependencies {
     testImplementation("org.apache.commons:commons-lang3:3.7")
 }
 
-repositories {
-    maven("https://oss.sonatype.org/content/repositories/snapshots/")
-    mavenCentral()
+allprojects {
+    repositories {
+        maven("https://oss.sonatype.org/content/repositories/snapshots/")
+        mavenCentral()
+        maven("https://maven.pkg.github.com/Qawaz/K-OpenApi-Parser") {
+            name = "GitHubPackages"
+            try {
+                credentials {
+                    username = System.getenv("GPR_USER").toString()
+                    password = System.getenv("GPR_API_KEY").toString()
+                }
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        }
+    }
 }

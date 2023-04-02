@@ -1,0 +1,13 @@
+@partial_raw
+    @function joinImports()
+        @if(@var(imports.size()) == 0) @return "" @endif
+        @var text = ""
+        @for(@var elem,index : @var(imports))
+            @if(@var(index) != 0)
+                @var text = @var(text) @+ "\n"
+            @endif
+            @var text = @var(text) @+ @var(elem) @+ ";"
+        @endfor
+        @return @var(text)
+    @end_function
+@end_partial_raw

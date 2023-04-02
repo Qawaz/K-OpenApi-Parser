@@ -18,6 +18,12 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.JsonNodeFactory
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.reprezen.jsonoverlay.*
+import com.wakaztahir.kate.InputSourceStream
+import com.wakaztahir.kate.OutputDestinationStream
+import com.wakaztahir.kate.RelativeResourceEmbeddingManager
+import com.wakaztahir.kate.TemplateContext
+import com.wakaztahir.kate.parser.stream.EmbeddingManager
+import com.wakaztahir.kate.parser.stream.SourceStream
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
@@ -37,20 +43,19 @@ abstract class TypeGenerator(
 
     protected abstract fun getPackage(): String
 
-    protected abstract fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDeclaration
+    protected abstract fun getTypeDeclaration(file: File, type: TypeData.Type, suffix: String?): TypeDeclaration
 
     @Throws(IOException::class)
     fun generate(type: TypeData.Type) {
         val filename = String.format("%s%s.java", type.name, suffix)
         val javaFile = File(dir, filename)
         println("Generating " + javaFile.canonicalFile)
-        generateToFile(javaFile, type)
+        generateWithTemplate(javaFile, type)
     }
 
-    @Throws(IOException::class)
-    protected fun generateToFile(javaFile: File, type: TypeData.Type) {
-        val declaration = getTypeDeclaration(type, suffix)
-        val gen = CompilationUnit("package ${getPackage()};", declaration)
+    private fun getCompilationUnitFor(javaFile: File, type: TypeData.Type): CompilationUnit {
+        val declaration = getTypeDeclaration(javaFile, type, suffix)
+        val gen = CompilationUnit(getPackage(), declaration)
         requireTypes(getImports(type))
         if (needIntfImports()) {
             gen.addImport("$intfPackage.*")
@@ -58,7 +63,29 @@ abstract class TypeGenerator(
         addGeneratedMembers(type, gen)
         requireTypes(Generated::class.java)
         resolveImports(type, gen)
+        return gen
+    }
+
+    @Throws(IOException::class)
+    protected fun generateToFile(javaFile: File, type: TypeData.Type) {
+        val gen = getCompilationUnitFor(javaFile = javaFile, type = type)
         Files.writeString(javaFile.toPath(), gen.format())
+    }
+
+    @Throws(IOException::class)
+    protected fun generateWithTemplate(javaFile: File, type: TypeData.Type) {
+        val gen = getCompilationUnitFor(javaFile = javaFile, type = type)
+        val obj = gen.toMutableKTEObject()
+        val resource = RelativeResourceEmbeddingManager("/")
+        val context = TemplateContext(
+            stream = InputSourceStream(
+                inputStream = resource.getStream(gen.type.templateResource),
+                model = obj
+            )
+        )
+        val outputStream = javaFile.outputStream()
+        context.generateTo(OutputDestinationStream(outputStream))
+        outputStream.close()
     }
 
     protected abstract fun getImports(type: TypeData.Type): Collection<String>
@@ -214,7 +241,7 @@ abstract class TypeGenerator(
 
     companion object {
         private val autoTypes = hashSetOf<String>(
-            "String","Object","Boolean","Integer","Number"
+            "String", "Object", "Boolean", "Integer", "Number"
         )
 
         private val knownTypes = getKnownTypes()

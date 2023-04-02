@@ -1,0 +1,35 @@
+@partial_raw
+
+    @embed_once ./imports.kate
+
+    @default_no_raw package @var(packageName); @end_default_no_raw
+
+    @if(@var(imports.size()) > 0)
+        @runtime.print_string("\n\n")
+        @default_no_raw @var(joinImports()) @end_default_no_raw
+    @endif
+
+    @runtime.print_string("\n\n")
+
+    @if(@var(isPublic))
+        @runtime.print_string("public ")
+    @endif
+
+    @runtime.print_string("interface ")
+    @runtime.print_string(@var(name) @+ " ")
+
+    @runtime.print_string("{\n\n")
+
+    @default_no_raw
+        @var(EnumEntries)
+    @default_no_raw
+
+    @runtime.print_string(";\n\n")
+
+    @default_no_raw
+        @var(ClassMembers)
+    @default_no_raw
+
+    @runtime.print_string("\n}\n")
+
+@end_partial_raw

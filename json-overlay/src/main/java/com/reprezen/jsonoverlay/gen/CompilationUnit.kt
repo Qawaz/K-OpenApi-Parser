@@ -1,5 +1,7 @@
 package com.reprezen.jsonoverlay.gen
 
+import com.wakaztahir.kate.model.model.MutableKTEObject
+
 class CompilationUnit(private var packageDec: String, val type: TypeDeclaration) {
 
     private val imports = mutableListOf<String>()
@@ -13,14 +15,19 @@ class CompilationUnit(private var packageDec: String, val type: TypeDeclaration)
     }
 
     fun format(): String {
-        val indentation = 0
-        var formatted = packageDec
+        var formatted = "package ${packageDec};"
         if (imports.size > 0) {
             formatted += "\n\n"
             formatted += imports.joinToString("\n") { "import $it;" }
         }
-        formatted += "\n\n${type.format(indentation)}"
+        formatted += "\n\n${type.format()}"
         return formatted
+    }
+
+    fun toMutableKTEObject(): MutableKTEObject {
+        return type.toMutableKTEObject().apply {
+            putValue("packageName", packageDec)
+        }
     }
 
 }

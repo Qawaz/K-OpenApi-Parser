@@ -1,0 +1,37 @@
+@partial_raw
+
+    @embed_once ./imports.kate
+
+    @default_no_raw package @var(packageName); @end_default_no_raw
+
+    @if(@var(imports.size()) > 0)
+        @runtime.print_string("\n\n")
+        @default_no_raw @var(joinImports()) @end_default_no_raw
+    @endif
+
+    @runtime.print_string("\n\n")
+
+    @if(@var(isPublic))
+        @runtime.print_string("public ")
+    @endif
+
+    @runtime.print_string("class ")
+    @runtime.print_string(@var(name) @+ " ")
+
+    @if(@var(extends.size()) > 0)
+        @runtime.print_string("extends " @+ @var(extends.joinToString(", ")) @+ " ")
+    @endif
+
+    @if(@var(implements.size()) > 0)
+        @runtime.print_string("implements " @+ @var(implements.joinToString(", ")) @+ " ")
+    @endif
+
+    @runtime.print_string("{\n\n")
+
+    @default_no_raw
+        @var(ClassMembers)
+    @default_no_raw
+
+    @runtime.print_string("\n}\n")
+
+@end_partial_raw

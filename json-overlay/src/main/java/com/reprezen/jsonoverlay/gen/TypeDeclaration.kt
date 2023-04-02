@@ -1,13 +1,33 @@
 package com.reprezen.jsonoverlay.gen
 
+import com.wakaztahir.kate.model.BooleanValue
+import com.wakaztahir.kate.model.StringValue
+import com.wakaztahir.kate.model.model.KTEListImpl
+import com.wakaztahir.kate.model.model.MutableKTEObject
+import com.wakaztahir.kate.parser.stream.DestinationStream
+
 interface TypeDeclaration {
+
     val name: String
+
+    val templateResource : String
+
     fun addMember(member: ClassMember)
-    fun format(indentation: Int): String
+
+    fun format(): String
+
+    fun toMutableKTEObject(): MutableKTEObject
+
 }
 
-class ClassOrInterfaceDeclaration(override val name: String, val isInterface: Boolean, val isPublic: Boolean) :
-    TypeDeclaration {
+class ClassOrInterfaceDeclaration(
+    override val name: String,
+    val isInterface: Boolean,
+    val isPublic: Boolean
+) : TypeDeclaration {
+
+    override val templateResource: String
+        get() = if(isInterface) "java/java_interface.kate" else "java/java_impl.kate"
 
     val extended = mutableListOf<String>()
     val implemented = mutableListOf<String>()
@@ -25,9 +45,7 @@ class ClassOrInterfaceDeclaration(override val name: String, val isInterface: Bo
         members.add(member)
     }
 
-    override fun format(indentation: Int): String {
-        var indented = ""
-        repeat(indentation) { indented += "\t" }
+    override fun format(): String {
         var formatted = if (isPublic) "public " else ""
         formatted += if (isInterface) "interface " else "class "
         formatted += "$name "
@@ -38,14 +56,26 @@ class ClassOrInterfaceDeclaration(override val name: String, val isInterface: Bo
             formatted += "implements " + implemented.joinToString(",") + " "
         }
         formatted += "{\n\n"
-        formatted += members.joinToString("\n\n") { it.format(indentation + 1) }
+        formatted += members.joinToString("\n\n") { it.format(1) }
         formatted += "\n}\n"
         return formatted
+    }
+
+    override fun toMutableKTEObject(): MutableKTEObject {
+        return MutableKTEObject {
+            putValue("extends", KTEListImpl(extended.map { StringValue(it) }))
+            putValue("implements", KTEListImpl(implemented.map { StringValue(it) }))
+            putValue("isPublic", BooleanValue(isPublic))
+            putValue("ClassMembers",members.joinToString("\n\n") { it.format(1) })
+        }
     }
 
 }
 
 class EnumDeclaration(override val name: String, val isPublic: Boolean) : TypeDeclaration {
+
+    override val templateResource: String
+        get() = "java/java_enum.kate"
 
     private val entries = mutableListOf<String>()
     private val members = mutableListOf<ClassMember>()
@@ -58,14 +88,23 @@ class EnumDeclaration(override val name: String, val isPublic: Boolean) : TypeDe
         members.add(member)
     }
 
-    override fun format(indentation: Int): String {
+    override fun format(): String {
         var formatted = if (isPublic) "public enum " else "enum "
         formatted += "$name "
         formatted += "{\n\n"
         formatted += entries.joinToString("\n\t")
         formatted += ";\n\n"
-        formatted += members.joinToString("\n") { it.format(indentation + 1) }
+        formatted += members.joinToString("\n") { it.format(1) }
         formatted += "\n\n}"
         return formatted
     }
+
+    override fun toMutableKTEObject(): MutableKTEObject {
+        return MutableKTEObject {
+            putValue("isPublic", BooleanValue(isPublic))
+            putValue("EnumEntries",entries.joinToString("\n\t"))
+            putValue("ClassMembers",members.joinToString("\n\n") { it.format(1) })
+        }
+    }
+
 }
