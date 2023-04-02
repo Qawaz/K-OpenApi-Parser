@@ -47,7 +47,7 @@ class JavaImplGenerator : TypeGenerator {
             if (type.typeData.modelType !== null) {
                 members.addMember(
                     """@Override
-                    |public Class <?> _getModelType() {
+                    |public Class<?> _getModelType() {
                     |${"\t"}return ${type.typeData.modelType}.class;
                     |} """.trimMargin("|")
                 )
@@ -56,7 +56,7 @@ class JavaImplGenerator : TypeGenerator {
         members.add(
             ClassMember(
                 """@Override
-            |protected OverlayFactory <?> _getFactory() {
+            |protected OverlayFactory<?> _getFactory() {
             |${"\t"}return factory;
             |}""".trimMargin("|")
             )
@@ -118,13 +118,13 @@ class JavaImplGenerator : TypeGenerator {
         requireTypes(Builder::class.java, OverlayFactory::class.java, IJsonOverlay::class.java)
         val createType = if (isEnum(type)) "IJsonOverlay<${type.name}>" else type.name
         members.addMember(
-            """public static<OV extends IJsonOverlay<?>> Builder<${type.name}> builder(OV modelMember) {
-                |${"\t"}return new Builder <${type.name}>(factory, modelMember);
+            """public static <OV extends IJsonOverlay<?>> Builder<${type.name}> builder(OV modelMember) {
+                |${"\t"}return new Builder<${type.name}>(factory, modelMember);
             |}""".trimMargin("|")
         )
         val notIsEnumTypeThen = if (!isEnum(type)) "(${type.name}) " else ""
         members.addMember(
-            """public static<OV extends IJsonOverlay<?>> $createType create (OV modelMember) {
+            """public static <OV extends IJsonOverlay<?>> $createType create(OV modelMember) {
             |${"\t"}return ${notIsEnumTypeThen}builder(modelMember).build();
             |}""".trimMargin("|")
         )
