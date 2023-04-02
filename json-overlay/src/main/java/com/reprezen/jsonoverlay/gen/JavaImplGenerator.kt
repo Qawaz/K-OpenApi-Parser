@@ -49,7 +49,7 @@ class JavaImplGenerator : TypeGenerator {
                     """@Override
                     |public Class<?> _getModelType() {
                     |${"\t"}return ${type.typeData.modelType}.class;
-                    |} """.trimMargin("|")
+                    |}""".trimMargin("|")
                 )
             }
         }
@@ -183,7 +183,7 @@ class JavaImplGenerator : TypeGenerator {
         if (f.isBoolean) {
             methods.addMember(
                 """public boolean is${f.name}() {
-                |${"\t"}Boolean bool = _get ("${f.propertyName}", Boolean.class);
+                |${"\t"}Boolean bool = _get("${f.propertyName}", Boolean.class);
                 |${"\t"}return bool != null ? bool : ${f.boolDefault};
                 |}""".trimMargin("|")
             )
