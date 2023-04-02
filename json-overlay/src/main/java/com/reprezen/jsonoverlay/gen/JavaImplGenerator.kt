@@ -331,7 +331,7 @@ class JavaImplGenerator : TypeGenerator {
             }
 
             TypeData.Structure.map -> {
-                val pat = f.keyPattern?.replace("\\\\", "\\\\\\\\")?.let { "\"$it\"" } ?: "null"
+                val pat = f.keyPattern?.replace("\\", "\\\\")?.let { "\"$it\"" } ?: "null"
                 "_createMap(\"${f.propertyName}\", \"${f.parentPath}\", ${f.implType}.factory, $pat);"
             }
         }
