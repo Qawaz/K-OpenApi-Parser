@@ -26,16 +26,6 @@ import java.util.stream.Collectors
 import java.util.stream.Stream
 import javax.annotation.Generated
 
-//import com.github.javaparser.JavaParser;
-//import com.github.javaparser.ast.CompilationUnit;
-//import com.github.javaparser.ast.body.BodyDeclaration;
-//import com.github.javaparser.ast.body.ConstructorDeclaration;
-//import com.github.javaparser.ast.body.FieldDeclaration;
-//import com.github.javaparser.ast.body.MethodDeclaration;
-//import com.github.javaparser.ast.body.TypeDeclaration;
-//import com.github.javaparser.ast.comments.Comment;
-//import com.github.javaparser.ast.expr.AnnotationExpr;
-
 abstract class TypeGenerator(
     private val dir: File,
     protected var intfPackage: String,
@@ -60,7 +50,7 @@ abstract class TypeGenerator(
     @Throws(IOException::class)
     protected fun generateToFile(javaFile: File, type: TypeData.Type) {
         val declaration = getTypeDeclaration(type, suffix)
-        val gen = CompilationUnit("package", declaration)
+        val gen = CompilationUnit("package ${getPackage()};", declaration)
         requireTypes(getImports(type))
         if (needIntfImports()) {
             gen.addImport("$intfPackage.*")
@@ -96,7 +86,7 @@ abstract class TypeGenerator(
         val importMap = type.typeData.imports
         val typeMap = type.typeData.typeMap
         for (requiredType in requiredTypes) {
-            gen.addImport(resolveImport(requiredType, typeMap, importMap)!!)
+            resolveImport(requiredType, typeMap, importMap)?.let { gen.addImport(it) }
         }
     }
 
@@ -223,27 +213,14 @@ abstract class TypeGenerator(
     }
 
     companion object {
-        private val autoTypes = getAutoTypes()
-        private fun getAutoTypes(): Set<String> {
-            val results: MutableSet<String> = HashSet()
-            val autos = listOf( //
-                String::class.java,  //
-                Int::class.java,  //
-                Number::class.java,  //
-                Boolean::class.java,  //
-                Primitive::class.java,  //
-                Any::class.java
-            )
-            for (cls in autos) {
-                results.add(cls.simpleName)
-            }
-            return results
-        }
+        private val autoTypes = hashSetOf<String>(
+            "String","Object","Boolean","Integer","Number"
+        )
 
         private val knownTypes = getKnownTypes()
         private fun getKnownTypes(): Map<String, String> {
             val results: MutableMap<String, String> = HashMap()
-            val overlays = Arrays.asList( //
+            val overlays = listOf( //
                 Generated::class.java,  //
                 MutableList::class.java,  //
                 MutableMap::class.java,  //

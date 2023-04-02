@@ -1,8 +1,9 @@
 package com.reprezen.kaizen.oasparser.kmodel3;
 
-import com.reprezen.jsonoverlay.IModelPart;
-import javax.annotation.Generated;
 import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.IModelPart;
+
+import javax.annotation.Generated;
 import java.util.Map;
 
 public interface Contact extends IJsonOverlay<Contact>, IModelPart<OpenApi3, Contact> {

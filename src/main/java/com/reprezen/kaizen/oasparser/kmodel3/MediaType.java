@@ -1,12 +1,10 @@
 package com.reprezen.kaizen.oasparser.kmodel3;
 
-import com.reprezen.jsonoverlay.IModelPart;
-import javax.annotation.Generated;
-import com.reprezen.kaizen.oasparser.kmodel3.EncodingProperty;
 import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.kaizen.oasparser.kmodel3.Example;
+import com.reprezen.jsonoverlay.IModelPart;
+
+import javax.annotation.Generated;
 import java.util.Map;
-import com.reprezen.kaizen.oasparser.kmodel3.Schema;
 
 public interface MediaType extends IJsonOverlay<MediaType>, IModelPart<OpenApi3, MediaType> {
 

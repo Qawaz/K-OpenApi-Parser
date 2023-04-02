@@ -1,16 +1,15 @@
 package com.reprezen.kaizen.oasparser.kmodel3;
 
-import com.reprezen.jsonoverlay.IModelPart;
-import javax.annotation.Generated;
-import com.reprezen.kaizen.oasparser.kmodel3.Xml;
-import java.util.List;
 import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.kaizen.oasparser.kmodel3.Discriminator;
+import com.reprezen.jsonoverlay.IModelPart;
+
+import javax.annotation.Generated;
+import java.util.List;
 import java.util.Map;
-import com.reprezen.kaizen.oasparser.kmodel3.ExternalDocs;
-import com.reprezen.kaizen.oasparser.kmodel3.Schema;
 
 public interface Schema extends IJsonOverlay<Schema>, IModelPart<OpenApi3, Schema> {
+
+    String getName();
 
     // Title
     @Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

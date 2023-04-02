@@ -1,17 +1,11 @@
 package com.reprezen.kaizen.oasparser.kmodel3;
 
+import com.reprezen.jsonoverlay.IJsonOverlay;
 import com.reprezen.jsonoverlay.IModelPart;
+
 import javax.annotation.Generated;
 import java.util.List;
-import com.reprezen.kaizen.oasparser.kmodel3.Response;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.kaizen.oasparser.kmodel3.Parameter;
 import java.util.Map;
-import com.reprezen.kaizen.oasparser.kmodel3.ExternalDocs;
-import com.reprezen.kaizen.oasparser.kmodel3.SecurityRequirement;
-import com.reprezen.kaizen.oasparser.kmodel3.Server;
-import com.reprezen.kaizen.oasparser.kmodel3.RequestBody;
-import com.reprezen.kaizen.oasparser.kmodel3.Callback;
 
 public interface Operation extends IJsonOverlay<Operation>, IModelPart<OpenApi3, Operation> {
 

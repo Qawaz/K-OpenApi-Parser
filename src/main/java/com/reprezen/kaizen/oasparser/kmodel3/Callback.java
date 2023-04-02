@@ -1,12 +1,14 @@
 package com.reprezen.kaizen.oasparser.kmodel3;
 
-import com.reprezen.jsonoverlay.IModelPart;
-import com.reprezen.kaizen.oasparser.kmodel3.Path;
-import javax.annotation.Generated;
 import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.IModelPart;
+
+import javax.annotation.Generated;
 import java.util.Map;
 
 public interface Callback extends IJsonOverlay<Callback>, IModelPart<OpenApi3, Callback> {
+
+    String getName();
 
     // CallbackPath
     @Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

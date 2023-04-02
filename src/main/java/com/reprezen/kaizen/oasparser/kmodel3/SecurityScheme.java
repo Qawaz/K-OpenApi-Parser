@@ -1,12 +1,14 @@
 package com.reprezen.kaizen.oasparser.kmodel3;
 
-import com.reprezen.jsonoverlay.IModelPart;
-import javax.annotation.Generated;
 import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.IModelPart;
+
+import javax.annotation.Generated;
 import java.util.Map;
-import com.reprezen.kaizen.oasparser.kmodel3.OAuthFlow;
 
 public interface SecurityScheme extends IJsonOverlay<SecurityScheme>, IModelPart<OpenApi3, SecurityScheme> {
+
+    String getKey();
 
     // Type
     @Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

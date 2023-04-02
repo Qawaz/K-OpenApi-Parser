@@ -4,10 +4,6 @@ class CompilationUnit(private var packageDec: String, val type: TypeDeclaration)
 
     private val imports = mutableListOf<String>()
 
-    fun setPackageDeclaration(pkg: String) {
-        this.packageDec = pkg
-    }
-
     fun addImport(import: String) {
         imports.add(import)
     }
@@ -20,9 +16,9 @@ class CompilationUnit(private var packageDec: String, val type: TypeDeclaration)
         var formatted = packageDec
         if (imports.size > 0) {
             formatted += "\n\n"
-            formatted += imports.joinToString("\n")
+            formatted += imports.joinToString("\n") { "import $it;" }
         }
-        formatted += "\n\n${type.format()}"
+        formatted += "\n\n${type.format().replace("\n","\n    ")}"
         return formatted
     }
 

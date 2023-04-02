@@ -1,9 +1,10 @@
 package com.reprezen.kaizen.oasparser.kmodel3;
 
+import com.reprezen.jsonoverlay.IJsonOverlay;
 import com.reprezen.jsonoverlay.IModelPart;
+
 import javax.annotation.Generated;
 import java.util.List;
-import com.reprezen.jsonoverlay.IJsonOverlay;
 import java.util.Map;
 
 public interface ServerVariable extends IJsonOverlay<ServerVariable>, IModelPart<OpenApi3, ServerVariable> {

@@ -1,11 +1,14 @@
 package com.reprezen.kaizen.oasparser.kmodel3;
 
-import com.reprezen.jsonoverlay.IModelPart;
-import javax.annotation.Generated;
 import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.IModelPart;
+
+import javax.annotation.Generated;
 import java.util.Map;
 
 public interface Example extends IJsonOverlay<Example>, IModelPart<OpenApi3, Example> {
+
+    String getName();
 
     // Summary
     @Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

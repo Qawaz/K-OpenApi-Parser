@@ -1,14 +1,14 @@
 package com.reprezen.kaizen.oasparser.kmodel3;
 
-import com.reprezen.jsonoverlay.IModelPart;
-import javax.annotation.Generated;
 import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.IModelPart;
+
+import javax.annotation.Generated;
 import java.util.Map;
-import com.reprezen.kaizen.oasparser.kmodel3.Link;
-import com.reprezen.kaizen.oasparser.kmodel3.MediaType;
-import com.reprezen.kaizen.oasparser.kmodel3.Header;
 
 public interface Response extends IJsonOverlay<Response>, IModelPart<OpenApi3, Response> {
+
+    String getName();
 
     // Description
     @Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

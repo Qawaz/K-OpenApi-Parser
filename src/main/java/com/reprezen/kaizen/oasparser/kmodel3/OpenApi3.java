@@ -1,30 +1,24 @@
 package com.reprezen.kaizen.oasparser.kmodel3;
 
-import java.util.Collection;
-import com.reprezen.kaizen.oasparser.kmodel3.SecurityScheme;
-import com.reprezen.kaizen.oasparser.kmodel3.ExternalDocs;
-import com.reprezen.kaizen.oasparser.kmodel3.SecurityRequirement;
-import com.reprezen.kaizen.oasparser.kmodel3.Server;
-import com.reprezen.kaizen.oasparser.kmodel3.RequestBody;
-import com.reprezen.kaizen.oasparser.kmodel3.Schema;
-import com.reprezen.kaizen.oasparser.kmodel3.Header;
-import com.reprezen.kaizen.oasparser.kmodel3.Callback;
-import com.reprezen.kaizen.oasparser.kmodel3.Info;
-import com.reprezen.jsonoverlay.IModelPart;
-import com.reprezen.kaizen.oasparser.kmodel3.Path;
-import com.reprezen.kaizen.oasparser.kmodel3.Tag;
-import com.reprezen.kaizen.oasparser.OpenApi;
-import java.util.List;
-import javax.annotation.Generated;
-import com.reprezen.kaizen.oasparser.kmodel3.Response;
 import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.IModelPart;
+import com.reprezen.kaizen.oasparser.OpenApi;
 import com.reprezen.kaizen.oasparser.val.ValidationResults;
-import com.reprezen.kaizen.oasparser.kmodel3.Parameter;
-import com.reprezen.kaizen.oasparser.kmodel3.Example;
+
+import javax.annotation.Generated;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
-import com.reprezen.kaizen.oasparser.kmodel3.Link;
 
 public interface OpenApi3 extends IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3>, OpenApi<OpenApi3> {
+
+    public void validate();
+
+    public boolean isValid();
+
+    public ValidationResults getValidationResults();
+
+    public Collection<ValidationResults.ValidationItem> getValidationItems();
 
     // OpenApi
     @Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

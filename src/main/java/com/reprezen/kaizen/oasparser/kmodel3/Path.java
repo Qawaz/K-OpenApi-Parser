@@ -1,15 +1,15 @@
 package com.reprezen.kaizen.oasparser.kmodel3;
 
+import com.reprezen.jsonoverlay.IJsonOverlay;
 import com.reprezen.jsonoverlay.IModelPart;
-import com.reprezen.kaizen.oasparser.kmodel3.Operation;
+
 import javax.annotation.Generated;
 import java.util.List;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.kaizen.oasparser.kmodel3.Parameter;
 import java.util.Map;
-import com.reprezen.kaizen.oasparser.kmodel3.Server;
 
 public interface Path extends IJsonOverlay<Path>, IModelPart<OpenApi3, Path> {
+
+    String getPathString();
 
     // Summary
     @Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

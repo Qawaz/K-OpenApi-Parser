@@ -36,7 +36,7 @@ class ClassOrInterfaceDeclaration(override val name: String, val isInterface: Bo
             formatted += "implements " + implemented.joinToString(",") + " "
         }
         formatted += "{\n\n"
-        formatted += members.joinToString("\n") { it.format() }
+        formatted += members.joinToString("\n\n") { it.format() }
         formatted += "\n\n}"
         return formatted
     }

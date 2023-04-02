@@ -28,7 +28,7 @@ class ClassMember(val code: String) {
     fun format(): String {
         var formatted = ""
         if (comment != null) {
-            formatted += comment + "\n"
+            formatted += "// $comment\n"
         }
         if (annotations.size > 0) {
             formatted += annotations.joinToString("\n")
