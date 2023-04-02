@@ -17,14 +17,14 @@ object GenOpenApi3 {
     @JvmStatic
     fun main(args: Array<String>) {
         CodeGenerator.main(
-            arrayOf( //
-                "-t", "src/main/java/com/reprezen/kaizen/oasparser/types3.yaml",  //
-                "-p", "com.reprezen.kaizen.oasparser",  //
-                "-d", "src/main/java/com/reprezen/kaizen/oasparser",  //
-                "-i", "model3",  //
-                "-I", "model3",  //
-                "-c", "ovl3",  //
-                "-C", "ovl3"
+            CodeGenerator.Options(
+                typeDataFile = "src/main/java/com/reprezen/kaizen/oasparser/types3.yaml",
+                pkg = "com.reprezen.kaizen.oasparser",
+                topDir = "src/main/java/com/reprezen/kaizen/oasparser",
+                interfaceDir = "model3",
+                interfacePackage = "model3",
+                classDir = "ovl3",
+                classPackage = "ovl3"
             )
         )
     }

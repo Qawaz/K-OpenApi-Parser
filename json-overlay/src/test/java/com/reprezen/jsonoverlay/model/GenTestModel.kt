@@ -25,14 +25,14 @@ object GenTestModel {
     @JvmStatic
     fun main(args: Array<String>) {
         CodeGenerator.main(
-            arrayOf( //
-                "-t", "json-overlay/src/test/java/com/reprezen/jsonoverlay/model/types.yaml",  //
-                "-p", "com.reprezen.jsonoverlay.model",  //
-                "-d", "json-overlay/src/test/java/com/reprezen/jsonoverlay/model",  //
-                "-i", "intf",  //
-                "-I", "intf",  //
-                "-c", "impl",  //
-                "-C", "impl" //
+            CodeGenerator.Options(
+                typeDataFile = "json-overlay/src/test/java/com/reprezen/jsonoverlay/model/types.yaml",
+                pkg = "com.reprezen.jsonoverlay.model",
+                topDir = "json-overlay/src/test/java/com/reprezen/jsonoverlay/model",
+                interfaceDir = "intf",
+                interfacePackage = "intf",
+                classDir = "impl",
+                classPackage = "impl"
             )
         )
     }
