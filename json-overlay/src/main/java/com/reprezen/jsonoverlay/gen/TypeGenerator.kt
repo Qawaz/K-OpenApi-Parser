@@ -73,7 +73,7 @@ abstract class TypeGenerator(
     @Throws(IOException::class)
     protected fun generateWithJavaTemplate(javaFile: File, type: TypeData.Type) {
         val gen = getCompilationUnitFor(javaFile = javaFile, type = type)
-        val obj = gen.toMutableKTEObject()
+        val obj = gen.toMutableKATEObject()
         val resource = RelativeResourceEmbeddingManager("/java")
         val context = TemplateContext(
             stream = InputSourceStream(
@@ -82,7 +82,7 @@ abstract class TypeGenerator(
                 embeddingManager = resource
             )
         )
-        gen.toMutableKTEObject()
+        gen.toMutableKATEObject()
         val outputStream = javaFile.outputStream()
         context.generateTo(OutputDestinationStream(outputStream))
         outputStream.close()

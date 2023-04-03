@@ -2,7 +2,8 @@ package com.reprezen.jsonoverlay.gen
 
 import com.wakaztahir.kate.model.BooleanValue
 import com.wakaztahir.kate.model.StringValue
-import com.wakaztahir.kate.model.model.KTEListImpl
+import com.wakaztahir.kate.model.model.KATEListImpl
+import com.wakaztahir.kate.model.model.MutableKATEObject
 import com.wakaztahir.kate.model.model.MutableKTEObject
 
 interface TypeDeclaration {
@@ -15,7 +16,7 @@ interface TypeDeclaration {
 
     fun format(): String
 
-    fun toMutableKTEObject(): MutableKTEObject
+    fun toMutableKTEObject(): MutableKATEObject
 
 }
 
@@ -60,11 +61,11 @@ class ClassOrInterfaceDeclaration(
         return formatted
     }
 
-    override fun toMutableKTEObject(): MutableKTEObject {
+    override fun toMutableKTEObject(): MutableKATEObject {
         return MutableKTEObject {
             putValue("name", name)
-            putValue("extends", KTEListImpl(extended.map { StringValue(it) }))
-            putValue("implements", KTEListImpl(implemented.map { StringValue(it) }))
+            putValue("extends", KATEListImpl(extended.map { StringValue(it) }))
+            putValue("implements", KATEListImpl(implemented.map { StringValue(it) }))
             putValue("isPublic", BooleanValue(isPublic))
             putValue("ClassMembers", members.joinToString("\n\n") { it.format(1) })
         }
@@ -99,7 +100,7 @@ class EnumDeclaration(override val name: String, val isPublic: Boolean) : TypeDe
         return formatted
     }
 
-    override fun toMutableKTEObject(): MutableKTEObject {
+    override fun toMutableKTEObject(): MutableKATEObject {
         return MutableKTEObject {
             putValue("name", name)
             putValue("isPublic", BooleanValue(isPublic))

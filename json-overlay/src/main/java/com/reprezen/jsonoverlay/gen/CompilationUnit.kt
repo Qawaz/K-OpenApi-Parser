@@ -1,8 +1,8 @@
 package com.reprezen.jsonoverlay.gen
 
 import com.wakaztahir.kate.model.StringValue
-import com.wakaztahir.kate.model.model.KTEListImpl
-import com.wakaztahir.kate.model.model.MutableKTEObject
+import com.wakaztahir.kate.model.model.KATEListImpl
+import com.wakaztahir.kate.model.model.MutableKATEObject
 
 class CompilationUnit(private var packageDec: String, val type: TypeDeclaration) {
 
@@ -26,10 +26,10 @@ class CompilationUnit(private var packageDec: String, val type: TypeDeclaration)
         return formatted
     }
 
-    fun toMutableKTEObject(): MutableKTEObject {
+    fun toMutableKATEObject(): MutableKATEObject {
         return type.toMutableKTEObject().apply {
             putValue("packageName", packageDec)
-            putValue("imports",KTEListImpl(imports.map { StringValue(it) }))
+            putValue("imports", KATEListImpl(imports.map { StringValue(it) }))
         }
     }
 

@@ -9,11 +9,13 @@
   <component name="ChangeListManager">
     <list default="true" id="d55a8c6a-af6b-48df-a7d6-a3559c3cc6b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/CompilationUnit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/CompilationUnit.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/TypeDeclaration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/TypeDeclaration.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/TypeGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/TypeGenerator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/resources/java/java_enum.kate" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/resources/java/enum.kate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/resources/java/java_impl.kate" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/resources/java/implementation.kate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/resources/java/java_interface.kate" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/resources/java/interface.kate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/resources/java/enum.kate" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/resources/java/enum.kate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/resources/java/implementation.kate" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/resources/java/implementation.kate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/resources/java/interface.kate" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/resources/java/interface.kate" afterDir="false" />
     </list>
     <list id="2db31701-028f-44e4-9104-20ae3599ae33" name="Revert Tests In Json Overlay" comment="" />
     <option name="SHOW_DIALOG" value="false" />
