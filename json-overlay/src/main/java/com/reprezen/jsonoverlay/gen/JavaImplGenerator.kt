@@ -40,7 +40,7 @@ class JavaImplGenerator : TypeGenerator {
                     """@Override
             |protected Class<${type.name}> getEnumClass() {
             |${"\t"}return ${type.name}.class;
-            |}"""
+            |}""".trimMargin("|")
                 )
             )
             members.add(getEnumFactoryMember(type))

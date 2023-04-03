@@ -6,7 +6,7 @@
 
     @if(@var(imports.size()) > 0)
         @runtime.print_string("\n\n")
-        @default_no_raw @var(joinImports()) @end_default_no_raw
+        @var(printImports())
     @endif
 
     @runtime.print_string("\n\n")
@@ -16,10 +16,13 @@
     @endif
 
     @runtime.print_string("interface ")
-    @runtime.print_string(@var(name) @+ " ")
+    @runtime.print_string(@var(name))
+    @runtime.print_char(' ')
 
     @if(@var(extends.size()) > 0)
-        @runtime.print_string("extends " @+ @var(extends.joinToString(", ")) @+ " ")
+        @runtime.print_string("extends ")
+        @runtime.print_string(@var(extends.joinToString(", ")))
+        @runtime.print_char(' ')
     @endif
 
     @if(@var(implements.size()) > 0)
@@ -30,7 +33,7 @@
 
     @default_no_raw
         @var(ClassMembers)
-    @default_no_raw
+    @end_default_no_raw
 
     @runtime.print_string("\n}\n")
 

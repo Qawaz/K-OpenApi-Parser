@@ -9,7 +9,7 @@ interface TypeDeclaration {
 
     val name: String
 
-    val javaTemplateResource : String
+    val javaTemplateResource: String
 
     fun addMember(member: ClassMember)
 
@@ -26,7 +26,7 @@ class ClassOrInterfaceDeclaration(
 ) : TypeDeclaration {
 
     override val javaTemplateResource: String
-        get() = if(isInterface) "java_interface.kate" else "java_impl.kate"
+        get() = if (isInterface) "java_interface.kate" else "java_impl.kate"
 
     val extended = mutableListOf<String>()
     val implemented = mutableListOf<String>()
@@ -62,10 +62,11 @@ class ClassOrInterfaceDeclaration(
 
     override fun toMutableKTEObject(): MutableKTEObject {
         return MutableKTEObject {
+            putValue("name", name)
             putValue("extends", KTEListImpl(extended.map { StringValue(it) }))
             putValue("implements", KTEListImpl(implemented.map { StringValue(it) }))
             putValue("isPublic", BooleanValue(isPublic))
-            putValue("ClassMembers",members.joinToString("\n\n") { it.format(1) })
+            putValue("ClassMembers", members.joinToString("\n\n") { it.format(1) })
         }
     }
 
@@ -100,9 +101,10 @@ class EnumDeclaration(override val name: String, val isPublic: Boolean) : TypeDe
 
     override fun toMutableKTEObject(): MutableKTEObject {
         return MutableKTEObject {
+            putValue("name", name)
             putValue("isPublic", BooleanValue(isPublic))
-            putValue("EnumEntries",entries.joinToString("\n\t"))
-            putValue("ClassMembers",members.joinToString("\n\n") { it.format(1) })
+            putValue("EnumEntries", "\t" + entries.joinToString(",\n\t"))
+            putValue("ClassMembers", members.joinToString("\n\n") { it.format(1) })
         }
     }
 

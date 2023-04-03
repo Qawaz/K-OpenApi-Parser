@@ -6,7 +6,7 @@
 
     @if(@var(imports.size()) > 0)
         @runtime.print_string("\n\n")
-        @default_no_raw @var(joinImports()) @end_default_no_raw
+        @var(printImports())
     @endif
 
     @runtime.print_string("\n\n")
@@ -15,20 +15,25 @@
         @runtime.print_string("public ")
     @endif
 
-    @runtime.print_string("interface ")
-    @runtime.print_string(@var(name) @+ " ")
+    @runtime.print_string("enum ")
+    @runtime.print_string(@var(name))
+    @runtime.print_char(' ')
 
     @runtime.print_string("{\n\n")
 
     @default_no_raw
         @var(EnumEntries)
-    @default_no_raw
+    @end_default_no_raw
 
-    @runtime.print_string(";\n\n")
+    @runtime.print_string(";\n")
+
+    @if(@var(ClassMembers.size()) > 0)
+        @runtime.print_char('\n')
+    @endif
 
     @default_no_raw
         @var(ClassMembers)
-    @default_no_raw
+    @end_default_no_raw
 
     @runtime.print_string("\n}\n")
 
