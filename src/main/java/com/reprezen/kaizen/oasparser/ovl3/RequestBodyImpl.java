@@ -1,33 +1,32 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.BooleanOverlay;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.kaizen.oasparser.model3.*;
 import com.reprezen.jsonoverlay.MapOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.Overlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.MediaType;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
-import com.reprezen.kaizen.oasparser.model3.RequestBody;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.ovl3.MediaTypeImpl;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.jsonoverlay.Overlay;
+import java.util.Map;
+import com.reprezen.jsonoverlay.BooleanOverlay;
 
 public class RequestBodyImpl extends PropertiesOverlay<RequestBody> implements RequestBody {
 
-	private Overlay<RequestBody> overlay = Overlay.of(this);
+    private Overlay<RequestBody> overlay = Overlay.of(this);
 
-	@Override
-	public String getName() {
-		return overlay.getParent() instanceof MapOverlay<?> ? overlay.getPathInParent() : null;
-	}
+    @Override
+    public String getName() {
+        return overlay.getParent() instanceof MapOverlay<?> ? overlay.getPathInParent() : null;
+    }
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public RequestBodyImpl(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
@@ -194,22 +193,21 @@ public class RequestBodyImpl extends PropertiesOverlay<RequestBody> implements R
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<RequestBody> factory = new OverlayFactory<RequestBody>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super RequestBody>> getOverlayClass() {
 			return RequestBodyImpl.class;
 		}
-
+	
 		@Override
-		public JsonOverlay<RequestBody> _create(RequestBody requestBody, JsonOverlay<?> parent,
-				ReferenceManager refMgr) {
+		public JsonOverlay<RequestBody> _create(RequestBody requestBody, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
 			overlay = new RequestBodyImpl(requestBody, parent, refMgr);
 			@SuppressWarnings("unchecked")
 			JsonOverlay<RequestBody> castOverlay = (JsonOverlay<RequestBody>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<RequestBody> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -218,7 +216,7 @@ public class RequestBodyImpl extends PropertiesOverlay<RequestBody> implements R
 			JsonOverlay<RequestBody> castOverlay = (JsonOverlay<RequestBody>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -234,15 +232,16 @@ public class RequestBodyImpl extends PropertiesOverlay<RequestBody> implements R
 	private static Class<? extends RequestBody> getSubtypeOf(JsonNode json) {
 		return RequestBody.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -256,4 +255,5 @@ public class RequestBodyImpl extends PropertiesOverlay<RequestBody> implements R
 	public static <OV extends IJsonOverlay<?>> RequestBody create(OV modelMember) {
 		return (RequestBody) builder(modelMember).build();
 	}
+
 }

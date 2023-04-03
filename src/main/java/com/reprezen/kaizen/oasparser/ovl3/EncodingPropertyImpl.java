@@ -1,21 +1,21 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.BooleanOverlay;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.model3.*;
+import com.reprezen.jsonoverlay.MapOverlay;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.EncodingProperty;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import java.util.Map;
+import com.reprezen.jsonoverlay.BooleanOverlay;
 
 public class EncodingPropertyImpl extends PropertiesOverlay<EncodingProperty> implements EncodingProperty {
 
@@ -225,22 +225,21 @@ public class EncodingPropertyImpl extends PropertiesOverlay<EncodingProperty> im
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<EncodingProperty> factory = new OverlayFactory<EncodingProperty>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super EncodingProperty>> getOverlayClass() {
 			return EncodingPropertyImpl.class;
 		}
-
+	
 		@Override
-		public JsonOverlay<EncodingProperty> _create(EncodingProperty encodingProperty, JsonOverlay<?> parent,
-				ReferenceManager refMgr) {
+		public JsonOverlay<EncodingProperty> _create(EncodingProperty encodingProperty, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
 			overlay = new EncodingPropertyImpl(encodingProperty, parent, refMgr);
 			@SuppressWarnings("unchecked")
 			JsonOverlay<EncodingProperty> castOverlay = (JsonOverlay<EncodingProperty>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<EncodingProperty> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -249,7 +248,7 @@ public class EncodingPropertyImpl extends PropertiesOverlay<EncodingProperty> im
 			JsonOverlay<EncodingProperty> castOverlay = (JsonOverlay<EncodingProperty>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -265,15 +264,16 @@ public class EncodingPropertyImpl extends PropertiesOverlay<EncodingProperty> im
 	private static Class<? extends EncodingProperty> getSubtypeOf(JsonNode json) {
 		return EncodingProperty.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -287,4 +287,5 @@ public class EncodingPropertyImpl extends PropertiesOverlay<EncodingProperty> im
 	public static <OV extends IJsonOverlay<?>> EncodingProperty create(OV modelMember) {
 		return (EncodingProperty) builder(modelMember).build();
 	}
+
 }

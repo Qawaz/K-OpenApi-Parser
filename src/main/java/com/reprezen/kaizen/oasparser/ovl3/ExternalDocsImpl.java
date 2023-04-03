@@ -1,20 +1,20 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.model3.*;
+import com.reprezen.jsonoverlay.MapOverlay;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.ExternalDocs;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import java.util.Map;
 
 public class ExternalDocsImpl extends PropertiesOverlay<ExternalDocs> implements ExternalDocs {
 
@@ -123,22 +123,21 @@ public class ExternalDocsImpl extends PropertiesOverlay<ExternalDocs> implements
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<ExternalDocs> factory = new OverlayFactory<ExternalDocs>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super ExternalDocs>> getOverlayClass() {
 			return ExternalDocsImpl.class;
 		}
-
+	
 		@Override
-		public JsonOverlay<ExternalDocs> _create(ExternalDocs externalDocs, JsonOverlay<?> parent,
-				ReferenceManager refMgr) {
+		public JsonOverlay<ExternalDocs> _create(ExternalDocs externalDocs, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
 			overlay = new ExternalDocsImpl(externalDocs, parent, refMgr);
 			@SuppressWarnings("unchecked")
 			JsonOverlay<ExternalDocs> castOverlay = (JsonOverlay<ExternalDocs>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<ExternalDocs> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -147,7 +146,7 @@ public class ExternalDocsImpl extends PropertiesOverlay<ExternalDocs> implements
 			JsonOverlay<ExternalDocs> castOverlay = (JsonOverlay<ExternalDocs>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -163,15 +162,16 @@ public class ExternalDocsImpl extends PropertiesOverlay<ExternalDocs> implements
 	private static Class<? extends ExternalDocs> getSubtypeOf(JsonNode json) {
 		return ExternalDocs.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -185,4 +185,5 @@ public class ExternalDocsImpl extends PropertiesOverlay<ExternalDocs> implements
 	public static <OV extends IJsonOverlay<?>> ExternalDocs create(OV modelMember) {
 		return (ExternalDocs) builder(modelMember).build();
 	}
+
 }

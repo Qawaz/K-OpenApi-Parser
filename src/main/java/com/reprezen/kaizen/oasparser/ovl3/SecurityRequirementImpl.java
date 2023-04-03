@@ -1,19 +1,19 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.Map;
-
+import com.reprezen.kaizen.oasparser.model3.*;
+import com.reprezen.jsonoverlay.MapOverlay;
+import java.util.stream.Collectors;
 import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.Builder;
 import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
 import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
 import com.reprezen.jsonoverlay.ReferenceManager;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
-import com.reprezen.kaizen.oasparser.model3.SecurityParameter;
-import com.reprezen.kaizen.oasparser.model3.SecurityRequirement;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import java.util.Map;
+import com.reprezen.kaizen.oasparser.ovl3.SecurityParameterImpl;
 
 public class SecurityRequirementImpl extends PropertiesOverlay<SecurityRequirement> implements SecurityRequirement {
 
@@ -23,8 +23,7 @@ public class SecurityRequirementImpl extends PropertiesOverlay<SecurityRequireme
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public SecurityRequirementImpl(SecurityRequirement securityRequirement, JsonOverlay<?> parent,
-			ReferenceManager refMgr) {
+	public SecurityRequirementImpl(SecurityRequirement securityRequirement, JsonOverlay<?> parent, ReferenceManager refMgr) {
 		super(securityRequirement, parent, factory, refMgr);
 	}
 
@@ -89,22 +88,21 @@ public class SecurityRequirementImpl extends PropertiesOverlay<SecurityRequireme
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<SecurityRequirement> factory = new OverlayFactory<SecurityRequirement>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super SecurityRequirement>> getOverlayClass() {
 			return SecurityRequirementImpl.class;
 		}
-
+	
 		@Override
-		public JsonOverlay<SecurityRequirement> _create(SecurityRequirement securityRequirement, JsonOverlay<?> parent,
-				ReferenceManager refMgr) {
+		public JsonOverlay<SecurityRequirement> _create(SecurityRequirement securityRequirement, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
 			overlay = new SecurityRequirementImpl(securityRequirement, parent, refMgr);
 			@SuppressWarnings("unchecked")
 			JsonOverlay<SecurityRequirement> castOverlay = (JsonOverlay<SecurityRequirement>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<SecurityRequirement> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -113,7 +111,7 @@ public class SecurityRequirementImpl extends PropertiesOverlay<SecurityRequireme
 			JsonOverlay<SecurityRequirement> castOverlay = (JsonOverlay<SecurityRequirement>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -129,15 +127,16 @@ public class SecurityRequirementImpl extends PropertiesOverlay<SecurityRequireme
 	private static Class<? extends SecurityRequirement> getSubtypeOf(JsonNode json) {
 		return SecurityRequirement.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -151,4 +150,5 @@ public class SecurityRequirementImpl extends PropertiesOverlay<SecurityRequireme
 	public static <OV extends IJsonOverlay<?>> SecurityRequirement create(OV modelMember) {
 		return (SecurityRequirement) builder(modelMember).build();
 	}
+
 }

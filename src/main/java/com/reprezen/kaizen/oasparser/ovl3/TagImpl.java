@@ -1,21 +1,21 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.model3.*;
+import com.reprezen.jsonoverlay.MapOverlay;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.ExternalDocs;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
-import com.reprezen.kaizen.oasparser.model3.Tag;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import java.util.Map;
+import com.reprezen.kaizen.oasparser.ovl3.ExternalDocsImpl;
 
 public class TagImpl extends PropertiesOverlay<Tag> implements Tag {
 
@@ -147,12 +147,12 @@ public class TagImpl extends PropertiesOverlay<Tag> implements Tag {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<Tag> factory = new OverlayFactory<Tag>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super Tag>> getOverlayClass() {
 			return TagImpl.class;
 		}
-
+	
 		@Override
 		public JsonOverlay<Tag> _create(Tag tag, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -161,7 +161,7 @@ public class TagImpl extends PropertiesOverlay<Tag> implements Tag {
 			JsonOverlay<Tag> castOverlay = (JsonOverlay<Tag>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<Tag> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -170,7 +170,7 @@ public class TagImpl extends PropertiesOverlay<Tag> implements Tag {
 			JsonOverlay<Tag> castOverlay = (JsonOverlay<Tag>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -186,15 +186,16 @@ public class TagImpl extends PropertiesOverlay<Tag> implements Tag {
 	private static Class<? extends Tag> getSubtypeOf(JsonNode json) {
 		return Tag.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -208,4 +209,5 @@ public class TagImpl extends PropertiesOverlay<Tag> implements Tag {
 	public static <OV extends IJsonOverlay<?>> Tag create(OV modelMember) {
 		return (Tag) builder(modelMember).build();
 	}
+
 }

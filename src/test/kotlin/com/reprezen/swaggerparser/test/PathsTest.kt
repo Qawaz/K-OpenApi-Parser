@@ -12,7 +12,6 @@ package com.reprezen.swaggerparser.test
 
 import com.google.common.io.Resources
 import com.reprezen.kaizen.oasparser.OpenApiParser
-import com.reprezen.kaizen.oasparser.getPathString
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import org.junit.Assert
 import org.junit.Test

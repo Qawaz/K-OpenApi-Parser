@@ -1,30 +1,30 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.kaizen.oasparser.model3.*;
 import com.reprezen.jsonoverlay.MapOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.Overlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
-import com.reprezen.kaizen.oasparser.model3.Operation;
-import com.reprezen.kaizen.oasparser.model3.Parameter;
-import com.reprezen.kaizen.oasparser.model3.Path;
-import com.reprezen.kaizen.oasparser.model3.Server;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.ListOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.ovl3.OperationImpl;
+import com.reprezen.kaizen.oasparser.ovl3.ServerImpl;
+import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import java.util.List;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.jsonoverlay.Overlay;
+import java.util.Map;
 
 public class PathImpl extends PropertiesOverlay<Path> implements Path {
 
-	private Overlay<Path> overlay = Overlay.of(this);
+    private Overlay<Path> overlay = Overlay.of(this);
 
 	@Override
 	public String getPathString() {
@@ -427,12 +427,12 @@ public class PathImpl extends PropertiesOverlay<Path> implements Path {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<Path> factory = new OverlayFactory<Path>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super Path>> getOverlayClass() {
 			return PathImpl.class;
 		}
-
+	
 		@Override
 		public JsonOverlay<Path> _create(Path path, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -441,7 +441,7 @@ public class PathImpl extends PropertiesOverlay<Path> implements Path {
 			JsonOverlay<Path> castOverlay = (JsonOverlay<Path>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<Path> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -450,7 +450,7 @@ public class PathImpl extends PropertiesOverlay<Path> implements Path {
 			JsonOverlay<Path> castOverlay = (JsonOverlay<Path>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -466,15 +466,16 @@ public class PathImpl extends PropertiesOverlay<Path> implements Path {
 	private static Class<? extends Path> getSubtypeOf(JsonNode json) {
 		return Path.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -488,4 +489,5 @@ public class PathImpl extends PropertiesOverlay<Path> implements Path {
 	public static <OV extends IJsonOverlay<?>> Path create(OV modelMember) {
 		return (Path) builder(modelMember).build();
 	}
+
 }

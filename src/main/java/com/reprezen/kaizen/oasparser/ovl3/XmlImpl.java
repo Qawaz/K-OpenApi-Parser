@@ -1,21 +1,21 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.BooleanOverlay;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.model3.*;
+import com.reprezen.jsonoverlay.MapOverlay;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
-import com.reprezen.kaizen.oasparser.model3.Xml;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import java.util.Map;
+import com.reprezen.jsonoverlay.BooleanOverlay;
 
 public class XmlImpl extends PropertiesOverlay<Xml> implements Xml {
 
@@ -189,12 +189,12 @@ public class XmlImpl extends PropertiesOverlay<Xml> implements Xml {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<Xml> factory = new OverlayFactory<Xml>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super Xml>> getOverlayClass() {
 			return XmlImpl.class;
 		}
-
+	
 		@Override
 		public JsonOverlay<Xml> _create(Xml xml, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -203,7 +203,7 @@ public class XmlImpl extends PropertiesOverlay<Xml> implements Xml {
 			JsonOverlay<Xml> castOverlay = (JsonOverlay<Xml>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<Xml> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -212,7 +212,7 @@ public class XmlImpl extends PropertiesOverlay<Xml> implements Xml {
 			JsonOverlay<Xml> castOverlay = (JsonOverlay<Xml>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -228,15 +228,16 @@ public class XmlImpl extends PropertiesOverlay<Xml> implements Xml {
 	private static Class<? extends Xml> getSubtypeOf(JsonNode json) {
 		return Xml.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -250,4 +251,5 @@ public class XmlImpl extends PropertiesOverlay<Xml> implements Xml {
 	public static <OV extends IJsonOverlay<?>> Xml create(OV modelMember) {
 		return (Xml) builder(modelMember).build();
 	}
+
 }

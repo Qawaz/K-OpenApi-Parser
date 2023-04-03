@@ -1,32 +1,31 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.kaizen.oasparser.model3.*;
 import com.reprezen.jsonoverlay.MapOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.Overlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.OAuthFlow;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
-import com.reprezen.kaizen.oasparser.model3.SecurityScheme;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.ovl3.OAuthFlowImpl;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.jsonoverlay.Overlay;
+import java.util.Map;
 
 public class SecuritySchemeImpl extends PropertiesOverlay<SecurityScheme> implements SecurityScheme {
 
-	private Overlay<SecurityScheme> overlay = Overlay.of(this);
+    private Overlay<SecurityScheme> overlay = Overlay.of(this);
 
-	@Override
-	public String getKey() {
-		return overlay.getParent() instanceof MapOverlay<?> ? overlay.getPathInParent() : null;
-	}
+    @Override
+    public String getKey() {
+        return overlay.getParent() instanceof MapOverlay<?> ? overlay.getPathInParent() : null;
+    }
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public SecuritySchemeImpl(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
@@ -363,22 +362,21 @@ public class SecuritySchemeImpl extends PropertiesOverlay<SecurityScheme> implem
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<SecurityScheme> factory = new OverlayFactory<SecurityScheme>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super SecurityScheme>> getOverlayClass() {
 			return SecuritySchemeImpl.class;
 		}
-
+	
 		@Override
-		public JsonOverlay<SecurityScheme> _create(SecurityScheme securityScheme, JsonOverlay<?> parent,
-				ReferenceManager refMgr) {
+		public JsonOverlay<SecurityScheme> _create(SecurityScheme securityScheme, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
 			overlay = new SecuritySchemeImpl(securityScheme, parent, refMgr);
 			@SuppressWarnings("unchecked")
 			JsonOverlay<SecurityScheme> castOverlay = (JsonOverlay<SecurityScheme>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<SecurityScheme> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -387,7 +385,7 @@ public class SecuritySchemeImpl extends PropertiesOverlay<SecurityScheme> implem
 			JsonOverlay<SecurityScheme> castOverlay = (JsonOverlay<SecurityScheme>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -403,15 +401,16 @@ public class SecuritySchemeImpl extends PropertiesOverlay<SecurityScheme> implem
 	private static Class<? extends SecurityScheme> getSubtypeOf(JsonNode json) {
 		return SecurityScheme.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -425,4 +424,5 @@ public class SecuritySchemeImpl extends PropertiesOverlay<SecurityScheme> implem
 	public static <OV extends IJsonOverlay<?>> SecurityScheme create(OV modelMember) {
 		return (SecurityScheme) builder(modelMember).build();
 	}
+
 }

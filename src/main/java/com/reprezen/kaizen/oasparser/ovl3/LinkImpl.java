@@ -1,32 +1,31 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.kaizen.oasparser.model3.*;
 import com.reprezen.jsonoverlay.MapOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.Overlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.Link;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
-import com.reprezen.kaizen.oasparser.model3.Server;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.ovl3.ServerImpl;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.jsonoverlay.Overlay;
+import java.util.Map;
 
 public class LinkImpl extends PropertiesOverlay<Link> implements Link {
 
-	private Overlay<Link> overlay = Overlay.of(this);
+    private Overlay<Link> overlay = Overlay.of(this);
 
-	@Override
-	public String getName() {
-		return overlay.getParent() instanceof MapOverlay<?> ? overlay.getPathInParent() : null;
-	}
+    @Override
+    public String getName() {
+        return overlay.getParent() instanceof MapOverlay<?> ? overlay.getPathInParent() : null;
+    }
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public LinkImpl(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
@@ -243,12 +242,12 @@ public class LinkImpl extends PropertiesOverlay<Link> implements Link {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<Link> factory = new OverlayFactory<Link>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super Link>> getOverlayClass() {
 			return LinkImpl.class;
 		}
-
+	
 		@Override
 		public JsonOverlay<Link> _create(Link link, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -257,7 +256,7 @@ public class LinkImpl extends PropertiesOverlay<Link> implements Link {
 			JsonOverlay<Link> castOverlay = (JsonOverlay<Link>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<Link> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -266,7 +265,7 @@ public class LinkImpl extends PropertiesOverlay<Link> implements Link {
 			JsonOverlay<Link> castOverlay = (JsonOverlay<Link>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -282,15 +281,16 @@ public class LinkImpl extends PropertiesOverlay<Link> implements Link {
 	private static Class<? extends Link> getSubtypeOf(JsonNode json) {
 		return Link.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -304,4 +304,5 @@ public class LinkImpl extends PropertiesOverlay<Link> implements Link {
 	public static <OV extends IJsonOverlay<?>> Link create(OV modelMember) {
 		return (Link) builder(modelMember).build();
 	}
+
 }

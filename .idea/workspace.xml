@@ -8,29 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d55a8c6a-af6b-48df-a7d6-a3559c3cc6b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/class/example.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/class/header.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/class/license.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/class/link.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/class/openapi3.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/class/parameter.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/class/request_body.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/class/response.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/class/schema.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/class/security_parameter.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/class/security_scheme.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/interface/example.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/interface/header.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/interface/link.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/interface/openapi3.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/interface/parameter.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/interface/request_body.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/interface/response.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/interface/schema.java.kate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/java/interface/security_scheme.java.kate" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/GenOpenApi3.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/GenOpenApi3.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/Utils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/Utils.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/Utils.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/model3/Callback.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/model3/Callback.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/model3/Contact.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/model3/Contact.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/model3/Discriminator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/model3/Discriminator.java" afterDir="false" />
@@ -83,8 +62,10 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ServerVariableImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ServerVariableImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/TagImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/TagImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/XmlImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/XmlImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/java/class/callback.java.kate" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/java/class/callback.java.kate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/java/class/path.java.kate" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/java/class/path.java.kate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/reprezen/kaizen/oasparser/val3/ParameterValidatorTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/reprezen/kaizen/oasparser/val3/ParameterValidatorTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/reprezen/swaggerparser/test/ExampleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/reprezen/swaggerparser/test/ExampleTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/reprezen/swaggerparser/test/ExamplesTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/reprezen/swaggerparser/test/ExamplesTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/reprezen/swaggerparser/test/PathsTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/reprezen/swaggerparser/test/PathsTest.kt" afterDir="false" />
     </list>
     <list id="2db31701-028f-44e4-9104-20ae3599ae33" name="Revert Tests In Json Overlay" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -208,7 +189,7 @@
       <command value="gradle init" />
     </option>
   </component>
-  <component name="RunManager" selected="Kotlin.GenOpenApi3">
+  <component name="RunManager" selected="Gradle.Tests in 'KOpenAPIParser.test'">
     <configuration name="GenTestModel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.reprezen.jsonoverlay.model.GenTestModel" />
       <module name="KOpenAPIParser.json-overlay.test" />
@@ -302,11 +283,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Tests in 'KOpenAPIParser.test'" />
         <item itemvalue="Kotlin.GenOpenApi3" />
         <item itemvalue="Kotlin.GenTestModel" />
         <item itemvalue="Gradle.Tests in 'KOpenAPIParser.json-overlay.test'" />
         <item itemvalue="Application.GenTestModel" />
-        <item itemvalue="Gradle.Tests in 'KOpenAPIParser.test'" />
       </list>
     </recent_temporary>
   </component>
@@ -321,6 +302,17 @@
       <updated>1679042259023</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

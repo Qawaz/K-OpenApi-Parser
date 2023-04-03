@@ -1,21 +1,22 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.model3.*;
+import com.reprezen.jsonoverlay.MapOverlay;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
-import com.reprezen.kaizen.oasparser.model3.ServerVariable;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.ListOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import java.util.List;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import java.util.Map;
 
 public class ServerVariableImpl extends PropertiesOverlay<ServerVariable> implements ServerVariable {
 
@@ -183,22 +184,21 @@ public class ServerVariableImpl extends PropertiesOverlay<ServerVariable> implem
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<ServerVariable> factory = new OverlayFactory<ServerVariable>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super ServerVariable>> getOverlayClass() {
 			return ServerVariableImpl.class;
 		}
-
+	
 		@Override
-		public JsonOverlay<ServerVariable> _create(ServerVariable serverVariable, JsonOverlay<?> parent,
-				ReferenceManager refMgr) {
+		public JsonOverlay<ServerVariable> _create(ServerVariable serverVariable, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
 			overlay = new ServerVariableImpl(serverVariable, parent, refMgr);
 			@SuppressWarnings("unchecked")
 			JsonOverlay<ServerVariable> castOverlay = (JsonOverlay<ServerVariable>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<ServerVariable> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -207,7 +207,7 @@ public class ServerVariableImpl extends PropertiesOverlay<ServerVariable> implem
 			JsonOverlay<ServerVariable> castOverlay = (JsonOverlay<ServerVariable>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -223,15 +223,16 @@ public class ServerVariableImpl extends PropertiesOverlay<ServerVariable> implem
 	private static Class<? extends ServerVariable> getSubtypeOf(JsonNode json) {
 		return ServerVariable.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -245,4 +246,5 @@ public class ServerVariableImpl extends PropertiesOverlay<ServerVariable> implem
 	public static <OV extends IJsonOverlay<?>> ServerVariable create(OV modelMember) {
 		return (ServerVariable) builder(modelMember).build();
 	}
+
 }

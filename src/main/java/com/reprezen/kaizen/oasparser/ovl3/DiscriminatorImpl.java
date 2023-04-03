@@ -1,19 +1,19 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.model3.*;
+import com.reprezen.jsonoverlay.MapOverlay;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.Discriminator;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import java.util.Map;
 
 public class DiscriminatorImpl extends PropertiesOverlay<Discriminator> implements Discriminator {
 
@@ -105,22 +105,21 @@ public class DiscriminatorImpl extends PropertiesOverlay<Discriminator> implemen
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<Discriminator> factory = new OverlayFactory<Discriminator>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super Discriminator>> getOverlayClass() {
 			return DiscriminatorImpl.class;
 		}
-
+	
 		@Override
-		public JsonOverlay<Discriminator> _create(Discriminator discriminator, JsonOverlay<?> parent,
-				ReferenceManager refMgr) {
+		public JsonOverlay<Discriminator> _create(Discriminator discriminator, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
 			overlay = new DiscriminatorImpl(discriminator, parent, refMgr);
 			@SuppressWarnings("unchecked")
 			JsonOverlay<Discriminator> castOverlay = (JsonOverlay<Discriminator>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<Discriminator> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -129,7 +128,7 @@ public class DiscriminatorImpl extends PropertiesOverlay<Discriminator> implemen
 			JsonOverlay<Discriminator> castOverlay = (JsonOverlay<Discriminator>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -145,15 +144,16 @@ public class DiscriminatorImpl extends PropertiesOverlay<Discriminator> implemen
 	private static Class<? extends Discriminator> getSubtypeOf(JsonNode json) {
 		return Discriminator.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -167,4 +167,5 @@ public class DiscriminatorImpl extends PropertiesOverlay<Discriminator> implemen
 	public static <OV extends IJsonOverlay<?>> Discriminator create(OV modelMember) {
 		return (Discriminator) builder(modelMember).build();
 	}
+
 }

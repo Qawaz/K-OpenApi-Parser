@@ -15,10 +15,7 @@ import com.google.common.collect.Lists
 import com.google.common.collect.Queues
 import com.reprezen.jsonoverlay.JsonLoader
 import com.reprezen.kaizen.oasparser.OpenApiParser
-import com.reprezen.kaizen.oasparser.getValidationItems
-import com.reprezen.kaizen.oasparser.isValid
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
-import com.reprezen.kaizen.oasparser.validate
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -42,10 +39,10 @@ class ExamplesTest(
     fun exampleCanBeParsed() {
         if (!exampleUrl.toString().contains("callback-example")) {
             val model = OpenApiParser().parse(exampleUrl) as OpenApi3
-            for (item in model.getValidationItems()!!) {
+            for (item in model.validationItems) {
                 println(item)
             }
-            assertTrue("Example was not valid: $exampleUrl", model.validate().isValid())
+            assertTrue("Example was not valid: $exampleUrl", model.isValid)
         }
     }
 

@@ -1,86 +1,92 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.Overlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.model3.*;
+import com.reprezen.jsonoverlay.MapOverlay;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.Callback;
-import com.reprezen.kaizen.oasparser.model3.Example;
-import com.reprezen.kaizen.oasparser.model3.ExternalDocs;
-import com.reprezen.kaizen.oasparser.model3.Header;
-import com.reprezen.kaizen.oasparser.model3.Info;
-import com.reprezen.kaizen.oasparser.model3.Link;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
-import com.reprezen.kaizen.oasparser.model3.Parameter;
-import com.reprezen.kaizen.oasparser.model3.Path;
-import com.reprezen.kaizen.oasparser.model3.RequestBody;
-import com.reprezen.kaizen.oasparser.model3.Response;
-import com.reprezen.kaizen.oasparser.model3.Schema;
-import com.reprezen.kaizen.oasparser.model3.SecurityRequirement;
-import com.reprezen.kaizen.oasparser.model3.SecurityScheme;
-import com.reprezen.kaizen.oasparser.model3.Server;
-import com.reprezen.kaizen.oasparser.model3.Tag;
-import com.reprezen.kaizen.oasparser.val.ValidationContext;
-import com.reprezen.kaizen.oasparser.val.ValidationResults;
+import com.reprezen.kaizen.oasparser.ovl3.CallbackImpl;
+import com.reprezen.jsonoverlay.ListOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.kaizen.oasparser.ovl3.HeaderImpl;
+import com.reprezen.kaizen.oasparser.ovl3.SecuritySchemeImpl;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl;
+import com.reprezen.kaizen.oasparser.ovl3.ServerImpl;
+import com.reprezen.kaizen.oasparser.ovl3.SecurityRequirementImpl;
+import com.reprezen.kaizen.oasparser.ovl3.LinkImpl;
+import java.util.List;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.jsonoverlay.Overlay;
+import com.reprezen.kaizen.oasparser.ovl3.ExampleImpl;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.kaizen.oasparser.ovl3.TagImpl;
 import com.reprezen.kaizen.oasparser.val.ValidationResults.Severity;
+import com.reprezen.kaizen.oasparser.ovl3.RequestBodyImpl;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.reprezen.kaizen.oasparser.ovl3.PathImpl;
+import com.reprezen.kaizen.oasparser.ovl3.ResponseImpl;
+import com.reprezen.kaizen.oasparser.val.ValidationContext;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.reprezen.kaizen.oasparser.val.ValidationResults;
+import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl;
+import java.util.Collection;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import com.reprezen.jsonoverlay.ReferenceRegistry;
+import com.reprezen.kaizen.oasparser.OpenApi;
 import com.reprezen.kaizen.oasparser.val3.OpenApi3Validator;
+import java.util.Map;
+import com.reprezen.kaizen.oasparser.val.Validator;
+import com.reprezen.kaizen.oasparser.ovl3.InfoImpl;
+import com.reprezen.kaizen.oasparser.ovl3.ExternalDocsImpl;
 
 public class OpenApi3Impl extends PropertiesOverlay<OpenApi3> implements OpenApi3 {
 
-	private ValidationResults validationResults = null;
+    private ValidationResults validationResults = null;
 
-	@Override
-	protected JsonNode _fixJson(JsonNode json) {
-		if (json.isMissingNode()) {
-			json = _jsonObject();
-		}
-		if (!json.has("paths")) {
-			((ObjectNode) json).putObject("paths");
-		}
-		return json;
-	}
+    @Override
+    protected JsonNode _fixJson(JsonNode json) {
+        if (json.isMissingNode()) {
+            json = _jsonObject();
+        }
+        if (!json.has("paths")) {
+            ((ObjectNode) json).putObject("paths");
+        }
+        return json;
+    }
 
-	@Override
-	public void validate() {
-		try (ValidationContext context = ValidationContext.open()) {
-			validationResults = ValidationContext.getValidationResults();
-			new OpenApi3Validator().validate(Overlay.of(this));
-		}
-	}
+    @Override
+    public void validate() {
+        try (ValidationContext context = ValidationContext.open()) {
+            validationResults = ValidationContext.getValidationResults();
+            new OpenApi3Validator().validate(Overlay.of(this));
+        }
+    }
 
-	@Override
-	public boolean isValid() {
-		if (validationResults == null) {
-			validate();
-		}
-		return validationResults.getSeverity().lt(Severity.ERROR);
-	}
+    @Override
+    public boolean isValid() {
+        if (validationResults == null) {
+            validate();
+        }
+        return validationResults.getSeverity().lt(Severity.ERROR);
+    }
 
-	@Override
-	public ValidationResults getValidationResults() {
-		if (validationResults == null) {
-			validate();
-		}
-		return validationResults;
-	}
+    @Override
+    public ValidationResults getValidationResults() {
+        if (validationResults == null) {
+            validate();
+        }
+        return validationResults;
+    }
 
-	@Override
-	public Collection<ValidationResults.ValidationItem> getValidationItems() {
-		return getValidationResults().getItems();
-	}
+    @Override
+    public Collection<ValidationResults.ValidationItem> getValidationItems() {
+        return getValidationResults().getItems();
+    }
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public OpenApi3Impl(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
@@ -1029,12 +1035,12 @@ public class OpenApi3Impl extends PropertiesOverlay<OpenApi3> implements OpenApi
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<OpenApi3> factory = new OverlayFactory<OpenApi3>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super OpenApi3>> getOverlayClass() {
 			return OpenApi3Impl.class;
 		}
-
+	
 		@Override
 		public JsonOverlay<OpenApi3> _create(OpenApi3 openApi3, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -1043,7 +1049,7 @@ public class OpenApi3Impl extends PropertiesOverlay<OpenApi3> implements OpenApi
 			JsonOverlay<OpenApi3> castOverlay = (JsonOverlay<OpenApi3>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<OpenApi3> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -1052,7 +1058,7 @@ public class OpenApi3Impl extends PropertiesOverlay<OpenApi3> implements OpenApi
 			JsonOverlay<OpenApi3> castOverlay = (JsonOverlay<OpenApi3>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -1068,15 +1074,16 @@ public class OpenApi3Impl extends PropertiesOverlay<OpenApi3> implements OpenApi
 	private static Class<? extends OpenApi3> getSubtypeOf(JsonNode json) {
 		return OpenApi3.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -1090,4 +1097,5 @@ public class OpenApi3Impl extends PropertiesOverlay<OpenApi3> implements OpenApi
 	public static <OV extends IJsonOverlay<?>> OpenApi3 create(OV modelMember) {
 		return (OpenApi3) builder(modelMember).build();
 	}
+
 }

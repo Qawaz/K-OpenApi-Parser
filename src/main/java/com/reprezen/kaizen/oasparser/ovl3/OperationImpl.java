@@ -1,29 +1,30 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.BooleanOverlay;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.model3.*;
+import com.reprezen.jsonoverlay.MapOverlay;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.Callback;
-import com.reprezen.kaizen.oasparser.model3.ExternalDocs;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
-import com.reprezen.kaizen.oasparser.model3.Operation;
-import com.reprezen.kaizen.oasparser.model3.Parameter;
-import com.reprezen.kaizen.oasparser.model3.RequestBody;
-import com.reprezen.kaizen.oasparser.model3.Response;
-import com.reprezen.kaizen.oasparser.model3.SecurityRequirement;
-import com.reprezen.kaizen.oasparser.model3.Server;
+import java.util.stream.Collectors;
+import com.reprezen.kaizen.oasparser.ovl3.CallbackImpl;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.ListOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.kaizen.oasparser.ovl3.RequestBodyImpl;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.kaizen.oasparser.ovl3.ResponseImpl;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.ovl3.ServerImpl;
+import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl;
+import com.reprezen.kaizen.oasparser.ovl3.SecurityRequirementImpl;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import java.util.List;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import java.util.Map;
+import com.reprezen.jsonoverlay.BooleanOverlay;
+import com.reprezen.kaizen.oasparser.ovl3.ExternalDocsImpl;
 
 public class OperationImpl extends PropertiesOverlay<Operation> implements Operation {
 
@@ -667,12 +668,12 @@ public class OperationImpl extends PropertiesOverlay<Operation> implements Opera
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<Operation> factory = new OverlayFactory<Operation>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super Operation>> getOverlayClass() {
 			return OperationImpl.class;
 		}
-
+	
 		@Override
 		public JsonOverlay<Operation> _create(Operation operation, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -681,7 +682,7 @@ public class OperationImpl extends PropertiesOverlay<Operation> implements Opera
 			JsonOverlay<Operation> castOverlay = (JsonOverlay<Operation>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<Operation> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -690,7 +691,7 @@ public class OperationImpl extends PropertiesOverlay<Operation> implements Opera
 			JsonOverlay<Operation> castOverlay = (JsonOverlay<Operation>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -706,15 +707,16 @@ public class OperationImpl extends PropertiesOverlay<Operation> implements Opera
 	private static Class<? extends Operation> getSubtypeOf(JsonNode json) {
 		return Operation.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -728,4 +730,5 @@ public class OperationImpl extends PropertiesOverlay<Operation> implements Opera
 	public static <OV extends IJsonOverlay<?>> Operation create(OV modelMember) {
 		return (Operation) builder(modelMember).build();
 	}
+
 }

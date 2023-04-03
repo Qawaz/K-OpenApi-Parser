@@ -1,22 +1,22 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.model3.*;
+import com.reprezen.jsonoverlay.MapOverlay;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.Contact;
-import com.reprezen.kaizen.oasparser.model3.Info;
-import com.reprezen.kaizen.oasparser.model3.License;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.kaizen.oasparser.ovl3.LicenseImpl;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.ovl3.ContactImpl;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import java.util.Map;
 
 public class InfoImpl extends PropertiesOverlay<Info> implements Info {
 
@@ -205,12 +205,12 @@ public class InfoImpl extends PropertiesOverlay<Info> implements Info {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<Info> factory = new OverlayFactory<Info>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super Info>> getOverlayClass() {
 			return InfoImpl.class;
 		}
-
+	
 		@Override
 		public JsonOverlay<Info> _create(Info info, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -219,7 +219,7 @@ public class InfoImpl extends PropertiesOverlay<Info> implements Info {
 			JsonOverlay<Info> castOverlay = (JsonOverlay<Info>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<Info> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -228,7 +228,7 @@ public class InfoImpl extends PropertiesOverlay<Info> implements Info {
 			JsonOverlay<Info> castOverlay = (JsonOverlay<Info>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -244,15 +244,16 @@ public class InfoImpl extends PropertiesOverlay<Info> implements Info {
 	private static Class<? extends Info> getSubtypeOf(JsonNode json) {
 		return Info.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -266,4 +267,5 @@ public class InfoImpl extends PropertiesOverlay<Info> implements Info {
 	public static <OV extends IJsonOverlay<?>> Info create(OV modelMember) {
 		return (Info) builder(modelMember).build();
 	}
+
 }

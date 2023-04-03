@@ -1,35 +1,34 @@
 package com.reprezen.kaizen.oasparser.ovl3;
 
-import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.BooleanOverlay;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.kaizen.oasparser.model3.*;
 import com.reprezen.jsonoverlay.MapOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.Overlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.model3.Example;
-import com.reprezen.kaizen.oasparser.model3.Header;
-import com.reprezen.kaizen.oasparser.model3.MediaType;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
-import com.reprezen.kaizen.oasparser.model3.Schema;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl;
+import com.reprezen.kaizen.oasparser.ovl3.MediaTypeImpl;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.jsonoverlay.Overlay;
+import com.reprezen.kaizen.oasparser.ovl3.ExampleImpl;
+import java.util.Map;
+import com.reprezen.jsonoverlay.BooleanOverlay;
 
 public class HeaderImpl extends PropertiesOverlay<Header> implements Header {
 
-	private Overlay<Header> overlay = Overlay.of(this);
+    private Overlay<Header> overlay = Overlay.of(this);
 
-	@Override
-	public String getKey() {
-		return overlay.getParent() instanceof MapOverlay<?> ? overlay.getPathInParent() : null;
-	}
+    @Override
+    public String getKey() {
+        return overlay.getParent() instanceof MapOverlay<?> ? overlay.getPathInParent() : null;
+    }
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public HeaderImpl(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
@@ -402,12 +401,12 @@ public class HeaderImpl extends PropertiesOverlay<Header> implements Header {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<Header> factory = new OverlayFactory<Header>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super Header>> getOverlayClass() {
 			return HeaderImpl.class;
 		}
-
+	
 		@Override
 		public JsonOverlay<Header> _create(Header header, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -416,7 +415,7 @@ public class HeaderImpl extends PropertiesOverlay<Header> implements Header {
 			JsonOverlay<Header> castOverlay = (JsonOverlay<Header>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<Header> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -425,7 +424,7 @@ public class HeaderImpl extends PropertiesOverlay<Header> implements Header {
 			JsonOverlay<Header> castOverlay = (JsonOverlay<Header>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -441,15 +440,16 @@ public class HeaderImpl extends PropertiesOverlay<Header> implements Header {
 	private static Class<? extends Header> getSubtypeOf(JsonNode json) {
 		return Header.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return OpenApi3.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -463,4 +463,5 @@ public class HeaderImpl extends PropertiesOverlay<Header> implements Header {
 	public static <OV extends IJsonOverlay<?>> Header create(OV modelMember) {
 		return (Header) builder(modelMember).build();
 	}
+
 }
