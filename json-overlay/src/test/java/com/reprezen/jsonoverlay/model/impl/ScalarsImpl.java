@@ -1,36 +1,24 @@
-/*********************************************************************
-*  Copyright (c) 2017 ModelSolv, Inc. and others.
-*
-* This program and the accompanying materials are made
-* available under the terms of the Eclipse Public License 2.0
-* which is available at https://www.eclipse.org/legal/epl-2.0/
-*
-* SPDX-License-Identifier: EPL-2.0
- *
- *  Contributors:
- *     ModelSolv, Inc. 
- *     - initial API and implementation and/or initial documentation
-**********************************************************************/
 package com.reprezen.jsonoverlay.model.impl;
 
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.BooleanOverlay;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.IntegerOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.NumberOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PrimitiveOverlay;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.jsonoverlay.model.intf.*;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.model.intf.Color;
-import com.reprezen.jsonoverlay.model.intf.Scalars;
-import com.reprezen.jsonoverlay.model.intf.TestModel;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.reprezen.jsonoverlay.NumberOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.jsonoverlay.IntegerOverlay;
+import com.reprezen.jsonoverlay.PrimitiveOverlay;
+import com.reprezen.jsonoverlay.model.impl.ScalarsImpl;
+import com.reprezen.jsonoverlay.ObjectOverlay;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.jsonoverlay.model.impl.ColorImpl;
+import com.reprezen.jsonoverlay.BooleanOverlay;
 
 public class ScalarsImpl extends PropertiesOverlay<Scalars> implements Scalars {
 
@@ -207,12 +195,12 @@ public class ScalarsImpl extends PropertiesOverlay<Scalars> implements Scalars {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<Scalars> factory = new OverlayFactory<Scalars>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super Scalars>> getOverlayClass() {
 			return ScalarsImpl.class;
 		}
-
+	
 		@Override
 		public JsonOverlay<Scalars> _create(Scalars scalars, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -221,7 +209,7 @@ public class ScalarsImpl extends PropertiesOverlay<Scalars> implements Scalars {
 			JsonOverlay<Scalars> castOverlay = (JsonOverlay<Scalars>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<Scalars> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -230,7 +218,7 @@ public class ScalarsImpl extends PropertiesOverlay<Scalars> implements Scalars {
 			JsonOverlay<Scalars> castOverlay = (JsonOverlay<Scalars>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -246,15 +234,16 @@ public class ScalarsImpl extends PropertiesOverlay<Scalars> implements Scalars {
 	private static Class<? extends Scalars> getSubtypeOf(JsonNode json) {
 		return Scalars.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return TestModel.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -268,4 +257,5 @@ public class ScalarsImpl extends PropertiesOverlay<Scalars> implements Scalars {
 	public static <OV extends IJsonOverlay<?>> Scalars create(OV modelMember) {
 		return (Scalars) builder(modelMember).build();
 	}
+
 }

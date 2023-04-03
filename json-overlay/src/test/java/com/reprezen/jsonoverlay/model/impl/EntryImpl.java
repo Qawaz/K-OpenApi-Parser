@@ -1,30 +1,17 @@
-/*********************************************************************
-*  Copyright (c) 2017 ModelSolv, Inc. and others.
-*
-* This program and the accompanying materials are made
-* available under the terms of the Eclipse Public License 2.0
-* which is available at https://www.eclipse.org/legal/epl-2.0/
-*
-* SPDX-License-Identifier: EPL-2.0
- *
- *  Contributors:
- *     ModelSolv, Inc. 
- *     - initial API and implementation and/or initial documentation
-**********************************************************************/
 package com.reprezen.jsonoverlay.model.impl;
 
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.jsonoverlay.model.intf.*;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.model.intf.Entry;
-import com.reprezen.jsonoverlay.model.intf.TestModel;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
 
 public class EntryImpl extends PropertiesOverlay<Entry> implements Entry {
 
@@ -63,12 +50,12 @@ public class EntryImpl extends PropertiesOverlay<Entry> implements Entry {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<Entry> factory = new OverlayFactory<Entry>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super Entry>> getOverlayClass() {
 			return EntryImpl.class;
 		}
-
+	
 		@Override
 		public JsonOverlay<Entry> _create(Entry entry, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -77,7 +64,7 @@ public class EntryImpl extends PropertiesOverlay<Entry> implements Entry {
 			JsonOverlay<Entry> castOverlay = (JsonOverlay<Entry>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<Entry> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -86,7 +73,7 @@ public class EntryImpl extends PropertiesOverlay<Entry> implements Entry {
 			JsonOverlay<Entry> castOverlay = (JsonOverlay<Entry>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -102,15 +89,16 @@ public class EntryImpl extends PropertiesOverlay<Entry> implements Entry {
 	private static Class<? extends Entry> getSubtypeOf(JsonNode json) {
 		return Entry.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return TestModel.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -124,4 +112,5 @@ public class EntryImpl extends PropertiesOverlay<Entry> implements Entry {
 	public static <OV extends IJsonOverlay<?>> Entry create(OV modelMember) {
 		return (Entry) builder(modelMember).build();
 	}
+
 }

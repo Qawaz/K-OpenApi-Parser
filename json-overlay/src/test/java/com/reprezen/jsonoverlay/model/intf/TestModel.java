@@ -1,25 +1,14 @@
-/*********************************************************************
-*  Copyright (c) 2017 ModelSolv, Inc. and others.
-*
-* This program and the accompanying materials are made
-* available under the terms of the Eclipse Public License 2.0
-* which is available at https://www.eclipse.org/legal/epl-2.0/
-*
-* SPDX-License-Identifier: EPL-2.0
- *
- *  Contributors:
- *     ModelSolv, Inc. 
- *     - initial API and implementation and/or initial documentation
-**********************************************************************/
 package com.reprezen.jsonoverlay.model.intf;
 
+import com.reprezen.jsonoverlay.model.intf.Item;
+import com.reprezen.jsonoverlay.model.intf.Entry;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.model.intf.Color;
+import com.reprezen.jsonoverlay.model.intf.Scalars;
+import com.reprezen.jsonoverlay.IModelPart;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Generated;
-
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.IModelPart;
 
 public interface TestModel extends IJsonOverlay<TestModel>, IModelPart<TestModel, TestModel> {
 
@@ -184,4 +173,5 @@ public interface TestModel extends IJsonOverlay<TestModel>, IModelPart<TestModel
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	void removeScalar(String name);
+
 }

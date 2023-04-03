@@ -1,30 +1,17 @@
-/*********************************************************************
-*  Copyright (c) 2017 ModelSolv, Inc. and others.
-*
-* This program and the accompanying materials are made
-* available under the terms of the Eclipse Public License 2.0
-* which is available at https://www.eclipse.org/legal/epl-2.0/
-*
-* SPDX-License-Identifier: EPL-2.0
- *
- *  Contributors:
- *     ModelSolv, Inc. 
- *     - initial API and implementation and/or initial documentation
-**********************************************************************/
 package com.reprezen.jsonoverlay.model.impl;
 
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.jsonoverlay.model.intf.*;
 import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.model.intf.Item;
-import com.reprezen.jsonoverlay.model.intf.TestModel;
+import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import com.reprezen.jsonoverlay.IJsonOverlay;
+import com.reprezen.jsonoverlay.OverlayFactory;
+import com.reprezen.jsonoverlay.Builder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.reprezen.jsonoverlay.JsonOverlay;
+import com.fasterxml.jackson.core.JsonPointer;
+import com.reprezen.jsonoverlay.ReferenceManager;
 
 public class ItemImpl extends PropertiesOverlay<Item> implements Item {
 
@@ -63,12 +50,12 @@ public class ItemImpl extends PropertiesOverlay<Item> implements Item {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	public static OverlayFactory<Item> factory = new OverlayFactory<Item>() {
-
+	
 		@Override
 		protected Class<? extends JsonOverlay<? super Item>> getOverlayClass() {
 			return ItemImpl.class;
 		}
-
+	
 		@Override
 		public JsonOverlay<Item> _create(Item item, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -77,7 +64,7 @@ public class ItemImpl extends PropertiesOverlay<Item> implements Item {
 			JsonOverlay<Item> castOverlay = (JsonOverlay<Item>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		public JsonOverlay<Item> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
 			JsonOverlay<?> overlay;
@@ -86,7 +73,7 @@ public class ItemImpl extends PropertiesOverlay<Item> implements Item {
 			JsonOverlay<Item> castOverlay = (JsonOverlay<Item>) overlay;
 			return castOverlay;
 		}
-
+	
 		@Override
 		protected boolean isExtendedType() {
 			return false;
@@ -102,15 +89,16 @@ public class ItemImpl extends PropertiesOverlay<Item> implements Item {
 	private static Class<? extends Item> getSubtypeOf(JsonNode json) {
 		return Item.class;
 	}
+	
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	public Class<?> _getModelType() {
 		return TestModel.class;
 	}
 
-	@Override
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
+	@Override
 	protected OverlayFactory<?> _getFactory() {
 		return factory;
 	}
@@ -124,4 +112,5 @@ public class ItemImpl extends PropertiesOverlay<Item> implements Item {
 	public static <OV extends IJsonOverlay<?>> Item create(OV modelMember) {
 		return (Item) builder(modelMember).build();
 	}
+
 }

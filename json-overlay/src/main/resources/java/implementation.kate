@@ -33,6 +33,6 @@
         @var(ClassMembers)
     @end_default_no_raw
 
-    @runtime.print_string("\n}\n")
+    @runtime.print_string("\n\n}\n")
 
 @end_partial_raw

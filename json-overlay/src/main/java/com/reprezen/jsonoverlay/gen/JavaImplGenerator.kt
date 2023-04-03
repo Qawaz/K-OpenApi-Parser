@@ -349,18 +349,18 @@ class JavaImplGenerator : TypeGenerator {
             """public static OverlayFactory<${type.name}> factory = new OverlayFactory<${type.name}>() {
         |
         |${"\t"}@Override
-        |${"\t"}protected Class <? extends JsonOverlay<? super ${type.name}>> getOverlayClass() {
+        |${"\t"}protected Class<? extends JsonOverlay<? super ${type.name}>> getOverlayClass() {
         |${"\t"}${"\t"}return ${type.implType}.class;
         |${"\t"}}
         |
         |${"\t"}@Override
-        |${"\t"}public JsonOverlay <${type.name}> _create(${type.name} ${type.lcName}, JsonOverlay<?> parent, ReferenceManager refMgr) {
+        |${"\t"}public JsonOverlay<${type.name}> _create(${type.name} ${type.lcName}, JsonOverlay<?> parent, ReferenceManager refMgr) {
         |${"\t"}${"\t"}return new ${type.implType}(${type.lcName}, parent, refMgr);
         |${"\t"}}
         |
         |${"\t"}@Override
-        |${"\t"}public JsonOverlay <${type.name}> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
-        |${"\t"}   return new ${type.implType}(json, parent, refMgr);
+        |${"\t"}public JsonOverlay<${type.name}> _create(JsonNode json, JsonOverlay<?> parent, ReferenceManager refMgr) {
+        |${"\t"}${"\t"}return new ${type.implType}(json, parent, refMgr);
         |${"\t"}}
         |};""".trimMargin("|")
         )
