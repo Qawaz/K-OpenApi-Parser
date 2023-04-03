@@ -15,11 +15,8 @@
         @runtime.print_string("public ")
     @endif
 
-    @runtime.print_string("enum ")
-    @runtime.print_string(@var(name))
-    @runtime.print_char(' ')
-
-    @runtime.print_string("{\n\n")
+    @default_no_raw enum @var(name)  { @end_default_no_raw
+    @runtime.print_string("\n\n")
 
     @default_no_raw
         @var(EnumEntries)

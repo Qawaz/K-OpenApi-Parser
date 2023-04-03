@@ -20,15 +20,13 @@
     @runtime.print_char(' ')
 
     @if(@var(extends.size()) > 0)
-        @runtime.print_string("extends ")
-        @runtime.print_string(@var(extends.joinToString(", ")))
-        @runtime.print_string(" ")
+        @default_no_raw extends @var(extends.joinToString(", ")) @end_default_no_raw
+        @runtime.print_char(' ')
     @endif
 
     @if(@var(implements.size()) > 0)
-        @runtime.print_string("implements ")
-        @runtime.print_string(@var(implements.joinToString(", ")))
-        @runtime.print_string(" ")
+        @default_no_raw implements @var(implements.joinToString(", ")) @end_default_no_raw
+        @runtime.print_char(' ')
     @endif
 
     @runtime.print_string("{\n\n")

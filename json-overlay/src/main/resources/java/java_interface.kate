@@ -15,18 +15,12 @@
         @runtime.print_string("public ")
     @endif
 
-    @runtime.print_string("interface ")
-    @runtime.print_string(@var(name))
+    @default_no_raw interface @var(name) @end_default_no_raw
     @runtime.print_char(' ')
 
     @if(@var(extends.size()) > 0)
-        @runtime.print_string("extends ")
-        @runtime.print_string(@var(extends.joinToString(", ")))
+        @default_no_raw extends @var(extends.joinToString(", ")) @end_default_no_raw
         @runtime.print_char(' ')
-    @endif
-
-    @if(@var(implements.size()) > 0)
-        @runtime.print_string("implements " @+ @var(implements.joinToString(", ")) @+ " ")
     @endif
 
     @runtime.print_string("{\n\n")
