@@ -8,12 +8,11 @@ import java.util.stream.Collectors
 
 class JavaImplGenerator : TypeGenerator {
 
-    constructor(dir: File, intfPackage: String, implPackage: String, suffix: String, preserve: Boolean) : super(
+    constructor(dir: File, intfPackage: String, implPackage: String, suffix: String) : super(
         dir,
         intfPackage,
         implPackage,
-        suffix,
-        preserve
+        suffix
     )
 
     override fun getPackage(): String {
@@ -69,7 +68,7 @@ class JavaImplGenerator : TypeGenerator {
         return members
     }
 
-    override fun getTypeDeclaration(file: File, type: TypeData.Type, suffix: String?): TypeDeclaration {
+    override fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDeclaration {
         val decl = ClassOrInterfaceDeclaration(
             name = type.name + suffix,
             isInterface = false,

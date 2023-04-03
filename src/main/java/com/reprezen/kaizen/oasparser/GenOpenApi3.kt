@@ -18,12 +18,12 @@ object GenOpenApi3 {
     fun main(args: Array<String>) {
         CodeGenerator.main(
             CodeGenerator.Options(
-                typeDataFile = "src/main/java/com/reprezen/kaizen/oasparser/types3.yaml",
-                pkg = "com.reprezen.kaizen.oasparser",
                 topDir = "src/main/java/com/reprezen/kaizen/oasparser",
-                interfaceDir = "model3",
+                typeDataFile = "src/main/java/com/reprezen/kaizen/oasparser/types3.yaml",
                 interfacePackage = "model3",
+                interfaceDir = "model3",
                 classDir = "ovl3",
+                pkg = "com.reprezen.kaizen.oasparser",
                 classPackage = "ovl3"
             )
         )

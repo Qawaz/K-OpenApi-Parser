@@ -26,12 +26,12 @@ object GenTestModel {
     fun main(args: Array<String>) {
         CodeGenerator.main(
             CodeGenerator.Options(
-                typeDataFile = "json-overlay/src/test/java/com/reprezen/jsonoverlay/model/types.yaml",
-                pkg = "com.reprezen.jsonoverlay.model",
                 topDir = "json-overlay/src/test/java/com/reprezen/jsonoverlay/model",
-                interfaceDir = "intf",
+                typeDataFile = "json-overlay/src/test/java/com/reprezen/jsonoverlay/model/types.yaml",
                 interfacePackage = "intf",
+                interfaceDir = "intf",
                 classDir = "impl",
+                pkg = "com.reprezen.jsonoverlay.model",
                 classPackage = "impl"
             )
         )

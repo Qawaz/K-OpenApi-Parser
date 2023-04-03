@@ -24,7 +24,7 @@ import com.wakaztahir.kate.RelativeResourceEmbeddingManager
 import com.wakaztahir.kate.TemplateContext
 import java.io.File
 import java.io.IOException
-import java.nio.file.Files
+import java.io.InputStream
 import java.util.*
 import java.util.stream.Collectors
 import java.util.stream.Stream
@@ -34,25 +34,16 @@ abstract class TypeGenerator(
     private val dir: File,
     protected var intfPackage: String,
     protected var implPackage: String,
-    protected var suffix: String,
-    private val preserve: Boolean
+    protected var suffix: String
 ) {
     private val requiredTypes: MutableSet<String> = HashSet()
 
     protected abstract fun getPackage(): String
 
-    protected abstract fun getTypeDeclaration(file: File, type: TypeData.Type, suffix: String?): TypeDeclaration
+    protected abstract fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDeclaration
 
-    @Throws(IOException::class)
-    fun generate(type: TypeData.Type) {
-        val filename = String.format("%s%s.java", type.name, suffix)
-        val javaFile = File(dir, filename)
-        println("Generating " + javaFile.canonicalFile)
-        generateWithJavaTemplate(javaFile, type)
-    }
-
-    private fun getCompilationUnitFor(javaFile: File, type: TypeData.Type): CompilationUnit {
-        val declaration = getTypeDeclaration(javaFile, type, suffix)
+    private fun getCompilationUnitFor(type: TypeData.Type): CompilationUnit {
+        val declaration = getTypeDeclaration(type, suffix)
         val gen = CompilationUnit(getPackage(), declaration)
         requireTypes(getImports(type))
         if (needIntfImports()) {
@@ -65,21 +56,38 @@ abstract class TypeGenerator(
     }
 
     @Throws(IOException::class)
-    protected fun generateWithJavaTemplate(javaFile: File, type: TypeData.Type) {
-        val gen = getCompilationUnitFor(javaFile = javaFile, type = type)
+    protected fun generateWithJavaTemplate(
+        javaFile: File,
+        gen: CompilationUnit,
+        inputStream: InputStream,
+        resource: RelativeResourceEmbeddingManager,
+    ) {
         val obj = gen.toMutableKATEObject()
-        val resource = RelativeResourceEmbeddingManager("/java")
         val context = TemplateContext(
             stream = InputSourceStream(
-                inputStream = resource.getStream(gen.type.templateResource),
+                inputStream = inputStream,
                 model = obj,
                 embeddingManager = resource
             )
         )
-        gen.toMutableKATEObject()
         val outputStream = javaFile.outputStream()
         context.generateTo(OutputDestinationStream(outputStream))
         outputStream.close()
+    }
+
+    @Throws(IOException::class)
+    fun generate(type: TypeData.Type, basePath: String,getTemplatePath: (File, CompilationUnit) -> String) {
+        val filename = String.format("%s%s.java", type.name, suffix)
+        val javaFile = File(dir, filename)
+        println("Generating " + javaFile.canonicalFile)
+        val gen = getCompilationUnitFor(type = type)
+        val resource = RelativeResourceEmbeddingManager(basePath)
+        generateWithJavaTemplate(
+            javaFile = javaFile,
+            gen = gen,
+            resource = resource,
+            inputStream = resource.getStream(getTemplatePath(javaFile,gen))
+        )
     }
 
     protected abstract fun getImports(type: TypeData.Type): Collection<String>

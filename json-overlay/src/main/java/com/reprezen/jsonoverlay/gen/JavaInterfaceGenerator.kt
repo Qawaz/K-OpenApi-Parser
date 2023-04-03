@@ -5,13 +5,18 @@ import java.io.File
 
 class JavaInterfaceGenerator : TypeGenerator {
 
-    constructor(dir: File, intfPackage: String, implPackage: String, suffix: String, preserve: Boolean) : super(dir, intfPackage, implPackage, suffix, preserve)
+    constructor(dir: File, intfPackage: String, implPackage: String, suffix: String) : super(
+        dir,
+        intfPackage,
+        implPackage,
+        suffix
+    )
 
     override fun getPackage(): String {
         return intfPackage
     }
 
-    override fun getTypeDeclaration(file: File, type: TypeData.Type, suffix: String?): TypeDeclaration {
+    override fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDeclaration {
         val decl = if(type.enumValues.isEmpty()) ClassOrInterfaceDeclaration(type.name,
             isInterface = true,
             isPublic = true

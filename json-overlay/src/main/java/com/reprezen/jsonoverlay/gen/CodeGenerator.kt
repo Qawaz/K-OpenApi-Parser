@@ -25,16 +25,6 @@ class CodeGenerator private constructor(private val opts: Options) {
     private fun generate(typeData: TypeData) {
         generateInterfaces(typeData)
         generateImpls(typeData)
-        if (!opts.preserve) {
-            System.err.println("WARNING: Preservation of non-generated code is suppressed!")
-            System.err
-                .println("This is normally appropriate only when modifying the code generator and/or input data,")
-            System.err.println("during which compilation errors are likely to be present in generated code.")
-            System.err.println("")
-            System.err.println("Please be sure to revert the generated code to a known good state and then regenerate")
-            System.err.println("after completing modifications, so as to carry forward any non-generated code that")
-            System.err.println("has been previously added.")
-        }
     }
 
     @Throws(IOException::class)
@@ -46,7 +36,11 @@ class CodeGenerator private constructor(private val opts: Options) {
             if (type.isNoGen) {
                 return
             }
-            JavaInterfaceGenerator(intfDir, intfPackage, implPackage, "", opts.preserve).generate(type)
+            JavaInterfaceGenerator(intfDir, intfPackage, implPackage, "").generate(
+                type = type,
+                basePath = opts.templateBasePath,
+                getTemplatePath = opts.getTemplatePath
+            )
         }
     }
 
@@ -59,7 +53,11 @@ class CodeGenerator private constructor(private val opts: Options) {
             if (type.isNoGen) {
                 return
             }
-            JavaImplGenerator(implDir, intfPackage, implPackage, opts.classSuffix, opts.preserve).generate(type)
+            JavaImplGenerator(implDir, intfPackage, implPackage, opts.classSuffix).generate(
+                type = type,
+                basePath = opts.templateBasePath,
+                getTemplatePath = opts.getTemplatePath
+            )
         }
     }
 
@@ -77,7 +75,10 @@ class CodeGenerator private constructor(private val opts: Options) {
         var pkg: String = CodeGenerator::class.java.getPackage().name,
         var classPackage: String = "impl",
         var classSuffix: String = "Impl",
-        var preserve: Boolean = true
+        val templateBasePath: String,
+        val getTemplatePath: (File, CompilationUnit) -> String = { javaFile, cUnit ->
+            cUnit.type.templateResource
+        }
     ) {
         constructor(
             topDir: String = ".",
@@ -88,7 +89,7 @@ class CodeGenerator private constructor(private val opts: Options) {
             pkg: String = CodeGenerator::class.java.getPackage().name,
             classPackage: String = "impl",
             classSuffix: String = "Impl",
-            preserve: Boolean = true,
+            templateBasePath: String = "/java"
         ) : this(
             topDir = File(topDir),
             typeDataFile = File(typeDataFile),
@@ -98,7 +99,8 @@ class CodeGenerator private constructor(private val opts: Options) {
             pkg = pkg,
             classPackage = classPackage,
             classSuffix = classSuffix,
-            preserve = preserve
+            templateBasePath = templateBasePath
+
         )
     }
 
