@@ -42,7 +42,7 @@ abstract class TypeGenerator(
 
     protected abstract fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDeclaration
 
-    private fun getCompilationUnitFor(type: TypeData.Type): CompilationUnit {
+    fun getCompilationUnitFor(type: TypeData.Type): CompilationUnit {
         val declaration = getTypeDeclaration(type, suffix)
         val gen = CompilationUnit(getPackage(), declaration)
         requireTypes(getImports(type))
@@ -56,7 +56,7 @@ abstract class TypeGenerator(
     }
 
     @Throws(IOException::class)
-    protected fun generateWithJavaTemplate(
+    protected fun generateWithTemplate(
         javaFile: File,
         gen: CompilationUnit,
         inputStream: InputStream,
@@ -75,18 +75,24 @@ abstract class TypeGenerator(
         outputStream.close()
     }
 
+    fun getFileFor(type: TypeData.Type): File {
+        return File(dir, String.format("%s%s.java", type.name, suffix))
+    }
+
     @Throws(IOException::class)
-    fun generate(type: TypeData.Type, basePath: String,getTemplatePath: (File, CompilationUnit) -> String) {
-        val filename = String.format("%s%s.java", type.name, suffix)
-        val javaFile = File(dir, filename)
+    fun generate(
+        gen : CompilationUnit,
+        javaFile: File,
+        basePath: String,
+        templatePath : String
+    ) {
         println("Generating " + javaFile.canonicalFile)
-        val gen = getCompilationUnitFor(type = type)
         val resource = RelativeResourceEmbeddingManager(basePath)
-        generateWithJavaTemplate(
+        generateWithTemplate(
             javaFile = javaFile,
             gen = gen,
             resource = resource,
-            inputStream = resource.getStream(getTemplatePath(javaFile,gen))
+            inputStream = resource.getStream(templatePath)
         )
     }
 

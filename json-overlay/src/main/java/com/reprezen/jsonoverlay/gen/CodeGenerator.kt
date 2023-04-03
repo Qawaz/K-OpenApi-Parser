@@ -36,11 +36,16 @@ class CodeGenerator private constructor(private val opts: Options) {
             if (type.isNoGen) {
                 return
             }
-            JavaInterfaceGenerator(intfDir, intfPackage, implPackage, "").generate(
-                type = type,
-                basePath = opts.templateBasePath,
-                getTemplatePath = opts.getTemplatePath
-            )
+            JavaInterfaceGenerator(intfDir, intfPackage, implPackage, "").apply {
+                val cUnit = getCompilationUnitFor(type)
+                val file = getFileFor(type)
+                this.generate(
+                    javaFile = file,
+                    basePath = opts.templateBasePath(file, cUnit),
+                    gen = cUnit,
+                    templatePath = opts.getTemplatePath(file, cUnit)
+                )
+            }
         }
     }
 
@@ -53,11 +58,16 @@ class CodeGenerator private constructor(private val opts: Options) {
             if (type.isNoGen) {
                 return
             }
-            JavaImplGenerator(implDir, intfPackage, implPackage, opts.classSuffix).generate(
-                type = type,
-                basePath = opts.templateBasePath,
-                getTemplatePath = opts.getTemplatePath
-            )
+            JavaImplGenerator(implDir, intfPackage, implPackage, opts.classSuffix).apply {
+                val cUnit = getCompilationUnitFor(type)
+                val file = getFileFor(type)
+                this.generate(
+                    javaFile = file,
+                    basePath = opts.templateBasePath(file, cUnit),
+                    gen = cUnit,
+                    templatePath = opts.getTemplatePath(file, cUnit)
+                )
+            }
         }
     }
 
@@ -75,10 +85,8 @@ class CodeGenerator private constructor(private val opts: Options) {
         var pkg: String = CodeGenerator::class.java.getPackage().name,
         var classPackage: String = "impl",
         var classSuffix: String = "Impl",
-        val templateBasePath: String,
-        val getTemplatePath: (File, CompilationUnit) -> String = { javaFile, cUnit ->
-            cUnit.type.templateResource
-        }
+        val templateBasePath: (File, CompilationUnit) -> String = { _, _ -> "/java" },
+        val getTemplatePath: (File, CompilationUnit) -> String = { _, cUnit -> cUnit.type.templateResource }
     ) {
         constructor(
             topDir: String = ".",
@@ -89,7 +97,7 @@ class CodeGenerator private constructor(private val opts: Options) {
             pkg: String = CodeGenerator::class.java.getPackage().name,
             classPackage: String = "impl",
             classSuffix: String = "Impl",
-            templateBasePath: String = "/java"
+            templateBasePath: (File, CompilationUnit) -> String = { _, _ -> "/java" }
         ) : this(
             topDir = File(topDir),
             typeDataFile = File(typeDataFile),
