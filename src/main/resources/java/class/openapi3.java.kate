@@ -1,0 +1,57 @@
+@partial_raw
+
+    @embed_once ../class_definition.kate
+
+    @default_no_raw @var(GenerateClassDefinition()) @end_default_no_raw
+
+    @default_no_raw
+            private ValidationResults validationResults = null;
+
+            @Override
+            protected JsonNode _fixJson(JsonNode json) {
+                if (json.isMissingNode()) {
+                    json = _jsonObject();
+                }
+                if (!json.has("paths")) {
+                    ((ObjectNode) json).putObject("paths");
+                }
+                return json;
+            }
+
+            @Override
+            public void validate() {
+                try (ValidationContext context = ValidationContext.open()) {
+                    validationResults = ValidationContext.getValidationResults();
+                    new OpenApi3Validator().validate(Overlay.of(this));
+                }
+            }
+
+            @Override
+            public boolean isValid() {
+                if (validationResults == null) {
+                    validate();
+                }
+                return validationResults.getSeverity().lt(Severity.ERROR);
+            }
+
+            @Override
+            public ValidationResults getValidationResults() {
+                if (validationResults == null) {
+                    validate();
+                }
+                return validationResults;
+            }
+
+            @Override
+            public Collection<ValidationResults.ValidationItem> getValidationItems() {
+                return getValidationResults().getItems();
+            }
+
+
+    @end_default_no_raw
+
+    @default_no_raw @var(ClassMembers) @end_default_no_raw
+
+    @default_no_raw @var(EndClassDefinition()) @end_default_no_raw
+
+@end_partial_raw

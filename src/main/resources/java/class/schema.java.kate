@@ -1,0 +1,32 @@
+@partial_raw
+
+    @embed_once ../class_definition.kate
+
+    @default_no_raw @var(GenerateClassDefinition()) @end_default_no_raw
+
+    @default_no_raw
+            private Overlay<Schema> overlay = Overlay.of(this);
+
+            @Override
+            public String getName() {
+                return overlay.getParent() instanceof MapOverlay<?> ? overlay.getPathInParent() : null;
+            }
+
+            @Override
+            public JsonOverlay<?> _findInternal(JsonPointer path) {
+                if (path.matchesProperty("additionalProperties")) {
+                    return path.tail().matches() ? _getOverlay("additionalProperties", BooleanOverlay.class)
+                            : _get("additionalPropertiesSchema", SchemaImpl.class)._findInternal(path.tail());
+                } else {
+                    return super._findInternal(path);
+                }
+            }
+
+
+    @end_default_no_raw
+
+    @default_no_raw @var(ClassMembers) @end_default_no_raw
+
+    @default_no_raw @var(EndClassDefinition()) @end_default_no_raw
+
+@end_partial_raw

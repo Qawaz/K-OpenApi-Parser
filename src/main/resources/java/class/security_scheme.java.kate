@@ -5,10 +5,10 @@
     @default_no_raw @var(GenerateClassDefinition()) @end_default_no_raw
 
     @default_no_raw
-            private Overlay<Callback> overlay = Overlay.of(this);
+            private Overlay<SecurityScheme> overlay = Overlay.of(this);
 
             @Override
-            public String getName() {
+            public String getKey() {
                 return overlay.getParent() instanceof MapOverlay<?> ? overlay.getPathInParent() : null;
             }
 

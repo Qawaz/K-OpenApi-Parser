@@ -15,10 +15,44 @@ import com.reprezen.jsonoverlay.gen.CodeGenerator
 object GenOpenApi3 {
 
     private val overrideTemplates = mapOf<String, String>(
-        "Path.java" to "java/interface/path.java.kate",
+
         "Callback.java" to "java/interface/callback.java.kate",
+        "CallbackImpl.java" to "java/class/callback.java.kate",
+
+        "Example.java" to "java/interface/example.java.kate",
+        "ExampleImpl.java" to "java/class/example.java.kate",
+
+        "Header.java" to "java/interface/header.java.kate",
+        "HeaderImpl.java" to "java/class/header.java.kate",
+
+        "LicenseImpl.java" to "java/class/license.java.kate",
+
+        "Link.java" to "java/interface/link.java.kate",
+        "LinkImpl.java" to "java/class/link.java.kate",
+
+        "OpenApi3.java" to "java/interface/openapi3.java.kate",
+        "OpenApi3Impl.java" to "java/class/openapi3.java.kate",
+
+        "Parameter.java" to "java/interface/parameter.java.kate",
+        "ParameterImpl.java" to "java/class/parameter.java.kate",
+
+        "Path.java" to "java/interface/path.java.kate",
         "PathImpl.java" to "java/class/path.java.kate",
-        "CallbackImpl.java" to "java/class/callback.java.kate"
+
+        "RequestBody.java" to "java/interface/request_body.java.kate",
+        "RequestBodyImpl.java" to "java/class/request_body.java.kate",
+
+        "Response.java" to "java/interface/response.java.kate",
+        "ResponseImpl.java" to "java/class/response.java.kate",
+
+        "Schema.java" to "java/interface/schema.java.kate",
+        "SchemaImpl.java" to "java/class/schema.java.kate",
+
+        "SecurityParameterImpl.java" to "java/class/security_parameter.java.kate",
+
+        "SecurityScheme.java" to "java/interface/security_scheme.java.kate",
+        "SecuritySchemeImpl.java" to "java/class/security_scheme.java.kate",
+
     )
 
     @Throws(Exception::class)

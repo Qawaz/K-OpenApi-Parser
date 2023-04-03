@@ -5,7 +5,7 @@
     @default_no_raw @var(GenerateClassDefinition()) @end_default_no_raw
 
     @default_no_raw
-            private Overlay<Callback> overlay = Overlay.of(this);
+            private Overlay<Response> overlay = Overlay.of(this);
 
             @Override
             public String getName() {

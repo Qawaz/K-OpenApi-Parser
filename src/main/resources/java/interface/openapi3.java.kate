@@ -1,0 +1,23 @@
+@partial_raw
+
+    @embed_once ../interface_definition.kate
+
+    @default_no_raw @var(GenerateInterfaceDefinition()) @end_default_no_raw
+
+    @default_no_raw
+            public void validate();
+
+            public boolean isValid();
+
+            public ValidationResults getValidationResults();
+
+            public Collection<ValidationResults.ValidationItem> getValidationItems();
+
+
+    @end_default_no_raw
+
+    @default_no_raw @var(ClassMembers) @end_default_no_raw
+
+    @default_no_raw @var(EndInterfaceDefinition()) @end_default_no_raw
+
+@end_partial_raw

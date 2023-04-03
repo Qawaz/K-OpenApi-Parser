@@ -30,5 +30,6 @@ fun ValidationResults.isValid(): Boolean {
 }
 
 fun OpenApi3.getValidationItems(): Collection<ValidationResults.ValidationItem?>? {
-    return validate()!!.getItems()
+    TODO()
+//    return validate()!!.getItems()
 }

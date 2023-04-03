@@ -1,0 +1,17 @@
+@partial_raw
+
+    @embed_once ../interface_definition.kate
+
+    @default_no_raw @var(GenerateInterfaceDefinition()) @end_default_no_raw
+
+    @default_no_raw
+            String getKey();
+
+
+    @end_default_no_raw
+
+    @default_no_raw @var(ClassMembers) @end_default_no_raw
+
+    @default_no_raw @var(EndInterfaceDefinition()) @end_default_no_raw
+
+@end_partial_raw
