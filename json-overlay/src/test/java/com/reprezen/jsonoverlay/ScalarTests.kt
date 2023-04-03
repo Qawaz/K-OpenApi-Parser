@@ -51,7 +51,7 @@ class ScalarTests {
     }
 
     @RunWith(Parameterized::class)
-    class BooleanTests(value: Boolean?) : ScalarTestBase<Boolean?>(BooleanOverlay.factory) {
+    class BooleanTests(value: Boolean?) : ScalarTestBase<Boolean>(BooleanOverlay.factory) {
         init {
             this.value = value
         }

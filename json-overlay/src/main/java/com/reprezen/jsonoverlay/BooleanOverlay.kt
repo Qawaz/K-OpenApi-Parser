@@ -17,14 +17,15 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.reprezen.jsonoverlay.BooleanOverlay
 
 class BooleanOverlay : ScalarOverlay<Boolean> {
-    private constructor(value: Boolean, parent: JsonOverlay<*>, refMgr: ReferenceManager) : super(
+
+    private constructor(value: Boolean?, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
         value,
         parent,
         Companion.factory,
         refMgr
     )
 
-    private constructor(json: JsonNode, parent: JsonOverlay<*>, refMgr: ReferenceManager) : super(
+    private constructor(json: JsonNode, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
         json,
         parent,
         Companion.factory,
@@ -44,19 +45,20 @@ class BooleanOverlay : ScalarOverlay<Boolean> {
     }
 
     companion object {
+
         @JvmField
         var factory: OverlayFactory<Boolean> = object : OverlayFactory<Boolean>() {
             override fun getOverlayClass(): Class<BooleanOverlay> {
                 return BooleanOverlay::class.java
             }
 
-            override fun _create(value: Boolean, parent: JsonOverlay<*>, refMgr: ReferenceManager): BooleanOverlay {
+            override fun _create(value: Boolean?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): BooleanOverlay {
                 return BooleanOverlay(value, parent, refMgr)
             }
 
             public override fun _create(
                 json: JsonNode,
-                parent: JsonOverlay<*>,
+                parent: JsonOverlay<*>?,
                 refMgr: ReferenceManager
             ): BooleanOverlay {
                 return BooleanOverlay(json, parent, refMgr)
