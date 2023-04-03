@@ -14,8 +14,6 @@ interface TypeDeclaration {
 
     fun addMember(member: ClassMember)
 
-    fun format(): String
-
     fun toMutableKTEObject(): MutableKATEObject
 
 }
@@ -45,22 +43,6 @@ class ClassOrInterfaceDeclaration(
         members.add(member)
     }
 
-    override fun format(): String {
-        var formatted = if (isPublic) "public " else ""
-        formatted += if (isInterface) "interface " else "class "
-        formatted += "$name "
-        if (extended.size > 0) {
-            formatted += "extends " + extended.joinToString(", ") + " "
-        }
-        if (implemented.size > 0 && !isInterface) {
-            formatted += "implements " + implemented.joinToString(",") + " "
-        }
-        formatted += "{\n\n"
-        formatted += members.joinToString("\n\n") { it.format(1) }
-        formatted += "\n}\n"
-        return formatted
-    }
-
     override fun toMutableKTEObject(): MutableKATEObject {
         return MutableKTEObject {
             putValue("name", name)
@@ -87,17 +69,6 @@ class EnumDeclaration(override val name: String, val isPublic: Boolean) : TypeDe
 
     override fun addMember(member: ClassMember) {
         members.add(member)
-    }
-
-    override fun format(): String {
-        var formatted = if (isPublic) "public enum " else "enum "
-        formatted += "$name "
-        formatted += "{\n\n"
-        formatted += entries.joinToString("\n\t")
-        formatted += ";\n\n"
-        formatted += members.joinToString("\n") { it.format(1) }
-        formatted += "\n\n}"
-        return formatted
     }
 
     override fun toMutableKTEObject(): MutableKATEObject {

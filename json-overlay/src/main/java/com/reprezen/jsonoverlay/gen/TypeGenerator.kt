@@ -65,12 +65,6 @@ abstract class TypeGenerator(
     }
 
     @Throws(IOException::class)
-    protected fun generateToFile(javaFile: File, type: TypeData.Type) {
-        val gen = getCompilationUnitFor(javaFile = javaFile, type = type)
-        Files.writeString(javaFile.toPath(), gen.format())
-    }
-
-    @Throws(IOException::class)
     protected fun generateWithJavaTemplate(javaFile: File, type: TypeData.Type) {
         val gen = getCompilationUnitFor(javaFile = javaFile, type = type)
         val obj = gen.toMutableKATEObject()

@@ -9,19 +9,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d55a8c6a-af6b-48df-a7d6-a3559c3cc6b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/JavaImplGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/JavaImplGenerator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/resources/java/implementation.kate" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/resources/java/implementation.kate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/resources/java/interface.kate" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/resources/java/interface.kate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/ColorImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/ColorImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/EntryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/EntryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/ItemImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/ItemImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/ScalarsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/ScalarsImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/TestModelImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/TestModelImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/intf/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/intf/Color.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/intf/Entry.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/intf/Entry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/intf/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/intf/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/intf/Scalars.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/intf/Scalars.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/intf/TestModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/intf/TestModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/CompilationUnit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/CompilationUnit.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/TypeDeclaration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/TypeDeclaration.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/TypeGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/TypeGenerator.kt" afterDir="false" />
     </list>
     <list id="2db31701-028f-44e4-9104-20ae3599ae33" name="Revert Tests In Json Overlay" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -143,7 +133,7 @@
       <command value="gradle init" />
     </option>
   </component>
-  <component name="RunManager" selected="Kotlin.GenTestModel">
+  <component name="RunManager" selected="Gradle.Tests in 'KOpenAPIParser.json-overlay.test'">
     <configuration name="GenTestModel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.reprezen.jsonoverlay.model.GenTestModel" />
       <module name="KOpenAPIParser.json-overlay.test" />
@@ -237,8 +227,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Kotlin.GenTestModel" />
         <item itemvalue="Gradle.Tests in 'KOpenAPIParser.json-overlay.test'" />
+        <item itemvalue="Kotlin.GenTestModel" />
         <item itemvalue="Application.GenTestModel" />
         <item itemvalue="Kotlin.GenOpenApi3" />
         <item itemvalue="Gradle.Tests in 'KOpenAPIParser.test'" />

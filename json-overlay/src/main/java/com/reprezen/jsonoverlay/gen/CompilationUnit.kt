@@ -16,16 +16,6 @@ class CompilationUnit(private var packageDec: String, val type: TypeDeclaration)
         for (member in members) type.addMember(member.generated())
     }
 
-    fun format(): String {
-        var formatted = "package ${packageDec};"
-        if (imports.size > 0) {
-            formatted += "\n\n"
-            formatted += imports.joinToString("\n") { "import $it;" }
-        }
-        formatted += "\n\n${type.format()}"
-        return formatted
-    }
-
     fun toMutableKATEObject(): MutableKATEObject {
         return type.toMutableKTEObject().apply {
             putValue("packageName", packageDec)
