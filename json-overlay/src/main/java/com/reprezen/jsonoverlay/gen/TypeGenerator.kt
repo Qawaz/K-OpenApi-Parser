@@ -62,6 +62,7 @@ abstract class TypeGenerator(
         inputStream: InputStream,
         resource: RelativeResourceEmbeddingManager,
     ) {
+        println("Generating " + javaFile.canonicalFile)
         val obj = gen.toMutableKATEObject()
         val context = TemplateContext(
             stream = InputSourceStream(
@@ -83,11 +84,9 @@ abstract class TypeGenerator(
     fun generate(
         gen : CompilationUnit,
         javaFile: File,
-        basePath: String,
+        resource: RelativeResourceEmbeddingManager,
         templatePath : String
     ) {
-        println("Generating " + javaFile.canonicalFile)
-        val resource = RelativeResourceEmbeddingManager(basePath)
         generateWithTemplate(
             javaFile = javaFile,
             gen = gen,

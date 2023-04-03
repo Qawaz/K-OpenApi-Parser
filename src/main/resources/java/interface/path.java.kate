@@ -1,12 +1,12 @@
 @partial_raw
 
-    @embed_once ./interface_definition.kate
+    @embed_once ../interface_definition.kate
 
     @default_no_raw @var(GenerateInterfaceDefinition()) @end_default_no_raw
 
     @default_no_raw
+            String getPathString();
 
-            String getName();
 
     @end_default_no_raw
 

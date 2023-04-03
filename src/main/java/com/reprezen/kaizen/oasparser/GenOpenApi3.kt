@@ -13,6 +13,14 @@ package com.reprezen.kaizen.oasparser
 import com.reprezen.jsonoverlay.gen.CodeGenerator
 
 object GenOpenApi3 {
+
+    private val overrideTemplates = mapOf<String, String>(
+        "Path.java" to "java/interface/path.java.kate",
+        "Callback.java" to "java/interface/callback.java.kate",
+        "PathImpl.java" to "java/class/path.java.kate",
+        "CallbackImpl.java" to "java/class/callback.java.kate"
+    )
+
     @Throws(Exception::class)
     @JvmStatic
     fun main(args: Array<String>) {
@@ -24,8 +32,12 @@ object GenOpenApi3 {
                 interfaceDir = "model3",
                 classDir = "ovl3",
                 pkg = "com.reprezen.kaizen.oasparser",
-                classPackage = "ovl3"
+                classPackage = "ovl3",
+                getTemplatePath = { file, _ ->
+                    overrideTemplates[file.name]
+                }
             )
         )
     }
+
 }

@@ -14,10 +14,13 @@
 package com.reprezen.jsonoverlay.gen
 
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
+import com.wakaztahir.kate.RelativeResourceEmbeddingManager
 import org.yaml.snakeyaml.Yaml
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
+import java.nio.file.Paths
+import kotlin.io.path.name
 
 class CodeGenerator private constructor(private val opts: Options) {
 
@@ -39,11 +42,15 @@ class CodeGenerator private constructor(private val opts: Options) {
             JavaInterfaceGenerator(intfDir, intfPackage, implPackage, "").apply {
                 val cUnit = getCompilationUnitFor(type)
                 val file = getFileFor(type)
+                val templatePath = opts.getTemplatePath(file, cUnit)
+                val resource = RelativeResourceEmbeddingManager(templatePath?.let {
+                    RelativeResourceEmbeddingManager("/").relativeParentPath(it)
+                } ?: "/java")
                 this.generate(
                     javaFile = file,
-                    basePath = opts.templateBasePath(file, cUnit),
+                    resource = resource,
                     gen = cUnit,
-                    templatePath = opts.getTemplatePath(file, cUnit)
+                    templatePath = templatePath?.let { Paths.get(it).name } ?: (cUnit.type.templateResource)
                 )
             }
         }
@@ -61,11 +68,15 @@ class CodeGenerator private constructor(private val opts: Options) {
             JavaImplGenerator(implDir, intfPackage, implPackage, opts.classSuffix).apply {
                 val cUnit = getCompilationUnitFor(type)
                 val file = getFileFor(type)
+                val templatePath = opts.getTemplatePath(file, cUnit)
+                val resource = RelativeResourceEmbeddingManager(templatePath?.let {
+                    RelativeResourceEmbeddingManager("/").relativeParentPath(it)
+                } ?: "/java")
                 this.generate(
                     javaFile = file,
-                    basePath = opts.templateBasePath(file, cUnit),
+                    resource = resource,
                     gen = cUnit,
-                    templatePath = opts.getTemplatePath(file, cUnit)
+                    templatePath = templatePath?.let { Paths.get(it).name } ?: (cUnit.type.templateResource)
                 )
             }
         }
@@ -85,8 +96,7 @@ class CodeGenerator private constructor(private val opts: Options) {
         var pkg: String = CodeGenerator::class.java.getPackage().name,
         var classPackage: String = "impl",
         var classSuffix: String = "Impl",
-        val templateBasePath: (File, CompilationUnit) -> String = { _, _ -> "/java" },
-        val getTemplatePath: (File, CompilationUnit) -> String = { _, cUnit -> cUnit.type.templateResource }
+        val getTemplatePath: (File, CompilationUnit) -> String? = { _, _ -> null }
     ) {
         constructor(
             topDir: String = ".",
@@ -97,7 +107,7 @@ class CodeGenerator private constructor(private val opts: Options) {
             pkg: String = CodeGenerator::class.java.getPackage().name,
             classPackage: String = "impl",
             classSuffix: String = "Impl",
-            templateBasePath: (File, CompilationUnit) -> String = { _, _ -> "/java" }
+            getTemplatePath: (File, CompilationUnit) -> String? = { _, _ -> null }
         ) : this(
             topDir = File(topDir),
             typeDataFile = File(typeDataFile),
@@ -107,8 +117,7 @@ class CodeGenerator private constructor(private val opts: Options) {
             pkg = pkg,
             classPackage = classPackage,
             classSuffix = classSuffix,
-            templateBasePath = templateBasePath
-
+            getTemplatePath = getTemplatePath
         )
     }
 
