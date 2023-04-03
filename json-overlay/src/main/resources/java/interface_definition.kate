@@ -1,0 +1,33 @@
+@partial_raw
+
+    @embed_once ./imports.kate
+
+    @function GenerateInterfaceDefinition()
+
+        @default_no_raw package @var(packageName); @end_default_no_raw
+
+        @if(@var(imports.size()) > 0)
+            @runtime.print_string("\n\n")
+            @var(printImports())
+        @endif
+
+        @runtime.print_string("\n\n")
+
+        @if(@var(isPublic))
+            @runtime.print_string("public ")
+        @endif
+
+        @runtime.print_string("interface " + @var(name) + ' ')
+
+        @if(@var(extends.size()) > 0)
+            @runtime.print_string("extends " + @var(extends.joinToString(", ")) + ' ')
+        @endif
+
+        @runtime.print_string("{\n\n")
+    @end_function
+
+    @function EndInterfaceDefinition()
+        @runtime.print_string("\n\n}\n")
+    @end_function
+
+@end_partial_raw
