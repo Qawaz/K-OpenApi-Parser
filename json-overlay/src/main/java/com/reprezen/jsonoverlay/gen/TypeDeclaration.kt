@@ -9,7 +9,7 @@ interface TypeDeclaration {
 
     val name: String
 
-    val javaTemplateResource: String
+    val templateResource: String
 
     fun addMember(member: ClassMember)
 
@@ -25,8 +25,8 @@ class ClassOrInterfaceDeclaration(
     val isPublic: Boolean
 ) : TypeDeclaration {
 
-    override val javaTemplateResource: String
-        get() = if (isInterface) "java_interface.kate" else "java_impl.kate"
+    override val templateResource: String
+        get() = if (isInterface) "interface.kate" else "implementation.kate"
 
     val extended = mutableListOf<String>()
     val implemented = mutableListOf<String>()
@@ -74,8 +74,8 @@ class ClassOrInterfaceDeclaration(
 
 class EnumDeclaration(override val name: String, val isPublic: Boolean) : TypeDeclaration {
 
-    override val javaTemplateResource: String
-        get() = "java_enum.kate"
+    override val templateResource: String
+        get() = "enum.kate"
 
     private val entries = mutableListOf<String>()
     private val members = mutableListOf<ClassMember>()

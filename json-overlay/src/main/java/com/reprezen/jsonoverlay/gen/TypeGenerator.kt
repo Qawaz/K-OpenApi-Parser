@@ -77,7 +77,7 @@ abstract class TypeGenerator(
         val resource = RelativeResourceEmbeddingManager("/java")
         val context = TemplateContext(
             stream = InputSourceStream(
-                inputStream = resource.getStream(gen.type.javaTemplateResource),
+                inputStream = resource.getStream(gen.type.templateResource),
                 model = obj,
                 embeddingManager = resource
             )
