@@ -23,7 +23,7 @@ import com.reprezen.jsonoverlay.BooleanOverlay;
 
 public class HeaderImpl extends PropertiesOverlay<Header> implements Header {
 
-    private Overlay<Header> overlay = Overlay.of(this);
+    private Overlay<Header> overlay = Overlay.Companion.of(this);
 
     @Override
     public String getKey() {

@@ -24,7 +24,8 @@ import org.junit.Test
 import java.io.IOException
 
 class ReferenceTests : Assert() {
-    private var model: TestModel? = null
+
+    lateinit var model: TestModel
 
     @Before
     @Throws(IOException::class)
@@ -34,15 +35,15 @@ class ReferenceTests : Assert() {
 
     @Test
     fun testRefAccess() {
-        assertEquals("Reference Test", model!!.description)
-        checkScalarsValues(model!!.getScalar("s1"), sharedRoot = true, sharedValues = true)
-        checkScalarsValues(model!!.getScalar("s2"), sharedRoot = false, sharedValues = true)
-        checkScalarsValues(model!!.getScalar("s3"), sharedRoot = true, sharedValues = true)
-        checkScalarsValues(model!!.getScalar("s4"), sharedRoot = true, sharedValues = true)
-        checkScalarsValues(model!!.getScalar("s5"), sharedRoot = false, sharedValues = true)
-        checkScalarsValues(model!!.getScalar("ext1"), sharedRoot = false, sharedValues = false)
-        checkScalarsValues(model!!.getScalar("ext2"), sharedRoot = false, sharedValues = false)
-        checkScalarsValues(model!!.getScalar("ext3"), sharedRoot = true, sharedValues = true)
+        assertEquals("Reference Test", model.description)
+        checkScalarsValues(model.getScalar("s1"), sharedRoot = true, sharedValues = true)
+        checkScalarsValues(model.getScalar("s2"), sharedRoot = false, sharedValues = true)
+        checkScalarsValues(model.getScalar("s3"), sharedRoot = true, sharedValues = true)
+        checkScalarsValues(model.getScalar("s4"), sharedRoot = true, sharedValues = true)
+        checkScalarsValues(model.getScalar("s5"), sharedRoot = false, sharedValues = true)
+        checkScalarsValues(model.getScalar("ext1"), sharedRoot = false, sharedValues = false)
+        checkScalarsValues(model.getScalar("ext2"), sharedRoot = false, sharedValues = false)
+        checkScalarsValues(model.getScalar("ext3"), sharedRoot = true, sharedValues = true)
     }
 
     private fun checkScalarsValues(s: Scalars, sharedRoot: Boolean, sharedValues: Boolean) {
@@ -57,7 +58,7 @@ class ReferenceTests : Assert() {
     }
 
     private fun checkScalarsSharing(s: Scalars, sharedRoot: Boolean, sharedValues: Boolean) {
-        val s1 = model!!.getScalar("s1")
+        val s1 = model.getScalar("s1")
         if (sharedRoot) {
             assertSame("Scalars objects should be shared", s1, s)
         } else if (sharedValues) {
@@ -67,21 +68,20 @@ class ReferenceTests : Assert() {
 
     @Test
     fun checkRecursion() {
-        assertSame(model!!.getScalar("s6").embeddedScalars, model!!.getScalar("s5"))
-        assertSame(model!!.getScalar("s7").embeddedScalars, model!!.getScalar("s7"))
-        assertSame(model!!.getScalar("s8a").embeddedScalars, model!!.getScalar("s8b"))
-        assertSame(model!!.getScalar("s8b").embeddedScalars, model!!.getScalar("s8a"))
-        assertSame(model!!.getScalar("ext1"), model!!.getScalar("ext2"))
+        assertSame(model.getScalar("s6").embeddedScalars, model.getScalar("s5"))
+        assertSame(model.getScalar("s7").embeddedScalars, model.getScalar("s7"))
+        assertSame(model.getScalar("s8a").embeddedScalars, model.getScalar("s8b"))
+        assertSame(model.getScalar("s8b").embeddedScalars, model.getScalar("s8a"))
+        assertSame(model.getScalar("ext1"), model.getScalar("ext2"))
     }
 
     @Test
     fun checkBadRefs() {
-        assertNull(model!!.getScalar("badPointer"))
-        checkBadRef(Overlay.of(model!!.scalars).getReference("badPointer"))
-        checkBadRef(Overlay.of(model!!.scalars).getReference("cycle"))
+        assertNull(model.getScalar("badPointer"))
+        checkBadRef(Overlay.of(model.scalars)?.getReference("badPointer")!!)
+        checkBadRef(Overlay.of(model.scalars)?.getReference("cycle")!!)
         assertTrue(
-            Overlay.of(model!!.scalars).getReference("cycle")
-                .invalidReason is ReferenceCycleException
+            Overlay.of(model.scalars)?.getReference("cycle")?.invalidReason is ReferenceCycleException
         )
     }
 
@@ -93,24 +93,24 @@ class ReferenceTests : Assert() {
     @Test
     fun testRoots() {
         assertSame(model, Overlay.of(model).root)
-        assertSame(model, Overlay.of(model!!.getScalar("s1")).root)
-        val ext1 = model!!.getScalar("ext1")
+        assertSame(model, Overlay.of(model.getScalar("s1")).root)
+        val ext1 = model.getScalar("ext1")
         assertSame(ext1, Overlay.of(ext1).root)
-        assertSame(model, Overlay.of(model!!.getScalar("s3")).root)
+        assertSame(model, Overlay.of(model.getScalar("s3")).root)
         assertSame(model, Overlay.of(model).getModel())
-        assertSame(model, Overlay.of(model!!.getScalar("s1")).getModel())
+        assertSame(model, Overlay.of(model.getScalar("s1")).getModel())
         assertNull(Overlay.of(ext1).getModel())
-        assertSame(model, Overlay.of(model!!.getScalar("s3")).getModel())
+        assertSame(model, Overlay.of(model.getScalar("s3")).getModel())
     }
 
     @Test
     fun testFind() {
-        assertSame(model!!.getScalar("s1"), Overlay.of(model).find("/scalars/s1"))
-        assertSame(model!!.getScalar("s3"), Overlay.of(model).find("/scalars/s1"))
-        assertSame(model!!.getScalar("s3"), Overlay.of(model).find("/scalars/s3"))
-        assertSame(model!!.getScalar("ext1"), Overlay.of(model).find("/scalars/ext1"))
-        assertSame(model!!.getScalar("ext2"), Overlay.of(model).find("/scalars/ext1"))
-        assertSame(model!!.getScalar("ext3"), Overlay.of(model).find("/scalars/s1"))
+        assertSame(model.getScalar("s1"), Overlay.of(model).find("/scalars/s1"))
+        assertSame(model.getScalar("s3"), Overlay.of(model).find("/scalars/s1"))
+        assertSame(model.getScalar("s3"), Overlay.of(model).find("/scalars/s3"))
+        assertSame(model.getScalar("ext1"), Overlay.of(model).find("/scalars/ext1"))
+        assertSame(model.getScalar("ext2"), Overlay.of(model).find("/scalars/ext1"))
+        assertSame(model.getScalar("ext3"), Overlay.of(model).find("/scalars/s1"))
     }
 
     @Test
@@ -118,18 +118,18 @@ class ReferenceTests : Assert() {
         val url = javaClass.getResource("/refTest.yaml")!!.toString()
         val ext = javaClass.getResource("/external.yaml")!!.toString()
         assertEquals(url, Overlay.of(model).jsonReference)
-        assertEquals("$url#/scalars/s1", Overlay.of(model!!.scalars, "s1").jsonReference)
+        assertEquals("$url#/scalars/s1", Overlay.of(model.scalars, "s1")?.jsonReference)
         assertEquals(
             "$url#/scalars/s1/stringValue",
-            Overlay.of(model!!.getScalar("s1"), "stringValue", String::class.java).jsonReference
+            Overlay.of(model.getScalar("s1"), "stringValue", String::class.java)?.jsonReference
         )
         assertEquals(
             "$url#/scalars/s1/stringValue",
-            Overlay.of(model!!.getScalar("s2"), "stringValue", String::class.java).jsonReference
+            Overlay.of(model.getScalar("s2"), "stringValue", String::class.java)?.jsonReference
         )
-        assertEquals("$url#/scalars/s1", Overlay.of(model!!.getScalar("s3")).jsonReference)
-        assertEquals("$ext#/scalar1", Overlay.of(model!!.getScalar("ext1")).jsonReference)
-        assertEquals("$ext#/scalar1", Overlay.of(model!!.getScalar("ext2")).jsonReference)
-        assertEquals("$url#/scalars/s1", Overlay.of(model!!.getScalar("ext3")).jsonReference)
+        assertEquals("$url#/scalars/s1", Overlay.of(model.getScalar("s3")).jsonReference)
+        assertEquals("$ext#/scalar1", Overlay.of(model.getScalar("ext1")).jsonReference)
+        assertEquals("$ext#/scalar1", Overlay.of(model.getScalar("ext2")).jsonReference)
+        assertEquals("$url#/scalars/s1", Overlay.of(model.getScalar("ext3")).jsonReference)
     }
 }

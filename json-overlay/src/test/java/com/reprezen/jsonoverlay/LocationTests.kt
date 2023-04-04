@@ -45,33 +45,32 @@ class LocationTests {
         val model = TestModelParser.parse(loadResourceFileAsURL("refTest.yaml"))
         checkPositions(model, 1, 1, 53, 35)
         run {
-            val desc = Overlay.of(model, "description", StringOverlay::class.java)
+            val desc = Overlay.of(model, "description", StringOverlay::class.java)!!
             checkPositions(desc, 1, 14, 1, 28)
         }
         run {
-            val scalars = Overlay.of(model.scalars)
+            val scalars = Overlay.of(model.scalars)!!
             checkPositions(scalars, 3, 3, 53, 35)
         }
         run {
-            val s2intRef = Overlay.of(model.getScalar("s2"), "intValue", IntegerOverlay::class.java)
+            val s2intRef = Overlay.of(model.getScalar("s2"), "intValue", IntegerOverlay::class.java)!!
             checkPositions(s2intRef, 15, 7, 16, 5)
         }
         run {
-            val s2Int = Overlay.of(model.getScalar("s2"), "intValue", IntegerOverlay::class.java)
-                .referenceOverlay
+            val s2Int = Overlay.of(model.getScalar("s2"), "intValue", IntegerOverlay::class.java)!!.referenceOverlay!!
             checkPositions(s2Int, 5, 15, 5, 17)
         }
         run {
-            val ext1Ref = Overlay.of(model.scalars, "ext1")
+            val ext1Ref = Overlay.of(model.scalars, "ext1")!!
             checkPositions(ext1Ref, 49, 5, 50, 3)
         }
         run {
-            val ext1Obj = Overlay.of(model.scalars, "ext1").referenceOverlay
+            val ext1Obj = Overlay.of(model.scalars, "ext1")!!.referenceOverlay!!
             checkPositions(ext1Obj, 2, 3, 9, 1)
         }
     }
 
-    private fun <V, T : IJsonOverlay<V>?> checkPositions(
+    private fun <V, T : IJsonOverlay<V>> checkPositions(
         overlay: T, startLine: Int, startCol: Int, endLine: Int,
         endCol: Int
     ) {
@@ -79,7 +78,7 @@ class LocationTests {
     }
 
     private fun checkPositions(overlay: Overlay<*>, startLine: Int, startCol: Int, endLine: Int, endCol: Int) {
-        val pos = overlay.positionInfo
+        val pos = overlay.positionInfo!!
         Assert.assertTrue(pos.isPresent)
         Assert.assertEquals(startLine.toLong(), pos.get().line.toLong())
         Assert.assertEquals(startCol.toLong(), pos.get().column.toLong())

@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class ExampleImpl extends PropertiesOverlay<Example> implements Example {
 
-    private Overlay<Example> overlay = Overlay.of(this);
+    private Overlay<Example> overlay = Overlay.Companion.of(this);
 
     @Override
     public String getName() {

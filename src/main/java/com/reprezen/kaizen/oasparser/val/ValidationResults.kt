@@ -77,7 +77,7 @@ class ValidationResults {
         val positionInfo: PositionInfo?
 
         init {
-            positionInfo = context.positionInfo.orElse(null)
+            positionInfo = context.positionInfo!!.orElse(null)
         }
 
         override fun toString(): String {

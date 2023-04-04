@@ -121,7 +121,7 @@ class PropertiesTests : Assert() {
         val foo = createFooWithJson()
         assertEquals(
             HashSet(mutableListOf("stringField", "numField", "listField", "mapField", "rootMap")),
-            Overlay.of(foo).propertyNames.toSet()
+            Overlay.of(foo).propertyNames?.toSet()
         )
     }
 

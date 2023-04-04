@@ -41,14 +41,14 @@ class LinkValidator : ObjectValidatorBase<Link>() {
             results.addError(msg(OpenApi3Messages.OpIdAndOpRefInLink), value)
         }
         if (opId != null) {
-            op = findOperationById(Overlay.of(link).getModel<OpenApi3>(), opId)
+            op = findOperationById(Overlay.of(link).getModel<OpenApi3>()!!, opId)
             if (op == null) {
                 results.addError(msg(OpenApi3Messages.OpIdNotFound, opId), value)
             }
         }
         val relativePath = getRelativePath(operationRef, results)
         if (relativePath != null) {
-            op = findOperationByPath(Overlay.of(link).getModel<OpenApi3>(), relativePath, results)
+            op = findOperationByPath(Overlay.of(link).getModel<OpenApi3>()!!, relativePath, results)
             if (op == null) {
                 results.addError(msg(OpenApi3Messages.OpPathNotFound, operationRef), value)
             }
@@ -66,9 +66,9 @@ class LinkValidator : ObjectValidatorBase<Link>() {
         for (paramName in params.keys) {
             val count = opParamCounts[paramName]!!
             if (count == 0) {
-                results.addError(msg(OpenApi3Messages.BadLinkParam, paramName), Overlay.of(params, paramName))
+                results.addError(msg(OpenApi3Messages.BadLinkParam, paramName), Overlay.of(params, paramName)!!)
             } else if (count > 1) {
-                results.addWarning(msg(OpenApi3Messages.AmbigLinkParam, paramName), Overlay.of(params, paramName))
+                results.addWarning(msg(OpenApi3Messages.AmbigLinkParam, paramName), Overlay.of(params, paramName)!!)
             }
         }
     }

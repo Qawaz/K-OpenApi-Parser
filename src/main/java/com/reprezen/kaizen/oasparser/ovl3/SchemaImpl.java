@@ -29,7 +29,7 @@ import com.reprezen.kaizen.oasparser.ovl3.ExternalDocsImpl;
 
 public class SchemaImpl extends PropertiesOverlay<Schema> implements Schema {
 
-    private Overlay<Schema> overlay = Overlay.of(this);
+    private Overlay<Schema> overlay = Overlay.Companion.of(this);
 
     @Override
     public String getName() {

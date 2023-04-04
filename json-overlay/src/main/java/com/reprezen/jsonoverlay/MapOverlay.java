@@ -80,7 +80,7 @@ public final class MapOverlay<V> extends JsonOverlay<Map<String, V>> {
 	}
 
 	@Override
-	protected boolean _isElaborated() {
+	public boolean _isElaborated() {
 		return elaborated;
 	}
 

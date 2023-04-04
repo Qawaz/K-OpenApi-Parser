@@ -21,7 +21,7 @@ class OverlayAdapterTests : Assert() {
 
     @Test
     fun testPropertiesAdapter() {
-        assertTrue(model === Overlay.of(model).get())
+        assertTrue(model === Overlay.of(model!!).get())
         assertTrue(
             model!!.info === Overlay<Info>(
                 model!!.info
@@ -31,20 +31,20 @@ class OverlayAdapterTests : Assert() {
 
     @Test
     fun testFieldAdapter() {
-        assertEquals(model!!.openApi, Overlay.of(model, "openApi", String::class.java).get())
+        assertEquals(model!!.openApi, Overlay.of(model, "openApi", String::class.java)?.get())
         val pathsMapOverlay= Overlay.of(model as PropertiesOverlay<*>, "paths", MutableMap::class.java).get()
-        assertTrue(model!!.getPath("/2.0/users/{username}") === pathsMapOverlay["/2.0/users/{username}"])
+        assertTrue(model!!.getPath("/2.0/users/{username}") === pathsMapOverlay?.get("/2.0/users/{username}"))
     }
 
     @Test
     fun testMapAdapter() {
-        val mapOverlay = Overlay.of<MutableMap<*, *>>(
+        val mapOverlay = Overlay.of(
             model as PropertiesOverlay<*>, "paths",
             MutableMap::class.java
-        ) as Overlay<MutableMap<String,Path>>
-        val castMapOverlay: MapOverlay<Path> = Overlay.getMapOverlay(mapOverlay)
+        ) as Overlay<Map<String,Path>>
+        val castMapOverlay: MapOverlay<Path> = Overlay.getMapOverlay<Path>(mapOverlay)!!
         assertTrue(castMapOverlay is MapOverlay<Path>)
-        val path: Path = Overlay.of<Path>(castMapOverlay, "/2.0/users/{username}").get()
+        val path: Path = Overlay.of<Path>(castMapOverlay, "/2.0/users/{username}").get()!!
         assertTrue(model!!.getPath("/2.0/users/{username}") === path)
     }
 
@@ -55,9 +55,9 @@ class OverlayAdapterTests : Assert() {
             method as PropertiesOverlay<*>, "parameters",
             MutableList::class.java
         ) as Any as Overlay<List<Parameter>>
-        val castListOverlay: ListOverlay<Parameter> = Overlay.getListOverlay(listOverlay)
+        val castListOverlay: ListOverlay<Parameter> = Overlay.getListOverlay(listOverlay)!!
         assertTrue(castListOverlay is ListOverlay<*>)
-        val param: Parameter = Overlay.of<Parameter>(castListOverlay, 1).get()
+        val param: Parameter = Overlay.of<Parameter>(castListOverlay, 1).get()!!
         assertTrue(method.getParameter(1) === param)
     }
 
@@ -69,26 +69,26 @@ class OverlayAdapterTests : Assert() {
         assertTrue(Overlay.of(resp200.getContentMediaType("application/json")).isReference("schema"))
         assertEquals(
             "#/components/schemas/user",
-            Overlay.of(resp200.getContentMediaType("application/json")).getReference("schema").refString
+            Overlay.of(resp200.getContentMediaType("application/json")).getReference("schema")!!.refString
         )
 
         // map reference
-        assertFalse(Overlay.of(model, "schemas", Schema::class.java).isReference("user"))
+        assertFalse(Overlay.of(model, "schemas", Schema::class.java)!!.isReference("user"))
         assertTrue(
             Overlay.of(
                 model!!.getSchema("repository").properties
-            ).isReference("owner")
+            )!!.isReference("owner")
         )
         assertEquals(
             "#/components/schemas/user",
-            Overlay.of(model!!.getSchema("repository").properties).getReference("owner").refString
+            Overlay.of(model!!.getSchema("repository").properties)!!.getReference("owner")!!.refString
         )
 
         // list reference
         val params = model!!.getPath("/2.0/repositories/{username}/{slug}").get.parameters
-        assertFalse(Overlay.of(params).isReference(1))
-        assertTrue(Overlay.of(params).isReference(0))
-        assertEquals("#/components/parameters/username", Overlay.of(params).getReference(0).refString)
+        assertFalse(Overlay.of(params)!!.isReference(1))
+        assertTrue(Overlay.of(params)!!.isReference(0))
+        assertEquals("#/components/parameters/username", Overlay.of(params)!!.getReference(0)!!.refString)
     }
 
     companion object {

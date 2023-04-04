@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class ResponseImpl extends PropertiesOverlay<Response> implements Response {
 
-    private Overlay<Response> overlay = Overlay.of(this);
+    private Overlay<Response> overlay = Overlay.Companion.of(this);
 
     @Override
     public String getName() {

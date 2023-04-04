@@ -49,12 +49,12 @@ class HeaderValidator : ObjectValidatorBase<Header>() {
         // TODO Q: Shouldn't "allowReserved" be disallowed for headers, as are "name"
         // and "in"?
         if (header.isAllowReserved) {
-            results.addWarning(msg(OpenApi3Messages.NonQryAllowRsvd, value.getPathInParent()!!, "header"), value!!)
+            results.addWarning(msg(OpenApi3Messages.NonQryAllowRsvd, value.pathInParent!!, "header"), value)
         }
     }
 
     private fun checkContentType() {
-        if (value.getPathInParent().equals("Content-Type", ignoreCase = true)) {
+        if (value.pathInParent.equals("Content-Type", ignoreCase = true)) {
             results.addWarning(msg(OpenApi3Messages.IgnContType), value)
         }
     }

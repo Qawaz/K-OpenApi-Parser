@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class LinkImpl extends PropertiesOverlay<Link> implements Link {
 
-    private Overlay<Link> overlay = Overlay.of(this);
+    private Overlay<Link> overlay = Overlay.Companion.of(this);
 
     @Override
     public String getName() {

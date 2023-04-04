@@ -52,7 +52,7 @@ class BigParseTest(
                 require(node != null && path != null)
                 val overlay = Overlay.find(model as JsonOverlay<*>, path)
                 assertNotNull("No overlay object found for path: $path", overlay)
-                val value = Overlay.get(overlay)
+                val value = Overlay.get(overlay!!)
                 val fromJson = getValue(node)
                 val msg = String.format(
                     "Wrong overlay value for model '%s' and path '%s': expected '%s', got '%s'",

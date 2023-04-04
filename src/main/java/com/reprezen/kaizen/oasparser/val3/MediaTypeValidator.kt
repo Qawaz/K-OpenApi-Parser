@@ -53,7 +53,7 @@ class MediaTypeValidator : ObjectValidatorBase<MediaType>() {
                 if (!propNames.contains(encodingPropertyName)) {
                     results.addError(
                         msg(OpenApi3Messages.EncPropNotSchemaProp, encodingPropertyName),
-                        Overlay.of<EncodingProperty>(encProps, encodingPropertyName)
+                        Overlay.of<EncodingProperty>(encProps, encodingPropertyName)!!
                     )
                 }
             }
@@ -61,7 +61,7 @@ class MediaTypeValidator : ObjectValidatorBase<MediaType>() {
     }
 
     fun checkExampleExclusion(examples: Overlay<Map<String, Example>>?, example: Overlay<Any>?) {
-        val examplesPresent = examples != null && examples.isPresent && Overlay.getMapOverlay(examples).size() > 0
+        val examplesPresent = examples != null && examples.isPresent && Overlay.getMapOverlay(examples)!!.size() > 0
         val examplePresent = example != null && example.isPresent
         if (examplesPresent && examplePresent) {
             results.addError("ExmplExclusion|The 'example' and 'exmaples' properties may not both appear", value)

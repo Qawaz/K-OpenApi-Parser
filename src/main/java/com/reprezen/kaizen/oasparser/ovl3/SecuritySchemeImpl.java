@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class SecuritySchemeImpl extends PropertiesOverlay<SecurityScheme> implements SecurityScheme {
 
-    private Overlay<SecurityScheme> overlay = Overlay.of(this);
+    private Overlay<SecurityScheme> overlay = Overlay.Companion.of(this);
 
     @Override
     public String getKey() {

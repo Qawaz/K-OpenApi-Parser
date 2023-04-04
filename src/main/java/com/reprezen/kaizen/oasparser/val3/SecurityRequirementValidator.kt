@@ -29,9 +29,9 @@ class SecurityRequirementValidator : ObjectValidatorBase<SecurityRequirement>() 
     }
 
     fun checkAllSchemesDefined(requirements: Overlay<Map<String, SecurityParameter>>) {
-        val model: OpenApi3 = value.getModel<OpenApi3>()
+        val model: OpenApi3 = value.getModel<OpenApi3>()!!
         val definedSchemes: Set<String> = model.getSecuritySchemes().keys
-        val mapOverlay: MapOverlay<SecurityParameter?> = Overlay.getMapOverlay(requirements)
+        val mapOverlay: MapOverlay<SecurityParameter> = Overlay.getMapOverlay(requirements)!!
         for (name in mapOverlay.keySet()) {
             if (!definedSchemes.contains(name)) {
                 results.addError(

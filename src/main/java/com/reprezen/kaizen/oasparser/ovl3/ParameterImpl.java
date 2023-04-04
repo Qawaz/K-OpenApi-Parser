@@ -23,7 +23,7 @@ import com.reprezen.jsonoverlay.BooleanOverlay;
 
 public class ParameterImpl extends PropertiesOverlay<Parameter> implements Parameter {
 
-    private Overlay<Parameter> overlay = Overlay.of(this);
+    private Overlay<Parameter> overlay = Overlay.Companion.of(this);
 
     @Override
     public String getKey() {

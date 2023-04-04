@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class PathImpl extends PropertiesOverlay<Path> implements Path {
 
-    private Overlay<Path> overlay = Overlay.of(this);
+    private Overlay<Path> overlay = Overlay.Companion.of(this);
 
 	@Override
 	public String getPathString() {

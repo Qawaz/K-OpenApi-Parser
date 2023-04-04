@@ -79,13 +79,13 @@ class ParameterValidator : ObjectValidatorBase<Parameter>() {
     private fun getPathString(parameter: Parameter): String? {
         var parent: PropertiesOverlay<*>? = Overlay.of(parameter).parentPropertiesOverlay
         while (parent != null && parent !is Path) {
-            parent = Overlay.of(parent).getParentPropertiesOverlay()
+            parent = Overlay.of(parent).parentPropertiesOverlay
         }
         return if (parent != null && parent is Path) Overlay.getPathInParent(parent) else null
     }
 
     fun checkExampleExclusion(examples: Overlay<Map<String, Example>>?, example: Overlay<Any>?) {
-        val examplesPresent = examples != null && examples.isPresent && Overlay.getMapOverlay(examples).size() > 0
+        val examplesPresent = examples != null && examples.isPresent && Overlay.getMapOverlay(examples)!!.size() > 0
         val examplePresent = example != null && example.isPresent
         if (examplesPresent && examplePresent) {
             results.addError("ExmplExclusion|The 'example' and 'exmaples' properties may not both appear", value)

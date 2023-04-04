@@ -21,7 +21,7 @@ import com.reprezen.jsonoverlay.BooleanOverlay;
 
 public class RequestBodyImpl extends PropertiesOverlay<RequestBody> implements RequestBody {
 
-    private Overlay<RequestBody> overlay = Overlay.of(this);
+    private Overlay<RequestBody> overlay = Overlay.Companion.of(this);
 
     @Override
     public String getName() {

@@ -26,6 +26,6 @@ object TestModelParser {
         val manager = ReferenceManager(url)
         val model = TestModelImpl.factory.create(manager.loadDoc(), null, manager) as TestModel
         (model as TestModelImpl)._setCreatingRef(manager.getReference(url.toString()))
-        return Overlay.of(model).get()
+        return Overlay.of(model).get()!!
     }
 }

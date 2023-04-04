@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class CallbackImpl extends PropertiesOverlay<Callback> implements Callback {
 
-    private Overlay<Callback> overlay = Overlay.of(this);
+    private Overlay<Callback> overlay = Overlay.Companion.of(this);
 
     @Override
     public String getName() {

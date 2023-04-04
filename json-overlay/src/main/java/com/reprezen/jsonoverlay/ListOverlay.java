@@ -76,7 +76,7 @@ public final class ListOverlay<V> extends JsonOverlay<List<V>> {
 	}
 
 	@Override
-	protected boolean _isElaborated() {
+	public boolean _isElaborated() {
 		return elaborated;
 	}
 

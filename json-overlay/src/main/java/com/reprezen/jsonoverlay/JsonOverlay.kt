@@ -311,7 +311,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         // most types of overlay don't need to do any elaboration
     }
 
-    protected open fun _isElaborated(): Boolean {
+    open fun _isElaborated(): Boolean {
         return true
     }
 

@@ -16,7 +16,7 @@ import com.reprezen.jsonoverlay.Overlay
 class ListValidator<T>(var itemValidator: Validator<T>?) : ValidatorBase<List<T>>() {
     override fun runValidations() {
         if (itemValidator != null) {
-            val list: ListOverlay<T> = Overlay.getListOverlay(value)
+            val list: ListOverlay<T> = Overlay.getListOverlay(value)!!
             for (i in 0 until list.size()) {
                 itemValidator!!.validate(Overlay.of<T>(list, i))
             }

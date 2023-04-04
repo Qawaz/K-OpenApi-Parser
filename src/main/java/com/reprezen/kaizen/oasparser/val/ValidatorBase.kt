@@ -62,7 +62,7 @@ abstract class ValidatorBase<V> : Validator<V> {
 
     fun checkPattern(field: Overlay<String>, pattern: Pattern) {
         if (!pattern.matcher(field.get()).matches()) {
-            results!!.addError(Messages.msg(BaseValidationMessages.PatternMatchFail, field.get(), pattern), field)
+            results!!.addError(Messages.msg(BaseValidationMessages.PatternMatchFail, field.get()!!, pattern), field)
         }
     }
 
@@ -71,7 +71,7 @@ abstract class ValidatorBase<V> : Validator<V> {
     }
 
     private fun checkRegex(field: Overlay<String>) {
-        val regex = field.get()
+        val regex = field.get()!!
         try {
             Pattern.compile(regex)
         } catch (e: PatternSyntaxException) {
@@ -104,7 +104,7 @@ abstract class ValidatorBase<V> : Validator<V> {
         // can appear, so handling vars means relacing {.*} with "1" and testing for URL
         // validity. We use a digit instead of a letter because it covers vars in the
         // port, and elsewhere digits are always allowed where letters are.
-        val origUrl = overlay.get()
+        val origUrl = overlay.get()!!
         var url = origUrl
         var fake = false
         if (allowVars) {
@@ -145,7 +145,7 @@ abstract class ValidatorBase<V> : Validator<V> {
     }
 
     private fun checkEmail(overlay: Overlay<String>) {
-        val email = overlay.get()
+        val email = overlay.get()!!
         try {
             val addr = InternetAddress()
             addr.address = email
@@ -172,7 +172,7 @@ abstract class ValidatorBase<V> : Validator<V> {
         val field = validateField(name, required, Number::class.java, null)
         checkMissing(field, required)
         if (field != null && field.isPresent && test != null) {
-            val n = field.get()
+            val n = field.get()!!
             if (!test.apply(n)) {
                 results!!.addError(Messages.msg(BaseValidationMessages.NumberConstraint, desc!!, n), field)
             }
@@ -221,20 +221,20 @@ abstract class ValidatorBase<V> : Validator<V> {
         checkListUnique(list, unique)
     }
 
-    private fun <X> checkListNotEmpty(list: Overlay<List<X>>?, nonEmpty: Boolean) {
+    private fun <X> checkListNotEmpty(list: Overlay<List<X>>, nonEmpty: Boolean) {
         if (nonEmpty) {
-            val listOverlay: ListOverlay<X> = Overlay.getListOverlay(list)
+            val listOverlay= Overlay.getListOverlay(list)
             if (list != null && !list.isPresent) {
-                if (nonEmpty && listOverlay.size() == 0) {
+                if (nonEmpty && listOverlay!!.size() == 0) {
                     results!!.addError(Messages.msg(BaseValidationMessages.EmptyList), list)
                 }
             }
         }
     }
 
-    private fun <X> checkListUnique(list: Overlay<List<X>>?, unique: Boolean) {
+    private fun <X> checkListUnique(list: Overlay<List<X>>, unique: Boolean) {
         if (unique) {
-            val listOverlay: ListOverlay<X> = Overlay.getListOverlay(list)
+            val listOverlay: ListOverlay<X> = Overlay.getListOverlay(list)!!
             val seen: MutableSet<X> = HashSet()
             for (i in 0 until listOverlay.size()) {
                 val item: X = listOverlay.get(i)
@@ -272,9 +272,9 @@ abstract class ValidatorBase<V> : Validator<V> {
         checkMapUnique(map, unique)
     }
 
-    private fun <X> checkMapNotEmpty(list: Overlay<Map<String, X>>?, nonEmpty: Boolean) {
+    private fun <X> checkMapNotEmpty(list: Overlay<Map<String, X>>, nonEmpty: Boolean) {
         if (nonEmpty) {
-            val mapOverlay: MapOverlay<X> = Overlay.getMapOverlay(list)
+            val mapOverlay: MapOverlay<X> = Overlay.getMapOverlay(list)!!
             if (list != null && !list.isPresent) {
                 if (nonEmpty && mapOverlay.size() == 0) {
                     results!!.addError(Messages.msg(BaseValidationMessages.EmptyList), list)
@@ -283,9 +283,9 @@ abstract class ValidatorBase<V> : Validator<V> {
         }
     }
 
-    private fun <X> checkMapUnique(map: Overlay<Map<String, X>>?, unique: Boolean) {
+    private fun <X> checkMapUnique(map: Overlay<Map<String, X>>, unique: Boolean) {
         if (unique) {
-            val mapOverlay: MapOverlay<X> = Overlay.getMapOverlay(map)
+            val mapOverlay: MapOverlay<X> = Overlay.getMapOverlay(map)!!
             val seen: MutableSet<X> = HashSet()
             for (key in mapOverlay.keySet()) {
                 val value: X = mapOverlay.get(key)
@@ -303,13 +303,13 @@ abstract class ValidatorBase<V> : Validator<V> {
 
     fun checkMissing(field: Overlay<*>?, required: Boolean) {
         if (required && (field == null || !field.isPresent)) {
-            results!!.addError(Messages.msg(BaseValidationMessages.MissingField, field!!.pathInParent), value!!)
+            results!!.addError(Messages.msg(BaseValidationMessages.MissingField, field!!.pathInParent!!), value!!)
         }
     }
 
     @JvmOverloads
-    fun validateExtensions(extensions: Map<String?, Any>?, crumb: String? = null): Overlay<Map<String, Any>> {
-        val mapOverlay = Overlay.of(extensions)
+    fun validateExtensions(extensions: Map<String, Any>, crumb: String? = null): Overlay<Map<String, Any>> {
+        val mapOverlay = Overlay.of(extensions)!!
         validateMap(mapOverlay, false, false, null)
         return mapOverlay
     }
@@ -348,7 +348,7 @@ abstract class ValidatorBase<V> : Validator<V> {
                 "array" -> ok = defaultValue is List<*>
             }
             if (!ok) {
-                results!!.addError(Messages.msg(BaseValidationMessages.WrongTypeValue, type, defaultValue), overlay)
+                results!!.addError(Messages.msg(BaseValidationMessages.WrongTypeValue, type, defaultValue!!), overlay)
             }
         }
     }

@@ -18,7 +18,7 @@ object ReferencesChecker {
         val listAdapter: Overlay<*> = Overlay.of(list)
         for (i in 0 until list.size()) {
             if (listAdapter.isReference(i)) {
-                checkReference(listAdapter.getReference(i), results, Overlay.of(list, i))
+                checkReference(listAdapter.getReference(i)!!, results, Overlay.of(list, i))
             }
         }
     }
@@ -27,7 +27,7 @@ object ReferencesChecker {
         val mapAdapter: Overlay<*> = Overlay.of(map)
         for (key in map.keySet()) {
             if (mapAdapter.isReference(key)) {
-                checkReference(mapAdapter.getReference(key), results, Overlay.of(map, key))
+                checkReference(mapAdapter.getReference(key)!!, results, Overlay.of(map, key))
             }
         }
     }
@@ -35,9 +35,9 @@ object ReferencesChecker {
     fun checkReferences(props: PropertiesOverlay<*>, results: ValidationResults) {
         if (props._isElaborated()) {
             val propsAdapter: Overlay<*> = Overlay.of(props)
-            for (name in propsAdapter.propertyNames) {
+            for (name in propsAdapter.propertyNames!!) {
                 if (propsAdapter.isReference(name)) {
-                    checkReference(propsAdapter.getReference(name), results, Overlay.of(props, name, Any::class.java))
+                    checkReference(propsAdapter.getReference(name)!!, results, Overlay.of(props, name, Any::class.java))
                 }
             }
         }
@@ -46,7 +46,7 @@ object ReferencesChecker {
     fun checkReference(ref: Reference, results: ValidationResults, context: Overlay<*>?) {
         if (ref.isInvalid) {
             results.addError(
-                Messages.Companion.msg(BaseValidationMessages.BadRef, ref.refString, ref.invalidReason)!!,
+                Messages.Companion.msg(BaseValidationMessages.BadRef, ref.refString, ref.invalidReason),
                 context!!
             )
         }
