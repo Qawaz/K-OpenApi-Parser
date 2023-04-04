@@ -40,9 +40,9 @@ abstract class TypeGenerator(
 
     protected abstract fun getPackage(): String
 
-    protected abstract fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDeclaration
+    protected abstract fun getTypeDeclaration(type: KTypeData.Type, suffix: String?): TypeDeclaration
 
-    fun getCompilationUnitFor(type: TypeData.Type): CompilationUnit {
+    fun getCompilationUnitFor(type: KTypeData.Type): CompilationUnit {
         val declaration = getTypeDeclaration(type, suffix)
         val gen = CompilationUnit(getPackage(), declaration)
         requireTypes(getImports(type))
@@ -76,7 +76,7 @@ abstract class TypeGenerator(
         outputStream.close()
     }
 
-    fun getFileFor(type: TypeData.Type): File {
+    fun getFileFor(type: KTypeData.Type): File {
         return File(dir, String.format("%s%s.java", type.name, suffix))
     }
 
@@ -95,7 +95,7 @@ abstract class TypeGenerator(
         )
     }
 
-    protected abstract fun getImports(type: TypeData.Type): Collection<String>
+    protected abstract fun getImports(type: KTypeData.Type): Collection<String>
 
     protected open fun needIntfImports(): Boolean {
         return false
@@ -116,7 +116,7 @@ abstract class TypeGenerator(
                 .collect(Collectors.toList()))
     }
 
-    private fun resolveImports(type: TypeData.Type, gen: CompilationUnit) {
+    private fun resolveImports(type: KTypeData.Type, gen: CompilationUnit) {
         val importMap = type.typeData.imports
         val typeMap = type.typeData.typeMap
         for (requiredType in requiredTypes) {
@@ -126,7 +126,7 @@ abstract class TypeGenerator(
 
     private fun resolveImport(
         type: String,
-        typeMap: Map<String, TypeData.Type>,
+        typeMap: Map<String, KTypeData.Type>,
         importMap: Map<String, String>
     ): String? {
         return if (importMap.containsKey(type)) {
@@ -160,7 +160,7 @@ abstract class TypeGenerator(
         }
     }
 
-    protected fun addGeneratedMembers(type: TypeData.Type, gen: CompilationUnit) {
+    protected fun addGeneratedMembers(type: KTypeData.Type, gen: CompilationUnit) {
         val members = Members()
         members.addAll(getConstructors(type))
         for (field in type.fields.values) {
@@ -177,7 +177,7 @@ abstract class TypeGenerator(
         gen.addGeneratedMembers(members)
     }
 
-    protected open fun skipField(field: TypeData.Field): Boolean {
+    protected open fun skipField(field: KTypeData.Field): Boolean {
         return false
     }
 
@@ -224,19 +224,19 @@ abstract class TypeGenerator(
     //        }
     //        return false;
     //    }
-    protected open fun getConstructors(type: TypeData.Type): Members {
+    protected open fun getConstructors(type: KTypeData.Type): Members {
         return Members()
     }
 
-    protected open fun getFieldMembers(field: TypeData.Field): Members {
+    protected open fun getFieldMembers(field: KTypeData.Field): Members {
         return Members()
     }
 
-    protected open fun getFieldMethods(field: TypeData.Field): Members {
+    protected open fun getFieldMethods(field: KTypeData.Field): Members {
         return Members()
     }
 
-    protected open fun getOtherMembers(type: TypeData.Type): Members {
+    protected open fun getOtherMembers(type: KTypeData.Type): Members {
         return Members()
     }
 

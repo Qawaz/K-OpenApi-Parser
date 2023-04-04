@@ -25,13 +25,13 @@ import kotlin.io.path.name
 class CodeGenerator private constructor(private val opts: Options) {
 
     @Throws(IOException::class)
-    private fun generate(typeData: TypeData) {
+    private fun generate(typeData: KTypeData) {
         generateInterfaces(typeData)
         generateImpls(typeData)
     }
 
     @Throws(IOException::class)
-    private fun generateInterfaces(typeData: TypeData) {
+    private fun generateInterfaces(typeData: KTypeData) {
         val intfDir = intfDir
         val intfPackage = intfPackage
         val implPackage = implPackage
@@ -57,7 +57,7 @@ class CodeGenerator private constructor(private val opts: Options) {
     }
 
     @Throws(IOException::class)
-    private fun generateImpls(typeData: TypeData) {
+    private fun generateImpls(typeData: KTypeData) {
         val implDir = implDir
         val intfPackage = intfPackage
         val implPackage = implPackage
@@ -129,7 +129,7 @@ class CodeGenerator private constructor(private val opts: Options) {
             val parsedYaml = Yaml().load<Any>(FileInputStream(options.typeDataFile))
             val typeData = YAMLMapper().convertValue(parsedYaml, TypeData::class.java)
             typeData.init()
-            CodeGenerator(options).generate(typeData)
+            CodeGenerator(options).generate(KTypeData(typeData))
         }
     }
 }

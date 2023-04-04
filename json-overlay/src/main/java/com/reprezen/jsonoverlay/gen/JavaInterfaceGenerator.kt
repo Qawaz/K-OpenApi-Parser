@@ -16,7 +16,7 @@ class JavaInterfaceGenerator : TypeGenerator {
         return intfPackage
     }
 
-    override fun getTypeDeclaration(type: TypeData.Type, suffix: String?): TypeDeclaration {
+    override fun getTypeDeclaration(type: KTypeData.Type, suffix: String?): TypeDeclaration {
         val decl = if(type.enumValues.isEmpty()) ClassOrInterfaceDeclaration(type.name,
             isInterface = true,
             isPublic = true
@@ -47,27 +47,27 @@ class JavaInterfaceGenerator : TypeGenerator {
         return decl
     }
 
-    private fun getSuperType(type : TypeData.Type): String {
+    private fun getSuperType(type : KTypeData.Type): String {
         return type.extensionOf ?: "IJsonOverlay<${type.name}>"
     }
 
-    override fun getImports(type: TypeData.Type): MutableCollection<String> {
+    override fun getImports(type: KTypeData.Type): MutableCollection<String> {
         return type.getRequiredImports("intf", "both")
     }
 
-    override fun getFieldMethods(field: Field): Members {
+    override fun getFieldMethods(field: KTypeData.Field): Members {
         val methods = Members()
         requireTypes(field.type)
         var first = true
         when(field.structure){
-            TypeData.Structure.scalar -> {
+            KTypeData.Structure.scalar -> {
                 for(method in getScalarMethods(field)){
                     if(first) method.comment(field.name)
                     methods.add(method)
                     first = false
                 }
             }
-            TypeData.Structure.collection -> {
+            KTypeData.Structure.collection -> {
                 for (method in getCollectionMethods(field)) {
                     if(first) method.comment(field.name)
                     methods.add(method)
@@ -75,7 +75,7 @@ class JavaInterfaceGenerator : TypeGenerator {
 
                 }
             }
-            TypeData.Structure.map -> {
+            KTypeData.Structure.map -> {
                 for (method in getMapMethods(field)) {
                     if(first) method.comment(field.name)
                     methods.add(method)
@@ -86,10 +86,10 @@ class JavaInterfaceGenerator : TypeGenerator {
         return methods
     }
 
-    private fun getScalarMethods(f : Field): Members {
+    private fun getScalarMethods(f : KTypeData.Field): Members {
         val methods = Members()
         methods.addMember("${f.type} get${f.name}();")
-        if (f.structure === TypeData.Structure.scalar && !f.isScalarType) {
+        if (f.structure === KTypeData.Structure.scalar && !f.isScalarType) {
             methods.addMember("${f.type} get${f.name}(boolean elaborate);")
         }
         if (f.isBoolean) {
@@ -99,7 +99,7 @@ class JavaInterfaceGenerator : TypeGenerator {
         return methods
     }
 
-    private fun getCollectionMethods(f : Field): Members {
+    private fun getCollectionMethods(f : KTypeData.Field): Members {
         val methods = Members()
         requireTypes(List::class.java)
         methods.addMember("List<${f.type}> get${f.plural}();")
@@ -114,7 +114,7 @@ class JavaInterfaceGenerator : TypeGenerator {
         return methods
     }
 
-    private fun getMapMethods(f : Field): Members {
+    private fun getMapMethods(f : KTypeData.Field): Members {
         requireTypes(Map::class.java)
         val methods = Members()
         methods.addMember("Map<String, ${f.type}> get${f.plural}();")

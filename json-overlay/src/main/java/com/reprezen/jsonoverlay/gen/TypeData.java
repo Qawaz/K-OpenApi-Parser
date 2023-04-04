@@ -29,11 +29,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class TypeData {
 
 	private Collection<Type> types;
-	private Map<String, String> imports = new HashMap<>();
+	public Map<String, String> imports = new HashMap<>();
 	private List<String> defaultExtendInterfaces = null;
 	private Map<String, Type> typeMap = null;
-	private String modelType = null;
-	private String discriminator = null;
+	public String modelType = null;
+	public String discriminator = null;
 
 	// Container for "decls" section that is solely used to define reusable
 	// anchors
@@ -43,14 +43,6 @@ public class TypeData {
 	public void init() {
 		typeMap = types.stream().collect(Collectors.toMap(Type::getName, t -> t));
 		types.stream().forEach(t -> t.init(this));
-	}
-
-	public String getModelType() {
-		return modelType;
-	}
-
-	public String getDiscriminator() {
-		return discriminator;
 	}
 
 	public Collection<Type> getTypes() {
@@ -65,27 +57,19 @@ public class TypeData {
 		return typeMap.get(typeName);
 	}
 
-	public Map<String, String> getImports() {
-		return imports;
-	}
-
-	public List<String> getDefaultExtendInterfaces() {
-		return defaultExtendInterfaces;
-	}
-
 	public static class Type {
 
-		private String name;
-		private Map<String, Field> fields = new LinkedHashMap<>();
-		private List<String> extendInterfaces = new ArrayList<>();
-		private Map<String, Collection<String>> imports = new HashMap<>();
-		private boolean noGen = false;
-		private String extensionOf;
+		public String name;
+		public Map<String, Field> fields = new LinkedHashMap<>();
+		public List<String> extendInterfaces = new ArrayList<>();
+		public Map<String, Collection<String>> imports = new HashMap<>();
+		public boolean noGen = false;
+		public String extensionOf;
 		@JsonProperty("abstract")
-		private boolean abstractType = false;
-		private String discriminator = null;
-		private String discriminatorValue = null;
-		private List<String> enumValues = new ArrayList<>();
+		public boolean abstractType = false;
+		public String discriminator = null;
+		public String discriminatorValue = null;
+		public List<String> enumValues = new ArrayList<>();
 
 		private TypeData typeData;
 
@@ -103,105 +87,23 @@ public class TypeData {
 			return typeData;
 		}
 
-		public Collection<String> getRequiredImports(String... moduleTypes) {
-			Set<String> results = new LinkedHashSet<>();
-			Collection<String> interfaces = extendInterfaces != null ? extendInterfaces
-					: typeData.defaultExtendInterfaces;
-			if (interfaces != null) {
-				results.addAll(interfaces);
-			}
-			for (String moduleType : moduleTypes) {
-				if (imports.get(moduleType) != null) {
-					results.addAll(imports.get(moduleType));
-				}
-			}
-			return results;
-		}
-
-		public String getIntfExtendsDecl() {
-			List<String> interfaces = extendInterfaces != null ? extendInterfaces : typeData.defaultExtendInterfaces;
-			return interfaces != null ? " extends " + interfaces.stream().collect(Collectors.joining(",")) : "";
-		}
-
 		public String getName() {
 			return name;
 		}
 
-		public String getLcName() {
-			String lcName = lcFirst(name);
-			return lcName;
-		}
-
-		public Map<String, Field> getFields() {
-			return fields;
-		}
-
-		public List<String> getExtendInterfaces() {
-			return extendInterfaces;
-		}
-
-		public Map<String, Collection<String>> getImports() {
-			return imports;
-		}
-
-		public boolean isNoGen() {
-			return noGen;
-		}
-
-		public String getExtensionOf() {
-			return extensionOf;
-		}
-
-		public boolean isAbstract() {
-			return abstractType;
-		}
-
-		public String getDiscriminator() {
-			return discriminator != null ? discriminator : typeData.getDiscriminator();
-		}
-
-		public String getDiscriminatorValue() {
-			return discriminatorValue != null ? discriminatorValue : name;
-		}
-
-		public List<String> getEnumValues() {
-			return enumValues;
-		}
-
-		public String getImplType() {
-			return isNoGen() ? name : getImplType(name);
-		}
-
-		public static String getImplType(String typeName) {
-			switch (typeName) {
-			case "String":
-			case "Integer":
-			case "Number":
-			case "Boolean":
-			case "Primitive":
-			case "Object":
-				return typeName + "Overlay";
-			default:
-				return typeName + "Impl";
-			}
-		}
-
-		String lcFirst(String s) {
-			return s.substring(0, 1).toLowerCase() + s.substring(1);
-		}
 	}
 
 	public static class Field {
-		private String name;
-		private String plural;
-		private Structure structure = Structure.scalar;
-		private String type;
-		private String keyName = "name";
-		private String keyPattern;
-		private boolean noImpl;
-		private String id;
-		private boolean boolDefault = false;
-		private String parentPath;
+		public String name;
+		public String plural;
+		public Structure structure = Structure.scalar;
+		public String type;
+		public String keyName = "name";
+		public String keyPattern;
+		public boolean noImpl;
+		public String id;
+		public boolean boolDefault = false;
+		public String parentPath;
 
 		private Type container;
 
@@ -224,102 +126,10 @@ public class TypeData {
 			}
 		}
 
-		public String getId() {
-			return id;
-		}
-
-		public Type getContainer() {
-			return container;
-		}
-
 		public TypeData getTypeData() {
 			return container.getTypeData();
 		}
 
-		public String getName() {
-			return name;
-		}
-
-		public String getLcName() {
-			String lcName = lcFirst(name);
-			switch (lcName) {
-			case "default":
-			case "enum":
-				lcName = lcName + "Value";
-			}
-			return lcName;
-		}
-
-		public String getPlural() {
-			return plural != null ? plural : name + "s";
-		}
-
-		public String getLcPlural() {
-			return lcFirst(getPlural());
-		}
-
-		public Structure getStructure() {
-			return structure;
-		}
-
-		public String getType() {
-			return type.equals("Primitive") ? "Object" : type;
-		}
-
-		String lcFirst(String s) {
-			return s.substring(0, 1).toLowerCase() + s.substring(1);
-		}
-
-		public String getKeyName() {
-			return keyName;
-		}
-
-		public String getKeyPattern() {
-			return keyPattern;
-		}
-
-		public boolean isNoImpl() {
-			return noImpl;
-		}
-
-		public boolean isBoolean() {
-			return getType().equals("Boolean");
-		}
-
-		public boolean getBoolDefault() {
-			return boolDefault;
-		}
-
-		public String getParentPath() {
-			return parentPath != null ? parentPath : id;
-		}
-
-		public String getImplType() {
-			Type objectType = getContainer().getTypeData().getTypeMap().get(getType());
-			return Type.getImplType(objectType != null ? objectType.getName() : type);
-		}
-
-		public boolean isScalarType() {
-			switch (getType()) {
-			case "String":
-			case "Integer":
-			case "Number":
-			case "Boolean":
-			case "Primitive":
-			case "Object":
-				return true;
-			default:
-				return false;
-			}
-		}
-
-		public String getPropertyName() {
-			return structure == Structure.scalar ? getLcName() : getLcPlural();
-		}
-
-		public String getOverlayType() {
-			return getType() + (isScalarType() ? "Overlay" : "");
-		}
 	}
 
 	public static class Method {
