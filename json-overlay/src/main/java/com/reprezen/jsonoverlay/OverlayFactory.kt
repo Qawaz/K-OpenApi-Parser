@@ -37,7 +37,7 @@ abstract class OverlayFactory<V> {
             overlay = (overlay._getFactory() as OverlayFactory<V>?)!!._create(null as V?, parent, refMgr)
             overlay._setReference(refOverlay)
         } else {
-            val existing = refMgr.registry.getOverlay(json, signature)
+            val existing = refMgr.registry.getOverlay(json!!, signature!!)
             if (existing != null) {
                 overlay = existing as JsonOverlay<V>
                 if (parent != null) {
@@ -46,7 +46,7 @@ abstract class OverlayFactory<V> {
             } else {
                 overlay = _create(json!!, parent, refMgr)
                 overlay!!._setParent(parent)
-                refMgr.registry.register(json, signature, overlay)
+                refMgr.registry.register(json, signature!!, overlay)
                 if (!overlay._isElaborated()) {
                     overlay._elaborate(true)
                 }
