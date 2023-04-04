@@ -60,7 +60,7 @@ class MapTests : Assert() {
         val copy = overlay._copy() as MapOverlay<Int>
         assertNotSame("Copy operation should yield different object", overlay, copy)
         assertEquals(overlay, copy)
-        for (key in overlay.value.keys) {
+        for (key in overlay.value!!.keys) {
             assertNotSame(
                 "Copy operation should create copy of each map entry",
                 overlay._getOverlay(key),
@@ -79,9 +79,9 @@ class MapTests : Assert() {
 
     private fun checkKeys(overlay: MapOverlay<Int>, vararg keys: String) {
         var i = 0
-        for (key in overlay._get().keys) {
+        for (key in overlay._get()!!.keys) {
             assertEquals(keys[i++], key)
-            assertEquals(Integer.valueOf(key[0].code - a.code), overlay._get()[key])
+            assertEquals(Integer.valueOf(key[0].code - a.code), overlay._get()!![key])
         }
     }
 }

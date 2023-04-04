@@ -24,6 +24,7 @@ import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.reprezen.jsonoverlay.SerializationOptions.Option;
+import org.jetbrains.annotations.NotNull;
 
 public final class MapOverlay<V> extends JsonOverlay<Map<String, V>> {
 
@@ -68,8 +69,9 @@ public final class MapOverlay<V> extends JsonOverlay<Map<String, V>> {
 		};
 	}
 
-	@Override
-	protected JsonNode _toJsonInternal(SerializationOptions options) {
+	@NotNull
+    @Override
+	protected JsonNode _toJsonInternal(@NotNull SerializationOptions options) {
 		ObjectNode obj = _jsonObject();
 		for (Entry<String, JsonOverlay<V>> entry : overlays.entrySet()) {
 			obj.set(entry.getKey(), entry.getValue()._toJson(options.minus(Option.KEEP_ONE_EMPTY)));

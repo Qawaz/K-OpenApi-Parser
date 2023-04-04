@@ -26,6 +26,7 @@ import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.reprezen.jsonoverlay.SerializationOptions.Option;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class PropertiesOverlay<V> extends JsonOverlay<V> {
 
@@ -291,8 +292,9 @@ public abstract class PropertiesOverlay<V> extends JsonOverlay<V> {
 		return result;
 	}
 
-	@Override
-	protected JsonNode _toJsonInternal(SerializationOptions options) {
+	@NotNull
+    @Override
+	protected JsonNode _toJsonInternal(@NotNull SerializationOptions options) {
 		JsonNode obj = _jsonMissing();
 		for (PropertyLocator child : childOrder) {
 			JsonNode childJson = children.get(child.getName())._toJson(options.minus(Option.KEEP_ONE_EMPTY));

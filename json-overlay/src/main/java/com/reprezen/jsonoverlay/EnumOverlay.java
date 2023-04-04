@@ -14,6 +14,7 @@
 package com.reprezen.jsonoverlay;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class EnumOverlay<V extends Enum<V>> extends ScalarOverlay<V> {
 
@@ -43,8 +44,9 @@ public abstract class EnumOverlay<V extends Enum<V>> extends ScalarOverlay<V> {
 		}
 	}
 
-	@Override
-	protected JsonNode _toJsonInternal(SerializationOptions options) {
+	@NotNull
+    @Override
+	protected JsonNode _toJsonInternal(@NotNull SerializationOptions options) {
 		return value != null ? _jsonScalar(value.name()) : _jsonMissing();
 	}
 
