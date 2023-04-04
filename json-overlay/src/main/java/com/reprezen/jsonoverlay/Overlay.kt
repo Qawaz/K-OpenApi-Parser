@@ -136,7 +136,7 @@ class Overlay<V> {
     val referenceOverlay: Overlay<V>?
         get() {
             val refOverlay = overlay._getRefOverlay()
-            return if (refOverlay != null) Overlay(refOverlay.overlay) else null
+            return if (refOverlay != null) Overlay(refOverlay.overlay!!) else null
         }
 
     fun getReference(key: String?): Reference? {

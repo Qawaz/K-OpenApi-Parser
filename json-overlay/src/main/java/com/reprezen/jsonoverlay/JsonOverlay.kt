@@ -165,19 +165,19 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
 
     /* package */
     fun _isPresent(): Boolean {
-        return (if (_isValidRef()) refOverlay!!.overlay else this).present
+        return (if (_isValidRef()) refOverlay!!.overlay else this)?.present == true
     }
 
     /* package */ /* package */
     @JvmOverloads
     fun _getParent(followRef: Boolean = true): JsonOverlay<*>? {
-        return (if (followRef && _isValidRef()) refOverlay!!.overlay else this).parent
+        return (if (followRef && _isValidRef()) refOverlay!!.overlay else this)?.parent
     }
 
     /* package */
     fun _getRoot(): JsonOverlay<*>? {
         return if (_isValidRef()) {
-            refOverlay!!.overlay._getRoot()
+            refOverlay!!.overlay?._getRoot()
         } else {
             var result: JsonOverlay<*>? = this
             while (result!!._getParent() != null) {
@@ -190,7 +190,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     /* package */
     fun _getModel(): JsonOverlay<*>? {
         return if (_isValidRef()) {
-            refOverlay!!.overlay._getModel()
+            refOverlay!!.overlay?._getModel()
         } else {
             var modelPart: JsonOverlay<*>? = if (_getModelType() != null) this else null
             var result: JsonOverlay<*>? = this
@@ -203,7 +203,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     }
 
     protected open fun _getModelType(): Class<*>? {
-        return if (_isValidRef()) refOverlay!!.overlay._getModelType() else null
+        return if (_isValidRef()) refOverlay!!.overlay?._getModelType() else null
     }
 
     /* package */
@@ -248,7 +248,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
             return creatingRef!!.normalizedRef
         }
         if (_isReference() && refOverlay!!._getReference().isValid && !forRef) {
-            return refOverlay!!.overlay._getJsonReference(false)
+            return refOverlay!!.overlay!!._getJsonReference(false)
         }
         return if (parent != null) {
             val ref = parent!!._getJsonReference()
@@ -280,7 +280,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
                 obj.put("\$ref", refOverlay!!._getReference().refString)
                 obj
             } else {
-                refOverlay!!.overlay._toJson(options)
+                refOverlay!!.overlay!!._toJson(options)
             }
         } else {
             _toJsonInternal(options)!!
@@ -303,7 +303,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         return if (refOverlay == null || refOverlay!!._getReference().isInvalid) {
             this
         } else {
-            refOverlay!!.overlay
+            refOverlay!!.overlay!!
         }
     }
 
