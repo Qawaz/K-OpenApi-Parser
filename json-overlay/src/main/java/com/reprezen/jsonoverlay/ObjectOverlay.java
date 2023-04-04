@@ -39,13 +39,13 @@ public final class ObjectOverlay extends ScalarOverlay<Object> {
 	}
 
 	@Override
-	protected OverlayFactory<Object> _getFactory() {
+	public OverlayFactory<Object> _getFactory() {
 		return factory;
 	}
 
 	public static OverlayFactory<Object> factory = new OverlayFactory<Object>() {
 		@Override
-		protected Class<ObjectOverlay> getOverlayClass() {
+		public Class<ObjectOverlay> getOverlayClass() {
 			return ObjectOverlay.class;
 		}
 

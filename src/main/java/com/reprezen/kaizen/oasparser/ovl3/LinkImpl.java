@@ -244,7 +244,7 @@ public class LinkImpl extends PropertiesOverlay<Link> implements Link {
 	public static OverlayFactory<Link> factory = new OverlayFactory<Link>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Link>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Link>> getOverlayClass() {
 			return LinkImpl.class;
 		}
 	
@@ -291,7 +291,7 @@ public class LinkImpl extends PropertiesOverlay<Link> implements Link {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

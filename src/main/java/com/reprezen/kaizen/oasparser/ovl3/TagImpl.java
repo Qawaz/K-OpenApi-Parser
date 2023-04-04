@@ -149,7 +149,7 @@ public class TagImpl extends PropertiesOverlay<Tag> implements Tag {
 	public static OverlayFactory<Tag> factory = new OverlayFactory<Tag>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Tag>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Tag>> getOverlayClass() {
 			return TagImpl.class;
 		}
 	
@@ -196,7 +196,7 @@ public class TagImpl extends PropertiesOverlay<Tag> implements Tag {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

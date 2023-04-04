@@ -180,7 +180,7 @@ public abstract class PropertiesOverlay<V> extends JsonOverlay<V> {
 	}
 
 	@Override
-	protected void _elaborate(boolean atCreation) {
+	public void _elaborate(boolean atCreation) {
 		if (atCreation && deferElaboration) {
 			return;
 		}

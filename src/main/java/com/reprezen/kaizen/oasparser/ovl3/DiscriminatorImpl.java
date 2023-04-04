@@ -107,7 +107,7 @@ public class DiscriminatorImpl extends PropertiesOverlay<Discriminator> implemen
 	public static OverlayFactory<Discriminator> factory = new OverlayFactory<Discriminator>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Discriminator>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Discriminator>> getOverlayClass() {
 			return DiscriminatorImpl.class;
 		}
 	
@@ -154,7 +154,7 @@ public class DiscriminatorImpl extends PropertiesOverlay<Discriminator> implemen
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

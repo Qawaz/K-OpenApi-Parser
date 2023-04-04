@@ -191,7 +191,7 @@ public class XmlImpl extends PropertiesOverlay<Xml> implements Xml {
 	public static OverlayFactory<Xml> factory = new OverlayFactory<Xml>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Xml>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Xml>> getOverlayClass() {
 			return XmlImpl.class;
 		}
 	
@@ -238,7 +238,7 @@ public class XmlImpl extends PropertiesOverlay<Xml> implements Xml {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

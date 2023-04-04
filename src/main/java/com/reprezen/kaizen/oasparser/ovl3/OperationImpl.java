@@ -670,7 +670,7 @@ public class OperationImpl extends PropertiesOverlay<Operation> implements Opera
 	public static OverlayFactory<Operation> factory = new OverlayFactory<Operation>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Operation>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Operation>> getOverlayClass() {
 			return OperationImpl.class;
 		}
 	
@@ -717,7 +717,7 @@ public class OperationImpl extends PropertiesOverlay<Operation> implements Opera
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

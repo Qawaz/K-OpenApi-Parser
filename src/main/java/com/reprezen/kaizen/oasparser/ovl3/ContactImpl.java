@@ -142,7 +142,7 @@ public class ContactImpl extends PropertiesOverlay<Contact> implements Contact {
 	public static OverlayFactory<Contact> factory = new OverlayFactory<Contact>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Contact>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Contact>> getOverlayClass() {
 			return ContactImpl.class;
 		}
 	
@@ -189,7 +189,7 @@ public class ContactImpl extends PropertiesOverlay<Contact> implements Contact {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

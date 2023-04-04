@@ -127,7 +127,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     }
 
     /* package */
-    fun _copy(): JsonOverlay<V?> {
+    fun _copy(): JsonOverlay<V> {
         return factory.create(_get(), null, refMgr)
     }
 
@@ -307,7 +307,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         }
     }
 
-    protected open fun _elaborate(atCreation: Boolean) {
+    open fun _elaborate(atCreation: Boolean) {
         // most types of overlay don't need to do any elaboration
     }
 
@@ -341,7 +341,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         return positionInfo
     }
 
-    protected abstract fun _getFactory(): OverlayFactory<*>?
+    abstract fun _getFactory(): OverlayFactory<*>?
 
     override fun toString(): String {
         return _toJson().toString()

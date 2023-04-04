@@ -127,7 +127,7 @@ public class LicenseImpl extends PropertiesOverlay<License> implements License {
 	public static OverlayFactory<License> factory = new OverlayFactory<License>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super License>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super License>> getOverlayClass() {
 			return LicenseImpl.class;
 		}
 	
@@ -174,7 +174,7 @@ public class LicenseImpl extends PropertiesOverlay<License> implements License {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

@@ -59,7 +59,7 @@ class JavaImplGenerator : TypeGenerator {
         members.add(
             ClassMember(
                 """@Override
-            |protected OverlayFactory<?> _getFactory() {
+            |public OverlayFactory<?> _getFactory() {
             |${"\t"}return factory;
             |}""".trimMargin("|")
             )
@@ -348,7 +348,7 @@ class JavaImplGenerator : TypeGenerator {
             """public static OverlayFactory<${type.name}> factory = new OverlayFactory<${type.name}>() {
         |
         |${"\t"}@Override
-        |${"\t"}protected Class<? extends JsonOverlay<? super ${type.name}>> getOverlayClass() {
+        |${"\t"}public Class<? extends JsonOverlay<? super ${type.name}>> getOverlayClass() {
         |${"\t"}${"\t"}return ${type.implType}.class;
         |${"\t"}}
         |
@@ -399,7 +399,7 @@ class JavaImplGenerator : TypeGenerator {
             """public static OverlayFactory<${type.name}> factory = new OverlayFactory<${type.name}>() {
         |
         |${"\t"}@Override
-        |${"\t"}protected Class<? extends JsonOverlay<? super ${type.name}>> getOverlayClass() {
+        |${"\t"}public Class<? extends JsonOverlay<? super ${type.name}>> getOverlayClass() {
         |${"\t"}${"\t"}return ${type.implType}.class;
         |${"\t"}}
         |

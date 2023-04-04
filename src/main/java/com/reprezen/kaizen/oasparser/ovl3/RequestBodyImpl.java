@@ -195,7 +195,7 @@ public class RequestBodyImpl extends PropertiesOverlay<RequestBody> implements R
 	public static OverlayFactory<RequestBody> factory = new OverlayFactory<RequestBody>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super RequestBody>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super RequestBody>> getOverlayClass() {
 			return RequestBodyImpl.class;
 		}
 	
@@ -242,7 +242,7 @@ public class RequestBodyImpl extends PropertiesOverlay<RequestBody> implements R
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

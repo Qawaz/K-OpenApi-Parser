@@ -102,7 +102,7 @@ public class SecurityParameterImpl extends PropertiesOverlay<SecurityParameter> 
 	public static OverlayFactory<SecurityParameter> factory = new OverlayFactory<SecurityParameter>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super SecurityParameter>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super SecurityParameter>> getOverlayClass() {
 			return SecurityParameterImpl.class;
 		}
 	
@@ -149,7 +149,7 @@ public class SecurityParameterImpl extends PropertiesOverlay<SecurityParameter> 
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

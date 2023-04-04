@@ -90,7 +90,7 @@ public class SecurityRequirementImpl extends PropertiesOverlay<SecurityRequireme
 	public static OverlayFactory<SecurityRequirement> factory = new OverlayFactory<SecurityRequirement>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super SecurityRequirement>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super SecurityRequirement>> getOverlayClass() {
 			return SecurityRequirementImpl.class;
 		}
 	
@@ -137,7 +137,7 @@ public class SecurityRequirementImpl extends PropertiesOverlay<SecurityRequireme
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

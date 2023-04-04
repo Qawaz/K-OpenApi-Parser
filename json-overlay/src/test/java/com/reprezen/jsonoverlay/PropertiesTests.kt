@@ -221,23 +221,23 @@ class PropertiesTests : Assert() {
         companion object {
             var factory: OverlayFactory<Foo> = object : OverlayFactory<Foo>() {
 
-                override fun getOverlayClass(): Class<out JsonOverlay<in Foo?>> {
+                override fun getOverlayClass(): Class<out JsonOverlay<in Foo>> {
                     return Foo::class.java
                 }
 
                 protected override fun _create(
-                    value: Foo,
+                    value: Foo?,
                     parent: JsonOverlay<*>?,
                     refMgr: ReferenceManager
                 ): JsonOverlay<Foo> {
-                    return Foo(value, parent, refMgr)
+                    return Foo(value!!, parent, refMgr)
                 }
 
                 override fun _create(
                     json: JsonNode,
                     parent: JsonOverlay<*>?,
                     refMgr: ReferenceManager
-                ): JsonOverlay<Foo?> {
+                ): JsonOverlay<Foo> {
                     return Foo(json, parent, refMgr)
                 }
             }

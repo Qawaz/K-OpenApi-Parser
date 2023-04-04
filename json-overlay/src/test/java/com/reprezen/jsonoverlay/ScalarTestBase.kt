@@ -36,7 +36,7 @@ abstract class ScalarTestBase<V>(private val factory: OverlayFactory<V>) : Asser
     @Test
     fun testOvlValueFromValue() {
         val ovl = factory.create(value, null, refMgr)
-        assertTrue(factory.overlayClass.isAssignableFrom(ovl.javaClass))
+        assertTrue(factory.getOverlayClass().isAssignableFrom(ovl.javaClass))
         assertEquals(value, ovl._get())
         testCopy(ovl)
     }
@@ -60,7 +60,7 @@ abstract class ScalarTestBase<V>(private val factory: OverlayFactory<V>) : Asser
 
     @Test
     fun testSerialization() {
-        val ovl = factory.create(value, null, refMgr)
+        val ovl = factory.create(value!!, null, refMgr)
         val json = ovl._toJson()
         val ovl2 = factory.create(json, null, refMgr)
         assertEquals(ovl._get(), ovl2._get())
@@ -68,32 +68,32 @@ abstract class ScalarTestBase<V>(private val factory: OverlayFactory<V>) : Asser
 
     @Test
     fun testRoot() {
-        val ovl = factory.create(value, null, refMgr)
+        val ovl = factory.create(value!!, null, refMgr)
         assertSame(ovl, ovl._getRoot())
         assertNull(Overlay.of(ovl).getModel())
     }
 
     @Test
     fun testPathFromRoot() {
-        val ovl = factory.create(value, null, refMgr)
+        val ovl = factory.create(value!!, null, refMgr)
         assertNull(Overlay.of(ovl).pathFromRoot)
     }
 
     @Test
     @Throws(MalformedURLException::class)
     fun testJsonRef() {
-        val ovl = factory.create(value, null, refMgr)
+        val ovl = factory.create(value!!, null, refMgr)
         assertEquals("#", Overlay.of(ovl).jsonReference)
     }
 
     fun testWithJson(json: JsonNode?, `val`: V?) {
         val ovl = factory.create(json, null, refMgr)
-        assertTrue(factory.overlayClass.isAssignableFrom(ovl.javaClass))
+        assertTrue(factory.getOverlayClass().isAssignableFrom(ovl.javaClass))
         assertEquals(`val`, ovl._get())
         testCopy(ovl)
     }
 
-    fun testCopy(ovl: JsonOverlay<V?>) {
+    fun testCopy(ovl: JsonOverlay<V>) {
         val copy = ovl._copy()
         assertNotSame("Copy operation should yield different object", ovl, copy)
         assertEquals(ovl, copy)

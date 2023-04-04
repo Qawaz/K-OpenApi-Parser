@@ -278,7 +278,7 @@ public class ResponseImpl extends PropertiesOverlay<Response> implements Respons
 	public static OverlayFactory<Response> factory = new OverlayFactory<Response>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Response>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Response>> getOverlayClass() {
 			return ResponseImpl.class;
 		}
 	
@@ -325,7 +325,7 @@ public class ResponseImpl extends PropertiesOverlay<Response> implements Respons
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

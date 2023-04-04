@@ -437,7 +437,7 @@ public class ParameterImpl extends PropertiesOverlay<Parameter> implements Param
 	public static OverlayFactory<Parameter> factory = new OverlayFactory<Parameter>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Parameter>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Parameter>> getOverlayClass() {
 			return ParameterImpl.class;
 		}
 	
@@ -484,7 +484,7 @@ public class ParameterImpl extends PropertiesOverlay<Parameter> implements Param
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

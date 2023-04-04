@@ -248,7 +248,7 @@ public class OAuthFlowImpl extends PropertiesOverlay<OAuthFlow> implements OAuth
 	public static OverlayFactory<OAuthFlow> factory = new OverlayFactory<OAuthFlow>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super OAuthFlow>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super OAuthFlow>> getOverlayClass() {
 			return OAuthFlowImpl.class;
 		}
 	
@@ -295,7 +295,7 @@ public class OAuthFlowImpl extends PropertiesOverlay<OAuthFlow> implements OAuth
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

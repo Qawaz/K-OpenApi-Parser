@@ -364,7 +364,7 @@ public class SecuritySchemeImpl extends PropertiesOverlay<SecurityScheme> implem
 	public static OverlayFactory<SecurityScheme> factory = new OverlayFactory<SecurityScheme>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super SecurityScheme>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super SecurityScheme>> getOverlayClass() {
 			return SecuritySchemeImpl.class;
 		}
 	
@@ -411,7 +411,7 @@ public class SecuritySchemeImpl extends PropertiesOverlay<SecurityScheme> implem
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

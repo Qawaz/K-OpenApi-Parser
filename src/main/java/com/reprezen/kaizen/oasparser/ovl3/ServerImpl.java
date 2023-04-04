@@ -232,7 +232,7 @@ public class ServerImpl extends PropertiesOverlay<Server> implements Server {
 	public static OverlayFactory<Server> factory = new OverlayFactory<Server>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Server>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Server>> getOverlayClass() {
 			return ServerImpl.class;
 		}
 	
@@ -279,7 +279,7 @@ public class ServerImpl extends PropertiesOverlay<Server> implements Server {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

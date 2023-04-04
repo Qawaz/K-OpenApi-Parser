@@ -429,7 +429,7 @@ public class PathImpl extends PropertiesOverlay<Path> implements Path {
 	public static OverlayFactory<Path> factory = new OverlayFactory<Path>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Path>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Path>> getOverlayClass() {
 			return PathImpl.class;
 		}
 	
@@ -476,7 +476,7 @@ public class PathImpl extends PropertiesOverlay<Path> implements Path {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

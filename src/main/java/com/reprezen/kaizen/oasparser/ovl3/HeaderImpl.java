@@ -403,7 +403,7 @@ public class HeaderImpl extends PropertiesOverlay<Header> implements Header {
 	public static OverlayFactory<Header> factory = new OverlayFactory<Header>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Header>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Header>> getOverlayClass() {
 			return HeaderImpl.class;
 		}
 	
@@ -450,7 +450,7 @@ public class HeaderImpl extends PropertiesOverlay<Header> implements Header {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

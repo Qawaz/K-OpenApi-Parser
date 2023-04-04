@@ -152,7 +152,7 @@ public class CallbackImpl extends PropertiesOverlay<Callback> implements Callbac
 	public static OverlayFactory<Callback> factory = new OverlayFactory<Callback>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Callback>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Callback>> getOverlayClass() {
 			return CallbackImpl.class;
 		}
 	
@@ -199,7 +199,7 @@ public class CallbackImpl extends PropertiesOverlay<Callback> implements Callbac
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

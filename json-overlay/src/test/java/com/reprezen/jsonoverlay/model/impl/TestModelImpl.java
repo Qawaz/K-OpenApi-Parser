@@ -395,7 +395,7 @@ public class TestModelImpl extends PropertiesOverlay<TestModel> implements TestM
 	public static OverlayFactory<TestModel> factory = new OverlayFactory<TestModel>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super TestModel>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super TestModel>> getOverlayClass() {
 			return TestModelImpl.class;
 		}
 	
@@ -442,7 +442,7 @@ public class TestModelImpl extends PropertiesOverlay<TestModel> implements TestM
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

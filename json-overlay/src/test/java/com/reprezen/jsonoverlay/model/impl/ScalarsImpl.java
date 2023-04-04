@@ -197,7 +197,7 @@ public class ScalarsImpl extends PropertiesOverlay<Scalars> implements Scalars {
 	public static OverlayFactory<Scalars> factory = new OverlayFactory<Scalars>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Scalars>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Scalars>> getOverlayClass() {
 			return ScalarsImpl.class;
 		}
 	
@@ -244,7 +244,7 @@ public class ScalarsImpl extends PropertiesOverlay<Scalars> implements Scalars {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

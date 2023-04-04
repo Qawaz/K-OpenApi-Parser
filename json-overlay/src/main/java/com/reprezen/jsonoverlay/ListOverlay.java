@@ -81,7 +81,7 @@ public final class ListOverlay<V> extends JsonOverlay<List<V>> {
 	}
 
 	@Override
-	protected void _elaborate(boolean atCreation) {
+	public void _elaborate(boolean atCreation) {
 		if (json != null) {
 			fillWithJson();
 		} else {
@@ -182,7 +182,7 @@ public final class ListOverlay<V> extends JsonOverlay<List<V>> {
 	}
 
 	@Override
-	protected OverlayFactory<List<V>> _getFactory() {
+	public OverlayFactory<List<V>> _getFactory() {
 		return factory;
 	}
 
@@ -200,7 +200,7 @@ public final class ListOverlay<V> extends JsonOverlay<List<V>> {
 		}
 
 		@Override
-		protected Class<? extends JsonOverlay<? super List<V>>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super List<V>>> getOverlayClass() {
 			Class<?> overlayClass = ListOverlay.class;
 			@SuppressWarnings("unchecked")
 			Class<? extends JsonOverlay<List<V>>> castClass = (Class<? extends JsonOverlay<List<V>>>) overlayClass;

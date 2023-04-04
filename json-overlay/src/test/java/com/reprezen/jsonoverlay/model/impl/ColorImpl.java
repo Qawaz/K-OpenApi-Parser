@@ -32,7 +32,7 @@ public class ColorImpl extends EnumOverlay<Color> {
 	public static OverlayFactory<Color> factory = new OverlayFactory<Color>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Color>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Color>> getOverlayClass() {
 			return ColorImpl.class;
 		}
 	
@@ -49,7 +49,7 @@ public class ColorImpl extends EnumOverlay<Color> {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

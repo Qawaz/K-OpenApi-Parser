@@ -239,7 +239,7 @@ public class MediaTypeImpl extends PropertiesOverlay<MediaType> implements Media
 	public static OverlayFactory<MediaType> factory = new OverlayFactory<MediaType>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super MediaType>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super MediaType>> getOverlayClass() {
 			return MediaTypeImpl.class;
 		}
 	
@@ -286,7 +286,7 @@ public class MediaTypeImpl extends PropertiesOverlay<MediaType> implements Media
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

@@ -227,7 +227,7 @@ public class EncodingPropertyImpl extends PropertiesOverlay<EncodingProperty> im
 	public static OverlayFactory<EncodingProperty> factory = new OverlayFactory<EncodingProperty>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super EncodingProperty>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super EncodingProperty>> getOverlayClass() {
 			return EncodingPropertyImpl.class;
 		}
 	
@@ -274,7 +274,7 @@ public class EncodingPropertyImpl extends PropertiesOverlay<EncodingProperty> im
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

@@ -52,7 +52,7 @@ public class EntryImpl extends PropertiesOverlay<Entry> implements Entry {
 	public static OverlayFactory<Entry> factory = new OverlayFactory<Entry>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Entry>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Entry>> getOverlayClass() {
 			return EntryImpl.class;
 		}
 	
@@ -99,7 +99,7 @@ public class EntryImpl extends PropertiesOverlay<Entry> implements Entry {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

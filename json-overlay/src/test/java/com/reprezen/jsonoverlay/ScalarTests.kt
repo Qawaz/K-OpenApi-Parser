@@ -34,6 +34,7 @@ class ScalarTests {
 
     @RunWith(Parameterized::class)
     class StringTests(value: String?) : ScalarTestBase<String>(StringOverlay.factory) {
+
         init {
             this.value = value
         }

@@ -1069,7 +1069,7 @@ public class SchemaImpl extends PropertiesOverlay<Schema> implements Schema {
 	public static OverlayFactory<Schema> factory = new OverlayFactory<Schema>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Schema>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Schema>> getOverlayClass() {
 			return SchemaImpl.class;
 		}
 	
@@ -1116,7 +1116,7 @@ public class SchemaImpl extends PropertiesOverlay<Schema> implements Schema {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

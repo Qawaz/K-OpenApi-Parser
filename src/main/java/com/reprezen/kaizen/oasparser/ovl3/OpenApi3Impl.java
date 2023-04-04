@@ -1037,7 +1037,7 @@ public class OpenApi3Impl extends PropertiesOverlay<OpenApi3> implements OpenApi
 	public static OverlayFactory<OpenApi3> factory = new OverlayFactory<OpenApi3>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super OpenApi3>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super OpenApi3>> getOverlayClass() {
 			return OpenApi3Impl.class;
 		}
 	
@@ -1084,7 +1084,7 @@ public class OpenApi3Impl extends PropertiesOverlay<OpenApi3> implements OpenApi
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

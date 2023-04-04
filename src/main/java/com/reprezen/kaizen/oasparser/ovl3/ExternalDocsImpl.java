@@ -125,7 +125,7 @@ public class ExternalDocsImpl extends PropertiesOverlay<ExternalDocs> implements
 	public static OverlayFactory<ExternalDocs> factory = new OverlayFactory<ExternalDocs>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super ExternalDocs>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super ExternalDocs>> getOverlayClass() {
 			return ExternalDocsImpl.class;
 		}
 	
@@ -172,7 +172,7 @@ public class ExternalDocsImpl extends PropertiesOverlay<ExternalDocs> implements
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

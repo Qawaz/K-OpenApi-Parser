@@ -167,7 +167,7 @@ public class ExampleImpl extends PropertiesOverlay<Example> implements Example {
 	public static OverlayFactory<Example> factory = new OverlayFactory<Example>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Example>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Example>> getOverlayClass() {
 			return ExampleImpl.class;
 		}
 	
@@ -214,7 +214,7 @@ public class ExampleImpl extends PropertiesOverlay<Example> implements Example {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

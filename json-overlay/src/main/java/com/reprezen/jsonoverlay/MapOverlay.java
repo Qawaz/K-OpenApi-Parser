@@ -85,7 +85,7 @@ public final class MapOverlay<V> extends JsonOverlay<Map<String, V>> {
 	}
 
 	@Override
-	protected void _elaborate(boolean atCreation) {
+	public void _elaborate(boolean atCreation) {
 		if (json != null) {
 			fillWithJson();
 		} else {
@@ -182,7 +182,7 @@ public final class MapOverlay<V> extends JsonOverlay<Map<String, V>> {
 	}
 
 	@Override
-	protected OverlayFactory<Map<String, V>> _getFactory() {
+	public OverlayFactory<Map<String, V>> _getFactory() {
 		return factory;
 	}
 
@@ -201,7 +201,7 @@ public final class MapOverlay<V> extends JsonOverlay<Map<String, V>> {
 		}
 
 		@Override
-		protected Class<? extends JsonOverlay<? super Map<String, V>>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Map<String, V>>> getOverlayClass() {
 			Class<?> overlayClass = MapOverlay.class;
 			@SuppressWarnings("unchecked")
 			Class<? extends JsonOverlay<Map<String, V>>> castClass = (Class<? extends JsonOverlay<Map<String, V>>>) overlayClass;

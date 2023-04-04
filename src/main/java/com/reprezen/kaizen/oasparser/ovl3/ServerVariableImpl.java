@@ -186,7 +186,7 @@ public class ServerVariableImpl extends PropertiesOverlay<ServerVariable> implem
 	public static OverlayFactory<ServerVariable> factory = new OverlayFactory<ServerVariable>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super ServerVariable>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super ServerVariable>> getOverlayClass() {
 			return ServerVariableImpl.class;
 		}
 	
@@ -233,7 +233,7 @@ public class ServerVariableImpl extends PropertiesOverlay<ServerVariable> implem
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

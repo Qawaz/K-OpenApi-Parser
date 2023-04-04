@@ -207,7 +207,7 @@ public class InfoImpl extends PropertiesOverlay<Info> implements Info {
 	public static OverlayFactory<Info> factory = new OverlayFactory<Info>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Info>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Info>> getOverlayClass() {
 			return InfoImpl.class;
 		}
 	
@@ -254,7 +254,7 @@ public class InfoImpl extends PropertiesOverlay<Info> implements Info {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 

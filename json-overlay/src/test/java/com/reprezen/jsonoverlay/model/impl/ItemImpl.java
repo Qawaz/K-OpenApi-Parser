@@ -52,7 +52,7 @@ public class ItemImpl extends PropertiesOverlay<Item> implements Item {
 	public static OverlayFactory<Item> factory = new OverlayFactory<Item>() {
 	
 		@Override
-		protected Class<? extends JsonOverlay<? super Item>> getOverlayClass() {
+		public Class<? extends JsonOverlay<? super Item>> getOverlayClass() {
 			return ItemImpl.class;
 		}
 	
@@ -99,7 +99,7 @@ public class ItemImpl extends PropertiesOverlay<Item> implements Item {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected OverlayFactory<?> _getFactory() {
+	public OverlayFactory<?> _getFactory() {
 		return factory;
 	}
 
