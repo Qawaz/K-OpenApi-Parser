@@ -24,8 +24,8 @@ public class ColorImpl extends EnumOverlay<Color> {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	@Override
-	protected Class<Color> getEnumClass() {
-		return Color.class;
+	protected Color getEnumValue(String value) {
+		return Color.valueOf(value);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

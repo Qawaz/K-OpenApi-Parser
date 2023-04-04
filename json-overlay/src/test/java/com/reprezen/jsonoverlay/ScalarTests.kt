@@ -303,6 +303,7 @@ class ScalarTests {
         }
 
         class XEnumOverlay : EnumOverlay<XEnum> {
+
             constructor(json: JsonNode?, parent: JsonOverlay<*>?, refMgr: ReferenceManager?) : super(
                 json,
                 parent,
@@ -317,8 +318,8 @@ class ScalarTests {
                 refMgr
             )
 
-            override fun getEnumClass(): Class<XEnum> {
-                return XEnum::class.java
+            override fun getEnumValue(value: String): XEnum? {
+                return XEnum.valueOf(value)
             }
 
             override fun _getFactory(): OverlayFactory<XEnum> {
@@ -326,8 +327,10 @@ class ScalarTests {
             }
 
             companion object {
+
                 var factory: OverlayFactory<XEnum> = object : OverlayFactory<XEnum>() {
-                    override fun getOverlayClass(): Class<out JsonOverlay<in XEnum?>> {
+
+                    override fun getOverlayClass(): Class<out JsonOverlay<in XEnum>> {
                         return XEnumOverlay::class.java
                     }
 
@@ -343,7 +346,7 @@ class ScalarTests {
                         json: JsonNode,
                         parent: JsonOverlay<*>?,
                         refMgr: ReferenceManager
-                    ): JsonOverlay<XEnum?> {
+                    ): JsonOverlay<XEnum> {
                         return XEnumOverlay(json, parent, refMgr)
                     }
                 }

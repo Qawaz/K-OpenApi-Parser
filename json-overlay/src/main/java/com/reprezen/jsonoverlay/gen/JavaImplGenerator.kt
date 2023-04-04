@@ -37,8 +37,8 @@ class JavaImplGenerator : TypeGenerator {
             members.add(
                 ClassMember(
                     """@Override
-            |protected Class<${type.name}> getEnumClass() {
-            |${"\t"}return ${type.name}.class;
+            |protected ${type.name} getEnumValue(String value) {
+            |${"\t"}return ${type.name}.valueOf(value);
             |}""".trimMargin("|")
                 )
             )
