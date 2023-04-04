@@ -21,14 +21,14 @@ import com.reprezen.kaizen.oasparser.`val`.msg.Messages.Companion.msg
 
 class SecurityRequirementValidator : ObjectValidatorBase<SecurityRequirement>() {
     override fun runObjectValidations() {
-        val requirements: Overlay<Map<String, SecurityParameter>> = validateMapField<SecurityParameter>(
+        val requirements: Overlay<MutableMap<String, SecurityParameter>> = validateMapField<SecurityParameter>(
             SecurityRequirementImpl.F_requirements, false, false,
             SecurityParameter::class.java, SecurityParameterValidator()
         )
         checkAllSchemesDefined(requirements)
     }
 
-    fun checkAllSchemesDefined(requirements: Overlay<Map<String, SecurityParameter>>) {
+    fun checkAllSchemesDefined(requirements: Overlay<MutableMap<String, SecurityParameter>>) {
         val model: OpenApi3 = value.getModel<OpenApi3>()!!
         val definedSchemes: Set<String> = model.getSecuritySchemes().keys
         val mapOverlay: MapOverlay<SecurityParameter> = Overlay.getMapOverlay(requirements)!!

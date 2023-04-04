@@ -28,7 +28,7 @@ class ParameterValidator : ObjectValidatorBase<Parameter>() {
         validateBooleanField(ParameterImpl.F_allowEmptyValue, false)
         validateBooleanField(ParameterImpl.F_explode, false)
         val example: Overlay<Any> = validateField<Any>(ParameterImpl.F_example, false, Any::class.java, null)
-        val examples: Overlay<Map<String, Example>>? = validateMapField<Example>(
+        val examples = validateMapField<Example>(
             ParameterImpl.F_examples, false, false, Example::class.java,
             ExampleValidator()
         )
@@ -84,7 +84,7 @@ class ParameterValidator : ObjectValidatorBase<Parameter>() {
         return if (parent != null && parent is Path) Overlay.getPathInParent(parent) else null
     }
 
-    fun checkExampleExclusion(examples: Overlay<Map<String, Example>>?, example: Overlay<Any>?) {
+    fun checkExampleExclusion(examples: Overlay<MutableMap<String, Example>>?, example: Overlay<Any>?) {
         val examplesPresent = examples != null && examples.isPresent && Overlay.getMapOverlay(examples)!!.size() > 0
         val examplePresent = example != null && example.isPresent
         if (examplesPresent && examplePresent) {

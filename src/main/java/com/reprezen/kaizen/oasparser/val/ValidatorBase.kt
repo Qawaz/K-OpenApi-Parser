@@ -253,26 +253,26 @@ abstract class ValidatorBase<V> : Validator<V> {
     fun <X> validateMapField(
         name: String?, nonEmpty: Boolean, unique: Boolean,
         valueClass: Class<X>?, valueValidator: Validator<X>?
-    ): Overlay<Map<String, X>> {
+    ): Overlay<MutableMap<String, X>> {
         val map = Overlay.of(
             value!!.get() as PropertiesOverlay<V>,
             name, MutableMap::class.java
-        ) as Any as Overlay<Map<String, X>>
+        ) as Any as Overlay<MutableMap<String, X>>
         validateMap(map, nonEmpty, unique, valueValidator)
         return map
     }
 
     private fun <X> validateMap(
-        map: Overlay<Map<String, X>>,
+        map: Overlay<MutableMap<String, X>>,
         nonEmpty: Boolean, unique: Boolean,
         valueValidator: Validator<X>?
     ) {
-        MapValidator(valueValidator).validate(map!!)
+        MapValidator(valueValidator).validate(map)
         checkMapNotEmpty(map, nonEmpty)
         checkMapUnique(map, unique)
     }
 
-    private fun <X> checkMapNotEmpty(list: Overlay<Map<String, X>>, nonEmpty: Boolean) {
+    private fun <X> checkMapNotEmpty(list: Overlay<MutableMap<String, X>>, nonEmpty: Boolean) {
         if (nonEmpty) {
             val mapOverlay: MapOverlay<X> = Overlay.getMapOverlay(list)!!
             if (list != null && !list.isPresent) {
@@ -283,12 +283,12 @@ abstract class ValidatorBase<V> : Validator<V> {
         }
     }
 
-    private fun <X> checkMapUnique(map: Overlay<Map<String, X>>, unique: Boolean) {
+    private fun <X> checkMapUnique(map: Overlay<MutableMap<String, X>>, unique: Boolean) {
         if (unique) {
             val mapOverlay: MapOverlay<X> = Overlay.getMapOverlay(map)!!
             val seen: MutableSet<X> = HashSet()
             for (key in mapOverlay.keySet()) {
-                val value: X = mapOverlay.get(key)
+                val value = mapOverlay.get(key)!!
                 if (seen.contains(value)) {
                     results!!.addError(
                         Messages.msg(BaseValidationMessages.DuplicateValue, value!!, key),
@@ -308,7 +308,7 @@ abstract class ValidatorBase<V> : Validator<V> {
     }
 
     @JvmOverloads
-    fun validateExtensions(extensions: Map<String, Any>, crumb: String? = null): Overlay<Map<String, Any>> {
+    fun validateExtensions(extensions: MutableMap<String, Any>, crumb: String? = null): Overlay<MutableMap<String, Any>> {
         val mapOverlay = Overlay.of(extensions)!!
         validateMap(mapOverlay, false, false, null)
         return mapOverlay

@@ -33,7 +33,7 @@ class Overlay<V> {
         this.overlay = castOverlay
     }
 
-    constructor(map: MapOverlay<V>, key: String?) {
+    constructor(map: MapOverlay<V>, key: String) {
         overlay = map._getOverlay(key)
     }
 
@@ -125,7 +125,7 @@ class Overlay<V> {
             null
         }
 
-    fun isReference(key: String?): Boolean {
+    fun isReference(key: String): Boolean {
         return getReference(key) != null
     }
 
@@ -139,7 +139,7 @@ class Overlay<V> {
             return if (refOverlay != null) Overlay(refOverlay.overlay!!) else null
         }
 
-    fun getReference(key: String?): Reference? {
+    fun getReference(key: String): Reference? {
         return if (overlay is PropertiesOverlay<*>) {
             getPropertyReference(key)
         } else if (overlay is MapOverlay<*>) {
@@ -162,7 +162,7 @@ class Overlay<V> {
         return getReference(propsOverlay._getOverlay<Any>(name))
     }
 
-    private fun getMapReference(key: String?): Reference? {
+    private fun getMapReference(key: String): Reference? {
         val mapOverlay = overlay as MapOverlay<V>
         return getReference(mapOverlay._getOverlay(key))
     }
@@ -189,11 +189,11 @@ class Overlay<V> {
             return Overlay(overlay)
         }
 
-        fun <V> of(overlay: MapOverlay<V>): Overlay<Map<String, V>> {
+        fun <V> of(overlay: MapOverlay<V>): Overlay<MutableMap<String, V>> {
             return Overlay(overlay)
         }
 
-        fun <V> of(map: Map<String, V>): Overlay<Map<String, V>>? {
+        fun <V> of(map: Map<String, V>): Overlay<MutableMap<String, V>>? {
             val overlay = getSidebandOverlay(map)
             return if (overlay != null) Overlay(overlay) else null
         }
@@ -207,11 +207,11 @@ class Overlay<V> {
             return if (overlay != null) Overlay(overlay) else null
         }
 
-        fun <V> of(map: MapOverlay<V>, key: String?): Overlay<V> {
+        fun <V> of(map: MapOverlay<V>, key: String): Overlay<V> {
             return Overlay(map, key)
         }
 
-        fun <V> of(map: Map<String, V>, key: String?): Overlay<V>? {
+        fun <V> of(map: Map<String, V>, key: String): Overlay<V>? {
             val mapOverlay = of(map)
             return if (mapOverlay != null) of(mapOverlay.overlay as MapOverlay<V>, key) else null
         }
@@ -250,7 +250,7 @@ class Overlay<V> {
             }
         }
 
-        fun <X> getMapOverlay(overlay: Overlay<Map<String, X>>): MapOverlay<X>? {
+        fun <X> getMapOverlay(overlay: Overlay<MutableMap<String, X>>): MapOverlay<X>? {
             return if (overlay.overlay is MapOverlay<*>) {
                 getSidebandOverlay(overlay.get()!!)
             } else {
@@ -343,7 +343,7 @@ class Overlay<V> {
             return Overlay(overlay).propertyNames
         }
 
-        fun <V> isReference(overlay: JsonOverlay<V>, key: String?): Boolean {
+        fun <V> isReference(overlay: JsonOverlay<V>, key: String): Boolean {
             return Overlay(overlay).isReference(key)
         }
 
@@ -355,7 +355,7 @@ class Overlay<V> {
             return of(overlay).referenceOverlay
         }
 
-        fun <V> getReference(overlay: JsonOverlay<V>, key: String?): Reference? {
+        fun <V> getReference(overlay: JsonOverlay<V>, key: String): Reference? {
             return Overlay(overlay).getReference(key)
         }
 

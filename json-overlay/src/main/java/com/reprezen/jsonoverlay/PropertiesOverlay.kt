@@ -142,26 +142,26 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
         return _get(name, elaborate, MutableMap::class.java) as Map<String, T>
     }
 
-    protected fun <T> _get(name: String?, key: String?, cls: Class<T>?): T {
+    protected fun <T> _get(name: String?, key: String, cls: Class<T>?): T? {
         return _get(name, key, true, cls)
     }
 
-    protected fun <T> _get(name: String?, key: String?, elaborate: Boolean, cls: Class<T>?): T {
+    protected fun <T> _get(name: String?, key: String, elaborate: Boolean, cls: Class<T>?): T? {
         val overlay = children!![name] as MapOverlay<T>
         return overlay[key]
     }
 
-    protected fun <T> _setMap(name: String?, mapVal: Map<String?, T>?, cls: Class<T>?) {
+    protected fun <T> _setMap(name: String?, mapVal: MutableMap<String, T>?, cls: Class<T>?) {
         val overlay = children!![name] as MapOverlay<T>
         overlay._set(mapVal)
     }
 
-    protected fun <T> _set(name: String?, key: String?, `val`: T, cls: Class<T>?) {
+    protected fun <T> _set(name: String?, key: String, `val`: T, cls: Class<T>?) {
         val overlay = children!![name] as MapOverlay<T>
         overlay[key] = `val`
     }
 
-    protected fun <T> _remove(name: String?, key: String?, cls: Class<T>?) {
+    protected fun <T> _remove(name: String?, key: String, cls: Class<T>?) {
         val overlay = children!![name] as MapOverlay<T>
         overlay.remove(key)
     }
@@ -209,7 +209,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
     }
 
     protected fun <X> _createMap(
-        name: String, path: String, valueFactory: OverlayFactory<X>?,
+        name: String, path: String, valueFactory: OverlayFactory<X>,
         keyPattern: String?
     ): MapOverlay<X> {
         return _addChild(name, path, MapOverlay.getFactory(valueFactory, keyPattern)) as MapOverlay<X>

@@ -41,7 +41,7 @@ class OverlayAdapterTests : Assert() {
         val mapOverlay = Overlay.of(
             model as PropertiesOverlay<*>, "paths",
             MutableMap::class.java
-        ) as Overlay<Map<String,Path>>
+        ) as Overlay<MutableMap<String,Path>>
         val castMapOverlay: MapOverlay<Path> = Overlay.getMapOverlay<Path>(mapOverlay)!!
         assertTrue(castMapOverlay is MapOverlay<Path>)
         val path: Path = Overlay.of<Path>(castMapOverlay, "/2.0/users/{username}").get()!!

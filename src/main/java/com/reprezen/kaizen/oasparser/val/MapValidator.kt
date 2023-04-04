@@ -13,7 +13,7 @@ package com.reprezen.kaizen.oasparser.`val`
 import com.reprezen.jsonoverlay.MapOverlay
 import com.reprezen.jsonoverlay.Overlay
 
-class MapValidator<T>(private val valueValidator: Validator<T>?) : ValidatorBase<Map<String, T>>() {
+class MapValidator<T>(private val valueValidator: Validator<T>?) : ValidatorBase<MutableMap<String, T>>() {
     override fun runValidations() {
         val mapOverlay: MapOverlay<T> = Overlay.getMapOverlay(value)!!
         if (valueValidator != null) {

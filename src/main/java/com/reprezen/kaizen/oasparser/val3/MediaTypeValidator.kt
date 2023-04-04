@@ -34,7 +34,7 @@ class MediaTypeValidator : ObjectValidatorBase<MediaType>() {
         )
         checkEncodingPropsAreProps(mediaType, results)
         validateExtensions(mediaType.extensions)
-        val examples: Overlay<Map<String, Example>>? = validateMapField<Example>(
+        val examples: Overlay<MutableMap<String, Example>>? = validateMapField<Example>(
             MediaTypeImpl.F_examples, false, false, Example::class.java,
             ExampleValidator()
         )
@@ -60,7 +60,7 @@ class MediaTypeValidator : ObjectValidatorBase<MediaType>() {
         }
     }
 
-    fun checkExampleExclusion(examples: Overlay<Map<String, Example>>?, example: Overlay<Any>?) {
+    fun checkExampleExclusion(examples: Overlay<MutableMap<String, Example>>?, example: Overlay<Any>?) {
         val examplesPresent = examples != null && examples.isPresent && Overlay.getMapOverlay(examples)!!.size() > 0
         val examplePresent = example != null && example.isPresent
         if (examplesPresent && examplePresent) {
