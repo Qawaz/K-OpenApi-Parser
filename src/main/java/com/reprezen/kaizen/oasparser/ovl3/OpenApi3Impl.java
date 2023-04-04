@@ -1089,12 +1089,12 @@ public class OpenApi3Impl extends PropertiesOverlay<OpenApi3> implements OpenApi
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<OpenApi3> builder(OV modelMember) {
+	public static Builder<OpenApi3> builder(JsonOverlay<?> modelMember) {
 		return new Builder<OpenApi3>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> OpenApi3 create(OV modelMember) {
+	public static OpenApi3 create(JsonOverlay<?> modelMember) {
 		return (OpenApi3) builder(modelMember).build();
 	}
 

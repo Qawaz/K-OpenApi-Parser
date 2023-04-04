@@ -159,12 +159,12 @@ public class DiscriminatorImpl extends PropertiesOverlay<Discriminator> implemen
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Discriminator> builder(OV modelMember) {
+	public static Builder<Discriminator> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Discriminator>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Discriminator create(OV modelMember) {
+	public static Discriminator create(JsonOverlay<?> modelMember) {
 		return (Discriminator) builder(modelMember).build();
 	}
 

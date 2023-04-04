@@ -455,12 +455,12 @@ public class HeaderImpl extends PropertiesOverlay<Header> implements Header {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Header> builder(OV modelMember) {
+	public static Builder<Header> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Header>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Header create(OV modelMember) {
+	public static Header create(JsonOverlay<?> modelMember) {
 		return (Header) builder(modelMember).build();
 	}
 

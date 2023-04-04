@@ -104,12 +104,12 @@ public class EntryImpl extends PropertiesOverlay<Entry> implements Entry {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Entry> builder(OV modelMember) {
+	public static Builder<Entry> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Entry>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Entry create(OV modelMember) {
+	public static Entry create(JsonOverlay<?> modelMember) {
 		return (Entry) builder(modelMember).build();
 	}
 

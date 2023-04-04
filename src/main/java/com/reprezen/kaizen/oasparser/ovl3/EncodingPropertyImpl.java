@@ -279,12 +279,12 @@ public class EncodingPropertyImpl extends PropertiesOverlay<EncodingProperty> im
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<EncodingProperty> builder(OV modelMember) {
+	public static Builder<EncodingProperty> builder(JsonOverlay<?> modelMember) {
 		return new Builder<EncodingProperty>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> EncodingProperty create(OV modelMember) {
+	public static EncodingProperty create(JsonOverlay<?> modelMember) {
 		return (EncodingProperty) builder(modelMember).build();
 	}
 

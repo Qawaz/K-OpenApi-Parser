@@ -300,12 +300,12 @@ public class OAuthFlowImpl extends PropertiesOverlay<OAuthFlow> implements OAuth
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<OAuthFlow> builder(OV modelMember) {
+	public static Builder<OAuthFlow> builder(JsonOverlay<?> modelMember) {
 		return new Builder<OAuthFlow>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> OAuthFlow create(OV modelMember) {
+	public static OAuthFlow create(JsonOverlay<?> modelMember) {
 		return (OAuthFlow) builder(modelMember).build();
 	}
 

@@ -142,12 +142,12 @@ public class SecurityRequirementImpl extends PropertiesOverlay<SecurityRequireme
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<SecurityRequirement> builder(OV modelMember) {
+	public static Builder<SecurityRequirement> builder(JsonOverlay<?> modelMember) {
 		return new Builder<SecurityRequirement>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> SecurityRequirement create(OV modelMember) {
+	public static SecurityRequirement create(JsonOverlay<?> modelMember) {
 		return (SecurityRequirement) builder(modelMember).build();
 	}
 

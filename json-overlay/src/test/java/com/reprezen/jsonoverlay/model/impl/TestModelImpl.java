@@ -447,12 +447,12 @@ public class TestModelImpl extends PropertiesOverlay<TestModel> implements TestM
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<TestModel> builder(OV modelMember) {
+	public static Builder<TestModel> builder(JsonOverlay<?> modelMember) {
 		return new Builder<TestModel>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> TestModel create(OV modelMember) {
+	public static TestModel create(JsonOverlay<?> modelMember) {
 		return (TestModel) builder(modelMember).build();
 	}
 

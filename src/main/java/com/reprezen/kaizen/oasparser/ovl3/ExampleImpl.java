@@ -219,12 +219,12 @@ public class ExampleImpl extends PropertiesOverlay<Example> implements Example {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Example> builder(OV modelMember) {
+	public static Builder<Example> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Example>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Example create(OV modelMember) {
+	public static Example create(JsonOverlay<?> modelMember) {
 		return (Example) builder(modelMember).build();
 	}
 

@@ -8,12 +8,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d55a8c6a-af6b-48df-a7d6-a3559c3cc6b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/EnumOverlay.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/Builder.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/EnumOverlay.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/Builder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/JsonOverlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/JsonOverlay.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/JavaImplGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/gen/JavaImplGenerator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/ScalarTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/ScalarTests.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/ColorImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/ColorImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/ColorImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/EntryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/EntryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/ItemImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/ItemImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/ScalarsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/ScalarsImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/TestModelImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/model/impl/TestModelImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/CallbackImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/CallbackImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ContactImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ContactImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/DiscriminatorImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/DiscriminatorImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/EncodingPropertyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/EncodingPropertyImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ExampleImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ExampleImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ExternalDocsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ExternalDocsImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/HeaderImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/HeaderImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/InfoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/InfoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/LicenseImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/LicenseImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/LinkImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/LinkImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/MediaTypeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/MediaTypeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/OAuthFlowImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/OAuthFlowImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/OpenApi3Impl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/OpenApi3Impl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/OperationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/OperationImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ParameterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ParameterImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/PathImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/PathImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/RequestBodyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/RequestBodyImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ResponseImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ResponseImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/SchemaImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/SchemaImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/SecurityParameterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/SecurityParameterImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/SecurityRequirementImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/SecurityRequirementImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/SecuritySchemeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/SecuritySchemeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ServerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ServerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ServerVariableImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/ServerVariableImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/TagImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/TagImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/XmlImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reprezen/kaizen/oasparser/ovl3/XmlImpl.java" afterDir="false" />
     </list>
     <list id="2db31701-028f-44e4-9104-20ae3599ae33" name="Revert Tests In Json Overlay" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -138,7 +168,7 @@
       <command value="gradle init" />
     </option>
   </component>
-  <component name="RunManager" selected="Kotlin.GenTestModel">
+  <component name="RunManager" selected="Gradle.Tests in 'KOpenAPIParser.json-overlay.test'">
     <configuration name="GenTestModel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.reprezen.jsonoverlay.model.GenTestModel" />
       <module name="KOpenAPIParser.json-overlay.test" />
@@ -232,10 +262,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Kotlin.GenTestModel" />
-        <item itemvalue="Gradle.Tests in 'KOpenAPIParser.test'" />
         <item itemvalue="Gradle.Tests in 'KOpenAPIParser.json-overlay.test'" />
+        <item itemvalue="Gradle.Tests in 'KOpenAPIParser.test'" />
         <item itemvalue="Kotlin.GenOpenApi3" />
+        <item itemvalue="Kotlin.GenTestModel" />
         <item itemvalue="Application.GenTestModel" />
       </list>
     </recent_temporary>

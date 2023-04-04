@@ -204,12 +204,12 @@ public class CallbackImpl extends PropertiesOverlay<Callback> implements Callbac
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Callback> builder(OV modelMember) {
+	public static Builder<Callback> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Callback>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Callback create(OV modelMember) {
+	public static Callback create(JsonOverlay<?> modelMember) {
 		return (Callback) builder(modelMember).build();
 	}
 

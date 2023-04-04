@@ -238,12 +238,12 @@ public class ServerVariableImpl extends PropertiesOverlay<ServerVariable> implem
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<ServerVariable> builder(OV modelMember) {
+	public static Builder<ServerVariable> builder(JsonOverlay<?> modelMember) {
 		return new Builder<ServerVariable>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> ServerVariable create(OV modelMember) {
+	public static ServerVariable create(JsonOverlay<?> modelMember) {
 		return (ServerVariable) builder(modelMember).build();
 	}
 

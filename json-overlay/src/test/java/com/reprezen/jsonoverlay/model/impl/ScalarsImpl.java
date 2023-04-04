@@ -249,12 +249,12 @@ public class ScalarsImpl extends PropertiesOverlay<Scalars> implements Scalars {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Scalars> builder(OV modelMember) {
+	public static Builder<Scalars> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Scalars>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Scalars create(OV modelMember) {
+	public static Scalars create(JsonOverlay<?> modelMember) {
 		return (Scalars) builder(modelMember).build();
 	}
 

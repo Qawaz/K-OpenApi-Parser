@@ -259,12 +259,12 @@ public class InfoImpl extends PropertiesOverlay<Info> implements Info {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Info> builder(OV modelMember) {
+	public static Builder<Info> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Info>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Info create(OV modelMember) {
+	public static Info create(JsonOverlay<?> modelMember) {
 		return (Info) builder(modelMember).build();
 	}
 

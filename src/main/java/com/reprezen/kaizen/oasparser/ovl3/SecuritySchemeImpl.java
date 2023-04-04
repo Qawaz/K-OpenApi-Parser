@@ -416,12 +416,12 @@ public class SecuritySchemeImpl extends PropertiesOverlay<SecurityScheme> implem
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<SecurityScheme> builder(OV modelMember) {
+	public static Builder<SecurityScheme> builder(JsonOverlay<?> modelMember) {
 		return new Builder<SecurityScheme>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> SecurityScheme create(OV modelMember) {
+	public static SecurityScheme create(JsonOverlay<?> modelMember) {
 		return (SecurityScheme) builder(modelMember).build();
 	}
 

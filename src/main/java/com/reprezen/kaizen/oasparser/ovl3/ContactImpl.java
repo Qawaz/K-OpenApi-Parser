@@ -194,12 +194,12 @@ public class ContactImpl extends PropertiesOverlay<Contact> implements Contact {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Contact> builder(OV modelMember) {
+	public static Builder<Contact> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Contact>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Contact create(OV modelMember) {
+	public static Contact create(JsonOverlay<?> modelMember) {
 		return (Contact) builder(modelMember).build();
 	}
 

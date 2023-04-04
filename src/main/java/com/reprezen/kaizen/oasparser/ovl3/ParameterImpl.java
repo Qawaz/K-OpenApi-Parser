@@ -489,12 +489,12 @@ public class ParameterImpl extends PropertiesOverlay<Parameter> implements Param
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Parameter> builder(OV modelMember) {
+	public static Builder<Parameter> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Parameter>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Parameter create(OV modelMember) {
+	public static Parameter create(JsonOverlay<?> modelMember) {
 		return (Parameter) builder(modelMember).build();
 	}
 

@@ -154,12 +154,12 @@ public class SecurityParameterImpl extends PropertiesOverlay<SecurityParameter> 
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<SecurityParameter> builder(OV modelMember) {
+	public static Builder<SecurityParameter> builder(JsonOverlay<?> modelMember) {
 		return new Builder<SecurityParameter>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> SecurityParameter create(OV modelMember) {
+	public static SecurityParameter create(JsonOverlay<?> modelMember) {
 		return (SecurityParameter) builder(modelMember).build();
 	}
 

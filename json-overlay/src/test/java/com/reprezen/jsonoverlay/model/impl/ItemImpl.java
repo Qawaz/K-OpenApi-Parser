@@ -104,12 +104,12 @@ public class ItemImpl extends PropertiesOverlay<Item> implements Item {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Item> builder(OV modelMember) {
+	public static Builder<Item> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Item>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Item create(OV modelMember) {
+	public static Item create(JsonOverlay<?> modelMember) {
 		return (Item) builder(modelMember).build();
 	}
 

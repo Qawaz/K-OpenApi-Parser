@@ -296,12 +296,12 @@ public class LinkImpl extends PropertiesOverlay<Link> implements Link {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Link> builder(OV modelMember) {
+	public static Builder<Link> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Link>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Link create(OV modelMember) {
+	public static Link create(JsonOverlay<?> modelMember) {
 		return (Link) builder(modelMember).build();
 	}
 

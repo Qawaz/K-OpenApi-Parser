@@ -77,7 +77,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     }
 
     fun builder(): Builder<V> {
-        return Builder(_getFactory(), this)
+        return Builder(_getFactory()!!, this)
     }
 
     /* package */ /* package */

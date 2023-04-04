@@ -481,12 +481,12 @@ public class PathImpl extends PropertiesOverlay<Path> implements Path {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Path> builder(OV modelMember) {
+	public static Builder<Path> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Path>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Path create(OV modelMember) {
+	public static Path create(JsonOverlay<?> modelMember) {
 		return (Path) builder(modelMember).build();
 	}
 

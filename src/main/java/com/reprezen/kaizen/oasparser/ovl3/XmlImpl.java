@@ -243,12 +243,12 @@ public class XmlImpl extends PropertiesOverlay<Xml> implements Xml {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Xml> builder(OV modelMember) {
+	public static Builder<Xml> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Xml>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Xml create(OV modelMember) {
+	public static Xml create(JsonOverlay<?> modelMember) {
 		return (Xml) builder(modelMember).build();
 	}
 

@@ -177,12 +177,12 @@ public class ExternalDocsImpl extends PropertiesOverlay<ExternalDocs> implements
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<ExternalDocs> builder(OV modelMember) {
+	public static Builder<ExternalDocs> builder(JsonOverlay<?> modelMember) {
 		return new Builder<ExternalDocs>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> ExternalDocs create(OV modelMember) {
+	public static ExternalDocs create(JsonOverlay<?> modelMember) {
 		return (ExternalDocs) builder(modelMember).build();
 	}
 

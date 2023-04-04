@@ -121,13 +121,13 @@ class JavaImplGenerator : TypeGenerator {
         requireTypes(Builder::class.java, OverlayFactory::class.java, IJsonOverlay::class.java)
         val createType = if (isEnum(type)) "IJsonOverlay<${type.name}>" else type.name
         members.addMember(
-            """public static <OV extends IJsonOverlay<?>> Builder<${type.name}> builder(OV modelMember) {
+            """public static Builder<${type.name}> builder(JsonOverlay<?> modelMember) {
                 |${"\t"}return new Builder<${type.name}>(factory, modelMember);
             |}""".trimMargin("|")
         )
         val notIsEnumTypeThen = if (!isEnum(type)) "(${type.name}) " else ""
         members.addMember(
-            """public static <OV extends IJsonOverlay<?>> $createType create(OV modelMember) {
+            """public static $createType create(JsonOverlay<?> modelMember) {
             |${"\t"}return ${notIsEnumTypeThen}builder(modelMember).build();
             |}""".trimMargin("|")
         )

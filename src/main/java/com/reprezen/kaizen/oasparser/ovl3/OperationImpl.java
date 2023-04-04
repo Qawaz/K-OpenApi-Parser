@@ -722,12 +722,12 @@ public class OperationImpl extends PropertiesOverlay<Operation> implements Opera
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Operation> builder(OV modelMember) {
+	public static Builder<Operation> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Operation>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Operation create(OV modelMember) {
+	public static Operation create(JsonOverlay<?> modelMember) {
 		return (Operation) builder(modelMember).build();
 	}
 

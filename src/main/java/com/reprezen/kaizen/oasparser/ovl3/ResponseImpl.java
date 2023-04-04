@@ -330,12 +330,12 @@ public class ResponseImpl extends PropertiesOverlay<Response> implements Respons
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Response> builder(OV modelMember) {
+	public static Builder<Response> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Response>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Response create(OV modelMember) {
+	public static Response create(JsonOverlay<?> modelMember) {
 		return (Response) builder(modelMember).build();
 	}
 

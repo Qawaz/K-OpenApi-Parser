@@ -1121,12 +1121,12 @@ public class SchemaImpl extends PropertiesOverlay<Schema> implements Schema {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Schema> builder(OV modelMember) {
+	public static Builder<Schema> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Schema>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Schema create(OV modelMember) {
+	public static Schema create(JsonOverlay<?> modelMember) {
 		return (Schema) builder(modelMember).build();
 	}
 

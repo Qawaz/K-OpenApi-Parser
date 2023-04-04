@@ -179,12 +179,12 @@ public class LicenseImpl extends PropertiesOverlay<License> implements License {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<License> builder(OV modelMember) {
+	public static Builder<License> builder(JsonOverlay<?> modelMember) {
 		return new Builder<License>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> License create(OV modelMember) {
+	public static License create(JsonOverlay<?> modelMember) {
 		return (License) builder(modelMember).build();
 	}
 

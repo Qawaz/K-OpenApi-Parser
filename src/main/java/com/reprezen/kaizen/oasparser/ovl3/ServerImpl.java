@@ -284,12 +284,12 @@ public class ServerImpl extends PropertiesOverlay<Server> implements Server {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Server> builder(OV modelMember) {
+	public static Builder<Server> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Server>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Server create(OV modelMember) {
+	public static Server create(JsonOverlay<?> modelMember) {
 		return (Server) builder(modelMember).build();
 	}
 

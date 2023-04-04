@@ -247,12 +247,12 @@ public class RequestBodyImpl extends PropertiesOverlay<RequestBody> implements R
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<RequestBody> builder(OV modelMember) {
+	public static Builder<RequestBody> builder(JsonOverlay<?> modelMember) {
 		return new Builder<RequestBody>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> RequestBody create(OV modelMember) {
+	public static RequestBody create(JsonOverlay<?> modelMember) {
 		return (RequestBody) builder(modelMember).build();
 	}
 

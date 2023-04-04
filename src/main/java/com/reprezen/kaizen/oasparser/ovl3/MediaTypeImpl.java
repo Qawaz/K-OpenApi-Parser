@@ -291,12 +291,12 @@ public class MediaTypeImpl extends PropertiesOverlay<MediaType> implements Media
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<MediaType> builder(OV modelMember) {
+	public static Builder<MediaType> builder(JsonOverlay<?> modelMember) {
 		return new Builder<MediaType>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> MediaType create(OV modelMember) {
+	public static MediaType create(JsonOverlay<?> modelMember) {
 		return (MediaType) builder(modelMember).build();
 	}
 

@@ -201,12 +201,12 @@ public class TagImpl extends PropertiesOverlay<Tag> implements Tag {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Tag> builder(OV modelMember) {
+	public static Builder<Tag> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Tag>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Tag create(OV modelMember) {
+	public static Tag create(JsonOverlay<?> modelMember) {
 		return (Tag) builder(modelMember).build();
 	}
 

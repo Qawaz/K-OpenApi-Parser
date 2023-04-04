@@ -54,12 +54,12 @@ public class ColorImpl extends EnumOverlay<Color> {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> Builder<Color> builder(OV modelMember) {
+	public static Builder<Color> builder(JsonOverlay<?> modelMember) {
 		return new Builder<Color>(factory, modelMember);
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	public static <OV extends IJsonOverlay<?>> IJsonOverlay<Color> create(OV modelMember) {
+	public static IJsonOverlay<Color> create(JsonOverlay<?> modelMember) {
 		return builder(modelMember).build();
 	}
 
