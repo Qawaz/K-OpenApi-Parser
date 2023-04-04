@@ -23,8 +23,8 @@ class RefOverlay<V> {
     private var factory: OverlayFactory<V>
     private var refMgr: ReferenceManager
 
-    constructor(json: JsonNode?, parent: JsonOverlay<*>?, factory: OverlayFactory<V>, refMgr: ReferenceManager) {
-        reference = refMgr.getReference(json)
+    constructor(json: JsonNode, parent: JsonOverlay<*>?, factory: OverlayFactory<V>, refMgr: ReferenceManager) {
+        reference = refMgr.getReference(json!!)
         this.parent = parent // parent of reference, not parent of referent
         this.factory = factory
         this.refMgr = refMgr
@@ -60,7 +60,7 @@ class RefOverlay<V> {
                     target = castTarget
                 }
                 if (target == null) {
-                    target = factory.create(reference.getJson()!!, null, reference.manager)
+                    target = factory.create(reference.getJson()!!, null, reference.manager!!)
                     target!!._setCreatingRef(reference)
                     refMgr.registry.register(reference.normalizedRef!!, factory.signature!!, target!!)
                 }

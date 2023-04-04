@@ -28,7 +28,7 @@ abstract class OverlayFactory<V> {
     fun create(json: JsonNode?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): JsonOverlay<V> {
         var overlay: JsonOverlay<V>?
         if (Reference.isReferenceNode(json)) {
-            val reference = refMgr.getReference(json)
+            val reference = refMgr.getReference(json!!)
             val refOverlay = RefOverlay(reference, null, this, refMgr)
             overlay = refOverlay.overlay
             if (overlay == null) {

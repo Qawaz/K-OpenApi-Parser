@@ -24,7 +24,7 @@ class Reference {
     var normalizedRef: String? = null
         private set
     private var pointer: JsonPointer? = null
-    var manager: ReferenceManager
+    var manager: ReferenceManager?
         private set
     private var json: JsonNode? = null
     private var valid: Boolean? = null
@@ -43,7 +43,7 @@ class Reference {
         }
     }
 
-    constructor(refString: String, invalidReason: ResolutionException?, manager: ReferenceManager) {
+    constructor(refString: String, invalidReason: ResolutionException?, manager: ReferenceManager?) {
         this.refString = refString
         this.invalidReason = invalidReason
         this.manager = manager
@@ -93,13 +93,13 @@ class Reference {
             }
             var currentJson: JsonNode? = null
             currentJson = try {
-                current.manager.loadDoc()
+                current.manager?.loadDoc()
             } catch (e: IOException) {
                 return failResolve("Failed to load referenced documnet", e)
             }
             currentJson = if (current.pointer != null) currentJson!!.at(current.pointer) else currentJson
             if (isReferenceNode(currentJson)) {
-                current = manager.getReference(currentJson)
+                current = manager?.getReference(currentJson!!)!!
                 if (current.isInvalid(false)) {
                     return failResolve("Invalid reference in reference chain", current.invalidReason)
                 }
