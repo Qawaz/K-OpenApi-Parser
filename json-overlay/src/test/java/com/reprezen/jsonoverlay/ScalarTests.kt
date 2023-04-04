@@ -88,7 +88,7 @@ class ScalarTests {
     }
 
     @RunWith(Parameterized::class)
-    class NumberTests(value: Number?) : ScalarTestBase<Number?>(NumberOverlay.factory) {
+    class NumberTests(value: Number?) : ScalarTestBase<Number>(NumberOverlay.factory) {
         init {
             this.value = value
         }
