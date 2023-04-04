@@ -46,7 +46,7 @@ object ReferencesChecker {
     fun checkReference(ref: Reference, results: ValidationResults, context: Overlay<*>?) {
         if (ref.isInvalid) {
             results.addError(
-                Messages.Companion.msg(BaseValidationMessages.BadRef, ref.refString, ref.invalidReason),
+                Messages.Companion.msg(BaseValidationMessages.BadRef, ref.refString, ref.invalidReason!!),
                 context!!
             )
         }

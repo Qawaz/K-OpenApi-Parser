@@ -137,7 +137,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     }
 
     private fun _isValidRef(): Boolean {
-        return if (refOverlay != null) refOverlay!!._getReference().isValid else false
+        return if (refOverlay != null) refOverlay!!._getReference().isValid() else false
     }
 
     /* package */
@@ -245,9 +245,9 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     @JvmOverloads
     fun _getJsonReference(forRef: Boolean = false): String {
         if (creatingRef != null) {
-            return creatingRef!!.normalizedRef
+            return creatingRef!!.normalizedRef!!
         }
-        if (_isReference() && refOverlay!!._getReference().isValid && !forRef) {
+        if (_isReference() && refOverlay!!._getReference().isValid() && !forRef) {
             return refOverlay!!.overlay!!._getJsonReference(false)
         }
         return if (parent != null) {

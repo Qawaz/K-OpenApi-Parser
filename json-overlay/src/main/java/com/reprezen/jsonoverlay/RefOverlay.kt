@@ -43,26 +43,26 @@ class RefOverlay<V> {
             if (!reference.isResolved) {
                 reference.resolve()
             }
-            if (target == null && reference.isValid) {
+            if (target == null && reference.isValid()) {
                 val registry = refMgr.registry
                 run {
                     val castTarget = registry.getOverlay(
-                        reference.normalizedRef,
+                        reference.normalizedRef!!,
                         factory.signature!!
                     ) as JsonOverlay<V>?
                     this.target = castTarget
                 }
                 if (target == null) {
                     val castTarget = registry.getOverlay(
-                        reference.json,
+                        reference.getJson()!!,
                         factory.signature!!
                     ) as JsonOverlay<V>?
                     target = castTarget
                 }
                 if (target == null) {
-                    target = factory.create(reference.json, null, reference.manager)
+                    target = factory.create(reference.getJson()!!, null, reference.manager)
                     target!!._setCreatingRef(reference)
-                    refMgr.registry.register(reference.normalizedRef, factory.signature!!, target!!)
+                    refMgr.registry.register(reference.normalizedRef!!, factory.signature!!, target!!)
                 }
             }
             return target
