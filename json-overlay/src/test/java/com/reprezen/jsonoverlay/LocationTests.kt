@@ -30,7 +30,7 @@ class LocationTests {
         val result = JsonLoader().loadWithLocations(
             loadResourceFileAsString("locationsTest.yaml")
         )
-        val locations = result.right
+        val locations = result.second
         Assert.assertTrue(locations.containsKey(JsonPointer.compile("/map/a")))
         val region = locations[JsonPointer.compile("/map/a")]
         Assert.assertEquals(5, region!!.start.line.toLong())
