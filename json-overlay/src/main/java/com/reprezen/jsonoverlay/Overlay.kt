@@ -71,7 +71,7 @@ class Overlay<V> {
         return overlay._toJson(options!!)
     }
 
-    fun toJson(vararg options: SerializationOptions.Option?): JsonNode {
+    fun toJson(vararg options: SerializationOptions.Option): JsonNode {
         return overlay._toJson(*options)
     }
 
@@ -282,7 +282,7 @@ class Overlay<V> {
             return overlay._toJson(options!!)
         }
 
-        fun <V> toJson(overlay: JsonOverlay<V>, vararg options: SerializationOptions.Option?): JsonNode {
+        fun <V> toJson(overlay: JsonOverlay<V>, vararg options: SerializationOptions.Option): JsonNode {
             return overlay._toJson(*options)
         }
 

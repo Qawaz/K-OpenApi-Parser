@@ -288,7 +288,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     }
 
     /* package */
-    fun _toJson(vararg options: SerializationOptions.Option?): JsonNode {
+    fun _toJson(vararg options: SerializationOptions.Option): JsonNode {
         return _toJson(SerializationOptions(*options))
     }
 
