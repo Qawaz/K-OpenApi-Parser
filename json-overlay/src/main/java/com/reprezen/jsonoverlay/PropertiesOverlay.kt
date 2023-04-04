@@ -99,10 +99,10 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
 
     protected fun <T> _get(name: String?, index: Int, elaborate: Boolean, cls: Class<T>?): T {
         val overlay = children!![name] as ListOverlay<T>
-        return overlay[index]
+        return overlay[index]!!
     }
 
-    protected fun <T> _setList(name: String?, listVal: List<T>?, cls: Class<T>?) {
+    protected fun <T> _setList(name: String?, listVal: MutableList<T>?, cls: Class<T>?) {
         val overlay = children!![name] as ListOverlay<T>
         overlay._set(listVal)
     }
@@ -204,7 +204,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
         return _addChild(name, path, factory)
     }
 
-    protected fun <X> _createList(name: String, path: String, itemFactory: OverlayFactory<X>?): ListOverlay<X> {
+    protected fun <X> _createList(name: String, path: String, itemFactory: OverlayFactory<X>): ListOverlay<X> {
         return _addChild(name, path, ListOverlay.getFactory(itemFactory)) as ListOverlay<X>
     }
 

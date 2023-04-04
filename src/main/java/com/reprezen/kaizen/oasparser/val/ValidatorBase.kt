@@ -237,7 +237,7 @@ abstract class ValidatorBase<V> : Validator<V> {
             val listOverlay: ListOverlay<X> = Overlay.getListOverlay(list)!!
             val seen: MutableSet<X> = HashSet()
             for (i in 0 until listOverlay.size()) {
-                val item: X = listOverlay.get(i)
+                val item: X = listOverlay[i]!!
                 if (seen.contains(item)) {
                     results!!.addError(
                         Messages.msg(BaseValidationMessages.DuplicateValue, item!!, i),

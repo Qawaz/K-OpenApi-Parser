@@ -18,10 +18,12 @@ import org.junit.Assert
 import org.junit.Test
 
 class ListTests : Assert() {
-    private val data: List<Int> = mutableListOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+    private val data: MutableList<Int> = mutableListOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     private val factory = ListOverlay.getFactory(IntegerOverlay.factory)
     private val refMgr = ReferenceManager(null)
     private val jfac = JsonNodeFactory.instance
+
     @Test
     fun testListFromValues() {
         doChecks(factory.create(data, null, refMgr) as ListOverlay<Int>)

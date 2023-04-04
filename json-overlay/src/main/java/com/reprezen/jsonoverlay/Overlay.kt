@@ -198,11 +198,11 @@ class Overlay<V> {
             return if (overlay != null) Overlay(overlay) else null
         }
 
-        fun <V> of(overlay: ListOverlay<V>): Overlay<List<V>> {
+        fun <V> of(overlay: ListOverlay<V>): Overlay<MutableList<V>> {
             return Overlay(overlay)
         }
 
-        fun <V> of(list: List<V>): Overlay<List<V>>? {
+        fun <V> of(list: List<V>): Overlay<MutableList<V>>? {
             val overlay = getSidebandOverlay(list)
             return if (overlay != null) Overlay(overlay) else null
         }
