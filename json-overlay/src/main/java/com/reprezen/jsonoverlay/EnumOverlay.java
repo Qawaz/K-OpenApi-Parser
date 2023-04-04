@@ -15,6 +15,7 @@ package com.reprezen.jsonoverlay;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class EnumOverlay<V extends Enum<V>> extends ScalarOverlay<V> {
 
@@ -29,6 +30,7 @@ public abstract class EnumOverlay<V extends Enum<V>> extends ScalarOverlay<V> {
 		this.enumClass = getEnumClass();
 	}
 
+	@Nullable
 	@Override
 	protected V _fromJson(JsonNode json) {
 		if (!json.isTextual()) {

@@ -241,7 +241,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         return if (docUrl.isEmpty()) null else docUrl
     }
 
-    protected abstract fun _fromJson(json: JsonNode): V
+    protected abstract fun _fromJson(json: JsonNode): V?
 
     fun _setParent(parent: JsonOverlay<*>?) {
         this.parent = parent

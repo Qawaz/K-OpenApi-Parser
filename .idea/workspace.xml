@@ -8,13 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d55a8c6a-af6b-48df-a7d6-a3559c3cc6b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/JsonOverlay.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/ScalarOverlay.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/EnumOverlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/EnumOverlay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/JsonOverlay.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/MapOverlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/MapOverlay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/PropertiesOverlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/PropertiesOverlay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/MapTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/MapTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/ScalarOverlay.java" beforeDir="false" />
     </list>
     <list id="2db31701-028f-44e4-9104-20ae3599ae33" name="Revert Tests In Json Overlay" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -139,7 +135,7 @@
       <command value="gradle init" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'KOpenAPIParser.test'">
+  <component name="RunManager" selected="Gradle.Tests in 'KOpenAPIParser.json-overlay.test'">
     <configuration name="GenTestModel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.reprezen.jsonoverlay.model.GenTestModel" />
       <module name="KOpenAPIParser.json-overlay.test" />
@@ -233,8 +229,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Tests in 'KOpenAPIParser.test'" />
         <item itemvalue="Gradle.Tests in 'KOpenAPIParser.json-overlay.test'" />
+        <item itemvalue="Gradle.Tests in 'KOpenAPIParser.test'" />
         <item itemvalue="Kotlin.GenOpenApi3" />
         <item itemvalue="Kotlin.GenTestModel" />
         <item itemvalue="Application.GenTestModel" />

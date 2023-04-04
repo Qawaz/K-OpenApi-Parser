@@ -14,7 +14,6 @@
 package com.reprezen.jsonoverlay
 
 import com.fasterxml.jackson.databind.JsonNode
-import com.reprezen.jsonoverlay.StringOverlay
 
 class StringOverlay : ScalarOverlay<String> {
 
