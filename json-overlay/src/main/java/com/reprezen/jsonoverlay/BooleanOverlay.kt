@@ -35,7 +35,7 @@ class BooleanOverlay : ScalarOverlay<Boolean> {
         return if (json.isBoolean) json.booleanValue() else null
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode {
+    override fun _toJsonInternal(options: SerializationOptions): JsonNode? {
         return if (value != null) _jsonBoolean(value!!) else _jsonMissing()
     }
 

@@ -21,6 +21,8 @@ import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.reprezen.jsonoverlay.SerializationOptions.Option;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class ListOverlay<V> extends JsonOverlay<List<V>> {
 
@@ -58,8 +60,9 @@ public final class ListOverlay<V> extends JsonOverlay<List<V>> {
 		};
 	}
 
-	@Override
-	protected JsonNode _toJsonInternal(SerializationOptions options) {
+	@Nullable
+    @Override
+	protected JsonNode _toJsonInternal(@NotNull SerializationOptions options) {
 		ArrayNode array = _jsonArray();
 		for (JsonOverlay<V> item : overlays) {
 			// we can't have missing children, since they'd screw up the position of other

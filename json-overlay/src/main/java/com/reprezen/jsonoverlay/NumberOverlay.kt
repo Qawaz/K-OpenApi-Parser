@@ -14,7 +14,6 @@
 package com.reprezen.jsonoverlay
 
 import com.fasterxml.jackson.databind.JsonNode
-import com.reprezen.jsonoverlay.NumberOverlay
 import java.math.BigDecimal
 import java.math.BigInteger
 
@@ -54,7 +53,7 @@ class NumberOverlay : ScalarOverlay<Number> {
         }
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode {
+    override fun _toJsonInternal(options: SerializationOptions): JsonNode? {
         if (value == null) {
             return _jsonMissing()
         }

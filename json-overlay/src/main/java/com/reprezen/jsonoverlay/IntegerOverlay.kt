@@ -14,7 +14,6 @@
 package com.reprezen.jsonoverlay
 
 import com.fasterxml.jackson.databind.JsonNode
-import com.reprezen.jsonoverlay.IntegerOverlay
 
 class IntegerOverlay : ScalarOverlay<Int> {
 
@@ -36,7 +35,7 @@ class IntegerOverlay : ScalarOverlay<Int> {
         return if (json.isInt) json.intValue() else null
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode {
+    override fun _toJsonInternal(options: SerializationOptions): JsonNode? {
         return if (value != null) _jsonScalar(value!!) else _jsonMissing()
     }
 

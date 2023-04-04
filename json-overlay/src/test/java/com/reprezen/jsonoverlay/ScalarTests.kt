@@ -182,7 +182,7 @@ class ScalarTests {
     }
 
     @RunWith(Parameterized::class)
-    class PrimitiveTests(value: Any?) : ScalarTestBase<Any?>(PrimitiveOverlay.factory) {
+    class PrimitiveTests(value: Any?) : ScalarTestBase<Any>(PrimitiveOverlay.factory) {
         init {
             this.value = value
         }
@@ -304,14 +304,14 @@ class ScalarTests {
 
         class XEnumOverlay : EnumOverlay<XEnum> {
 
-            constructor(json: JsonNode?, parent: JsonOverlay<*>?, refMgr: ReferenceManager?) : super(
+            constructor(json: JsonNode, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
                 json,
                 parent,
                 Companion.factory,
                 refMgr
             )
 
-            constructor(value: XEnum?, parent: JsonOverlay<*>?, refMgr: ReferenceManager?) : super(
+            constructor(value: XEnum?, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
                 value,
                 parent,
                 Companion.factory,

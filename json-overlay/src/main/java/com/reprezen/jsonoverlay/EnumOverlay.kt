@@ -18,10 +18,10 @@ import com.fasterxml.jackson.databind.JsonNode
 abstract class EnumOverlay<V : Enum<V>> : ScalarOverlay<V> {
 
     protected constructor(
-        json: JsonNode?,
+        json: JsonNode,
         parent: JsonOverlay<*>?,
-        factory: OverlayFactory<V>?,
-        refMgr: ReferenceManager?
+        factory: OverlayFactory<V>,
+        refMgr: ReferenceManager
     ) : super(json, parent, factory, refMgr)
 
     protected constructor(
@@ -42,7 +42,7 @@ abstract class EnumOverlay<V : Enum<V>> : ScalarOverlay<V> {
         }
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode {
+    override fun _toJsonInternal(options: SerializationOptions): JsonNode? {
         return if (value != null) {
             _jsonScalar(value!!.name)
         } else {

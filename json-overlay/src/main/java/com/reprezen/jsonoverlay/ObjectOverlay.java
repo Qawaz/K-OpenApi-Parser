@@ -14,6 +14,8 @@
 package com.reprezen.jsonoverlay;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class ObjectOverlay extends ScalarOverlay<Object> {
 
@@ -30,8 +32,9 @@ public final class ObjectOverlay extends ScalarOverlay<Object> {
 		return json.isMissingNode() ? null : mapper.convertValue(json, Object.class);
 	}
 
-	@Override
-	protected JsonNode _toJsonInternal(SerializationOptions options) {
+	@Nullable
+    @Override
+	protected JsonNode _toJsonInternal(@NotNull SerializationOptions options) {
 		return value != null ? mapper.convertValue(value, JsonNode.class) : _jsonMissing();
 	}
 

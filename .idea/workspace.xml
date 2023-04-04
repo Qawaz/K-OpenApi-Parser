@@ -8,9 +8,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d55a8c6a-af6b-48df-a7d6-a3559c3cc6b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/NumberOverlay.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/Primitive.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/PrimitiveOverlay.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/NumberOverlay.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/BooleanOverlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/BooleanOverlay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/EnumOverlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/EnumOverlay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/IntegerOverlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/IntegerOverlay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/JsonOverlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/JsonOverlay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/ListOverlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/ListOverlay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/NumberOverlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/NumberOverlay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/ObjectOverlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/ObjectOverlay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/Primitive.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/PrimitiveOverlay.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/ScalarOverlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/ScalarOverlay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/StringOverlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/main/java/com/reprezen/jsonoverlay/StringOverlay.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/ScalarTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/json-overlay/src/test/java/com/reprezen/jsonoverlay/ScalarTests.kt" afterDir="false" />
     </list>
     <list id="2db31701-028f-44e4-9104-20ae3599ae33" name="Revert Tests In Json Overlay" comment="" />

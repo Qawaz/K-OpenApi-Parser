@@ -19,12 +19,17 @@ import com.fasterxml.jackson.databind.JsonNode
 abstract class ScalarOverlay<V> : JsonOverlay<V> {
 
     protected constructor(
-        json: JsonNode?,
+        factory: OverlayFactory<V>,
+        refMgr: ReferenceManager
+    ) : super(factory,refMgr)
+
+    protected constructor(
+        json: JsonNode,
         parent: JsonOverlay<*>?,
-        factory: OverlayFactory<V>?,
-        refMgr: ReferenceManager?
+        factory: OverlayFactory<V>,
+        refMgr: ReferenceManager
     ) : super(
-        json!!, parent, factory!!, refMgr!!
+        json, parent, factory, refMgr
     )
 
     protected constructor(

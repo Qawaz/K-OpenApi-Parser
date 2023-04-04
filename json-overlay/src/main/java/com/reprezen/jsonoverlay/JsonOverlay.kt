@@ -28,10 +28,10 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     public var value: V? = null
 
     @JvmField
-    protected var parent: JsonOverlay<*>?
+    protected var parent: JsonOverlay<*>? = null
 
     @JvmField
-    var json: JsonNode?
+    var json: JsonNode? = null
 
     @JvmField
     val refMgr: ReferenceManager
@@ -45,6 +45,19 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     private var creatingRef: Reference? = null
     private var positionInfo: Optional<PositionInfo>? = null
 
+    protected constructor(factory: OverlayFactory<V>, refMgr: ReferenceManager) {
+        this.factory = factory
+        this.refMgr = refMgr
+        this.present = false
+    }
+
+    protected fun load(value: V?, parent: JsonOverlay<*>?) {
+        json = null
+        this.value = value
+        this.parent = parent
+        present = value != null
+    }
+
     protected constructor(value: V?, parent: JsonOverlay<*>?, factory: OverlayFactory<V>, refMgr: ReferenceManager) {
         json = null
         this.value = value
@@ -52,6 +65,17 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         this.factory = factory
         this.refMgr = refMgr
         present = value != null
+    }
+
+    protected fun load(json: JsonNode, parent: JsonOverlay<*>?) {
+        this.json = json
+        if (Reference.isReferenceNode(json)) {
+            refOverlay = RefOverlay(json, parent, factory, refMgr)
+        } else {
+            value = _fromJson(json)
+        }
+        this.parent = parent
+        present = !json.isMissingNode
     }
 
     protected constructor(
@@ -259,7 +283,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
                 refOverlay!!.overlay._toJson(options)
             }
         } else {
-            _toJsonInternal(options)
+            _toJsonInternal(options)!!
         }
     }
 
@@ -268,7 +292,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         return _toJson(SerializationOptions(*options))
     }
 
-    protected abstract fun _toJsonInternal(options: SerializationOptions): JsonNode
+    protected abstract fun _toJsonInternal(options: SerializationOptions): JsonNode?
 
     /* package */
     fun _getParsedJson(): JsonNode? {
