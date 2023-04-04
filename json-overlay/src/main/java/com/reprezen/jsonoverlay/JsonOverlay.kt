@@ -362,7 +362,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
 
     companion object {
 
-        @JvmField
+        @JvmStatic
         protected val mapper = ObjectMapper()
 
         // some utility classes for overlays

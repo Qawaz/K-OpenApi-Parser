@@ -256,7 +256,7 @@ class ScalarTests {
     }
 
     @RunWith(Parameterized::class)
-    class ObjectTests(value: Any?) : ScalarTestBase<Any?>(ObjectOverlay.factory) {
+    class ObjectTests(value: Any?) : ScalarTestBase<Any>(ObjectOverlay.factory) {
         init {
             this.value = value
         }

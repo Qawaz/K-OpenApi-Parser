@@ -228,9 +228,7 @@ class ApiTests : Assert() {
     private fun checkIntegersPaths() {
         for (i in model.integers.indices) {
             assertEquals(
-                Integer.toString(i), Overlay.of(
-                    model.integers, i
-                )?.pathInParent
+                i.toString(), Overlay.of(model.integers, i)?.pathInParent
             )
         }
     }

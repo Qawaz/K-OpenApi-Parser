@@ -18,14 +18,13 @@ import java.math.BigDecimal
 import java.math.BigInteger
 
 class PrimitiveOverlay private constructor(
-    isJson: Boolean,
     value: Any?,
     parent: JsonOverlay<*>?,
     refMgr: ReferenceManager
 ) : ScalarOverlay<Any>(Companion.factory, refMgr) {
 
     init {
-        if (isJson && value != null && value is JsonNode) {
+        if (value != null && value is JsonNode) {
             load(value, parent)
         } else {
             load(value, parent)
@@ -82,7 +81,7 @@ class PrimitiveOverlay private constructor(
             }
 
             override fun _create(value: Any?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): PrimitiveOverlay {
-                return PrimitiveOverlay(isJson = false, value, parent, refMgr)
+                return PrimitiveOverlay(value, parent, refMgr)
             }
 
             public override fun _create(
@@ -90,7 +89,7 @@ class PrimitiveOverlay private constructor(
                 parent: JsonOverlay<*>?,
                 refMgr: ReferenceManager
             ): PrimitiveOverlay {
-                return PrimitiveOverlay(isJson = true, json, parent, refMgr)
+                return PrimitiveOverlay(json, parent, refMgr)
             }
         }
     }
