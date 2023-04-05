@@ -14,8 +14,8 @@ import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.kaizen.oasparser.model3.*
 import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
-import com.reprezen.kaizen.oasparser.`val`.msg.Messages.Companion.msg
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.msg.Messages.Companion.msg
 import java.lang.Boolean
 import kotlin.Any
 import kotlin.String
@@ -34,7 +34,7 @@ class ParameterValidator : ObjectValidatorBase<Parameter>() {
         )
         checkExampleExclusion(examples, example)
         validateStringField(ParameterImpl.F_name, true)
-        validateStringField(ParameterImpl.F_in, true, Regexes.PARAM_IN_REGEX)
+        validateStringField(ParameterImpl.F_inValue, true, Regexes.PARAM_IN_REGEX)
         checkPathParam(parameter)
         checkRequired(parameter)
         validateStringField(ParameterImpl.F_style, false, Regexes.STYLE_REGEX)
@@ -48,15 +48,15 @@ class ParameterValidator : ObjectValidatorBase<Parameter>() {
             MediaType::class.java,
             MediaTypeValidator()
         )
-        validateExtensions(parameter.extensions)
+        validateExtensions(parameter.getExtensions())
     }
 
     private fun checkPathParam(parameter: Parameter) {
-        if (parameter.getIn() != null && parameter.getIn() == "path" && parameter.name != null) {
+        if (parameter.getIn() != null && parameter.getIn() == "path" && parameter.getName() != null) {
             val path = getPathString(parameter)
             if (path != null) {
-                if (!path.matches((".*\\{" + parameter.name + "\\}(.*)?").toRegex())) {
-                    results.addError(msg(OpenApi3Messages.MissingPathTplt, parameter.name, path), value)
+                if (!path.matches((".*\\{" + parameter.getName() + "\\}(.*)?").toRegex())) {
+                    results.addError(msg(OpenApi3Messages.MissingPathTplt, parameter.getName()!!, path), value)
                 }
             }
         }
@@ -64,15 +64,15 @@ class ParameterValidator : ObjectValidatorBase<Parameter>() {
 
     private fun checkRequired(parameter: Parameter) {
         if ("path" == parameter.getIn()) {
-            if (parameter.required !== Boolean.TRUE) {
-                results.addError(msg(OpenApi3Messages.PathParamReq, parameter.name), value)
+            if (parameter.getRequired() !== Boolean.TRUE) {
+                results.addError(msg(OpenApi3Messages.PathParamReq, parameter.getName() ?: ""), value)
             }
         }
     }
 
     private fun checkAllowReserved(parameter: Parameter) {
-        if (parameter.isAllowReserved && "query" != parameter.getIn()) {
-            results.addWarning(msg(OpenApi3Messages.NonQryAllowRsvd, parameter.name, parameter.getIn()), value)
+        if (parameter.isAllowReserved() && "query" != parameter.getIn()) {
+            results.addWarning(msg(OpenApi3Messages.NonQryAllowRsvd, parameter.getName() ?: "", parameter.getIn() ?: ""), value)
         }
     }
 

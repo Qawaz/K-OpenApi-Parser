@@ -13,7 +13,7 @@ package com.reprezen.kaizen.oasparser.val3
 import com.reprezen.kaizen.oasparser.model3.Server
 import com.reprezen.kaizen.oasparser.model3.ServerVariable
 import com.reprezen.kaizen.oasparser.ovl3.ServerImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class ServerValidator : ObjectValidatorBase<Server>() {
     override fun runObjectValidations() {
@@ -27,6 +27,6 @@ class ServerValidator : ObjectValidatorBase<Server>() {
             ServerVariable::class.java,
             ServerVariableValidator()
         )
-        validateExtensions(server.extensions)
+        validateExtensions(server.getExtensions())
     }
 }

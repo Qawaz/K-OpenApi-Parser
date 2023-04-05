@@ -16,8 +16,8 @@ import com.reprezen.kaizen.oasparser.model3.ExternalDocs
 import com.reprezen.kaizen.oasparser.model3.Schema
 import com.reprezen.kaizen.oasparser.model3.Xml
 import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
-import com.reprezen.kaizen.oasparser.`val`.msg.Messages.Companion.msg
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.msg.Messages.Companion.msg
 import java.util.function.Consumer
 
 class SchemaValidator : ObjectValidatorBase<Schema>() {
@@ -53,13 +53,13 @@ class SchemaValidator : ObjectValidatorBase<Schema>() {
             validateField<Schema>(SchemaImpl.F_itemsSchema, false, Schema::class.java, schemaValidator)
             validateMapField<Schema>(SchemaImpl.F_properties, false, false, Schema::class.java, schemaValidator)
         }
-        validateFormatField(SchemaImpl.F_format, false, schema.type)
+        validateFormatField(SchemaImpl.F_format, false, schema.getType())
         validateField<Any>(
             SchemaImpl.F_defaultValue,
             false,
             Any::class.java,
             null,
-            Consumer { field: Overlay<Any>? -> checkDefault(field, schema.type) })
+            Consumer { field: Overlay<Any>? -> checkDefault(field, schema.getType()) })
         validateField<Discriminator>(
             SchemaImpl.F_discriminator,
             false,
@@ -69,12 +69,12 @@ class SchemaValidator : ObjectValidatorBase<Schema>() {
         checkReadWrite(schema)
         validateField<Xml>(SchemaImpl.F_xml, false, Xml::class.java, XmlValidator())
         validateField<ExternalDocs>(SchemaImpl.F_externalDocs, false, ExternalDocs::class.java, ExternalDocsValidator())
-        validateExtensions(schema.extensions)
+        validateExtensions(schema.getExtensions())
     }
 
     private fun checkReadWrite(schema: Schema) {
-        if (schema.isReadOnly && schema.isWriteOnly) {
-            results.addError(msg(OpenApi3Messages.ROnlyAndWOnly), value!!)
+        if (schema.isReadOnly() && schema.isWriteOnly()) {
+            results.addError(msg(OpenApi3Messages.ROnlyAndWOnly), value)
         }
     }
 }

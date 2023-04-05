@@ -15,9 +15,9 @@ class Issue131Test : Assert() {
         assertEquals("SampleData", Overlay.getPathInParent(Overlay.of(model).find("/components/schemas/SampleData")!!))
         assertEquals("MoreData", Overlay.getPathInParent(Overlay.of(model).find("/components/schemas/MoreData")!!))
         val direct = model.getSchema("SampleData")
-        val viaMoreData = model.getSchema("MoreData").getProperty("master")
-        val viaPath = model.getPath("/sampledatamanagement/v1/sampledata/custom/{id}").get.getResponse("200")
-            .getContentMediaType("application/json").schema
+        val viaMoreData = model.getSchema("MoreData")?.getProperty("master")
+        val viaPath = model.getPath("/sampledatamanagement/v1/sampledata/custom/{id}")?.getGet()?.getResponse("200")
+            ?.getContentMediaType("application/json")?.getSchema()
         assertTrue(direct === viaMoreData)
         assertTrue(direct === viaPath)
     }

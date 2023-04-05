@@ -13,7 +13,7 @@ package com.reprezen.kaizen.oasparser.val3
 import com.reprezen.kaizen.oasparser.model3.OAuthFlow
 import com.reprezen.kaizen.oasparser.model3.SecurityScheme
 import com.reprezen.kaizen.oasparser.ovl3.SecuritySchemeImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 
 class SecuritySchemeValidator : ObjectValidatorBase<SecurityScheme>() {
@@ -21,7 +21,7 @@ class SecuritySchemeValidator : ObjectValidatorBase<SecurityScheme>() {
         val securityScheme: SecurityScheme = value.getOverlay() as SecurityScheme
         validateStringField(SecuritySchemeImpl.F_description, false)
         validateStringField(SecuritySchemeImpl.F_type, true, "apiKey|http|oauth2|openIdConnect")
-        val type: String = securityScheme.getType()
+        val type = securityScheme.getType()
         // TODO should these type-specific fields be disallowed for non-applicable
         // types? (At least a warning)
         if (type != null) {
@@ -33,7 +33,7 @@ class SecuritySchemeValidator : ObjectValidatorBase<SecurityScheme>() {
 
                 "apiKey" -> {
                     validateStringField(SecuritySchemeImpl.F_name, true)
-                    validateStringField(SecuritySchemeImpl.F_in, true, "query|header|cookie")
+                    validateStringField(SecuritySchemeImpl.F_inValue, true, "query|header|cookie")
                 }
 
                 "oauth2" -> {

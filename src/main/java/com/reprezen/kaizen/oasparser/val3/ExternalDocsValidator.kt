@@ -12,7 +12,7 @@ package com.reprezen.kaizen.oasparser.val3
 
 import com.reprezen.kaizen.oasparser.model3.ExternalDocs
 import com.reprezen.kaizen.oasparser.ovl3.ExternalDocsImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class ExternalDocsValidator : ObjectValidatorBase<ExternalDocs>() {
     override fun runObjectValidations() {

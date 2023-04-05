@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode
 import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.kaizen.oasparser.model3.SecurityParameter
 import com.reprezen.kaizen.oasparser.ovl3.SecurityParameterImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 import java.util.*
 
 class SecurityParameterValidator : ObjectValidatorBase<SecurityParameter>() {

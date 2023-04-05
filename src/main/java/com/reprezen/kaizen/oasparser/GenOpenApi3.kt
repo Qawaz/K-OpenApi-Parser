@@ -16,42 +16,42 @@ object GenOpenApi3 {
 
     private val overrideTemplates = mapOf<String, String>(
 
-        "Callback.java" to "java/interface/callback.java.kate",
-        "CallbackImpl.java" to "java/class/callback.java.kate",
+        "Callback.kt" to "kotlin/interface/callback.kate",
+        "CallbackImpl.kt" to "kotlin/class/callback.kate",
 
-        "Example.java" to "java/interface/example.java.kate",
-        "ExampleImpl.java" to "java/class/example.java.kate",
+        "Example.kt" to "kotlin/interface/example.kate",
+        "ExampleImpl.kt" to "kotlin/class/example.kate",
 
-        "Header.java" to "java/interface/header.java.kate",
-        "HeaderImpl.java" to "java/class/header.java.kate",
+        "Header.kt" to "kotlin/interface/header.kate",
+        "HeaderImpl.kt" to "kotlin/class/header.kate",
 
-        "LicenseImpl.java" to "java/class/license.java.kate",
+        "LicenseImpl.kt" to "kotlin/class/license.kate",
 
-        "Link.java" to "java/interface/link.java.kate",
-        "LinkImpl.java" to "java/class/link.java.kate",
+        "Link.kt" to "kotlin/interface/link.kate",
+        "LinkImpl.kt" to "kotlin/class/link.kate",
 
-        "OpenApi3.java" to "java/interface/openapi3.java.kate",
-        "OpenApi3Impl.java" to "java/class/openapi3.java.kate",
+        "OpenApi3.kt" to "kotlin/interface/openapi3.kate",
+        "OpenApi3Impl.kt" to "kotlin/class/openapi3.kate",
 
-        "Parameter.java" to "java/interface/parameter.java.kate",
-        "ParameterImpl.java" to "java/class/parameter.java.kate",
+        "Parameter.kt" to "kotlin/interface/parameter.kate",
+        "ParameterImpl.kt" to "kotlin/class/parameter.kate",
 
-        "Path.java" to "java/interface/path.java.kate",
-        "PathImpl.java" to "java/class/path.java.kate",
+        "Path.kt" to "kotlin/interface/path.kate",
+        "PathImpl.kt" to "kotlin/class/path.kate",
 
-        "RequestBody.java" to "java/interface/request_body.java.kate",
-        "RequestBodyImpl.java" to "java/class/request_body.java.kate",
+        "RequestBody.kt" to "kotlin/interface/request_body.kate",
+        "RequestBodyImpl.kt" to "kotlin/class/request_body.kate",
 
-        "Response.java" to "java/interface/response.java.kate",
-        "ResponseImpl.java" to "java/class/response.java.kate",
+        "Response.kt" to "kotlin/interface/response.kate",
+        "ResponseImpl.kt" to "kotlin/class/response.kate",
 
-        "Schema.java" to "java/interface/schema.java.kate",
-        "SchemaImpl.java" to "java/class/schema.java.kate",
+        "Schema.kt" to "kotlin/interface/schema.kate",
+        "SchemaImpl.kt" to "kotlin/class/schema.kate",
 
-        "SecurityParameterImpl.java" to "java/class/security_parameter.java.kate",
+        "SecurityParameterImpl.kt" to "kotlin/class/security_parameter.kate",
 
-        "SecurityScheme.java" to "java/interface/security_scheme.java.kate",
-        "SecuritySchemeImpl.java" to "java/class/security_scheme.java.kate",
+        "SecurityScheme.kt" to "kotlin/interface/security_scheme.kate",
+        "SecuritySchemeImpl.kt" to "kotlin/class/security_scheme.kate",
 
     )
 

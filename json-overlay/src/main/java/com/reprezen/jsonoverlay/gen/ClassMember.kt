@@ -18,13 +18,6 @@ class ClassMember(val code: String) {
         return this
     }
 
-    fun override(): ClassMember {
-        if (!annotations.contains("@Override")) {
-            annotations.add("@Override")
-        }
-        return this
-    }
-
     fun format(indentation: Int): String {
         var indented = ""
         repeat(indentation) { indented += "\t" }
@@ -36,7 +29,7 @@ class ClassMember(val code: String) {
             formatted += annotations.joinToString("\n") { "$indented$it" }
             formatted += "\n"
         }
-        formatted += indented + code.replace("\n","\n$indented")
+        formatted += indented + code.replace("\n", "\n$indented")
         return formatted
     }
 

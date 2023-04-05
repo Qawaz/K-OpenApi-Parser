@@ -14,7 +14,7 @@ import com.reprezen.kaizen.oasparser.model3.Contact
 import com.reprezen.kaizen.oasparser.model3.Info
 import com.reprezen.kaizen.oasparser.model3.License
 import com.reprezen.kaizen.oasparser.ovl3.InfoImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class InfoValidator : ObjectValidatorBase<Info>() {
     override fun runObjectValidations() {
@@ -25,6 +25,6 @@ class InfoValidator : ObjectValidatorBase<Info>() {
         validateField<Contact>(InfoImpl.F_contact, false, Contact::class.java, ContactValidator())
         validateField<License>(InfoImpl.F_license, false, License::class.java, LicenseValidator())
         validateStringField(InfoImpl.F_version, true)
-        validateExtensions(info.extensions)
+        validateExtensions(info.getExtensions())
     }
 }

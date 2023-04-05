@@ -12,7 +12,7 @@ package com.reprezen.kaizen.oasparser.val3
 
 import com.reprezen.kaizen.oasparser.model3.OAuthFlow
 import com.reprezen.kaizen.oasparser.ovl3.OAuthFlowImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class OAuthFlowValidator : ObjectValidatorBase<OAuthFlow>() {
     override fun runObjectValidations() {

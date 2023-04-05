@@ -13,8 +13,8 @@ package com.reprezen.kaizen.oasparser.val3
 import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.kaizen.oasparser.model3.Example
 import com.reprezen.kaizen.oasparser.ovl3.ExampleImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
-import com.reprezen.kaizen.oasparser.`val`.msg.Messages.Companion.msg
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.msg.Messages.Companion.msg
 
 class ExampleValidator : ObjectValidatorBase<Example>() {
     override fun runObjectValidations() {
@@ -23,7 +23,7 @@ class ExampleValidator : ObjectValidatorBase<Example>() {
         validateStringField(ExampleImpl.F_description, false)
         val valueField: Overlay<Any> = validateField<Any>(ExampleImpl.F_value, false, Any::class.java, null)
         val externalField: Overlay<String> = validateUrlField(ExampleImpl.F_externalValue, false, true, false)
-        validateExtensions(example.extensions)
+        validateExtensions(example.getExtensions())
         checkExactlyOneValue(valueField, externalField)
         // TODO check that a direct value is compatible with the containng parameter or
         // media type (not entirely clear how to approach this)

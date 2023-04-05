@@ -101,7 +101,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     }
 
     fun builder(): Builder<V> {
-        return Builder(_getFactory()!!, this)
+        return Builder(_getFactory(), this)
     }
 
     /* package */ /* package */
@@ -341,7 +341,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         return positionInfo
     }
 
-    abstract fun _getFactory(): OverlayFactory<*>?
+    abstract fun _getFactory(): OverlayFactory<*>
 
     override fun toString(): String {
         return _toJson().toString()

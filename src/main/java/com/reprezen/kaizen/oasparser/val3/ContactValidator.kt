@@ -12,8 +12,7 @@ package com.reprezen.kaizen.oasparser.val3
 
 import com.reprezen.kaizen.oasparser.model3.Contact
 import com.reprezen.kaizen.oasparser.ovl3.ContactImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
-import com.reprezen.kaizen.oasparser.`val`.ValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class ContactValidator : ObjectValidatorBase<Contact>() {
     override fun runObjectValidations() {
@@ -21,6 +20,6 @@ class ContactValidator : ObjectValidatorBase<Contact>() {
         validateStringField(ContactImpl.F_name, false)
         validateUrlField(ContactImpl.F_url, false, true, false)
         validateEmailField(ContactImpl.F_email, false)
-        validateExtensions(contact.extensions)
+        validateExtensions(contact.getExtensions())
     }
 }

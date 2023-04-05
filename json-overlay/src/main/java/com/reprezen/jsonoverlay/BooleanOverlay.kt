@@ -39,7 +39,7 @@ class BooleanOverlay : ScalarOverlay<Boolean> {
         return if (value != null) _jsonBoolean(value!!) else _jsonMissing()
     }
 
-    override fun _getFactory(): OverlayFactory<Boolean> {
+    override fun _getFactory(): OverlayFactory<*> {
         return Companion.factory
     }
 

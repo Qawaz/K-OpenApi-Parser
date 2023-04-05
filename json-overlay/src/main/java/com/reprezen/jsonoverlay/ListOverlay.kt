@@ -161,7 +161,7 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>> {
         return overlays.hashCode()
     }
 
-    override fun _getFactory(): OverlayFactory<MutableList<V>> {
+    override fun _getFactory(): OverlayFactory<*> {
         return factory
     }
 

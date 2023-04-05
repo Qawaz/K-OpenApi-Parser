@@ -39,7 +39,7 @@ class StringOverlay : ScalarOverlay<String> {
         return if (value != null) _jsonScalar(value) else _jsonMissing()
     }
 
-    override fun _getFactory(): OverlayFactory<String> {
+    override fun _getFactory(): OverlayFactory<*> {
         return Companion.factory
     }
 

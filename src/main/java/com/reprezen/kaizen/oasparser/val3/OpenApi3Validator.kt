@@ -12,9 +12,9 @@ package com.reprezen.kaizen.oasparser.val3
 
 import com.reprezen.kaizen.oasparser.model3.*
 import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
-class OpenApi3Validator : ObjectValidatorBase<OpenApi3?>() {
+class OpenApi3Validator : ObjectValidatorBase<OpenApi3>() {
     override fun runObjectValidations() {
         val model: OpenApi3 = value.getOverlay() as OpenApi3
         validateStringField(OpenApi3Impl.F_openApi, true, "3\\.\\d+(\\.\\d+.*)?")

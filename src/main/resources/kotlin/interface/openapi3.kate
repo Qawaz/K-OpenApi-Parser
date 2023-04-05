@@ -1,0 +1,23 @@
+@partial_raw
+
+    @embed_once ../interface_definition.kate
+
+    @var(GenerateInterfaceDefinition())
+
+    @default_no_raw
+            fun validate()
+
+            fun isValid() : Boolean
+
+            fun getValidationResults() : ValidationResults
+
+            fun getValidationItems() : Collection<ValidationResults.ValidationItem>
+
+
+    @end_default_no_raw
+
+    @var(GenerateInterfaceMembers())
+
+    @var(EndInterfaceDefinition())
+
+@end_partial_raw

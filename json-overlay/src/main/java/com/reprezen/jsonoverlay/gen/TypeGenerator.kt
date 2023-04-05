@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.JsonNodeFactory
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.reprezen.jsonoverlay.*
+import com.reprezen.jsonoverlay.parser.Generated
 import com.wakaztahir.kate.InputSourceStream
 import com.wakaztahir.kate.OutputDestinationStream
 import com.wakaztahir.kate.RelativeResourceEmbeddingManager
@@ -27,8 +28,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.*
 import java.util.stream.Collectors
-import java.util.stream.Stream
-import javax.annotation.Generated
+import kotlin.reflect.KClass
 
 abstract class TypeGenerator(
     private val dir: File,
@@ -50,7 +50,7 @@ abstract class TypeGenerator(
             gen.addImport("$intfPackage.*")
         }
         addGeneratedMembers(type, gen)
-        requireTypes(Generated::class.java)
+        this.requireTypes(Generated::class)
         resolveImports(type, gen)
         return gen
     }
@@ -77,15 +77,15 @@ abstract class TypeGenerator(
     }
 
     fun getFileFor(type: KTypeData.Type): File {
-        return File(dir, String.format("%s%s.java", type.name, suffix))
+        return File(dir, String.format("%s%s.kt", type.name, suffix))
     }
 
     @Throws(IOException::class)
     fun generate(
-        gen : CompilationUnit,
+        gen: CompilationUnit,
         javaFile: File,
         resource: RelativeResourceEmbeddingManager,
-        templatePath : String
+        templatePath: String
     ) {
         generateWithTemplate(
             javaFile = javaFile,
@@ -101,9 +101,8 @@ abstract class TypeGenerator(
         return false
     }
 
-    protected fun requireTypes(vararg types: Class<*>) {
-        requireTypes(Stream.of(*types).map { obj: Class<*> -> obj.simpleName }
-            .collect(Collectors.toList()))
+    protected fun requireTypes(vararg types: KClass<*>) {
+        requireTypes(types.toList().map { it.simpleName!! })
     }
 
     protected fun requireTypes(vararg types: String) {
@@ -173,6 +172,9 @@ abstract class TypeGenerator(
                 members.addAll(getFieldMethods(field))
             }
         }
+        for (member in getCompanionMembers(type)) {
+            gen.type.addCompanionMember(member)
+        }
         members.addAll(getOtherMembers(type))
         gen.addGeneratedMembers(members)
     }
@@ -181,49 +183,6 @@ abstract class TypeGenerator(
         return false
     }
 
-    //    private CompilationUnit tryParse(File file) {
-    //        try {
-    //            return JavaParser.parse(file);
-    //        } catch (IOException e) {
-    //            System.err.println("ABORTING AFTER PARTIAL GENERATION!");
-    //            System.err.printf(
-    //                    "Parsing of file %s failed; so generation cannot continue without destroying manual code.\n", file);
-    //            System.err.println("Please restore generated code artifacts to a known good state before regenerating");
-    //            System.err.println("Parse Error:");
-    //            e.printStackTrace();
-    //            System.exit(1);
-    //            return null;
-    //        }
-    //    }
-    //
-    //    private void copyFileComment(SimpleJavaGenerator gen, CompilationUnit existing) {
-    //        Optional<Comment> fileComment = existing.getComment();
-    //        if (fileComment.isPresent()) {
-    //            gen.setFileComment(fileComment.get().toString());
-    //        }
-    //    }
-    //
-    //    private void addManualMembers(SimpleJavaGenerator gen, CompilationUnit existing) {
-    //        for (TypeDeclaration<?> type : existing.getTypes()) {
-    //            for (BodyDeclaration<?> member : type.getMembers()) {
-    //                if (member instanceof MethodDeclaration || member instanceof FieldDeclaration
-    //                        || member instanceof ConstructorDeclaration) {
-    //                    if (!isGenerated(member)) {
-    //                        gen.addMember(new Member(member));
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //
-    //    private boolean isGenerated(BodyDeclaration<?> node) {
-    //        for (AnnotationExpr annotation : node.getAnnotations()) {
-    //            if (annotation.getName().toString().equals("Generated")) {
-    //                return true;
-    //            }
-    //        }
-    //        return false;
-    //    }
     protected open fun getConstructors(type: KTypeData.Type): Members {
         return Members()
     }
@@ -233,6 +192,10 @@ abstract class TypeGenerator(
     }
 
     protected open fun getFieldMethods(field: KTypeData.Field): Members {
+        return Members()
+    }
+
+    protected open fun getCompanionMembers(type: KTypeData.Type): Members {
         return Members()
     }
 
@@ -248,41 +211,41 @@ abstract class TypeGenerator(
 
     companion object {
         private val autoTypes = hashSetOf<String>(
-            "String", "Object", "Boolean", "Integer", "Number"
+            "String", "Any", "Boolean", "Int", "Number"
         )
 
         private val knownTypes = getKnownTypes()
         private fun getKnownTypes(): Map<String, String> {
             val results: MutableMap<String, String> = HashMap()
             val overlays = listOf( //
-                Generated::class.java,  //
-                MutableList::class.java,  //
-                MutableMap::class.java,  //
-                Optional::class.java,  //
-                Collectors::class.java,  //
-                JsonNode::class.java,  //
-                ObjectNode::class.java,  //
-                JsonNodeFactory::class.java,  //
-                JsonPointer::class.java,  //
-                IJsonOverlay::class.java,  //
-                JsonOverlay::class.java,  //
-                IModelPart::class.java,  //
-                PropertiesOverlay::class.java,  //
-                OverlayFactory::class.java,  //
-                Builder::class.java,  //
-                ReferenceManager::class.java,  //
-                StringOverlay::class.java,  //
-                IntegerOverlay::class.java,  //
-                NumberOverlay::class.java,  //
-                BooleanOverlay::class.java,  //
-                EnumOverlay::class.java,  //
-                PrimitiveOverlay::class.java,  //
-                ObjectOverlay::class.java,  //
-                ListOverlay::class.java,  //
-                MapOverlay::class.java
+                Generated::class,  //
+                MutableList::class,  //
+                MutableMap::class,  //
+                Optional::class,  //
+                Collectors::class,  //
+                JsonNode::class,  //
+                ObjectNode::class,  //
+                JsonNodeFactory::class,  //
+                JsonPointer::class,  //
+                IJsonOverlay::class,  //
+                JsonOverlay::class,  //
+                IModelPart::class,  //
+                PropertiesOverlay::class,  //
+                OverlayFactory::class,  //
+                Builder::class,  //
+                ReferenceManager::class,  //
+                StringOverlay::class,  //
+                IntegerOverlay::class,  //
+                NumberOverlay::class,  //
+                BooleanOverlay::class,  //
+                EnumOverlay::class,  //
+                PrimitiveOverlay::class,  //
+                ObjectOverlay::class,  //
+                ListOverlay::class,  //
+                MapOverlay::class
             ) //
             for (cls in overlays) {
-                results[cls.simpleName] = cls.name.replace("\\$".toRegex(), ".")
+                results[cls.simpleName!!] = cls.qualifiedName!!.replace("\\$".toRegex(), ".")
             }
             return results
         }

@@ -16,13 +16,11 @@ package com.reprezen.jsonoverlay
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.MissingNode
-import com.reprezen.jsonoverlay.ScalarTests.EnumTests.XEnumOverlay
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.*
-import java.util.List
 import kotlin.collections.Collection
 import kotlin.collections.HashMap
 import kotlin.collections.MutableMap
@@ -323,7 +321,7 @@ class ScalarTests {
                 return XEnum.valueOf(value)
             }
 
-            override fun _getFactory(): OverlayFactory<XEnum> {
+            override fun _getFactory(): OverlayFactory<*> {
                 return Companion.factory
             }
 

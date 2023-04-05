@@ -15,8 +15,8 @@ import com.reprezen.kaizen.oasparser.model3.Header
 import com.reprezen.kaizen.oasparser.model3.MediaType
 import com.reprezen.kaizen.oasparser.model3.Schema
 import com.reprezen.kaizen.oasparser.ovl3.HeaderImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
-import com.reprezen.kaizen.oasparser.`val`.msg.Messages.Companion.msg
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.msg.Messages.Companion.msg
 
 class HeaderValidator : ObjectValidatorBase<Header>() {
     override fun runObjectValidations() {
@@ -38,7 +38,7 @@ class HeaderValidator : ObjectValidatorBase<Header>() {
             MediaType::class.java,
             MediaTypeValidator()
         )
-        validateExtensions(header.extensions)
+        validateExtensions(header.getExtensions())
         checkContentType()
         // TODO validate that location-related values (like style) are consistent with
         // header location
@@ -48,7 +48,7 @@ class HeaderValidator : ObjectValidatorBase<Header>() {
     private fun checkAllowReserved(header: Header) {
         // TODO Q: Shouldn't "allowReserved" be disallowed for headers, as are "name"
         // and "in"?
-        if (header.isAllowReserved) {
+        if (header.isAllowReserved()) {
             results.addWarning(msg(OpenApi3Messages.NonQryAllowRsvd, value.pathInParent!!, "header"), value)
         }
     }

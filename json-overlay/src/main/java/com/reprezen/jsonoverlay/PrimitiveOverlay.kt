@@ -69,7 +69,7 @@ class PrimitiveOverlay private constructor(
         }
     }
 
-    override fun _getFactory(): OverlayFactory<Any> {
+    override fun _getFactory(): OverlayFactory<*> {
         return Companion.factory
     }
 

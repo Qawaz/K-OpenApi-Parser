@@ -13,9 +13,9 @@ package com.reprezen.kaizen.oasparser.val3
 import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.kaizen.oasparser.model3.*
 import com.reprezen.kaizen.oasparser.ovl3.LinkImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
-import com.reprezen.kaizen.oasparser.`val`.ValidationResults
-import com.reprezen.kaizen.oasparser.`val`.msg.Messages.Companion.msg
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ValidationResults
+import com.reprezen.kaizen.oasparser.validate.msg.Messages.Companion.msg
 
 class LinkValidator : ObjectValidatorBase<Link>() {
     override fun runObjectValidations() {
@@ -28,12 +28,12 @@ class LinkValidator : ObjectValidatorBase<Link>() {
         val requestBody: Overlay<Any> = validateField<Any>(LinkImpl.F_requestBody, false, Any::class.java, null)
         checkRequestBody(requestBody)
         validateField<Server>(LinkImpl.F_server, false, Server::class.java, ServerValidator())
-        validateExtensions(link.extensions)
+        validateExtensions(link.getExtensions())
     }
 
     private fun checkValidOperation(link: Link): Operation? {
-        val opId = link.operationId
-        val operationRef = link.operationRef
+        val opId = link.getOperationId()
+        val operationRef = link.getOperationRef()
         var op: Operation? = null
         if (opId == null && operationRef == null) {
             results.addError(msg(OpenApi3Messages.NoOpIdNoOpRefInLink), value)
@@ -50,7 +50,7 @@ class LinkValidator : ObjectValidatorBase<Link>() {
         if (relativePath != null) {
             op = findOperationByPath(Overlay.of(link).getModel<OpenApi3>()!!, relativePath, results)
             if (op == null) {
-                results.addError(msg(OpenApi3Messages.OpPathNotFound, operationRef), value)
+                results.addError(msg(OpenApi3Messages.OpPathNotFound, operationRef!!), value)
             }
         }
         return op
@@ -61,8 +61,8 @@ class LinkValidator : ObjectValidatorBase<Link>() {
         // operation; will
         // allow if it's unique, warn if
         // it's not
-        val opParamCounts = getParamNameCounts(op.parameters)
-        val params = link.parameters
+        val opParamCounts = getParamNameCounts(op.getParameters())
+        val params = link.getParameters()
         for (paramName in params.keys) {
             val count = opParamCounts[paramName]!!
             if (count == 0) {
@@ -75,8 +75,8 @@ class LinkValidator : ObjectValidatorBase<Link>() {
 
     private fun findOperationById(model: OpenApi3, operationId: String): Operation? {
         for (path in model.getPaths().values) {
-            for (op in path.operations.values) {
-                if (operationId == op.operationId) {
+            for (op in path.getOperations().values) {
+                if (operationId == op.getOperationId()) {
                     return op
                 }
             }
@@ -85,8 +85,7 @@ class LinkValidator : ObjectValidatorBase<Link>() {
     }
 
     private fun findOperationByPath(model: OpenApi3, relativePath: String, results: ValidationResults): Operation? {
-        val path: Path = model.getPath(relativePath)
-        return if (path != null) path.getGet(false) else null
+        return model.getPath(relativePath)?.getGet(false)
     }
 
     private fun getRelativePath(operationRef: String?, results: ValidationResults): String? {
@@ -100,7 +99,7 @@ class LinkValidator : ObjectValidatorBase<Link>() {
     private fun getParamNameCounts(parameters: Collection<Parameter>): Map<String, Int> {
         val counts: MutableMap<String, Int> = HashMap()
         for (parameter in parameters) {
-            val name = parameter.name
+            val name = parameter.getName()!!
             if (counts.containsKey(name)) {
                 counts[name] = 1 + counts[name]!!
             } else {

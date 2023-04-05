@@ -1,6 +1,5 @@
 package com.reprezen.jsonoverlay.gen
 
-import com.reprezen.jsonoverlay.gen.TypeData.Field
 import java.io.File
 
 class JavaInterfaceGenerator : TypeGenerator {
@@ -88,43 +87,43 @@ class JavaInterfaceGenerator : TypeGenerator {
 
     private fun getScalarMethods(f : KTypeData.Field): Members {
         val methods = Members()
-        methods.addMember("${f.type} get${f.name}();")
+        methods.addMember("fun get${f.name}() : ${f.type}?")
         if (f.structure === KTypeData.Structure.scalar && !f.isScalarType) {
-            methods.addMember("${f.type} get${f.name}(boolean elaborate);")
+            methods.addMember("fun get${f.name}(elaborate : Boolean) : ${f.type}?")
         }
         if (f.isBoolean) {
-            methods.addMember("boolean is${f.name}();")
+            methods.addMember("fun is${f.name}() : Boolean")
         }
-        methods.addMember("void set${f.name}(${f.type} ${f.lcName});")
+        methods.addMember("fun set${f.name}(${f.lcName} : ${f.type})")
         return methods
     }
 
     private fun getCollectionMethods(f : KTypeData.Field): Members {
         val methods = Members()
-        requireTypes(List::class.java)
-        methods.addMember("List<${f.type}> get${f.plural}();")
-        methods.addMember("List<${f.type}> get${f.plural}(boolean elaborate);")
-        methods.addMember("boolean has${f.plural}();")
-        methods.addMember("${f.type} get${f.name}(int index);")
-        methods.addMember("void set${f.plural}(List<${f.type}> ${f.lcPlural});")
-        methods.addMember("void set${f.name}(int index, ${f.type} ${f.lcName});")
-        methods.addMember("void add${f.name}(${f.type} ${f.lcName});")
-        methods.addMember("void insert${f.name}(int index, ${f.type} ${f.lcName});")
-        methods.addMember("void remove${f.name}(int index);")
+        requireTypes(List::class)
+        methods.addMember("fun get${f.plural}() : List<${f.type}>")
+        methods.addMember("fun get${f.plural}(elaborate : Boolean) : List<${f.type}>")
+        methods.addMember("fun has${f.plural}() : Boolean")
+        methods.addMember("fun get${f.name}(index : Int) : ${f.type}")
+        methods.addMember("fun set${f.plural}(${f.lcPlural} : MutableList<${f.type}>)")
+        methods.addMember("fun set${f.name}(index : Int, ${f.lcName} : ${f.type})")
+        methods.addMember("fun add${f.name}(${f.lcName} : ${f.type})")
+        methods.addMember("fun insert${f.name}(index : Int,${f.lcName} : ${f.type})")
+        methods.addMember("fun remove${f.name}(index : Int)")
         return methods
     }
 
     private fun getMapMethods(f : KTypeData.Field): Members {
-        requireTypes(Map::class.java)
+        requireTypes(Map::class)
         val methods = Members()
-        methods.addMember("Map<String, ${f.type}> get${f.plural}();")
-        methods.addMember("Map<String, ${f.type}> get${f.plural}(boolean elaborate);")
-        methods.addMember("boolean has${f.plural}();")
-        methods.addMember("boolean has${f.name}(String ${f.keyName});")
-        methods.addMember("${f.type} get${f.name}(String ${f.keyName});")
-        methods.addMember("void set${f.plural}(Map<String, ${f.type}> ${f.lcPlural});")
-        methods.addMember("void set${f.name}(String ${f.keyName}, ${f.type} ${f.lcName});")
-        methods.addMember("void remove${f.name}(String ${f.keyName});")
+        methods.addMember("fun get${f.plural}() : MutableMap<String, ${f.type}>")
+        methods.addMember("fun get${f.plural}(elaborate : Boolean) : MutableMap<String, ${f.type}>")
+        methods.addMember("fun has${f.plural}() : Boolean")
+        methods.addMember("fun has${f.name}(${f.keyName} : String) : Boolean")
+        methods.addMember("fun get${f.name}(${f.keyName} : String) : ${f.type}?")
+        methods.addMember("fun set${f.plural}(${f.lcPlural} : MutableMap<String, ${f.type}>)")
+        methods.addMember("fun set${f.name}(${f.keyName} : String,${f.lcName} : ${f.type})")
+        methods.addMember("fun remove${f.name}(${f.keyName} : String)")
         return methods
     }
 }

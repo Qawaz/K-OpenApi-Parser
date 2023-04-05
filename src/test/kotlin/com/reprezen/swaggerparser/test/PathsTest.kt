@@ -21,11 +21,11 @@ class PathsTest {
     @Throws(Exception::class)
     fun testGetPaths() {
         val model = OpenApiParser().parse(Resources.getResource("models/pathsTest.yaml"), false) as OpenApi3
-        Assert.assertEquals(2, model.paths.size.toLong())
+        Assert.assertEquals(2, model.getPaths().size.toLong())
         Assert.assertTrue(model.hasPath("/"))
         Assert.assertTrue(model.hasPath("/v2"))
-        Assert.assertEquals("/", model.getPath("/").getPathString())
-        Assert.assertEquals("/v2", model.getPath("/v2").getPathString())
+        Assert.assertEquals("/", model.getPath("/")?.getPathString())
+        Assert.assertEquals("/v2", model.getPath("/v2")?.getPathString())
         Assert.assertNotNull(model.getPath("/"))
         Assert.assertNotNull(model.getPath("/v2"))
     }

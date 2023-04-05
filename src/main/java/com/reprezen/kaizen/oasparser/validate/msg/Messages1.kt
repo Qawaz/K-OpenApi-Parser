@@ -26,10 +26,6 @@ interface Messages {
         return MessagesHelper.format(Locale.getDefault(), this, *args)
     }
 
-    fun msgNoLocale(vararg args: Any): String? {
-        TODO("Not yet implemented")
-    }
-
     fun msg(locale: Locale, vararg args: Any): String {
         return MessagesHelper.format(locale, this, *args)
     }

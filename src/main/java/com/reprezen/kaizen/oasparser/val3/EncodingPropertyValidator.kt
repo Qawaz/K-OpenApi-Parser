@@ -14,7 +14,7 @@ import com.reprezen.kaizen.oasparser.model3.EncodingProperty
 import com.reprezen.kaizen.oasparser.model3.Header
 import com.reprezen.kaizen.oasparser.ovl3.EncodingPropertyImpl
 import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class EncodingPropertyValidator : ObjectValidatorBase<EncodingProperty>() {
     override fun runObjectValidations() {

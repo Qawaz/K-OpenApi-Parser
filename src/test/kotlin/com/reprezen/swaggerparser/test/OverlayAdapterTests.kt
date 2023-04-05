@@ -23,15 +23,13 @@ class OverlayAdapterTests : Assert() {
     fun testPropertiesAdapter() {
         assertTrue(model === Overlay.of(model!!).get())
         assertTrue(
-            model!!.info === Overlay<Info>(
-                model!!.info
-            ).get()
+            model!!.getInfo() === Overlay<Info>(model!!.getInfo()!!).get()
         )
     }
 
     @Test
     fun testFieldAdapter() {
-        assertEquals(model!!.openApi, Overlay.of(model, "openApi", String::class.java)?.get())
+        assertEquals(model!!.getOpenApi(), Overlay.of(model, "openApi", String::class.java)?.get())
         val pathsMapOverlay= Overlay.of(model as PropertiesOverlay<*>, "paths", MutableMap::class.java).get()
         assertTrue(model!!.getPath("/2.0/users/{username}") === pathsMapOverlay?.get("/2.0/users/{username}"))
     }
@@ -50,7 +48,7 @@ class OverlayAdapterTests : Assert() {
 
     @Test
     fun testListAdapter() {
-        val method = model!!.getPath("/2.0/repositories/{username}/{slug}").get
+        val method = model!!.getPath("/2.0/repositories/{username}/{slug}")?.getGet()
         val listOverlay = Overlay.of(
             method as PropertiesOverlay<*>, "parameters",
             MutableList::class.java
@@ -64,28 +62,26 @@ class OverlayAdapterTests : Assert() {
     @Test
     fun testReferences() {
         // props reference
-        val resp200 = model!!.getPath("/2.0/users/{username}").get.getResponse("200")
+        val resp200 = model!!.getPath("/2.0/users/{username}")?.getGet()?.getResponse("200")!!
         assertFalse(Overlay.of(resp200).isReference("description"))
-        assertTrue(Overlay.of(resp200.getContentMediaType("application/json")).isReference("schema"))
+        assertTrue(Overlay.of(resp200.getContentMediaType("application/json")!!).isReference("schema"))
         assertEquals(
             "#/components/schemas/user",
-            Overlay.of(resp200.getContentMediaType("application/json")).getReference("schema")!!.refString
+            Overlay.of(resp200.getContentMediaType("application/json")!!).getReference("schema")!!.refString
         )
 
         // map reference
         assertFalse(Overlay.of(model, "schemas", Schema::class.java)!!.isReference("user"))
         assertTrue(
-            Overlay.of(
-                model!!.getSchema("repository").properties
-            )!!.isReference("owner")
+            Overlay.of(model!!.getSchema("repository")?.getProperties()!!)!!.isReference("owner")
         )
         assertEquals(
             "#/components/schemas/user",
-            Overlay.of(model!!.getSchema("repository").properties)!!.getReference("owner")!!.refString
+            Overlay.of(model!!.getSchema("repository")?.getProperties()!!)!!.getReference("owner")!!.refString
         )
 
         // list reference
-        val params = model!!.getPath("/2.0/repositories/{username}/{slug}").get.parameters
+        val params = model!!.getPath("/2.0/repositories/{username}/{slug}")?.getGet()?.getParameters()!!
         assertFalse(Overlay.of(params)!!.isReference(1))
         assertTrue(Overlay.of(params)!!.isReference(0))
         assertEquals("#/components/parameters/username", Overlay.of(params)!!.getReference(0)!!.refString)

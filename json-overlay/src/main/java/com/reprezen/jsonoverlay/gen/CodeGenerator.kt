@@ -45,7 +45,7 @@ class CodeGenerator private constructor(private val opts: Options) {
                 val templatePath = opts.getTemplatePath(file, cUnit)
                 val resource = RelativeResourceEmbeddingManager(templatePath?.let {
                     RelativeResourceEmbeddingManager("/").relativeParentPath(it)
-                } ?: "/java")
+                } ?: "/kotlin")
                 this.generate(
                     javaFile = file,
                     resource = resource,
@@ -71,7 +71,7 @@ class CodeGenerator private constructor(private val opts: Options) {
                 val templatePath = opts.getTemplatePath(file, cUnit)
                 val resource = RelativeResourceEmbeddingManager(templatePath?.let {
                     RelativeResourceEmbeddingManager("/").relativeParentPath(it)
-                } ?: "/java")
+                } ?: "/kotlin")
                 this.generate(
                     javaFile = file,
                     resource = resource,

@@ -14,6 +14,8 @@ interface TypeDeclaration {
 
     fun addMember(member: ClassMember)
 
+    fun addCompanionMember(member: ClassMember)
+
     fun toMutableKTEObject(): MutableKATEObject
 
 }
@@ -30,6 +32,7 @@ class ClassOrInterfaceDeclaration(
     val extended = mutableListOf<String>()
     val implemented = mutableListOf<String>()
     val members = mutableListOf<ClassMember>()
+    val companionMembers = mutableListOf<ClassMember>()
 
     fun addExtendedType(type: String) {
         extended.add(type)
@@ -43,6 +46,10 @@ class ClassOrInterfaceDeclaration(
         members.add(member)
     }
 
+    override fun addCompanionMember(member: ClassMember) {
+        companionMembers.add(member)
+    }
+
     override fun toMutableKTEObject(): MutableKATEObject {
         return MutableKTEObject {
             putValue("name", name)
@@ -50,6 +57,7 @@ class ClassOrInterfaceDeclaration(
             putValue("implements", KATEListImpl(implemented.map { StringValue(it) }))
             putValue("isPublic", BooleanValue(isPublic))
             putValue("ClassMembers", members.joinToString("\n\n") { it.format(1) })
+            putValue("CompanionMembers", companionMembers.joinToString("\n\n") { it.format(2) })
         }
     }
 
@@ -62,6 +70,7 @@ class EnumDeclaration(override val name: String, val isPublic: Boolean) : TypeDe
 
     private val entries = mutableListOf<String>()
     private val members = mutableListOf<ClassMember>()
+    val companionMembers = mutableListOf<ClassMember>()
 
     fun addEntry(entryName: String) {
         entries.add(entryName)
@@ -71,12 +80,17 @@ class EnumDeclaration(override val name: String, val isPublic: Boolean) : TypeDe
         members.add(member)
     }
 
+    override fun addCompanionMember(member: ClassMember) {
+        companionMembers.add(member)
+    }
+
     override fun toMutableKTEObject(): MutableKATEObject {
         return MutableKTEObject {
             putValue("name", name)
             putValue("isPublic", BooleanValue(isPublic))
             putValue("EnumEntries", "\t" + entries.joinToString(",\n\t"))
             putValue("ClassMembers", members.joinToString("\n\n") { it.format(1) })
+            putValue("CompanionMembers", companionMembers.joinToString("\n\n") { it.format(2) })
         }
     }
 

@@ -13,7 +13,7 @@ package com.reprezen.kaizen.oasparser.val3
 import com.reprezen.kaizen.oasparser.model3.MediaType
 import com.reprezen.kaizen.oasparser.model3.RequestBody
 import com.reprezen.kaizen.oasparser.ovl3.RequestBodyImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class RequestBodyValidator : ObjectValidatorBase<RequestBody>() {
     override fun runObjectValidations() {

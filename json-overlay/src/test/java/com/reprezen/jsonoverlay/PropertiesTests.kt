@@ -214,7 +214,7 @@ class PropertiesTests : Assert() {
         val rootMap: Map<String, Int>
             get() = _getMap("rootMap", Int::class.java)
 
-        override fun _getFactory(): OverlayFactory<Foo> {
+        override fun _getFactory(): OverlayFactory<*> {
             return Companion.factory
         }
 

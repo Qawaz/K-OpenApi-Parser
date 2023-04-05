@@ -74,7 +74,7 @@ import com.reprezen.kaizen.oasparser.model3.Operation;
 import com.reprezen.kaizen.oasparser.model3.Parameter;
 import com.reprezen.kaizen.oasparser.model3.Path;
 import com.reprezen.kaizen.oasparser.model3.Schema;
-import com.reprezen.kaizen.oasparser.val.ValidationResults.ValidationItem;
+import com.reprezen.kaizen.oasparser.validate.ValidationResults.ValidationItem;
 
 public class GettingStarted {
 

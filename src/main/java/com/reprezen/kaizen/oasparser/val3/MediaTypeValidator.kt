@@ -16,9 +16,9 @@ import com.reprezen.kaizen.oasparser.model3.Example
 import com.reprezen.kaizen.oasparser.model3.MediaType
 import com.reprezen.kaizen.oasparser.model3.Schema
 import com.reprezen.kaizen.oasparser.ovl3.MediaTypeImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
-import com.reprezen.kaizen.oasparser.`val`.ValidationResults
-import com.reprezen.kaizen.oasparser.`val`.msg.Messages.Companion.msg
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ValidationResults
+import com.reprezen.kaizen.oasparser.validate.msg.Messages.Companion.msg
 
 class MediaTypeValidator : ObjectValidatorBase<MediaType>() {
     override fun runObjectValidations() {
@@ -33,7 +33,7 @@ class MediaTypeValidator : ObjectValidatorBase<MediaType>() {
             EncodingPropertyValidator()
         )
         checkEncodingPropsAreProps(mediaType, results)
-        validateExtensions(mediaType.extensions)
+        validateExtensions(mediaType.getExtensions())
         val examples: Overlay<MutableMap<String, Example>>? = validateMapField<Example>(
             MediaTypeImpl.F_examples, false, false, Example::class.java,
             ExampleValidator()
@@ -47,8 +47,8 @@ class MediaTypeValidator : ObjectValidatorBase<MediaType>() {
         // additionalProperties?
         val schema = mediaType.getSchema(false)
         if (schema != null && Overlay.of(schema).isElaborated) {
-            val propNames: Set<String> = schema.properties.keys
-            val encProps: Map<String, EncodingProperty> = mediaType.encodingProperties
+            val propNames: Set<String> = schema.getProperties().keys
+            val encProps: Map<String, EncodingProperty> = mediaType.getEncodingProperties()
             for (encodingPropertyName in encProps.keys) {
                 if (!propNames.contains(encodingPropertyName)) {
                     results.addError(

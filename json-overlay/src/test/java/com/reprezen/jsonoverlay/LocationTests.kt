@@ -49,7 +49,7 @@ class LocationTests {
             checkPositions(desc, 1, 14, 1, 28)
         }
         run {
-            val scalars = Overlay.of(model.scalars)!!
+            val scalars = Overlay.of(model.getScalars())!!
             checkPositions(scalars, 3, 3, 53, 35)
         }
         run {
@@ -61,11 +61,11 @@ class LocationTests {
             checkPositions(s2Int, 5, 15, 5, 17)
         }
         run {
-            val ext1Ref = Overlay.of(model.scalars, "ext1")!!
+            val ext1Ref = Overlay.of(model.getScalars(), "ext1")!!
             checkPositions(ext1Ref, 49, 5, 50, 3)
         }
         run {
-            val ext1Obj = Overlay.of(model.scalars, "ext1")!!.referenceOverlay!!
+            val ext1Obj = Overlay.of(model.getScalars(), "ext1")!!.referenceOverlay!!
             checkPositions(ext1Obj, 2, 3, 9, 1)
         }
     }

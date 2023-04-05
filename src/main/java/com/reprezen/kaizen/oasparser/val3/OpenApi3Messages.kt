@@ -1,6 +1,6 @@
 package com.reprezen.kaizen.oasparser.val3
 
-import com.reprezen.kaizen.oasparser.`val`.msg.Messages
+import com.reprezen.kaizen.oasparser.validate.msg.Messages
 
 enum class OpenApi3Messages(private val formatString: String) : Messages {
     ExmplTwoValues("Example may not specify both a direct value and an external value URL"),  //

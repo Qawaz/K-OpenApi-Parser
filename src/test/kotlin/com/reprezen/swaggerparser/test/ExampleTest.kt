@@ -28,31 +28,31 @@ class ExampleTest {
     @Test
     fun testExample() {
         val example = model!!.getPath("/v2") //
-            .getOperation("get") //
-            .getResponse("203") //
-            .getContentMediaType("application/json") //
-            .example
+            ?.getOperation("get") //
+            ?.getResponse("203") //
+            ?.getContentMediaType("application/json") //
+            ?.getExample()
         Assert.assertEquals(exampleFixture, example)
     }
 
     @Test
     fun testExamples() {
         val examples = model!!.getPath("/v2") //
-            .getOperation("get") //
-            .getResponse("200") //
-            .getContentMediaType("application/json") //
-            .examples
-        Assert.assertEquals(1, examples.size.toLong())
-        Assert.assertTrue(examples.containsKey("foo"))
-        val example = examples["foo"]
-        Assert.assertEquals(exampleFixture, example!!.value)
-        Assert.assertEquals("First Example", example.summary)
-        Assert.assertEquals("An Example", example.description)
+            ?.getOperation("get") //
+            ?.getResponse("200") //
+            ?.getContentMediaType("application/json") //
+            ?.getExamples()
+        Assert.assertEquals(1, examples?.size)
+        Assert.assertTrue(examples?.containsKey("foo") ?: false)
+        val example = examples?.get("foo")
+        Assert.assertEquals(exampleFixture, example!!.getValue())
+        Assert.assertEquals("First Example", example.getSummary())
+        Assert.assertEquals("An Example", example.getDescription())
     }
 
     @Test
     fun testValidate() {
-        Assert.assertTrue(model!!.isValid)
+        Assert.assertTrue(model!!.isValid())
     }
 
     companion object {

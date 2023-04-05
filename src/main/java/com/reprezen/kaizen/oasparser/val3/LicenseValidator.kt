@@ -12,13 +12,13 @@ package com.reprezen.kaizen.oasparser.val3
 
 import com.reprezen.kaizen.oasparser.model3.License
 import com.reprezen.kaizen.oasparser.ovl3.LicenseImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class LicenseValidator : ObjectValidatorBase<License>() {
     override fun runObjectValidations() {
         val license = value.getOverlay() as License
         validateStringField(LicenseImpl.F_name, true)
         validateUrlField(LicenseImpl.F_url, false, true, false)
-        validateExtensions(license.extensions)
+        validateExtensions(license.getExtensions())
     }
 }

@@ -1,0 +1,21 @@
+@partial_raw
+
+    @embed_once ../class_definition.kate
+
+    @var(GenerateClassDefinition())
+
+    @default_no_raw
+            private val overlay : Overlay<SecurityScheme> = Overlay.Companion.of(this);
+
+            override fun getKey() : String? {
+                return if(overlay.parent is MapOverlay<*>) overlay.pathInParent else null
+            }
+
+
+    @end_default_no_raw
+
+    @var(GenerateClassMembers())
+
+    @var(EndClassDefinition())
+
+@end_partial_raw

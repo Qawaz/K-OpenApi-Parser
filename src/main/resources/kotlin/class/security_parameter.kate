@@ -1,0 +1,19 @@
+@partial_raw
+
+    @embed_once ../class_definition.kate
+
+    @var(GenerateClassDefinition())
+
+    @default_no_raw
+            override fun _fixJson(json : JsonNode) : JsonNode {
+                return if(json.isMissingNode()) _jsonArray() else json
+            }
+
+
+    @end_default_no_raw
+
+    @var(GenerateClassMembers())
+
+    @var(EndClassDefinition())
+
+@end_partial_raw

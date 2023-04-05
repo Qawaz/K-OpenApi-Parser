@@ -34,12 +34,12 @@ class KTypeData(
     ) {
 
         val type: String
-            get() = if (_type == "Primitive") "Object" else _type
+            get() = if (_type == "Primitive") "Any" else _type
 
         val isScalarType: Boolean
             get() {
                 return when (type) {
-                    "String", "Integer", "Number", "Boolean", "Primitive", "Object" -> true
+                    "String", "Int", "Number", "Boolean", "Primitive", "Any" -> true
                     else -> false
                 }
             }
@@ -51,7 +51,7 @@ class KTypeData(
             get() {
                 var lcName = lcFirst(name)
                 when (lcName) {
-                    "default", "enum" -> lcName += "Value"
+                    "default", "enum", "in" -> lcName += "Value"
                 }
                 return lcName
             }
@@ -120,7 +120,7 @@ class KTypeData(
         val discriminatorValue: String
             get() = _discriminatorValue ?: name
 
-        val intfExtendsDecl : String
+        val intfExtendsDecl: String
             get() = " extends " + extendInterfaces.joinToString(",")
 
         constructor(typeData: KTypeData, type: TypeData.Type) : this(
@@ -157,7 +157,9 @@ class KTypeData(
         companion object {
             fun getImplType(typeName: String): String {
                 return when (typeName) {
-                    "String", "Integer", "Number", "Boolean", "Primitive", "Object" -> typeName + "Overlay"
+                    "String", "Number", "Boolean", "Primitive" -> typeName + "Overlay"
+                    "Int" -> "IntegerOverlay"
+                    "Any" -> "ObjectOverlay"
                     else -> typeName + "Impl"
                 }
             }

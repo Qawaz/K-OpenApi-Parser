@@ -15,7 +15,7 @@ import com.reprezen.kaizen.oasparser.model3.Link
 import com.reprezen.kaizen.oasparser.model3.MediaType
 import com.reprezen.kaizen.oasparser.model3.Response
 import com.reprezen.kaizen.oasparser.ovl3.ResponseImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class ResponseValidator : ObjectValidatorBase<Response>() {
     override fun runObjectValidations() {
@@ -30,6 +30,6 @@ class ResponseValidator : ObjectValidatorBase<Response>() {
             MediaTypeValidator()
         )
         validateMapField<Link>(ResponseImpl.F_links, false, false, Link::class.java, LinkValidator())
-        validateExtensions(response.extensions)
+        validateExtensions(response.getExtensions())
     }
 }

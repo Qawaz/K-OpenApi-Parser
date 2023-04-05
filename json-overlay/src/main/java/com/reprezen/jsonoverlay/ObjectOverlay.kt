@@ -14,7 +14,6 @@
 package com.reprezen.jsonoverlay
 
 import com.fasterxml.jackson.databind.JsonNode
-import com.reprezen.jsonoverlay.ObjectOverlay
 
 class ObjectOverlay : ScalarOverlay<Any> {
 
@@ -34,7 +33,7 @@ class ObjectOverlay : ScalarOverlay<Any> {
         return if (value != null) mapper.convertValue(value, JsonNode::class.java) else _jsonMissing()
     }
 
-    override fun _getFactory(): OverlayFactory<Any> {
+    override fun _getFactory(): OverlayFactory<*> {
         return Companion.factory
     }
 

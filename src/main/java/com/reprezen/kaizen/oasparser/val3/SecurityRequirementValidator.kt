@@ -16,8 +16,8 @@ import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import com.reprezen.kaizen.oasparser.model3.SecurityParameter
 import com.reprezen.kaizen.oasparser.model3.SecurityRequirement
 import com.reprezen.kaizen.oasparser.ovl3.SecurityRequirementImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
-import com.reprezen.kaizen.oasparser.`val`.msg.Messages.Companion.msg
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.msg.Messages.Companion.msg
 
 class SecurityRequirementValidator : ObjectValidatorBase<SecurityRequirement>() {
     override fun runObjectValidations() {

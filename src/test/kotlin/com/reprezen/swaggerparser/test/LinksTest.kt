@@ -21,10 +21,10 @@ class LinksTest {
     @Throws(Exception::class)
     fun testLinks() {
         val model = OpenApiParser().parse(Resources.getResource("models/linksTest.yaml"), false) as OpenApi3
-        Assert.assertNotNull(model.getLink("PullRequestMerge").operationId)
-        Assert.assertNotNull(model.getLink("PullRequestMerge").operationRef)
-        Assert.assertNotNull(model.getLink("PullRequestMerge").server)
-        Assert.assertEquals("http://localhost", model.getLink("PullRequestMerge").server.url)
-        Assert.assertEquals("server", model.getLink("PullRequestMerge").server.description)
+        Assert.assertNotNull(model.getLink("PullRequestMerge")?.getOperationId())
+        Assert.assertNotNull(model.getLink("PullRequestMerge")?.getOperationRef())
+        Assert.assertNotNull(model.getLink("PullRequestMerge")?.getServer())
+        Assert.assertEquals("http://localhost", model.getLink("PullRequestMerge")?.getServer()?.getUrl())
+        Assert.assertEquals("server", model.getLink("PullRequestMerge")?.getServer()?.getDescription())
     }
 }

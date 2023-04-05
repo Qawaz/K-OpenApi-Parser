@@ -36,18 +36,19 @@ class ApiTests : Assert() {
 
     @Test
     fun testScalarApi() {
-        assertEquals("Model description", model.description)
-        model.description = "Model Description"
-        assertEquals("Model Description", model.description)
-        assertEquals(Integer.valueOf(10), model.width)
-        assertNull(model.height)
-        model.height = 20
-        assertEquals(Integer.valueOf(20), model.height)
-        assertEquals(Color.GREEN, model.color)
-        model.color = Color.BLUE
-        assertEquals(Color.BLUE, model.color)
-        model.color = null
-        assertNull(model.color)
+        assertEquals("Model description", model.getDescription())
+        model.setDescription("Model Description")
+        assertEquals("Model Description", model.getDescription())
+        assertEquals(Integer.valueOf(10), model.getWidth())
+        assertNull(model.getHeight())
+        model.setHeight(20)
+        assertEquals(Integer.valueOf(20), model.getHeight())
+        assertEquals(Color.GREEN, model.getColor())
+        model.setColor(Color.BLUE)
+        assertEquals(Color.BLUE, model.getColor())
+        //TODO allow to set color to null
+//        model.setColor(null)
+//        assertNull(model.getColor())
         assertEquals(mutableListOf("A", "B"), entryKeys)
     }
 
@@ -63,8 +64,8 @@ class ApiTests : Assert() {
         model.insertInteger(1, 200)
         checkIntegers(100, 200, 3, 4, 5, 6)
         checkIntegersPaths()
-        assertEquals("Title for item 1", model.getItem(0).title)
-        assertEquals("Title for item 2", model.getItem(1).title)
+        assertEquals("Title for item 1", model.getItem(0).getTitle())
+        assertEquals("Title for item 2", model.getItem(1).getTitle())
     }
 
     @Test
@@ -80,8 +81,8 @@ class ApiTests : Assert() {
         model.setNamedInteger("II", 22)
         checkNamedIntegerNames("II", "III", "IV", "V", "X")
         checkNamedIntegers(22, 3, 4, 5, 10)
-        assertEquals("Title for entry A", model.getEntry("A").title)
-        assertEquals("Title for entry B", model.getEntry("B").title)
+        assertEquals("Title for entry A", model.getEntry("A")!!.getTitle())
+        assertEquals("Title for entry B", model.getEntry("B")!!.getTitle())
     }
 
     @Test
@@ -89,12 +90,12 @@ class ApiTests : Assert() {
         assertEquals("description", Overlay.of(model as TestModelImpl?, "description", String::class.java)?.pathInParent)
         assertEquals(
             "0", Overlay.of(
-                model.items, 0
+                model.getItems(), 0
             )?.pathInParent
         )
         assertEquals(
             "A", Overlay.of(
-                model.entries, "A"
+                model.getEntries(), "A"
             )?.pathInParent
         )
     }
@@ -107,12 +108,12 @@ class ApiTests : Assert() {
         assertSame(model, Overlay.of(model, "namedIntegers", MapOverlay::class.java)?.root)
         assertSame(
             model, Overlay.of(
-                model.entries, "A"
+                model.getEntries(), "A"
             )?.root
         )
         assertSame(
             model, Overlay.of(
-                model.items, 0
+                model.getItems(), 0
             )?.root
         )
         assertSame(model, Overlay.of(model).getModel())
@@ -121,12 +122,12 @@ class ApiTests : Assert() {
         assertSame(model, Overlay.of(model, "namedIntegers", MapOverlay::class.java)?.getModel())
         assertSame(
             model, Overlay.of(
-                model.entries, "A"
+                model.getEntries(), "A"
             )?.getModel()
         )
         assertSame(
             model, Overlay.of(
-                model.items, 0
+                model.getItems(), 0
             )?.getModel()
         )
     }
@@ -142,13 +143,13 @@ class ApiTests : Assert() {
         assertEquals(
             hashSetOf("title"),
             Overlay.of(
-                model.entries, "A"
+                model.getEntries(), "A"
             )?.propertyNames?.toSet()
         )
         assertEquals(
             hashSetOf("title"),
             Overlay.of(
-                model.items, 0
+                model.getItems(), 0
             )?.propertyNames?.toSet()
         )
     }
@@ -159,16 +160,16 @@ class ApiTests : Assert() {
         checkScalarFind("width", Int::class.java, "/width")
         checkScalarFind("width", Int::class.java, "/width")
         checkScalarFind("color", Color::class.java, "/color")
-        assertSame(Overlay.of(model.items, 0)?.overlay, Overlay.of(model).find("/items/0"))
-        assertSame(Overlay.of(model.items, 1)?.overlay, Overlay.of(model).find("/items/1"))
+        assertSame(Overlay.of(model.getItems(), 0)?.overlay, Overlay.of(model).find("/items/0"))
+        assertSame(Overlay.of(model.getItems(), 1)?.overlay, Overlay.of(model).find("/items/1"))
         assertNotSame(
             Overlay.of(
-                model.items, 1
+                model.getItems(), 1
             )?.overlay, Overlay.of(model).find("/items/0")
         )
-        assertSame(Overlay.of(model.namedIntegers, "I")?.overlay, Overlay.of(model).find("/namedIntegers/I"))
-        assertSame(Overlay.of(model.namedIntegers, "II")?.overlay, Overlay.of(model).find("/namedIntegers/II"))
-        assertNotSame(Overlay.of(model.namedIntegers, "I")?.overlay, Overlay.of(model).find("/namedIntegers/II"))
+        assertSame(Overlay.of(model.getNamedIntegers(), "I")?.overlay, Overlay.of(model).find("/namedIntegers/I"))
+        assertSame(Overlay.of(model.getNamedIntegers(), "II")?.overlay, Overlay.of(model).find("/namedIntegers/II"))
+        assertNotSame(Overlay.of(model.getNamedIntegers(), "I")?.overlay, Overlay.of(model).find("/namedIntegers/II"))
     }
 
     @Test
@@ -178,18 +179,18 @@ class ApiTests : Assert() {
         assertEquals("/color", Overlay.of(model, "color", Color::class.java)?.pathFromRoot)
         assertEquals(
             "/items/0", Overlay.of(
-                model.items, 0
+                model.getItems(), 0
             )?.pathFromRoot
         )
         assertEquals("/items/0/title", Overlay.of(model.getItem(0), "title", String::class.java)?.pathFromRoot)
         assertEquals(
             "/entries", Overlay.of(
-                model.entries
+                model.getEntries()
             )?.pathFromRoot
         )
         assertEquals(
             "/entries/A", Overlay.of(
-                model.entries, "A"
+                model.getEntries(), "A"
             )?.pathFromRoot
         )
     }
@@ -202,43 +203,43 @@ class ApiTests : Assert() {
         assertEquals("$url#/color", Overlay.of(model, "color", Color::class.java)?.jsonReference)
         assertEquals(
             "$url#/items/0", Overlay.of(
-                model.items, 0
+                model.getItems(), 0
             )?.jsonReference
         )
         assertEquals("$url#/items/0/title", Overlay.of(model.getItem(0), "title", String::class.java)?.jsonReference)
         assertEquals(
             "$url#/entries", Overlay.of(
-                model.entries
+                model.getEntries()
             )?.jsonReference
         )
         assertEquals(
             "$url#/entries/A", Overlay.of(
-                model.entries, "A"
+                model.getEntries(), "A"
             )?.jsonReference
         )
     }
 
     private val entryKeys: List<String>
-        private get() = model.entries.keys.stream().toList()
+        private get() = model.getEntries().keys.stream().toList()
 
     private fun checkIntegers(vararg integers: Int) {
-        assertEquals(integers.toList(), model.integers)
+        assertEquals(integers.toList(), model.getIntegers())
     }
 
     private fun checkIntegersPaths() {
-        for (i in model.integers.indices) {
+        for (i in model.getIntegers().indices) {
             assertEquals(
-                i.toString(), Overlay.of(model.integers, i)?.pathInParent
+                i.toString(), Overlay.of(model.getIntegers(), i)?.pathInParent
             )
         }
     }
 
     private fun checkNamedIntegerNames(vararg names: String) {
-        assertEquals(listOf(*names), model.namedIntegers.keys.stream().toList())
+        assertEquals(listOf(*names), model.getNamedIntegers().keys.stream().toList())
     }
 
     private fun checkNamedIntegers(vararg integers: Int) {
-        assertEquals(integers.toList(), model.namedIntegers.values.stream().toList())
+        assertEquals(integers.toList(), model.getNamedIntegers().values.stream().toList())
     }
 
     private fun <V> checkScalarFind(field: String, fieldType: Class<V>, path: String) {

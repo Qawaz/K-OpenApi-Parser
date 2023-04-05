@@ -13,7 +13,7 @@ package com.reprezen.kaizen.oasparser.val3
 import com.reprezen.kaizen.oasparser.model3.ExternalDocs
 import com.reprezen.kaizen.oasparser.model3.Tag
 import com.reprezen.kaizen.oasparser.ovl3.TagImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class TagValidator : ObjectValidatorBase<Tag>() {
     override fun runObjectValidations() {
@@ -21,6 +21,6 @@ class TagValidator : ObjectValidatorBase<Tag>() {
         validateStringField(TagImpl.F_name, true)
         validateStringField(TagImpl.F_description, false)
         validateField<ExternalDocs>(TagImpl.F_externalDocs, false, ExternalDocs::class.java, ExternalDocsValidator())
-        validateExtensions(tag.extensions)
+        validateExtensions(tag.getExtensions())
     }
 }

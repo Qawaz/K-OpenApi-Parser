@@ -12,7 +12,7 @@ package com.reprezen.kaizen.oasparser.val3
 
 import com.reprezen.kaizen.oasparser.model3.Xml
 import com.reprezen.kaizen.oasparser.ovl3.XmlImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class XmlValidator : ObjectValidatorBase<Xml>() {
     override fun runObjectValidations() {

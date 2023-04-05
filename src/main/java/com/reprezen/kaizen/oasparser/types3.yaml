@@ -1,13 +1,13 @@
 modelType: OpenApi3
 imports:
   OpenApi: com.reprezen.kaizen.oasparser.OpenApi
-  Validator: com.reprezen.kaizen.oasparser.val.Validator
-  ValidationResults: com.reprezen.kaizen.oasparser.val.ValidationResults
-  ValidationContext: com.reprezen.kaizen.oasparser.val.ValidationContext
-  Severity: com.reprezen.kaizen.oasparser.val.ValidationResults.Severity
+  Validator: com.reprezen.kaizen.oasparser.validate.Validator
+  ValidationResults: com.reprezen.kaizen.oasparser.validate.ValidationResults
+  ValidationContext: com.reprezen.kaizen.oasparser.validate.ValidationContext
+  Severity: com.reprezen.kaizen.oasparser.validate.ValidationResults.Severity
   OpenApi3Validator: com.reprezen.kaizen.oasparser.val3.OpenApi3Validator
   Overlay: com.reprezen.jsonoverlay.Overlay
-  Collection: java.util.Collection
+  Collection: kotlin.collections.Collection
   ReferenceRegistry: com.reprezen.jsonoverlay.ReferenceRegistry
   Inject: com.google.inject.Inject
 decls:
@@ -19,7 +19,7 @@ decls:
 - extName: extension
 - extDef: &id001
     name: Extension
-    type: Object
+    type: Any
     parentPath: ''
     structure: map
     keyPattern: x-.+
@@ -56,7 +56,7 @@ types:
       parentPath: paths
       keyPattern: x-.+
       structure: map
-      type: Object
+      type: Any
       name: PathsExtension
     components/schemas:
       structure: map
@@ -92,7 +92,7 @@ types:
     componentsExtension:
       parentPath: components
       name: ComponentsExtension
-      type: Object
+      type: Any
       structure: map
       keyPattern: x-.+
     security:
@@ -118,7 +118,7 @@ types:
       parentPath: scopes
       keyPattern: x-.+
       structure: map
-      type: Object
+      type: Any
       name: ScopesExtension
     extension: *id001
 - name: Tag
@@ -162,7 +162,7 @@ types:
     flowExtension:
       parentPath: flow
       name: OAuthFlowsExtension
-      type: Object
+      type: Any
       structure: map
       keyPattern: x-.+
     openIdConnectUrl: {
@@ -213,7 +213,7 @@ types:
       parentPath: variables
       keyPattern: x-.+
       structure: map
-      type: Object
+      type: Any
       name: VariablesExtension
     extension: *id001
 - name: ServerVariable
@@ -292,7 +292,7 @@ types:
     responsesExtension:
       parentPath: responses
       name: ResponsesExtension
-      type: Object
+      type: Any
       structure: map
       keyPattern: x-.+
     callbacks:
@@ -302,7 +302,7 @@ types:
       parentPath: callbacks
       keyPattern: x-.+
       structure: map
-      type: Object
+      type: Any
       name: CallbacksExtension
     deprecated:
       type: Boolean
@@ -373,7 +373,7 @@ types:
     server:
       type: Server
     requestBody:
-      type: Object
+      type: Any
     extension: *id001
 - name: RequestBody
   imports:
@@ -398,7 +398,7 @@ types:
       structure: map
       keyPattern: '[a-zA-Z0-9\._-]+'
     example:
-      type: Object
+      type: Any
     encoding:
       name: EncodingProperty
       plural: EncodingProperties
@@ -447,7 +447,7 @@ types:
     schema: &id005 {
       }
     example: &id004
-      type: Object
+      type: Any
     examples: &id003
       type: Example
       structure: map
@@ -498,26 +498,26 @@ types:
     exclusiveMinimum:
       type: Boolean
     maxLength:
-      type: Integer
+      type: Int
     minLength:
-      type: Integer
+      type: Int
     pattern: {
       }
     maxItems:
-      type: Integer
+      type: Int
     minItems:
-      type: Integer
+      type: Int
     uniqueItems:
       type: Boolean
     maxProperties:
-      type: Integer
+      type: Int
     minProperties:
-      type: Integer
+      type: Int
     required:
       name: RequiredField
       structure: collection
     enum:
-      type: Object
+      type: Any
       structure: collection
     type: {
       }
@@ -556,7 +556,7 @@ types:
     format: {
       }
     default:
-      type: Object
+      type: Any
     nullable:
       type: Boolean
     discriminator: {
@@ -570,7 +570,7 @@ types:
     externalDocs: {
       }
     example:
-      type: Object
+      type: Any
     deprecated:
       type: Boolean
     extension: *id001
@@ -597,7 +597,7 @@ types:
     description: {
       }
     value:
-      type: Object
+      type: Any
     externalValue: {
       }
     extension: *id001

@@ -79,7 +79,7 @@ class NumberOverlay : ScalarOverlay<Number> {
         }
     }
 
-    override fun _getFactory(): OverlayFactory<Number>? {
+    override fun _getFactory(): OverlayFactory<*> {
         return Companion.factory
     }
 

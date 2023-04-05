@@ -12,7 +12,7 @@ package com.reprezen.kaizen.oasparser.val3
 
 import com.reprezen.kaizen.oasparser.model3.ServerVariable
 import com.reprezen.kaizen.oasparser.ovl3.ServerVariableImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class ServerVariableValidator : ObjectValidatorBase<ServerVariable>() {
     override fun runObjectValidations() {
@@ -21,6 +21,6 @@ class ServerVariableValidator : ObjectValidatorBase<ServerVariable>() {
         validateListField<String>(ServerVariableImpl.F_enumValues, false, false, String::class.java, null)
         // TODO Q: What the heck is does the description in the spec mean???
         validateField<String>(ServerVariableImpl.F_defaultValue, true, String::class.java, null)
-        validateExtensions(`var`.extensions)
+        validateExtensions(`var`.getExtensions())
     }
 }

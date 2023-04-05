@@ -37,7 +37,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
     }
 
     protected constructor(
-        value: V,
+        value: V?,
         parent: JsonOverlay<*>?,
         factory: OverlayFactory<V>?,
         refMgr: ReferenceManager?
@@ -130,16 +130,16 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
     protected fun <T> _getMap(
         name: String?,
         cls: Class<T>?
-    ): Map<String, T> {
-        return _get(name, MutableMap::class.java) as Map<String, T>
+    ): MutableMap<String, T> {
+        return _get(name, MutableMap::class.java) as MutableMap<String, T>
     }
 
     protected fun <T> _getMap(
         name: String?,
         elaborate: Boolean,
         cls: Class<T>?
-    ): Map<String, T> {
-        return _get(name, elaborate, MutableMap::class.java) as Map<String, T>
+    ): MutableMap<String, T> {
+        return _get(name, elaborate, MutableMap::class.java) as MutableMap<String, T>
     }
 
     protected fun <T> _get(name: String?, key: String, cls: Class<T>?): T? {

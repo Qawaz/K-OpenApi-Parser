@@ -5,9 +5,9 @@ types:
     description: {
       }
     width:
-      type: Integer
+      type: Int
     height:
-      type: Integer
+      type: Int
     entries:
       name: Entry
       structure: map
@@ -17,10 +17,10 @@ types:
       type: Item
     integers:
       structure: collection
-      type: Integer
+      type: Int
     namedIntegers:
       structure: map
-      type: Integer
+      type: Int
     color:
       type: Color
     scalars:
@@ -48,13 +48,13 @@ types:
     stringValue:
       type: String
     intValue:
-      type: Integer
+      type: Int
     numberValue:
       type: Number
     boolValue:
       type: Boolean
     objValue:
-      type: Object
+      type: Any
     primValue:
       type: Primitive
     colorValue:

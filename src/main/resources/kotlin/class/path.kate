@@ -1,0 +1,117 @@
+@partial_raw
+
+    @embed_once ../class_definition.kate
+
+    @var(GenerateClassDefinition())
+
+    @default_no_raw
+            private val overlay : Overlay<Path> = Overlay.Companion.of(this);
+
+        	override fun getPathString() : String? {
+        		return if(overlay.parent is MapOverlay<*>) overlay.pathInParent else null
+        	}
+
+        	override fun getGet() : Operation? {
+        		return getOperations()["get"]
+        	}
+
+        	override fun getGet(elaborate : Boolean) : Operation? {
+        		return getOperations(elaborate)["get"]
+        	}
+
+        	override fun setGet(get : Operation) {
+        		getOperations().put("get", get)
+        	}
+
+        	override fun getPut() : Operation? {
+        		return getOperations().get("put")
+        	}
+
+        	override fun getPut(elaborate : Boolean) : Operation? {
+        		return getOperations(elaborate)["put"]
+        	}
+
+        	override fun setPut(put : Operation) {
+        		getOperations().put("put", put)
+        	}
+
+        	override fun getPost() : Operation? {
+        		return getOperations()["post"]
+        	}
+
+        	override fun getPost(elaborate : Boolean) : Operation? {
+        		return getOperations(elaborate)["post"]
+        	}
+
+        	override fun setPost(post : Operation) {
+        		getOperations().put("post", post)
+        	}
+
+        	override fun getDelete() : Operation? {
+        		return getOperations()["delete"]
+        	}
+
+        	override fun getDelete(elaborate : Boolean) : Operation? {
+        		return getOperations(elaborate)["delete"]
+        	}
+
+        	override fun setDelete(delete : Operation) {
+        		getOperations().put("delete", delete)
+        	}
+
+        	override fun getOptions() : Operation? {
+        		return getOperations()["options"]
+        	}
+
+        	override fun getOptions(elaborate : Boolean) : Operation? {
+        		return getOperations(elaborate)["options"]
+        	}
+
+        	override fun setOptions(options : Operation) {
+        		getOperations().put("options", options)
+        	}
+
+        	override fun getHead() : Operation? {
+        		return getOperations()["head"]
+        	}
+
+        	override fun getHead(elaborate : Boolean) : Operation? {
+        		return getOperations(elaborate)["head"]
+        	}
+
+        	override fun setHead(head : Operation) {
+        		getOperations().put("head", head)
+        	}
+
+        	override fun getPatch() : Operation? {
+        		return getOperations()["patch"]
+        	}
+
+        	override fun getPatch(elaborate : Boolean) : Operation? {
+        		return getOperations(elaborate)["patch"]
+        	}
+
+        	override fun setPatch(patch : Operation) {
+        		getOperations().put("patch", patch)
+        	}
+
+        	override fun getTrace() : Operation? {
+        		return getOperations()["trace"]
+        	}
+
+        	override fun getTrace(elaborate : Boolean) : Operation? {
+        		return getOperations(elaborate)["trace"]
+        	}
+
+        	override fun setTrace(trace : Operation) {
+        		getOperations().put("trace", trace)
+        	}
+
+
+    @end_default_no_raw
+
+    @var(GenerateClassMembers())
+
+    @var(EndClassDefinition())
+
+@end_partial_raw

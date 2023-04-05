@@ -1,0 +1,17 @@
+@partial_raw
+
+    @embed_once ../interface_definition.kate
+
+    @var(GenerateInterfaceDefinition())
+
+    @default_no_raw
+            fun getPathString() : String?
+
+
+    @end_default_no_raw
+
+    @var(GenerateInterfaceMembers())
+
+    @var(EndInterfaceDefinition())
+
+@end_partial_raw

@@ -13,12 +13,12 @@ package com.reprezen.kaizen.oasparser.val3
 import com.reprezen.kaizen.oasparser.model3.Callback
 import com.reprezen.kaizen.oasparser.model3.Path
 import com.reprezen.kaizen.oasparser.ovl3.CallbackImpl
-import com.reprezen.kaizen.oasparser.`val`.ObjectValidatorBase
+import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class CallbackValidator : ObjectValidatorBase<Callback>() {
     override fun runObjectValidations() {
         val callback = value!!.getOverlay() as Callback
         validateMapField<Path>(CallbackImpl.F_callbackPaths, false, false, Path::class.java, PathValidator())
-        validateExtensions(callback.extensions)
+        validateExtensions(callback.getExtensions())
     }
 }

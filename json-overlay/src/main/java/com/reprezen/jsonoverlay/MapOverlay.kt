@@ -15,7 +15,6 @@ package com.reprezen.jsonoverlay
 
 import com.fasterxml.jackson.core.JsonPointer
 import com.fasterxml.jackson.databind.JsonNode
-import com.reprezen.jsonoverlay.MapOverlay
 import java.util.regex.Pattern
 
 class MapOverlay<V> : JsonOverlay<MutableMap<String, V>> {
@@ -164,7 +163,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>> {
         return overlays.hashCode()
     }
 
-    override fun _getFactory(): OverlayFactory<MutableMap<String, V>> {
+    override fun _getFactory(): OverlayFactory<*> {
         return factory
     }
 

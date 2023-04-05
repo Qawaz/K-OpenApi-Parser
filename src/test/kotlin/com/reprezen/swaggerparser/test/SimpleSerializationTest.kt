@@ -113,13 +113,13 @@ object SimpleSerializationTest : Assert() {
         @Throws(Exception::class)
         fun toJsonNoticesChanges() {
             val model = parseLocalModel("simpleTest")
-            assertEquals("simple model", model.info.title)
+            assertEquals("simple model", model.getInfo()?.getTitle())
             assertEquals("simple model", Overlay.of(model).toJson().at("/info/title").asText())
             // this changes the overlay value but does not refresh cached JSON -
             // just marks
             // it as out-of-date
-            model.info.title = "changed title"
-            assertEquals("changed title", model.info.title)
+            model.getInfo()?.setTitle("changed title")
+            assertEquals("changed title", model.getInfo()?.getTitle())
             assertEquals("changed title", Overlay.of(model).toJson().at("/info/title").asText())
         }
 
@@ -127,7 +127,7 @@ object SimpleSerializationTest : Assert() {
         @Throws(Exception::class)
         fun toJsonFollowsRefs() {
             val model = parseLocalModel("simpleTest")
-            val xSchema = model.getSchema("X")
+            val xSchema = model.getSchema("X")!!
             assertEquals("#/components/schemas/Y", Overlay.of(xSchema).toJson().at("/properties/y/\$ref").asText())
             assertEquals(
                 "integer",
