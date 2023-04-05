@@ -12,7 +12,7 @@ import com.reprezen.jsonoverlay.IJsonOverlay;
 import com.reprezen.kaizen.oasparser.model3.Info;
 import com.reprezen.kaizen.oasparser.model3.ExternalDocs;
 import com.reprezen.kaizen.oasparser.model3.Response;
-import com.reprezen.kaizen.oasparser.val.ValidationResults;
+import com.reprezen.kaizen.oasparser.validate.ValidationResults;
 import com.reprezen.kaizen.oasparser.model3.Callback;
 import com.reprezen.kaizen.oasparser.model3.Header;
 import java.util.Collection;
