@@ -1,6 +1,7 @@
 package com.reprezen.kaizen.oasparser.validate
 
 class ValidationContext : AutoCloseable {
+
     private val validationResults: ValidationResults
     private val visitedObjectRegistry: VisitedObjectRegistry
 
@@ -31,9 +32,14 @@ class ValidationContext : AutoCloseable {
         }
 
         @JvmStatic
-        fun getValidationResults(): ValidationResults {
+        fun getNullableResults() : ValidationResults? {
             val context = get()
-            return context?.validationResults ?: throw IllegalStateException()
+            return context?.validationResults
+        }
+
+        @JvmStatic
+        fun getValidationResults(): ValidationResults {
+            return getNullableResults() ?: throw IllegalStateException()
         }
 
         fun visitIfUnvisited(o: Any): Boolean {

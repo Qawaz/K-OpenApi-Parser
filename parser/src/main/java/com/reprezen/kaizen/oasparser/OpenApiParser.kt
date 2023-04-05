@@ -31,49 +31,49 @@ open class OpenApiParser {
         return try {
             val loader = JsonLoader()
             val tree = loader.loadString(resolutionBase, spec)
-            parse(tree, resolutionBase, validate, loader)
+            parse(tree, resolutionBase, loader)
         } catch (e: IOException) {
             throw OpenApiParserException("Failed to parse spec as JSON or YAML", e)
         }
     }
 
-    @Throws(Exception::class)
-    open fun parse(specFile: File): OpenApi3 {
-        return parse(specFile, true)
-    }
+//    @Throws(Exception::class)
+//    open fun parse(specFile: File): OpenApi3 {
+//        return parse(specFile, true)
+//    }
 
     @Throws(Exception::class)
-    open fun parse(specFile: File, validate: Boolean): OpenApi3 {
+    open fun parse(specFile: File): OpenApi3 {
         return try {
-            parse(specFile.toURI().toURL(), validate)
+            parse(specFile.toURI().toURL())
         } catch (e: IOException) {
             throw OpenApiParserException("Failed to read spec from file", e)
         }
     }
 
-    @Throws(Exception::class)
-    open fun parse(uri: URI): OpenApi3 {
-        return parse(uri, true)
-    }
+//    @Throws(Exception::class)
+//    open fun parse(uri: URI): OpenApi3 {
+//        return parse(uri, true)
+//    }
 
     @Throws(Exception::class)
-    open fun parse(uri: URI, validate: Boolean): OpenApi3 {
+    open fun parse(uri: URI): OpenApi3 {
         return try {
-            parse(uri.toURL(), validate)
+            parse(uri.toURL())
         } catch (e: MalformedURLException) {
             throw OpenApiParserException("Invalid URI for Swagger spec", e)
         }
     }
 
-    @Throws(Exception::class)
-    open fun parse(resolutionBase: URL?): OpenApi3 {
-        return parse(resolutionBase, true)
-    }
+//    @Throws(Exception::class)
+//    open fun parse(resolutionBase: URL?): OpenApi3 {
+//        return parse(resolutionBase, true)
+//    }
 
     @Throws(Exception::class)
-    open fun parse(resolutionBase: URL?, validate: Boolean): OpenApi3 {
+    open fun parse(resolutionBase: URL?): OpenApi3 {
         val manager = ReferenceManager(resolutionBase)
-        return parse(manager, validate)
+        return parse(manager)
     }
 
     open fun parse(tree: JsonNode?, resolutionBase: URL?): OpenApi3 {
@@ -81,24 +81,21 @@ open class OpenApiParser {
     }
 
     open fun parse(tree: JsonNode?, resolutionBase: URL?, validate: Boolean): OpenApi3 {
-        return parse(tree, resolutionBase, validate, null)
+        return parse(tree, resolutionBase, null)
     }
 
-    fun parse(tree: JsonNode?, resolutionBase: URL?, validate: Boolean, loader: JsonLoader?): OpenApi3 {
+    fun parse(tree: JsonNode?, resolutionBase: URL?, loader: JsonLoader?): OpenApi3 {
         val manager = ReferenceManager(resolutionBase, tree, loader)
-        return parse(manager, validate)
+        return parse(manager)
     }
 
-    private fun parse(manager: ReferenceManager, validate: Boolean): OpenApi3 {
+    private fun parse(manager: ReferenceManager): OpenApi3 {
         val tree: JsonNode
         return try {
             tree = manager.loadDoc()
             if (isVersion3(tree)) {
                 val model = OpenApi3Impl.factory.create(tree, null, manager) as OpenApi3
                 (model as OpenApi3Impl)._setCreatingRef(manager.docReference)
-                if (validate) {
-                    model.validate()
-                }
                 model
             } else {
                 throw OpenApiParserException(

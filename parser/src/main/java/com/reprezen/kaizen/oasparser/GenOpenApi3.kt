@@ -30,7 +30,6 @@ object GenOpenApi3 {
         "Link.kt" to "kotlin/interface/link.kate",
         "LinkImpl.kt" to "kotlin/class/link.kate",
 
-        "OpenApi3.kt" to "kotlin/interface/openapi3.kate",
         "OpenApi3Impl.kt" to "kotlin/class/openapi3.kate",
 
         "Parameter.kt" to "kotlin/interface/parameter.kate",
@@ -60,8 +59,8 @@ object GenOpenApi3 {
     fun main(args: Array<String>) {
         CodeGenerator.main(
             CodeGenerator.Options(
-                topDir = "src/main/java/com/reprezen/kaizen/oasparser",
-                typeDataFile = "src/main/java/com/reprezen/kaizen/oasparser/types3.yaml",
+                topDir = "parser/src/main/java/com/reprezen/kaizen/oasparser",
+                typeDataFile = "parser/src/main/java/com/reprezen/kaizen/oasparser/types3.yaml",
                 interfacePackage = "model3",
                 interfaceDir = "model3",
                 classDir = "ovl3",

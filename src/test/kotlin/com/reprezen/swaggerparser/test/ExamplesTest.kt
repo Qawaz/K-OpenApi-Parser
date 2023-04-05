@@ -15,6 +15,8 @@ import com.google.common.collect.Lists
 import com.google.common.collect.Queues
 import com.reprezen.jsonoverlay.JsonLoader
 import com.reprezen.kaizen.oasparser.OpenApiParser
+import com.reprezen.kaizen.oasparser.getValidationItems
+import com.reprezen.kaizen.oasparser.isValid
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import org.junit.Assert
 import org.junit.Test

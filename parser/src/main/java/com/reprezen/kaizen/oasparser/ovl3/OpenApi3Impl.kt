@@ -25,27 +25,20 @@ import com.reprezen.jsonoverlay.parser.Generated;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.reprezen.jsonoverlay.IJsonOverlay;
 import com.reprezen.kaizen.oasparser.ovl3.TagImpl;
-import com.reprezen.kaizen.oasparser.validate.ValidationResults.Severity;
 import com.reprezen.kaizen.oasparser.ovl3.RequestBodyImpl;
 import com.reprezen.jsonoverlay.PropertiesOverlay;
 import com.reprezen.kaizen.oasparser.ovl3.PathImpl;
 import com.reprezen.kaizen.oasparser.ovl3.ResponseImpl;
-import com.reprezen.kaizen.oasparser.validate.ValidationContext;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.reprezen.kaizen.oasparser.validate.ValidationResults;
 import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl;
 import kotlin.collections.Collection;
 import com.reprezen.jsonoverlay.ObjectOverlay;
 import com.reprezen.jsonoverlay.ReferenceRegistry;
-import com.reprezen.kaizen.oasparser.val3.OpenApi3Validator;
 import kotlin.collections.Map;
-import com.reprezen.kaizen.oasparser.validate.Validator;
 import com.reprezen.kaizen.oasparser.ovl3.InfoImpl;
 import com.reprezen.kaizen.oasparser.ovl3.ExternalDocsImpl;
 
 class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
-
-    private var validationResults : ValidationResults? = null;
 
     override fun _fixJson(json : JsonNode) : JsonNode {
         var json = json
@@ -56,31 +49,6 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
             (json as ObjectNode).putObject("paths")
         }
         return json
-    }
-
-    override fun validate() {
-        ValidationContext.open().use { context ->
-            validationResults = ValidationContext.getValidationResults()
-            OpenApi3Validator().validate(Overlay.of(this))
-        }
-    }
-
-    override fun isValid() : Boolean {
-        if (validationResults == null) {
-            validate()
-        }
-        return validationResults!!.severity.lt(Severity.ERROR);
-    }
-
-    override fun getValidationResults() : ValidationResults {
-        if (validationResults == null) {
-            validate()
-        }
-        return validationResults!!
-    }
-
-    override fun getValidationItems() : Collection<ValidationResults.ValidationItem> {
-        return getValidationResults().getItems()
     }
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

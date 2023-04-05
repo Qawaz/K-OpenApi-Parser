@@ -24,18 +24,8 @@ class OpenApi3Parser : OpenApiParser() {
     }
 
     @Throws(Exception::class)
-    override fun parse(specFile: File, validate: Boolean): OpenApi3 {
-        return super.parse(specFile, validate)
-    }
-
-    @Throws(Exception::class)
     override fun parse(uri: URI): OpenApi3 {
         return super.parse(uri)
-    }
-
-    @Throws(Exception::class)
-    override fun parse(uri: URI, validate: Boolean): OpenApi3 {
-        return super.parse(uri, validate)
     }
 
     @Throws(Exception::class)
@@ -43,14 +33,10 @@ class OpenApi3Parser : OpenApiParser() {
         return super.parse(resolutionBase)
     }
 
-    @Throws(Exception::class)
-    override fun parse(resolutionBase: URL?, validate: Boolean): OpenApi3 {
-        return super.parse(resolutionBase, validate)
-    }
-
     override fun isVersion3(tree: JsonNode): Boolean {
         return true // if 'openapi' property is missing or incorrect, that will
         // show up as a
         // validation error
     }
+
 }

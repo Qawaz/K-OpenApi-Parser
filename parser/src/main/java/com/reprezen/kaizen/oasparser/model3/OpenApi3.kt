@@ -8,7 +8,6 @@ import com.reprezen.kaizen.oasparser.model3.Schema;
 import com.reprezen.kaizen.oasparser.model3.Info;
 import com.reprezen.kaizen.oasparser.model3.ExternalDocs;
 import com.reprezen.kaizen.oasparser.model3.Response;
-import com.reprezen.kaizen.oasparser.validate.ValidationResults;
 import com.reprezen.kaizen.oasparser.model3.Callback;
 import com.reprezen.kaizen.oasparser.model3.Header;
 import com.reprezen.kaizen.oasparser.model3.Example;
@@ -24,14 +23,6 @@ import com.reprezen.kaizen.oasparser.model3.RequestBody;
 import com.reprezen.kaizen.oasparser.model3.SecurityRequirement;
 
 interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
-
-    fun validate()
-
-    fun isValid() : Boolean
-
-    fun getValidationResults() : ValidationResults
-
-    fun getValidationItems() : Collection<ValidationResults.ValidationItem>
 
 	// OpenApi
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

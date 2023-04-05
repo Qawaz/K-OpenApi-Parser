@@ -13,7 +13,9 @@ package com.reprezen.swaggerparser.test
 import com.google.common.collect.ImmutableMap
 import com.google.common.io.Resources
 import com.reprezen.kaizen.oasparser.OpenApiParser
+import com.reprezen.kaizen.oasparser.isValid
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
+import com.reprezen.kaizen.oasparser.validate
 import org.junit.Assert
 import org.junit.Test
 
@@ -56,6 +58,6 @@ class ExampleTest {
     }
 
     companion object {
-        private var model: OpenApi3? = OpenApiParser().parse(Resources.getResource("models/examplesTest.yaml"), true)
+        private var model: OpenApi3? = OpenApiParser().parse(Resources.getResource("models/examplesTest.yaml")).also { it.validate() }
     }
 }

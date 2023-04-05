@@ -45,14 +45,14 @@ class BigParseTest(
     fun test() {
         val parsedYaml = Yaml().load<Any>(modelUrl.openStream())
         val tree = YAMLMapper().convertValue(parsedYaml, JsonNode::class.java)
-        val model = OpenApiParser().parse(modelUrl, false)
+        val model = OpenApiParser().parse(modelUrl)
         val valueNodePredicate = Predicate { obj: JsonNode -> obj.isValueNode }
         val valueChecker = object : JsonTreeWalker.WalkMethod {
             override fun run(node: JsonNode?, path: JsonPointer?) {
                 require(node != null && path != null)
                 val overlay = Overlay.find(model as JsonOverlay<*>, path)
                 assertNotNull("No overlay object found for path: $path", overlay)
-                val value = Overlay.get(overlay!!)
+                val value = Overlay[overlay!!]
                 val fromJson = getValue(node)
                 val msg = String.format(
                     "Wrong overlay value for model '%s' and path '%s': expected '%s', got '%s'",

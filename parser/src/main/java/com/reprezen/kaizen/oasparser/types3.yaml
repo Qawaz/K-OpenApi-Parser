@@ -1,10 +1,5 @@
 modelType: OpenApi3
 imports:
-  Validator: com.reprezen.kaizen.oasparser.validate.Validator
-  ValidationResults: com.reprezen.kaizen.oasparser.validate.ValidationResults
-  ValidationContext: com.reprezen.kaizen.oasparser.validate.ValidationContext
-  Severity: com.reprezen.kaizen.oasparser.validate.ValidationResults.Severity
-  OpenApi3Validator: com.reprezen.kaizen.oasparser.val3.OpenApi3Validator
   Overlay: com.reprezen.jsonoverlay.Overlay
   Collection: kotlin.collections.Collection
   ReferenceRegistry: com.reprezen.jsonoverlay.ReferenceRegistry
@@ -26,14 +21,8 @@ types:
 - name: OpenApi3
   imports:
     intf:
-    - ValidationResults
     - Collection
     impl:
-    - OpenApi3Validator
-    - Validator
-    - ValidationResults
-    - ValidationContext
-    - Severity
     - ReferenceRegistry
     - Overlay
     - ObjectNode
