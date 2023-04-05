@@ -1,9 +1,9 @@
-package com.reprezen.kaizen.oasparser.`val`
+package com.reprezen.kaizen.oasparser.validate
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.*
 import com.reprezen.jsonoverlay.*
-import com.reprezen.kaizen.oasparser.`val`.msg.Messages
+import com.reprezen.kaizen.oasparser.validate.msg.Messages
 import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URL

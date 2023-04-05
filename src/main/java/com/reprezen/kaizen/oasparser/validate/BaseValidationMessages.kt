@@ -1,6 +1,6 @@
-package com.reprezen.kaizen.oasparser.`val`
+package com.reprezen.kaizen.oasparser.validate
 
-import com.reprezen.kaizen.oasparser.`val`.msg.Messages
+import com.reprezen.kaizen.oasparser.validate.msg.Messages
 
 enum class BaseValidationMessages(private val formatString: String) : Messages {
     WrongTypeJson("Incorrect JSON value type: %1; allowed types: %2"),  //

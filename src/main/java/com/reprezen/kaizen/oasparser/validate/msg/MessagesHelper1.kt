@@ -1,4 +1,4 @@
-package com.reprezen.kaizen.oasparser.`val`.msg
+package com.reprezen.kaizen.oasparser.validate.msg
 
 import java.io.IOException
 import java.util.*

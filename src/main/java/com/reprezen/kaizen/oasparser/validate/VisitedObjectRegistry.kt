@@ -1,4 +1,4 @@
-package com.reprezen.kaizen.oasparser.`val`
+package com.reprezen.kaizen.oasparser.validate
 
 import java.util.*
 

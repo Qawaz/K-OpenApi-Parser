@@ -8,7 +8,7 @@
  * Contributors:
  * ModelSolv, Inc. - initial API and implementation and/or initial documentation
  */
-package com.reprezen.kaizen.oasparser.`val`
+package com.reprezen.kaizen.oasparser.validate
 
 import java.math.BigDecimal
 import java.math.BigInteger

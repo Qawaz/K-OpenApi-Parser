@@ -8,10 +8,10 @@
  * Contributors:
  * ModelSolv, Inc. - initial API and implementation and/or initial documentation
  */
-package com.reprezen.kaizen.oasparser.`val`
+package com.reprezen.kaizen.oasparser.validate
 
 import com.reprezen.jsonoverlay.*
-import com.reprezen.kaizen.oasparser.`val`.msg.Messages
+import com.reprezen.kaizen.oasparser.validate.msg.Messages
 
 object ReferencesChecker {
     fun checkReferences(list: ListOverlay<*>, results: ValidationResults) {
