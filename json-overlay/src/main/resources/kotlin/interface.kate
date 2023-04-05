@@ -1,0 +1,11 @@
+@partial_raw
+
+    @embed_once ./interface_definition.kate
+
+    @var(GenerateInterfaceDefinition())
+
+    @var(GenerateInterfaceMembers())
+
+    @var(EndInterfaceDefinition())
+
+@end_partial_raw

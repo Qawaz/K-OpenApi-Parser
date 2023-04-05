@@ -4,7 +4,7 @@
 
     @function GenerateInterfaceDefinition()
 
-        @default_no_raw package @var(packageName); @end_default_no_raw
+        @default_no_raw package @var(packageName) @end_default_no_raw
 
         @if(@var(imports.size()) > 0)
             @runtime.print_string("\n\n")
@@ -13,17 +13,21 @@
 
         @runtime.print_string("\n\n")
 
-        @if(@var(isPublic))
-            @runtime.print_string("public ")
+        @if(@var(isPublic) == false)
+            @runtime.print_string("private ")
         @endif
 
         @runtime.print_string("interface " + @var(name) + ' ')
 
         @if(@var(extends.size()) > 0)
-            @runtime.print_string("extends " + @var(extends.joinToString(", ")) + ' ')
+            @runtime.print_string(": " + @var(extends.joinToString(", ")) + ' ')
         @endif
 
         @runtime.print_string("{\n\n")
+    @end_function
+
+    @function GenerateInterfaceMembers()
+        @default_no_raw @var(ClassMembers) @end_default_no_raw
     @end_function
 
     @function EndInterfaceDefinition()

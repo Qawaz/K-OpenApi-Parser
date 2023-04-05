@@ -11,11 +11,11 @@
 
     @runtime.print_string("\n\n")
 
-    @if(@var(isPublic))
-        @runtime.print_string("public ")
+    @if(@var(isPublic) == false)
+        @runtime.print_string("private ")
     @endif
 
-    @runtime.print_string("enum " + @var(name) + "  {\n\n")
+    @runtime.print_string("enum class " + @var(name) + "  {\n\n")
 
     @default_no_raw
         @var(EnumEntries)

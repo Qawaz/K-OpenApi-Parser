@@ -1,0 +1,11 @@
+@partial_raw
+
+    @embed_once ./class_definition.kate
+
+    @var(GenerateClassDefinition())
+
+    @var(GenerateClassMembers())
+
+    @var(EndClassDefinition())
+
+@end_partial_raw
