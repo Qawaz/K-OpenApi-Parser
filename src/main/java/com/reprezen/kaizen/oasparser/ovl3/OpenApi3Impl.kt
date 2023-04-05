@@ -37,7 +37,6 @@ import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl;
 import kotlin.collections.Collection;
 import com.reprezen.jsonoverlay.ObjectOverlay;
 import com.reprezen.jsonoverlay.ReferenceRegistry;
-import com.reprezen.kaizen.oasparser.OpenApi;
 import com.reprezen.kaizen.oasparser.val3.OpenApi3Validator;
 import kotlin.collections.Map;
 import com.reprezen.kaizen.oasparser.validate.Validator;

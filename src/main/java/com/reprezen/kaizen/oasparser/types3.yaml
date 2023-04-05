@@ -1,6 +1,5 @@
 modelType: OpenApi3
 imports:
-  OpenApi: com.reprezen.kaizen.oasparser.OpenApi
   Validator: com.reprezen.kaizen.oasparser.validate.Validator
   ValidationResults: com.reprezen.kaizen.oasparser.validate.ValidationResults
   ValidationContext: com.reprezen.kaizen.oasparser.validate.ValidationContext
@@ -40,8 +39,6 @@ types:
     - ObjectNode
     - JsonNodeFactory
     - Collection
-  extendInterfaces:
-  - OpenApi<OpenApi3>
   fields:
     openapi:
       name: OpenApi

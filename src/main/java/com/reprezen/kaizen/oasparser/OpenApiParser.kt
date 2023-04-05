@@ -23,11 +23,11 @@ import java.net.URL
 
 open class OpenApiParser {
 
-    open fun parse(spec: String?, resolutionBase: URL?): OpenApi<*> {
+    open fun parse(spec: String?, resolutionBase: URL?): OpenApi3 {
         return parse(spec, resolutionBase, true)
     }
 
-    open fun parse(spec: String?, resolutionBase: URL?, validate: Boolean): OpenApi<*> {
+    open fun parse(spec: String?, resolutionBase: URL?, validate: Boolean): OpenApi3 {
         return try {
             val loader = JsonLoader()
             val tree = loader.loadString(resolutionBase, spec)
@@ -38,12 +38,12 @@ open class OpenApiParser {
     }
 
     @Throws(Exception::class)
-    open fun parse(specFile: File): OpenApi<*> {
+    open fun parse(specFile: File): OpenApi3 {
         return parse(specFile, true)
     }
 
     @Throws(Exception::class)
-    open fun parse(specFile: File, validate: Boolean): OpenApi<*> {
+    open fun parse(specFile: File, validate: Boolean): OpenApi3 {
         return try {
             parse(specFile.toURI().toURL(), validate)
         } catch (e: IOException) {
@@ -52,12 +52,12 @@ open class OpenApiParser {
     }
 
     @Throws(Exception::class)
-    open fun parse(uri: URI): OpenApi<*> {
+    open fun parse(uri: URI): OpenApi3 {
         return parse(uri, true)
     }
 
     @Throws(Exception::class)
-    open fun parse(uri: URI, validate: Boolean): OpenApi<*> {
+    open fun parse(uri: URI, validate: Boolean): OpenApi3 {
         return try {
             parse(uri.toURL(), validate)
         } catch (e: MalformedURLException) {
@@ -66,30 +66,30 @@ open class OpenApiParser {
     }
 
     @Throws(Exception::class)
-    open fun parse(resolutionBase: URL?): OpenApi<*> {
+    open fun parse(resolutionBase: URL?): OpenApi3 {
         return parse(resolutionBase, true)
     }
 
     @Throws(Exception::class)
-    open fun parse(resolutionBase: URL?, validate: Boolean): OpenApi<*> {
+    open fun parse(resolutionBase: URL?, validate: Boolean): OpenApi3 {
         val manager = ReferenceManager(resolutionBase)
         return parse(manager, validate)
     }
 
-    open fun parse(tree: JsonNode?, resolutionBase: URL?): OpenApi<*> {
+    open fun parse(tree: JsonNode?, resolutionBase: URL?): OpenApi3 {
         return parse(tree, resolutionBase, true)
     }
 
-    open fun parse(tree: JsonNode?, resolutionBase: URL?, validate: Boolean): OpenApi<*> {
+    open fun parse(tree: JsonNode?, resolutionBase: URL?, validate: Boolean): OpenApi3 {
         return parse(tree, resolutionBase, validate, null)
     }
 
-    fun parse(tree: JsonNode?, resolutionBase: URL?, validate: Boolean, loader: JsonLoader?): OpenApi<*> {
+    fun parse(tree: JsonNode?, resolutionBase: URL?, validate: Boolean, loader: JsonLoader?): OpenApi3 {
         val manager = ReferenceManager(resolutionBase, tree, loader)
         return parse(manager, validate)
     }
 
-    private fun parse(manager: ReferenceManager, validate: Boolean): OpenApi<*> {
+    private fun parse(manager: ReferenceManager, validate: Boolean): OpenApi3 {
         val tree: JsonNode
         return try {
             tree = manager.loadDoc()
