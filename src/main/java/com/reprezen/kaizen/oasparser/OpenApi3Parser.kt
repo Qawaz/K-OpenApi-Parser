@@ -17,13 +17,6 @@ import java.net.URI
 import java.net.URL
 
 class OpenApi3Parser : OpenApiParser() {
-    override fun parse(spec: String?, resolutionBase: URL?): OpenApi3 {
-        return super.parse(spec, resolutionBase)
-    }
-
-    override fun parse(spec: String?, resolutionBase: URL?, validate: Boolean): OpenApi3 {
-        return super.parse(spec, resolutionBase, validate)
-    }
 
     @Throws(Exception::class)
     override fun parse(specFile: File): OpenApi3 {
@@ -53,14 +46,6 @@ class OpenApi3Parser : OpenApiParser() {
     @Throws(Exception::class)
     override fun parse(resolutionBase: URL?, validate: Boolean): OpenApi3 {
         return super.parse(resolutionBase, validate)
-    }
-
-    override fun parse(tree: JsonNode?, resolutionBase: URL?): OpenApi3 {
-        return super.parse(tree, resolutionBase)
-    }
-
-    override fun parse(tree: JsonNode?, resolutionBase: URL?, validate: Boolean): OpenApi3 {
-        return super.parse(tree, resolutionBase, validate)
     }
 
     override fun isVersion3(tree: JsonNode): Boolean {

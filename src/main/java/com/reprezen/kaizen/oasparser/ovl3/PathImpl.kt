@@ -39,11 +39,11 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	}
 
 	override fun setGet(get : Operation) {
-		getOperations().put("get", get)
+		getOperations()["get"] = get
 	}
 
 	override fun getPut() : Operation? {
-		return getOperations().get("put")
+		return getOperations()["put"]
 	}
 
 	override fun getPut(elaborate : Boolean) : Operation? {
@@ -51,7 +51,7 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	}
 
 	override fun setPut(put : Operation) {
-		getOperations().put("put", put)
+		getOperations()["put"] = put
 	}
 
 	override fun getPost() : Operation? {
@@ -63,7 +63,7 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	}
 
 	override fun setPost(post : Operation) {
-		getOperations().put("post", post)
+		getOperations()["post"] = post
 	}
 
 	override fun getDelete() : Operation? {
@@ -75,7 +75,7 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	}
 
 	override fun setDelete(delete : Operation) {
-		getOperations().put("delete", delete)
+		getOperations()["delete"] = delete
 	}
 
 	override fun getOptions() : Operation? {
@@ -87,7 +87,7 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	}
 
 	override fun setOptions(options : Operation) {
-		getOperations().put("options", options)
+		getOperations()["options"] = options
 	}
 
 	override fun getHead() : Operation? {
@@ -99,7 +99,7 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	}
 
 	override fun setHead(head : Operation) {
-		getOperations().put("head", head)
+		getOperations()["head"] = head
 	}
 
 	override fun getPatch() : Operation? {
@@ -111,7 +111,7 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	}
 
 	override fun setPatch(patch : Operation) {
-		getOperations().put("patch", patch)
+		getOperations()["patch"] = patch
 	}
 
 	override fun getTrace() : Operation? {
@@ -123,7 +123,7 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	}
 
 	override fun setTrace(trace : Operation) {
-		getOperations().put("trace", trace)
+		getOperations()["trace"] = trace
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

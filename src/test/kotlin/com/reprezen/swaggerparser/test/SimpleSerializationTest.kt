@@ -44,7 +44,7 @@ object SimpleSerializationTest : Assert() {
     @Throws(Exception::class)
     private fun parseLocalModel(name: String): OpenApi3 {
         val url = SimpleSerializationTest::class.java.getResource("/models/$name.yaml")
-        return OpenApiParser().parse(url) as OpenApi3
+        return OpenApiParser().parse(url)
     }
 
     private fun <T> iterable(iterator: Iterator<T>): Iterable<T> {
@@ -65,7 +65,7 @@ object SimpleSerializationTest : Assert() {
         @Throws(Exception::class)
         fun serializeExample() {
             if (!exampleUrl.toString().contains("callback-example")) {
-                val model = OpenApiParser().parse(exampleUrl) as OpenApi3
+                val model = OpenApiParser().parse(exampleUrl)
                 val serialized = Overlay.toJson<OpenApi3>(model as OpenApi3Impl)
                 val expected = yamlMapper.readTree(exampleUrl)
                 JSONAssert.assertEquals(

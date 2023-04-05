@@ -49,7 +49,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>> {
         return if (overlays.containsKey(key)) overlays[key]!!._find(path.tail()) else null
     }
 
-    override fun _fromJson(json: JsonNode): MutableMap<String, V>? {
+    override fun _fromJson(json: JsonNode): MutableMap<String, V> {
         return object : LinkedHashMap<String, V>() {
             private val serialVersionUID = 1L
 
@@ -178,7 +178,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>> {
             return overlayClass as Class<out JsonOverlay<Map<String, V>>?>
         }
 
-        protected override fun _create(
+        override fun _create(
             value: MutableMap<String, V>?,
             parent: JsonOverlay<*>?,
             refMgr: ReferenceManager
@@ -186,7 +186,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>> {
             return MapOverlay<V>(value, parent, this, refMgr)
         }
 
-        protected override fun _create(
+        override fun _create(
             json: JsonNode,
             parent: JsonOverlay<*>?,
             refMgr: ReferenceManager

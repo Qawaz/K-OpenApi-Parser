@@ -21,10 +21,10 @@ import java.util.stream.Collectors
 
 abstract class PropertiesOverlay<V> : JsonOverlay<V> {
     // retrieve property values from this map by property name
-    private val children: MutableMap<String?, JsonOverlay<*>>? = HashMap()
+    private val children: MutableMap<String?, JsonOverlay<*>> = HashMap()
 
     // this queue sets ordering for serialization, so it matches parsed JSON
-    private val childOrder: MutableList<PropertyLocator>? = ArrayList()
+    private val childOrder: MutableList<PropertyLocator> = ArrayList()
     private var elaborated = false
     private var deferElaboration = false
     private var elaborationValue: V? = null
@@ -51,16 +51,16 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
 
     /* package */
     fun _getPropertyNames(): List<String> {
-        return childOrder!!.stream().map { locator: PropertyLocator -> locator.name }.collect(Collectors.toList())
+        return childOrder.stream().map { locator: PropertyLocator -> locator.name }.collect(Collectors.toList())
     }
 
     /* package */
     fun <T> _getOverlay(name: String?): JsonOverlay<*> {
-        return children!![name]!!
+        return children[name]!!
     }
 
     protected fun _isPresent(name: String?): Boolean {
-        val overlay = children!![name]
+        val overlay = children[name]
         return overlay != null && !overlay.json!!.isMissingNode
     }
 
@@ -68,16 +68,16 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
         if (elaborate) {
             _ensureElaborated()
         }
-        val overlay = children!![name] as JsonOverlay<T>
+        val overlay = children[name] as JsonOverlay<T>
         return overlay._get()
     }
 
-    public fun <T> _getOverlay(name: String?, cls: Class<T>?): JsonOverlay<T> {
-        return children!![name] as JsonOverlay<T>
+    fun <T> _getOverlay(name: String?, cls: Class<T>?): JsonOverlay<T> {
+        return children[name] as JsonOverlay<T>
     }
 
     protected fun <T> _setScalar(name: String?, `val`: T?, cls: Class<T>?) {
-        val overlay = children!![name] as JsonOverlay<T>
+        val overlay = children[name] as JsonOverlay<T>
         overlay._set(`val`)
     }
 
@@ -98,32 +98,32 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
     }
 
     protected fun <T> _get(name: String?, index: Int, elaborate: Boolean, cls: Class<T>?): T {
-        val overlay = children!![name] as ListOverlay<T>
+        val overlay = children[name] as ListOverlay<T>
         return overlay[index]!!
     }
 
     protected fun <T> _setList(name: String?, listVal: MutableList<T>?, cls: Class<T>?) {
-        val overlay = children!![name] as ListOverlay<T>
+        val overlay = children[name] as ListOverlay<T>
         overlay._set(listVal)
     }
 
     protected fun <T> _set(name: String?, index: Int, `val`: T, cls: Class<T>?) {
-        val overlay = children!![name] as ListOverlay<T>
+        val overlay = children[name] as ListOverlay<T>
         overlay[index] = `val`
     }
 
     protected fun <T> _insert(name: String?, index: Int, `val`: T, cls: Class<T>?) {
-        val overlay = children!![name] as ListOverlay<T>
+        val overlay = children[name] as ListOverlay<T>
         overlay.insert(index, `val`)
     }
 
     protected fun <T> _add(name: String?, `val`: T, cls: Class<T>?) {
-        val overlay = children!![name] as ListOverlay<T>
+        val overlay = children[name] as ListOverlay<T>
         overlay.add(`val`)
     }
 
     protected fun <T> _remove(name: String?, index: Int, cls: Class<T>?) {
-        val overlay = children!![name] as ListOverlay<T>
+        val overlay = children[name] as ListOverlay<T>
         overlay.remove(index)
     }
 
@@ -147,22 +147,22 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
     }
 
     protected fun <T> _get(name: String?, key: String, elaborate: Boolean, cls: Class<T>?): T? {
-        val overlay = children!![name] as MapOverlay<T>
+        val overlay = children[name] as MapOverlay<T>
         return overlay[key]
     }
 
     protected fun <T> _setMap(name: String?, mapVal: MutableMap<String, T>?, cls: Class<T>?) {
-        val overlay = children!![name] as MapOverlay<T>
+        val overlay = children[name] as MapOverlay<T>
         overlay._set(mapVal)
     }
 
     protected fun <T> _set(name: String?, key: String, `val`: T, cls: Class<T>?) {
-        val overlay = children!![name] as MapOverlay<T>
+        val overlay = children[name] as MapOverlay<T>
         overlay[key] = `val`
     }
 
     protected fun <T> _remove(name: String?, key: String, cls: Class<T>?) {
-        val overlay = children!![name] as MapOverlay<T>
+        val overlay = children[name] as MapOverlay<T>
         overlay.remove(key)
     }
 
@@ -187,12 +187,12 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
 
     private fun _elaborateValue() {
         val overlay = elaborationValue as PropertiesOverlay<V>?
-        children!!.clear()
-        for ((key, value1) in overlay!!.children!!) {
+        children.clear()
+        for ((key, value1) in overlay!!.children) {
             children[key] = value1._copy()
         }
-        childOrder!!.clear()
-        childOrder.addAll(overlay.childOrder!!)
+        childOrder.clear()
+        childOrder.addAll(overlay.childOrder)
         elaborationValue = null
     }
 
@@ -221,13 +221,13 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
         val child = factory.create(childJson, this, refMgr)
         child._setPathInParent(path)
         val locator = PropertyLocator(name, path, json!!)
-        childOrder!!.add(locator)
-        children!![name] = child
+        childOrder.add(locator)
+        children[name] = child
         return child
     }
 
     override fun _findInternal(path: JsonPointer?): JsonOverlay<*>? {
-        for (child in children!!.values) {
+        for (child in children.values) {
             if (matchesPath(child, path)) {
                 val found = child._find(tailPath(child, path)!!)
                 if (found != null) {
@@ -278,8 +278,8 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
 
     override fun _toJsonInternal(options: SerializationOptions): JsonNode {
         var obj: JsonNode = _jsonMissing()
-        for (child in childOrder!!) {
-            val childJson = children!![child.name]!!._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY))
+        for (child in childOrder) {
+            val childJson = children[child.name]!!._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY))
             if (!childJson.isMissingNode) {
                 obj = _injectChild(obj, childJson, child.pointer)
             }
@@ -345,8 +345,8 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
 
     override fun hashCode(): Int {
         var hash = 7
-        hash = 31 * hash + (children?.hashCode() ?: 0)
-        hash = 31 * hash + (childOrder?.hashCode() ?: 0)
+        hash = 31 * hash + children.hashCode()
+        hash = 31 * hash + childOrder.hashCode()
         return hash
     }
 
@@ -407,7 +407,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
         override operator fun compareTo(other: PropertyLocator?): Int {
             if(other == null) return -1
             return if (vector == null) {
-                if (other.vector == null) name!!.compareTo(other.name!!) else 1
+                if (other.vector == null) name.compareTo(other.name) else 1
             } else if (other.vector == null) {
                 -1
             } else {
@@ -426,7 +426,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
         override fun hashCode(): Int {
             val prime = 31
             var result = 1
-            result = prime * result + (name?.hashCode() ?: 0)
+            result = prime * result + name.hashCode()
             result = prime * result + (pointer?.hashCode() ?: 0)
             result = prime * result + (vector?.hashCode() ?: 0)
             return result

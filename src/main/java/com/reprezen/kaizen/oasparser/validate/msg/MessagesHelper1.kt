@@ -46,7 +46,7 @@ object MessagesHelper {
     fun format(locale: Locale, message: Messages, vararg args: Any): String {
         val formatString = message.getFormatString(locale)
         val sortArgs = sortArgs(formatString, args.toList().toTypedArray())
-        val printfString = Stream.of(*formatString!!.split("%%".toRegex()).dropLastWhile { it.isEmpty() }
+        val printfString = Stream.of(*formatString.split("%%".toRegex()).dropLastWhile { it.isEmpty() }
             .toTypedArray())
             .map { part: String? -> placeholderPattern.matcher(part).replaceAll("%s") } //
             .collect(Collectors.joining("%%"))

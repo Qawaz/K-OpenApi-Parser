@@ -317,7 +317,7 @@ class ScalarTests {
                 refMgr
             )
 
-            override fun getEnumValue(value: String): XEnum? {
+            override fun getEnumValue(value: String): XEnum {
                 return XEnum.valueOf(value)
             }
 

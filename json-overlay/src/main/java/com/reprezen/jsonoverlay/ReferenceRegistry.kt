@@ -22,7 +22,7 @@ import java.util.*
 class ReferenceRegistry @JvmOverloads constructor(loader: JsonLoader? = null) {
     private val managers: MutableMap<String, ReferenceManager> = HashMap()
     private val loader: JsonLoader
-    private val overlaysByRef: MutableMap<kotlin.Pair<String, String>, JsonOverlay<*>> = HashMap()
+    private val overlaysByRef: MutableMap<Pair<String, String>, JsonOverlay<*>> = HashMap()
 
     // can't use Pair here because we need to index by JsonNode identity, not
     // using
@@ -47,11 +47,11 @@ class ReferenceRegistry @JvmOverloads constructor(loader: JsonLoader? = null) {
     }
 
     fun getOverlay(normalizedRef: String, factorySig: String): JsonOverlay<*>? {
-        return overlaysByRef[kotlin.Pair(normalizedRef, factorySig)]
+        return overlaysByRef[Pair(normalizedRef, factorySig)]
     }
 
     fun register(normalizedRef: String, factorySig: String, overlay: JsonOverlay<*>) {
-        overlaysByRef[kotlin.Pair(normalizedRef, factorySig)] = overlay
+        overlaysByRef[Pair(normalizedRef, factorySig)] = overlay
     }
 
     fun getOverlay(json: JsonNode, factorySig: String): JsonOverlay<*>? {

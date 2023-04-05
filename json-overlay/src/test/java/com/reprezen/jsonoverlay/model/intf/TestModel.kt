@@ -35,10 +35,10 @@ interface TestModel : IJsonOverlay<TestModel>, IModelPart<TestModel, TestModel> 
 
 	// Entry
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getEntries() : Map<String, Entry>
+	fun getEntries() : MutableMap<String, Entry>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getEntries(elaborate : Boolean) : Map<String, Entry>
+	fun getEntries(elaborate : Boolean) : MutableMap<String, Entry>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasEntries() : Boolean
@@ -116,10 +116,10 @@ interface TestModel : IJsonOverlay<TestModel>, IModelPart<TestModel, TestModel> 
 
 	// NamedInteger
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getNamedIntegers() : Map<String, Int>
+	fun getNamedIntegers() : MutableMap<String, Int>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getNamedIntegers(elaborate : Boolean) : Map<String, Int>
+	fun getNamedIntegers(elaborate : Boolean) : MutableMap<String, Int>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasNamedIntegers() : Boolean
@@ -151,10 +151,10 @@ interface TestModel : IJsonOverlay<TestModel>, IModelPart<TestModel, TestModel> 
 
 	// Scalar
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getScalars() : Map<String, Scalars>
+	fun getScalars() : MutableMap<String, Scalars>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getScalars(elaborate : Boolean) : Map<String, Scalars>
+	fun getScalars(elaborate : Boolean) : MutableMap<String, Scalars>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasScalars() : Boolean

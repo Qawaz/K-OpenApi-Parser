@@ -62,13 +62,13 @@ class JsonLoader {
     }
 
     @Throws(IOException::class)
-    fun loadWithLocations(json: String?): kotlin.Pair<JsonNode, Map<JsonPointer, PositionInfo>> {
+    fun loadWithLocations(json: String?): Pair<JsonNode, Map<JsonPointer, PositionInfo>> {
         val tree: JsonNode
         val regions: Map<JsonPointer, PositionInfo>
         val parser = yamlFactory.createParser(fixTabs(json)) as LocationRecorderYamlParser
         tree = yamlMapper.readTree(parser)
         regions = parser.locations
-        return kotlin.Pair(tree, regions)
+        return Pair(tree, regions)
     }
 
     private fun fixTabs(json: String?): String {

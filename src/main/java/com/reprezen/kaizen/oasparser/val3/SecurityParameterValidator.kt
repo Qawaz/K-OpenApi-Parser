@@ -13,7 +13,7 @@ class SecurityParameterValidator : ObjectValidatorBase<SecurityParameter>() {
         validateListField<String>(SecurityParameterImpl.F_parameters, false, false, String::class.java, null)
     }
 
-    protected override fun getAllowedJsonTypes(value: Overlay<*>?): Collection<Class<out JsonNode?>> {
+    override fun getAllowedJsonTypes(value: Overlay<*>?): Collection<Class<out JsonNode?>> {
         // SecurityParameter is the odd case of a ParametersOverlay that is not formed
         // from an object. It's the value type of the security requirement map, and that
         // value comes in the form of a JSON array. The SecurityParameter type exposes

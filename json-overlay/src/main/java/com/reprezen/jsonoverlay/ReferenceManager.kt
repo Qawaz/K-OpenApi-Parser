@@ -30,7 +30,7 @@ class ReferenceManager {
     private val positions: MutableMap<JsonPointer, Optional<PositionInfo>> = HashMap()
 
     @JvmOverloads
-    constructor(rootUrl: URL? = null as URL?, loader: JsonLoader? = null as JsonLoader?) {
+    constructor(rootUrl: URL? = null, loader: JsonLoader? = null) {
         registry = ReferenceRegistry(loader)
         docUrl = if (rootUrl != null) normalize(rootUrl, true) else null
         if (docUrl != null) {

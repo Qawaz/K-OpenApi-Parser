@@ -38,7 +38,7 @@ class ExamplesTest(
     @Throws(Exception::class)
     fun exampleCanBeParsed() {
         if (!exampleUrl.toString().contains("callback-example")) {
-            val model = OpenApiParser().parse(exampleUrl) as OpenApi3
+            val model = OpenApiParser().parse(exampleUrl)
             for (item in model.getValidationItems()) {
                 println(item)
             }

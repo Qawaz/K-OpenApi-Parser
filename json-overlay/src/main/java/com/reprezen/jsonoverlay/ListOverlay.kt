@@ -44,7 +44,7 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>> {
         return if (index >= 0 && overlays.size > index) overlays[index]._find(path.tail()) else null
     }
 
-    override fun _fromJson(json: JsonNode): MutableList<V>? {
+    override fun _fromJson(json: JsonNode): MutableList<V> {
         return object : ArrayList<V>() {
             private val serialVersionUID = 1L
 
@@ -54,7 +54,7 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>> {
         }
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode? {
+    override fun _toJsonInternal(options: SerializationOptions): JsonNode {
         val array = _jsonArray()
         for (item in overlays) {
             // we can't have missing children, since they'd screw up the position of other
@@ -175,7 +175,7 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>> {
             return overlayClass as Class<out JsonOverlay<MutableList<V>>?>
         }
 
-        protected override fun _create(
+        override fun _create(
             value: MutableList<V>?,
             parent: JsonOverlay<*>?,
             refMgr: ReferenceManager
@@ -183,7 +183,7 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>> {
             return ListOverlay(value, parent, this, refMgr)
         }
 
-        protected override fun _create(
+        override fun _create(
             json: JsonNode,
             parent: JsonOverlay<*>?,
             refMgr: ReferenceManager

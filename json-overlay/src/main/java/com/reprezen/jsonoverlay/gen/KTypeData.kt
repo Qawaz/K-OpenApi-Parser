@@ -66,7 +66,7 @@ class KTypeData(
             get() = if (structure == Structure.scalar) lcName else lcPlural
 
         val parentPath: String
-            get() = _parentPath ?: id;
+            get() = _parentPath ?: id
 
         val implType: String
             get() = Type.getImplType(container.typeData.typeMap[type]?.name ?: _type)

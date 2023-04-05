@@ -225,7 +225,7 @@ class PropertiesTests : Assert() {
                     return Foo::class.java
                 }
 
-                protected override fun _create(
+                override fun _create(
                     value: Foo?,
                     parent: JsonOverlay<*>?,
                     refMgr: ReferenceManager

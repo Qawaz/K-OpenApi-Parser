@@ -45,7 +45,7 @@ class BigParseTest(
     fun test() {
         val parsedYaml = Yaml().load<Any>(modelUrl.openStream())
         val tree = YAMLMapper().convertValue(parsedYaml, JsonNode::class.java)
-        val model = OpenApiParser().parse(modelUrl, false) as OpenApi3
+        val model = OpenApiParser().parse(modelUrl, false)
         val valueNodePredicate = Predicate { obj: JsonNode -> obj.isValueNode }
         val valueChecker = object : JsonTreeWalker.WalkMethod {
             override fun run(node: JsonNode?, path: JsonPointer?) {

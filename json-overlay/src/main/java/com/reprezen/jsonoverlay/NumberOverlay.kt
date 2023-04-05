@@ -53,7 +53,7 @@ class NumberOverlay : ScalarOverlay<Number> {
         }
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode? {
+    override fun _toJsonInternal(options: SerializationOptions): JsonNode {
         if (value == null) {
             return _jsonMissing()
         }

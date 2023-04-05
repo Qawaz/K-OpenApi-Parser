@@ -56,6 +56,6 @@ class ExampleTest {
     }
 
     companion object {
-        private var model: OpenApi3? = OpenApiParser().parse(Resources.getResource("models/examplesTest.yaml"), true) as OpenApi3
+        private var model: OpenApi3? = OpenApiParser().parse(Resources.getResource("models/examplesTest.yaml"), true)
     }
 }

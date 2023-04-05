@@ -65,12 +65,12 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Entry
-	override fun getEntries() : Map<String, Entry> {
+	override fun getEntries() : MutableMap<String, Entry> {
 		return _getMap("entries", Entry::class.java)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getEntries(elaborate : Boolean) : Map<String, Entry> {
+	override fun getEntries(elaborate : Boolean) : MutableMap<String, Entry> {
 		return _getMap("entries", elaborate, Entry::class.java)
 	}
 
@@ -198,12 +198,12 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// NamedInteger
-	override fun getNamedIntegers() : Map<String, Int> {
+	override fun getNamedIntegers() : MutableMap<String, Int> {
 		return _getMap("namedIntegers", Int::class.java)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getNamedIntegers(elaborate : Boolean) : Map<String, Int> {
+	override fun getNamedIntegers(elaborate : Boolean) : MutableMap<String, Int> {
 		return _getMap("namedIntegers", elaborate, Int::class.java)
 	}
 
@@ -255,12 +255,12 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Scalar
-	override fun getScalars() : Map<String, Scalars> {
+	override fun getScalars() : MutableMap<String, Scalars> {
 		return _getMap("scalars", Scalars::class.java)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getScalars(elaborate : Boolean) : Map<String, Scalars> {
+	override fun getScalars(elaborate : Boolean) : MutableMap<String, Scalars> {
 		return _getMap("scalars", elaborate, Scalars::class.java)
 	}
 

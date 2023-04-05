@@ -44,8 +44,8 @@ abstract class OverlayFactory<V> {
                     overlay._setParent(parent)
                 }
             } else {
-                overlay = _create(json!!, parent, refMgr)
-                overlay!!._setParent(parent)
+                overlay = _create(json, parent, refMgr)
+                overlay._setParent(parent)
                 refMgr.registry.register(json, signature!!, overlay)
                 if (!overlay._isElaborated()) {
                     overlay._elaborate(true)

@@ -35,7 +35,7 @@ class StringOverlay : ScalarOverlay<String> {
         return if (json.isTextual) json.textValue() else null
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode? {
+    override fun _toJsonInternal(options: SerializationOptions): JsonNode {
         return if (value != null) _jsonScalar(value) else _jsonMissing()
     }
 

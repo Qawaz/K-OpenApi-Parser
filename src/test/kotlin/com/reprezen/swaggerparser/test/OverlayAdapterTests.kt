@@ -52,7 +52,7 @@ class OverlayAdapterTests : Assert() {
         val listOverlay = Overlay.of(
             method as PropertiesOverlay<*>, "parameters",
             MutableList::class.java
-        ) as Any as Overlay<List<Parameter>>
+        ) as Overlay<List<Parameter>>
         val castListOverlay: ListOverlay<Parameter> = Overlay.getListOverlay(listOverlay)!!
         assertTrue(castListOverlay is ListOverlay<*>)
         val param: Parameter = Overlay.of<Parameter>(castListOverlay, 1).get()!!
@@ -91,7 +91,7 @@ class OverlayAdapterTests : Assert() {
         @Throws(Exception::class)
         private fun parseLocalModel(name: String): OpenApi3 {
             val url = SimpleSerializationTest::class.java.getResource("/models/$name.yaml")
-            return OpenApiParser().parse(url) as OpenApi3
+            return OpenApiParser().parse(url)
         }
     }
 }

@@ -30,7 +30,7 @@ public class TypeData {
 
 	private Collection<Type> types;
 	public Map<String, String> imports = new HashMap<>();
-	private List<String> defaultExtendInterfaces = null;
+	private final List<String> defaultExtendInterfaces = null;
 	private Map<String, Type> typeMap = null;
 	public String modelType = null;
 	public String discriminator = null;

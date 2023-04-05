@@ -25,7 +25,7 @@ import java.util.function.Consumer
 abstract class JsonOverlay<V> : IJsonOverlay<V> {
 
     @JvmField
-    public var value: V? = null
+    var value: V? = null
 
     @JvmField
     protected var parent: JsonOverlay<*>? = null
@@ -37,7 +37,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     val refMgr: ReferenceManager
 
     @JvmField
-    public val factory: OverlayFactory<V>
+    val factory: OverlayFactory<V>
 
     private var pathInParent: String? = null
     private var present: Boolean
@@ -234,7 +234,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         }
     }
 
-    private fun encodePointerPart(part: String?): String? {
+    private fun encodePointerPart(part: String?): String {
         // TODO fix this bogus special case
         return if (part!!.startsWith("components/")) {
             part

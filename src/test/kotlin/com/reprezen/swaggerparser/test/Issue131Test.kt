@@ -11,7 +11,7 @@ class Issue131Test : Assert() {
     @Test
     @Throws(Exception::class)
     fun testSchemaRefs() {
-        val model = OpenApiParser().parse(Resources.getResource("models/issue131.yaml"), true) as OpenApi3
+        val model = OpenApiParser().parse(Resources.getResource("models/issue131.yaml"), true)
         assertEquals("SampleData", Overlay.getPathInParent(Overlay.of(model).find("/components/schemas/SampleData")!!))
         assertEquals("MoreData", Overlay.getPathInParent(Overlay.of(model).find("/components/schemas/MoreData")!!))
         val direct = model.getSchema("SampleData")

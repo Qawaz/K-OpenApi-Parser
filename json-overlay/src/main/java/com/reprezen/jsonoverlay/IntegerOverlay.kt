@@ -35,7 +35,7 @@ class IntegerOverlay : ScalarOverlay<Int> {
         return if (json.isInt) json.intValue() else null
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode? {
+    override fun _toJsonInternal(options: SerializationOptions): JsonNode {
         return if (value != null) _jsonScalar(value!!) else _jsonMissing()
     }
 

@@ -20,11 +20,11 @@
         	}
 
         	override fun setGet(get : Operation) {
-        		getOperations().put("get", get)
+        		getOperations()["get"] = get
         	}
 
         	override fun getPut() : Operation? {
-        		return getOperations().get("put")
+        		return getOperations()["put"]
         	}
 
         	override fun getPut(elaborate : Boolean) : Operation? {
@@ -32,7 +32,7 @@
         	}
 
         	override fun setPut(put : Operation) {
-        		getOperations().put("put", put)
+        		getOperations()["put"] = put
         	}
 
         	override fun getPost() : Operation? {
@@ -44,7 +44,7 @@
         	}
 
         	override fun setPost(post : Operation) {
-        		getOperations().put("post", post)
+        		getOperations()["post"] = post
         	}
 
         	override fun getDelete() : Operation? {
@@ -56,7 +56,7 @@
         	}
 
         	override fun setDelete(delete : Operation) {
-        		getOperations().put("delete", delete)
+        		getOperations()["delete"] = delete
         	}
 
         	override fun getOptions() : Operation? {
@@ -68,7 +68,7 @@
         	}
 
         	override fun setOptions(options : Operation) {
-        		getOperations().put("options", options)
+        		getOperations()["options"] = options
         	}
 
         	override fun getHead() : Operation? {
@@ -80,7 +80,7 @@
         	}
 
         	override fun setHead(head : Operation) {
-        		getOperations().put("head", head)
+        		getOperations()["head"] = head
         	}
 
         	override fun getPatch() : Operation? {
@@ -92,7 +92,7 @@
         	}
 
         	override fun setPatch(patch : Operation) {
-        		getOperations().put("patch", patch)
+        		getOperations()["patch"] = patch
         	}
 
         	override fun getTrace() : Operation? {
@@ -104,7 +104,7 @@
         	}
 
         	override fun setTrace(trace : Operation) {
-        		getOperations().put("trace", trace)
+        		getOperations()["trace"] = trace
         	}
 
 

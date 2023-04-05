@@ -20,7 +20,7 @@ class LinksTest {
     @Test
     @Throws(Exception::class)
     fun testLinks() {
-        val model = OpenApiParser().parse(Resources.getResource("models/linksTest.yaml"), false) as OpenApi3
+        val model = OpenApiParser().parse(Resources.getResource("models/linksTest.yaml"), false)
         Assert.assertNotNull(model.getLink("PullRequestMerge")?.getOperationId())
         Assert.assertNotNull(model.getLink("PullRequestMerge")?.getOperationRef())
         Assert.assertNotNull(model.getLink("PullRequestMerge")?.getServer())
