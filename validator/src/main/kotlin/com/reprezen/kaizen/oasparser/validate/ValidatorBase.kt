@@ -72,9 +72,9 @@ abstract class ValidatorBase<V> : Validator<V> {
     private fun checkRegex(field: Overlay<String>) {
         val regex = field.get()!!
         try {
-            Pattern.compile(regex)
-        } catch (e: PatternSyntaxException) {
-            results.addWarning(Messages.msg(BaseValidationMessages.BadPattern, regex), field)
+            Regex(regex)
+        } catch (e: Exception) {
+            results.addWarning(Messages.msg(BaseValidationMessages.BadPattern, regex, (e.message ?: "")), field)
         }
     }
 
@@ -156,7 +156,7 @@ abstract class ValidatorBase<V> : Validator<V> {
 
     private fun checkEmail(overlay: Overlay<String>) {
         val email = overlay.get()!!
-        if(!isEmailValid(email)){
+        if (!isEmailValid(email)) {
             results.addError(Messages.msg(BaseValidationMessages.BadEmail, email, "invalid email detected"), overlay)
         }
     }
@@ -230,7 +230,7 @@ abstract class ValidatorBase<V> : Validator<V> {
 
     private fun <X> checkListNotEmpty(list: Overlay<List<X>>, nonEmpty: Boolean) {
         if (nonEmpty) {
-            val listOverlay= Overlay.getListOverlay(list)
+            val listOverlay = Overlay.getListOverlay(list)
             if (!list.isPresent) {
                 if (nonEmpty && listOverlay!!.size() == 0) {
                     results.addError(Messages.msg(BaseValidationMessages.EmptyList), list)
@@ -315,7 +315,10 @@ abstract class ValidatorBase<V> : Validator<V> {
     }
 
     @JvmOverloads
-    fun validateExtensions(extensions: MutableMap<String, Any>, crumb: String? = null): Overlay<MutableMap<String, Any>> {
+    fun validateExtensions(
+        extensions: MutableMap<String, Any>,
+        crumb: String? = null
+    ): Overlay<MutableMap<String, Any>> {
         val mapOverlay = Overlay.of(extensions)!!
         validateMap(mapOverlay, nonEmpty = false, unique = false, valueValidator = null)
         return mapOverlay
