@@ -22,6 +22,7 @@ import java.math.BigInteger
 import java.util.*
 import java.util.function.Consumer
 
+@Suppress("FunctionName")
 abstract class JsonOverlay<V> : IJsonOverlay<V> {
 
     @JvmField
@@ -262,7 +263,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     fun _getDocumentUrl(forRef: Boolean): String? {
         val jsonRef = _getJsonReference(forRef)
         val docUrl = if (jsonRef.contains("#")) jsonRef.substring(0, jsonRef.indexOf("#")) else jsonRef
-        return if (docUrl.isEmpty()) null else docUrl
+        return docUrl.ifEmpty { null }
     }
 
     protected abstract fun _fromJson(json: JsonNode): V?
@@ -336,7 +337,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         if (positionInfo == null) {
             val ptr = JsonPointer.compile(_getPathFromRoot())
             positionInfo = refMgr.getPositionInfo(ptr)
-            positionInfo!!.ifPresent(Consumer { info: PositionInfo -> info.documentUrl = _getDocumentUrl(true) })
+            positionInfo!!.ifPresent { info: PositionInfo -> info.documentUrl = _getDocumentUrl(true) }
         }
         return positionInfo
     }
@@ -349,8 +350,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
 
     override fun equals(obj: Any?): Boolean {
         return if (obj is JsonOverlay<*>) {
-            val castObj = obj
-            if (value != null) value == castObj.value else castObj.value == null
+            if (value != null) value == obj.value else obj.value == null
         } else {
             false // obj is null or not an overlay object
         }
