@@ -8,9 +8,7 @@
  * Contributors:
  * ModelSolv, Inc. - initial API and implementation and/or initial documentation
  */
-package com.reprezen.kaizen.oasparser
-
-import com.reprezen.jsonoverlay.gen.CodeGenerator
+package com.wakaztahir.generator
 
 object GenOpenApi3 {
 
@@ -60,7 +58,7 @@ object GenOpenApi3 {
         CodeGenerator.main(
             CodeGenerator.Options(
                 topDir = "parser/src/main/java/com/reprezen/kaizen/oasparser",
-                typeDataFile = "parser/src/main/java/com/reprezen/kaizen/oasparser/types3.yaml",
+                typeDataFile = "src/main/java/com/wakaztahir/generator/types3.yaml",
                 interfacePackage = "model3",
                 interfaceDir = "model3",
                 classDir = "ovl3",

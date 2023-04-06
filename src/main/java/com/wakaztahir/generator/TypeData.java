@@ -11,7 +11,7 @@
  *     ModelSolv, Inc. 
  *     - initial API and implementation and/or initial documentation
 **********************************************************************/
-package com.reprezen.jsonoverlay.gen;
+package com.wakaztahir.generator;
 
 import java.util.ArrayList;
 import java.util.Collection;

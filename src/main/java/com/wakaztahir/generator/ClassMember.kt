@@ -1,4 +1,4 @@
-package com.reprezen.jsonoverlay.gen
+package com.wakaztahir.generator
 
 class ClassMember(val code: String) {
 

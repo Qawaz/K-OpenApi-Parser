@@ -1,4 +1,4 @@
-package com.reprezen.jsonoverlay.gen
+package com.wakaztahir.generator
 
 import com.fasterxml.jackson.core.JsonPointer
 import com.fasterxml.jackson.databind.JsonNode

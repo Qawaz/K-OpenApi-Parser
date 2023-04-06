@@ -1,4 +1,4 @@
-package com.reprezen.jsonoverlay.gen
+package com.wakaztahir.generator
 
 import com.wakaztahir.kate.model.StringValue
 import com.wakaztahir.kate.model.model.KATEListImpl

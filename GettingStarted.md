@@ -2,16 +2,7 @@
 
 ## Build
 
-K-OpenAPI-Parser requires a kotlin 8 JDK, and will require changes 
-to build on later kotlin versions. All the software currently resides 
-in a single Eclipse/Maven project located in `K-openapi-parser`.
-
-From this directory, you can use:
-* `mvn package` to build locally
-* `mvn install` to build and install into your local maven repository
-  cache
-* `mvn test` to compile and run tests
-* etc.
+The project should build fine in IntelliJ , since it uses Gradle , Open the project and you can run tests / regenerate api
 
 ### Special Considerations for Tests
 
@@ -24,19 +15,8 @@ severe for unauthenticated requests.
 
 ### Regenerating Code
 
-The K parser uses its own framework to generate interfaces and implementation classes for
-all OpenAPI object types, based on information provided in a
-YAML-based DSL (`types3.yaml`). The git repo always contains
-up-to-date copies of all these generated sources, but if you ever want
-to regenerate them, you need to activate the `gen` maven profile, as
-in:
-
-```
-mvn test -P gen
-```
-Code generation takes place during the maven `generate-sources` phase, preceding compilation. The `gen` profile is disabled by default, so unless you specifically activate it, your build will use existing sources, without regeneration.
-
-The generator makes use of a kotlin parser to parse existing source files before regenerating them. This is so that class members that are *not* marked with the `@Generated` annotation can be preserved during regeneration. If this parse fails for whatever reason, the overall build will be interrupted at that point and will fail. To recover from this scenario, you can check out the most recently checked-in files from your git working tree and then retry. To ensure that this will be possible as you make your own changes to the code it is recommended that you ALWAYS check in parseable copies of the generated sources after regeneration, before you begin any customization of those sources (adding non-generated members or replacements for nonrmally-generated members).
+There's a [GenOpenAPI3](./src/main/java/com/wakaztahir/generator/GenOpenApi3.kt) Object which contains the function to run
+to generate the API again using the file [types3.yaml](./src/main/java/com/wakaztahir/generator/types3.yaml)
 
 
 ## Learn About the APIs
@@ -61,64 +41,60 @@ At the time of this writing, validation fails on the
 `callback-example` because that example does not include the required
 `openapi` and `info` properties.
 
-```java
+```kotlin
 package test;
 
-import java.net.URI;
-import java.util.Arrays;
+import com.reprezen.kaizen.oasparser.OpenApi3Parser
+import com.reprezen.kaizen.oasparser.model3.OpenApi3
+import com.reprezen.kaizen.oasparser.model3.Parameter
 
-import com.reprezen.jsonoverlay.Overlay;
-import com.reprezen.kaizen.oasparser.OpenApi3Parser;
-import com.reprezen.kaizen.oasparser.model3.OpenApi3;
-import com.reprezen.kaizen.oasparser.model3.Operation;
-import com.reprezen.kaizen.oasparser.model3.Parameter;
-import com.reprezen.kaizen.oasparser.model3.Path;
-import com.reprezen.kaizen.oasparser.model3.Schema;
-import com.reprezen.kaizen.oasparser.validate.ValidationResults.ValidationItem;
+object GettingStarted {
 
-public class GettingStarted {
+    @kotlin.Throws(Exception::class)
+    @JvmStatic
+    fun main(args: Array<String>) {
+        for (modelName: String in mutableListOf(
+            "api-with-examples", "callback-example", "link-example", "petstore",
+            "petstore-expanded", "uspto"
+        )) {
+            val modelUri: java.net.URI = java.net.URI(
+                "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/"
+                        + modelName + ".yaml"
+            )
+            processModel(modelUri)
+        }
+    }
 
-	public static void main(String[] args) throws Exception {
-		boolean validate = !(args.length >= 1 && args[0].equals("-n"));
-		for (String modelName : Arrays.asList("api-with-examples", "callback-example", "link-example", "petstore",
-				"petstore-expanded", "uspto")) {
-			URI modelUri = new URI("https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/"
-					+ modelName + ".yaml");
-			processModel(modelUri, validate);
-		}
-	}
+    @kotlin.Throws(Exception::class)
+    private fun processModel(modelUri: java.net.URI) {
+        val model: OpenApi3 = OpenApi3Parser().parse(modelUri)
+        java.lang.System.out.printf("== Model %s\n", modelUri)
+        describeModel(model)
+        java.lang.System.out.printf("------\n\n")
+    }
 
-	private static void processModel(URI modelUri, boolean validate) throws Exception {
-		OpenApi3 model = new OpenApi3Parser().parse(modelUri, validate);
-		System.out.printf("== Model %s\n", modelUri);
-		if (!validate || model.isValid()) {
-			describeModel(model);
-		} else {
-			for (ValidationItem item : model.getValidationItems()) {
-				System.out.println(item);
-			}
-		}
-		System.out.printf("------\n\n");
-	}
+    private fun describeModel(model: OpenApi3) {
+        java.lang.System.out.printf("Title: %s\n", model.getInfo()?.getTitle())
+        for (path: com.reprezen.kaizen.oasparser.model3.Path in model.getPaths().values) {
+            java.lang.System.out.printf("Path %s:\n", com.reprezen.jsonoverlay.Overlay.of(path).pathInParent)
+            for (op: com.reprezen.kaizen.oasparser.model3.Operation in path.getOperations().values) {
+                java.lang.System.out.printf(
+                    "  %s: [%s] %s\n", com.reprezen.jsonoverlay.Overlay.of(op).pathInParent?.uppercase(),
+                    op.getOperationId(), op.getSummary()
+                )
+                for (param: com.reprezen.kaizen.oasparser.model3.Parameter in op.getParameters()) {
+                    java.lang.System.out.printf(
+                        "    %s[%s]:, %s - %s\n", param.getName(), param.getIn(), getParameterType(param),
+                        param.getDescription()
+                    )
+                }
+            }
+        }
+    }
 
-	private static void describeModel(OpenApi3 model) {
-		System.out.printf("Title: %s\n", model.getInfo().getTitle());
-		for (Path path : model.getPaths().values()) {
-			System.out.printf("Path %s:\n", Overlay.of(path).getPathInParent());
-			for (Operation op : path.getOperations().values()) {
-				System.out.printf("  %s: [%s] %s\n", Overlay.of(op).getPathInParent().toUpperCase(),
-						op.getOperationId(), op.getSummary());
-				for (Parameter param : op.getParameters()) {
-					System.out.printf("    %s[%s]:, %s - %s\n", param.getName(), param.getIn(), getParameterType(param),
-							param.getDescription());
-				}
-			}
-		}
-	}
-
-	private static String getParameterType(Parameter param) {
-		Schema schema = param.getSchema();
-		return schema != null ? schema.getType() : "unknown";
-	}
+    private fun getParameterType(param: Parameter): String {
+        val schema = param.getSchema()
+        return schema?.getType() ?: "unknown"
+    }
 
 }```
