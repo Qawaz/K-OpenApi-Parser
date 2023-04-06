@@ -1,5 +1,5 @@
 /*********************************************************************
-*  Copyright (c) 2017 ModelSolv, Inc. and others.
+*  Copyright (c) 2023 WaqasTahir, Inc. and others.
 *
 * This program and the accompanying materials are made
 * available under the terms of the Eclipse Public License 2.0
@@ -8,7 +8,7 @@
 * SPDX-License-Identifier: EPL-2.0
  *
  *  Contributors:
- *     ModelSolv, Inc. 
+ *     WaqasTahir 
  *     - initial API and implementation and/or initial documentation
 **********************************************************************/
 package com.wakaztahir.generator;
