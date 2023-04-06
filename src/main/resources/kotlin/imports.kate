@@ -1,12 +1,12 @@
 @partial_raw
     @function printImports()
-        @if(@var(imports.size()) == 0) @return @Unit @endif
-        @for(@var elem,index : @var(imports))
-            @if(@var(index) != 0)
+        @if(imports.size() == 0) @return @Unit @endif
+        @for(@var elem,index : imports)
+            @if(index != 0)
                 @runtime.print_char('\n')
             @endif
             @runtime.print_string("import ")
-            @runtime.print_string(@var(elem))
+            @runtime.print_string(elem)
             @runtime.print_char(';')
         @endfor
     @end_function

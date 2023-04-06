@@ -1,4 +1,5 @@
 plugins {
+    java
     kotlin("jvm")
     id("maven-publish")
 }
@@ -8,7 +9,7 @@ dependencies {
     val jacksonVersion = property("jackson.version") as String
 
     implementation(project(":json-overlay"))
-    implementation("com.wakaztahir:kate:1.0.1")
+    implementation("com.wakaztahir:kate:1.0.2")
 
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")

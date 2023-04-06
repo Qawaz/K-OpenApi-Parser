@@ -5,14 +5,14 @@
     @function GenerateClassDefinition()
         @default_no_raw package @var(packageName); @end_default_no_raw
 
-        @if(@var(imports.size()) > 0)
+        @if(imports.size() > 0)
             @runtime.print_string("\n\n")
             @var(printImports())
         @endif
 
         @runtime.print_string("\n\n")
 
-        @if(@var(isPublic) == false)
+        @if(isPublic == false)
             @runtime.print_string("private ")
         @endif
 
@@ -20,24 +20,24 @@
         @runtime.print_string(@var(name))
         @runtime.print_char(' ')
 
-        @if(@var(extends.size()) > 0)
+        @if(extends.size() > 0)
             @runtime.print_string(": " + @var(extends.joinToString("(), ")) + ' ')
         @endif
 
-        @if(@var(implements.size()) > 0)
-            @if(@var(extends.size()) == 0)
+        @if(implements.size() > 0)
+            @if(extends.size() == 0)
                 @runtime.print_string(": ")
             @else
                 @runtime.print_string(",")
             @endif
-            @runtime.print_string(@var(implements.joinToString(", ")) + ' ')
+            @runtime.print_string(implements.joinToString(", ") + ' ')
         @endif
 
         @runtime.print_string("{\n\n")
     @end_function
 
     @function GenerateCompanionMembers()
-        @if(@var(CompanionMembers.size()) > 0)
+        @if(CompanionMembers.size() > 0)
             @runtime.print_string("\n\n\tcompanion object {\n")
             @default_no_raw @var(CompanionMembers) @end_default_no_raw
             @runtime.print_string("\n\t}")

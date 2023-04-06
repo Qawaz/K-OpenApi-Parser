@@ -4,14 +4,14 @@
 
     @default_no_raw package @var(packageName); @end_default_no_raw
 
-    @if(@var(imports.size()) > 0)
+    @if(imports.size() > 0)
         @runtime.print_string("\n\n")
         @var(printImports())
     @endif
 
     @runtime.print_string("\n\n")
 
-    @if(@var(isPublic) == false)
+    @if(isPublic == false)
         @runtime.print_string("private ")
     @endif
 
@@ -23,7 +23,7 @@
 
     @runtime.print_string(";\n")
 
-    @if(@var(ClassMembers.size()) > 0)
+    @if(ClassMembers.size() > 0)
         @runtime.print_char('\n')
     @endif
 

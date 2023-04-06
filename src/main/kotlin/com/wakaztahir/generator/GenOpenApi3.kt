@@ -57,8 +57,8 @@ object GenOpenApi3 {
     fun main(args: Array<String>) {
         CodeGenerator.main(
             CodeGenerator.Options(
-                topDir = "parser/src/main/java/com/reprezen/kaizen/oasparser",
-                typeDataFile = "src/main/java/com/wakaztahir/generator/types3.yaml",
+                topDir = "parser/src/main/kotlin/com/reprezen/kaizen/oasparser",
+                typeDataFile = "src/main/kotlin/com/wakaztahir/generator/types3.yaml",
                 interfacePackage = "model3",
                 interfaceDir = "model3",
                 classDir = "ovl3",
