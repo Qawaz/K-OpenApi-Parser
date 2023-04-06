@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    id("maven-publish")
 }
 
 dependencies {
@@ -14,20 +15,42 @@ dependencies {
 
 }
 
+fun RepositoryHandler.githubPackages(){
+    maven("https://maven.pkg.github.com/Qawaz/K-OpenApi-Parser") {
+        name = "GithubPackages"
+        try {
+            credentials {
+                username = (System.getenv("GPR_USER")).toString()
+                password = (System.getenv("GPR_API_KEY")).toString()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+}
+
+subprojects {
+    apply(plugin = "maven-publish")
+    afterEvaluate {
+        publishing {
+            publications {
+                register<MavenPublication>("release") {
+                    from(components["kotlin"])
+                }
+            }
+            repositories {
+                githubPackages()
+            }
+        }
+    }
+}
+
 allprojects {
+    group = "com.wakaztahir.openapi"
+    version = property("version") as String
     repositories {
         maven("https://oss.sonatype.org/content/repositories/snapshots/")
         mavenCentral()
-        maven("https://maven.pkg.github.com/Qawaz/K-OpenApi-Parser") {
-            name = "GitHubPackages"
-            try {
-                credentials {
-                    username = System.getenv("GPR_USER").toString()
-                    password = System.getenv("GPR_API_KEY").toString()
-                }
-            } catch (e: Throwable) {
-                e.printStackTrace()
-            }
-        }
+        githubPackages()
     }
 }

@@ -1,6 +1,7 @@
 plugins {
     java
     kotlin("jvm")
+    id("maven-publish")
 }
 
 repositories {
