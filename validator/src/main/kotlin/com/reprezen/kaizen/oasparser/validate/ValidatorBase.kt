@@ -15,8 +15,6 @@ import java.util.function.Function
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
 import java.util.stream.Collectors
-import javax.mail.internet.AddressException
-import javax.mail.internet.InternetAddress
 
 abstract class ValidatorBase<V> : Validator<V> {
 
@@ -145,14 +143,21 @@ abstract class ValidatorBase<V> : Validator<V> {
             Consumer { overlay: Overlay<String> -> checkEmail(overlay) })
     }
 
+    private fun isEmailValid(email: String): Boolean {
+        return Regex(
+            "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]|[\\w-]{2,}))@"
+                    + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                    + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                    + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                    + "[0-9]{1,2}|25[0-5]|2[0-4][0-9]))|"
+                    + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$"
+        ).matches(email)
+    }
+
     private fun checkEmail(overlay: Overlay<String>) {
         val email = overlay.get()!!
-        try {
-            val addr = InternetAddress()
-            addr.address = email
-            addr.validate()
-        } catch (e: AddressException) {
-            results.addError(Messages.msg(BaseValidationMessages.BadEmail, email, e.toString()), overlay)
+        if(!isEmailValid(email)){
+            results.addError(Messages.msg(BaseValidationMessages.BadEmail, email, "invalid email detected"), overlay)
         }
     }
 

@@ -13,12 +13,9 @@ dependencies {
     implementation(project(":json-overlay"))
     api(project(":parser"))
 
-
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
-    implementation("javax.mail:javax.mail-api:1.6.1")
-    implementation("com.sun.mail:javax.mail:1.6.1")
-    implementation("javax.annotation:javax.annotation-api:1.3.2")
+
     testImplementation("junit:junit:4.13.1")
     testImplementation("com.google.guava:guava:30.0-jre")
     testImplementation("org.skyscreamer:jsonassert:1.5.0")
