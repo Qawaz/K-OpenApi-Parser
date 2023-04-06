@@ -15,8 +15,8 @@ severe for unauthenticated requests.
 
 ### Regenerating Code
 
-There's a [GenOpenAPI3](./src/main/java/com/wakaztahir/generator/GenOpenApi3.kt) Object which contains the function to run
-to generate the API again using the file [types3.yaml](./src/main/java/com/wakaztahir/generator/types3.yaml)
+There's a [GenOpenAPI3](./src/main/kotlin/com/wakaztahir/generator/GenOpenApi3.kt) Object which contains the function to run
+to generate the API again using the file [types3.yaml](./src/main/kotlin/com/wakaztahir/generator/types3.yaml)
 
 
 ## Learn About the APIs
