@@ -18,10 +18,14 @@ import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.jsonoverlay.model.impl.TestModelImpl
 import com.reprezen.jsonoverlay.model.intf.TestModel
+import java.io.BufferedReader
 import java.io.IOException
+import java.io.InputStreamReader
 import java.net.URL
+import java.nio.charset.StandardCharsets
 
 object TestModelParser {
+
     @Throws(IOException::class)
     fun parse(url: URL): TestModel {
         val manager = ReferenceManager(url)
@@ -29,4 +33,15 @@ object TestModelParser {
         (model as TestModelImpl)._setCreatingRef(manager.getReference(url.toString()))
         return Overlay.of(model).get()!!
     }
+
+    fun loadResourceFileAsURL(resourcePath: String): URL {
+        return object {}.javaClass.classLoader.getResource(resourcePath)!!
+    }
+
+    fun loadResourceFileAsString(resourcePath: String): String {
+        val inputStream = object {}.javaClass.classLoader.getResourceAsStream(resourcePath)!!
+        val reader = BufferedReader(InputStreamReader(inputStream, StandardCharsets.UTF_8))
+        return reader.readText()
+    }
+
 }

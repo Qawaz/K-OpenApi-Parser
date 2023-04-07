@@ -17,8 +17,6 @@ package com.reprezen.jsonoverlay
 import com.fasterxml.jackson.core.JsonPointer
 import com.reprezen.jsonoverlay.IntegerOverlay
 import com.reprezen.jsonoverlay.StringOverlay
-import com.reprezen.jsonoverlay.model.GenTestModel.loadResourceFileAsString
-import com.reprezen.jsonoverlay.model.GenTestModel.loadResourceFileAsURL
 import com.reprezen.jsonoverlay.model.TestModelParser
 import org.junit.Assert
 import org.junit.Test
@@ -29,7 +27,7 @@ class LocationTests {
     @Throws(IOException::class)
     fun testYamlLocation() {
         val result = JsonLoader().loadWithLocations(
-            loadResourceFileAsString("locationsTest.yaml")
+            TestModelParser.loadResourceFileAsString("locationsTest.yaml")
         )
         val locations = result.second
         Assert.assertTrue(locations.containsKey(JsonPointer.compile("/map/a")))
@@ -43,7 +41,7 @@ class LocationTests {
     @Test
     @Throws(IOException::class)
     fun testPositions() {
-        val model = TestModelParser.parse(loadResourceFileAsURL("refTest.yaml"))
+        val model = TestModelParser.parse(TestModelParser.loadResourceFileAsURL("refTest.yaml"))
         checkPositions(model, 1, 1, 53, 35)
         run {
             val desc = Overlay.of(model, "description", StringOverlay::class.java)!!

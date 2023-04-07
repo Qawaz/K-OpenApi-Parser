@@ -10,7 +10,6 @@ dependencies {
 
     val jacksonVersion = property("jackson.version") as String
 
-    implementation(project(":json-overlay"))
     api(project(":parser"))
 
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")

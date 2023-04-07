@@ -12,13 +12,7 @@
  * ModelSolv, Inc.
  * - initial API and implementation and/or initial documentation
  */
-package com.reprezen.jsonoverlay.model
-
-import com.reprezen.jsonoverlay.gen.CodeGenerator
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.URL
-import java.nio.charset.StandardCharsets
+package com.wakaztahir.generator
 
 object GenTestModel {
 
@@ -28,7 +22,7 @@ object GenTestModel {
         CodeGenerator.main(
             CodeGenerator.Options(
                 topDir = "json-overlay/src/test/java/com/reprezen/jsonoverlay/model",
-                typeDataFile = "json-overlay/src/test/java/com/reprezen/jsonoverlay/model/types.yaml",
+                typeDataFile = "src/main/kotlin/com/wakaztahir/generator/test_types.yaml",
                 interfacePackage = "intf",
                 interfaceDir = "intf",
                 classDir = "impl",
@@ -36,16 +30,6 @@ object GenTestModel {
                 classPackage = "impl"
             )
         )
-    }
-
-    fun loadResourceFileAsURL(resourcePath: String): URL {
-        return object {}.javaClass.classLoader.getResource(resourcePath)!!
-    }
-
-    fun loadResourceFileAsString(resourcePath: String): String {
-        val inputStream = object {}.javaClass.classLoader.getResourceAsStream(resourcePath)!!
-        val reader = BufferedReader(InputStreamReader(inputStream, StandardCharsets.UTF_8))
-        return reader.readText()
     }
 
 }
