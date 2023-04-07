@@ -16,12 +16,10 @@
             @runtime.print_string("private ")
         @endif
 
-        @runtime.print_string("class ")
-        @runtime.print_string(@var(name))
-        @runtime.print_char(' ')
+        @runtime.print_string("class " + name + ' ')
 
         @if(extends.size() > 0)
-            @runtime.print_string(": " + @var(extends.joinToString("(), ")) + ' ')
+            @runtime.print_string(": " + extends.joinToString("(), ") + ' ')
         @endif
 
         @if(implements.size() > 0)

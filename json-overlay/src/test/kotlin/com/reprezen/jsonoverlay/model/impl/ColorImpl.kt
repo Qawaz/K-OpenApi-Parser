@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.reprezen.jsonoverlay.JsonOverlay;
 import com.reprezen.jsonoverlay.ReferenceManager;
 
-class ColorImpl : EnumOverlay<Color>  {
+class ColorImpl : EnumOverlay<Color> {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)

@@ -21,7 +21,7 @@ object GenTestModel {
     fun main(args: Array<String>) {
         CodeGenerator.main(
             CodeGenerator.Options(
-                topDir = "json-overlay/src/test/java/com/reprezen/jsonoverlay/model",
+                topDir = "json-overlay/src/test/kotlin/com/reprezen/jsonoverlay/model",
                 typeDataFile = "src/main/kotlin/com/wakaztahir/generator/test_types.yaml",
                 interfacePackage = "intf",
                 interfaceDir = "intf",
