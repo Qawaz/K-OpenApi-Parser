@@ -4,7 +4,6 @@ import com.wakaztahir.kate.model.BooleanValue
 import com.wakaztahir.kate.model.StringValue
 import com.wakaztahir.kate.model.model.KATEListImpl
 import com.wakaztahir.kate.model.model.MutableKATEObject
-import com.wakaztahir.kate.model.model.MutableKTEObject
 
 interface TypeDeclaration {
 
@@ -51,7 +50,7 @@ class ClassOrInterfaceDeclaration(
     }
 
     override fun toMutableKTEObject(): MutableKATEObject {
-        return MutableKTEObject {
+        return MutableKATEObject {
             putValue("name", name)
             putValue("extends", KATEListImpl(extended.map { StringValue(it) }))
             putValue("implements", KATEListImpl(implemented.map { StringValue(it) }))
@@ -85,7 +84,7 @@ class EnumDeclaration(override val name: String, val isPublic: Boolean) : TypeDe
     }
 
     override fun toMutableKTEObject(): MutableKATEObject {
-        return MutableKTEObject {
+        return MutableKATEObject {
             putValue("name", name)
             putValue("isPublic", BooleanValue(isPublic))
             putValue("EnumEntries", "\t" + entries.joinToString(",\n\t"))
