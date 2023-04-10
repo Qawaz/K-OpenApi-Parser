@@ -12,5 +12,6 @@ pluginManagement {
 rootProject.name = "KOpenAPIParser"
 
 include("json-overlay")
+include("json-overlay-kt")
 include("parser")
 include("validator")
