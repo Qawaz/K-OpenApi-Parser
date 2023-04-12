@@ -10,9 +10,7 @@ import com.reprezen.jsonoverlay.ListOverlay;
 import com.reprezen.jsonoverlay.OverlayFactory;
 import com.reprezen.jsonoverlay.Builder;
 import com.reprezen.jsonoverlay.model.impl.EntryImpl;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.fasterxml.jackson.core.JsonPointer;
 import com.reprezen.jsonoverlay.ReferenceManager;
 import com.reprezen.jsonoverlay.IntegerOverlay;
 import com.reprezen.jsonoverlay.model.impl.ScalarsImpl;
@@ -20,12 +18,13 @@ import com.reprezen.jsonoverlay.model.impl.ItemImpl;
 import kotlin.collections.List;
 import com.reprezen.jsonoverlay.JsonOverlay;
 import com.reprezen.jsonoverlay.model.impl.ColorImpl;
+import kotlinx.serialization.json.JsonElement
 import kotlin.collections.Map;
 
 class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(testModel : TestModel?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(testModel, parent, Companion.factory, refMgr)
@@ -347,7 +346,7 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 				return TestModelImpl(testModel, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<TestModel> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<TestModel> {
 				return TestModelImpl(json, parent, refMgr)
 			}
 		
@@ -358,7 +357,7 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 			return TestModel::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out TestModel> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out TestModel> {
 			return TestModel::class.java
 		}
 		

@@ -7,16 +7,15 @@ import com.reprezen.jsonoverlay.parser.Generated;
 import com.reprezen.jsonoverlay.IJsonOverlay;
 import com.reprezen.jsonoverlay.OverlayFactory;
 import com.reprezen.jsonoverlay.Builder;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.reprezen.jsonoverlay.PropertiesOverlay;
 import com.reprezen.jsonoverlay.JsonOverlay;
-import com.fasterxml.jackson.core.JsonPointer;
 import com.reprezen.jsonoverlay.ReferenceManager;
+import kotlinx.serialization.json.JsonElement
 
 class ItemImpl : PropertiesOverlay<Item> ,Item {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(item : Item?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(item, parent, Companion.factory, refMgr)
@@ -61,7 +60,7 @@ class ItemImpl : PropertiesOverlay<Item> ,Item {
 				return ItemImpl(item, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Item> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Item> {
 				return ItemImpl(json, parent, refMgr)
 			}
 		
@@ -72,7 +71,7 @@ class ItemImpl : PropertiesOverlay<Item> ,Item {
 			return Item::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out Item> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out Item> {
 			return Item::class.java
 		}
 		

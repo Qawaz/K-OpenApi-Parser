@@ -7,9 +7,7 @@ import com.reprezen.jsonoverlay.parser.Generated;
 import com.reprezen.jsonoverlay.IJsonOverlay;
 import com.reprezen.jsonoverlay.OverlayFactory;
 import com.reprezen.jsonoverlay.Builder;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.fasterxml.jackson.core.JsonPointer;
 import com.reprezen.jsonoverlay.NumberOverlay;
 import com.reprezen.jsonoverlay.ReferenceManager;
 import com.reprezen.jsonoverlay.IntegerOverlay;
@@ -19,11 +17,12 @@ import com.reprezen.jsonoverlay.ObjectOverlay;
 import com.reprezen.jsonoverlay.JsonOverlay;
 import com.reprezen.jsonoverlay.model.impl.ColorImpl;
 import com.reprezen.jsonoverlay.BooleanOverlay;
+import kotlinx.serialization.json.JsonElement
 
 class ScalarsImpl : PropertiesOverlay<Scalars> ,Scalars {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(scalars : Scalars?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(scalars, parent, Companion.factory, refMgr)
@@ -181,7 +180,7 @@ class ScalarsImpl : PropertiesOverlay<Scalars> ,Scalars {
 				return ScalarsImpl(scalars, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Scalars> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Scalars> {
 				return ScalarsImpl(json, parent, refMgr)
 			}
 		
@@ -192,7 +191,7 @@ class ScalarsImpl : PropertiesOverlay<Scalars> ,Scalars {
 			return Scalars::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out Scalars> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out Scalars> {
 			return Scalars::class.java
 		}
 		

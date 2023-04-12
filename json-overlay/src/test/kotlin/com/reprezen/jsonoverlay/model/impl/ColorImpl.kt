@@ -6,14 +6,14 @@ import com.reprezen.jsonoverlay.IJsonOverlay;
 import com.reprezen.jsonoverlay.OverlayFactory;
 import com.reprezen.jsonoverlay.Builder;
 import com.reprezen.jsonoverlay.EnumOverlay;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.reprezen.jsonoverlay.JsonOverlay;
 import com.reprezen.jsonoverlay.ReferenceManager;
+import kotlinx.serialization.json.JsonElement
 
 class ColorImpl : EnumOverlay<Color> {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(color : Color?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(color, parent, Companion.factory, refMgr)
@@ -38,7 +38,7 @@ class ColorImpl : EnumOverlay<Color> {
 				return ColorImpl(color, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Color> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Color> {
 				return ColorImpl(json, parent, refMgr)
 			}
 		}
