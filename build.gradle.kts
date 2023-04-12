@@ -2,6 +2,7 @@ plugins {
     java
     kotlin("jvm")
     id("maven-publish")
+    kotlin("plugin.serialization") version "1.8.10"
 }
 
 dependencies {
@@ -10,6 +11,8 @@ dependencies {
 
     implementation(project(":json-overlay"))
     implementation("com.wakaztahir:kate:1.0.7")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")

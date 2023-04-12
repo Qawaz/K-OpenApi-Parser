@@ -14,10 +14,13 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.core.JsonPointer
-import com.fasterxml.jackson.databind.JsonNode
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.jsonArray
 
-class ListOverlay<V> : JsonOverlay<MutableList<V>> {
+class ListOverlay<V> : JsonOverlay<MutableList<V>>, KeyValueOverlay {
+
 
     private val itemFactory: OverlayFactory<V>
 
@@ -26,7 +29,9 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>> {
     private var elaborated = false
 
     private constructor(
-        json: JsonNode, parent: JsonOverlay<*>?, factory: OverlayFactory<MutableList<V>>,
+        json: JsonElement,
+        parent: JsonOverlay<*>?,
+        factory: OverlayFactory<MutableList<V>>,
         refMgr: ReferenceManager
     ) : super(json, parent, factory, refMgr) {
         itemFactory = (factory as ListOverlayFactory<V>).itemFactory
@@ -36,16 +41,11 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>> {
         value: List<V>?,
         parent: JsonOverlay<*>?, factory: OverlayFactory<MutableList<V>>,
         refMgr: ReferenceManager
-    ) : super(ArrayList<V>(value), parent, factory, refMgr) {
+    ) : super(ArrayList<V>(value ?: listOf()), parent, factory, refMgr) {
         itemFactory = (factory as ListOverlayFactory<V>).itemFactory
     }
 
-    override fun _findInternal(path: JsonPointer?): JsonOverlay<*>? {
-        val index = path!!.matchingIndex
-        return if (index >= 0 && overlays.size > index) overlays[index]._find(path.tail()) else null
-    }
-
-    override fun _fromJson(json: JsonNode): MutableList<V> {
+    override fun _fromJson(json: JsonElement): MutableList<V> {
         return object : ArrayList<V>() {
             private val serialVersionUID = 1L
 
@@ -55,17 +55,9 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>> {
         }
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode {
-        val array = _jsonArray()
-        for (item in overlays) {
-            // we can't have missing children, since they'd screw up the position of other
-            // entries. So we set an option for each of chilren ensuring that they will
-            // return empty containers. This only affects list, map, and properties
-            // overlays. Map and properties overlays remove the keep-one option when
-            // serializing their children.
-            array.add(item._toJson(options.plus(SerializationOptions.Option.KEEP_ONE_EMPTY)))
-        }
-        return if (array.size() > 0 || options.isKeepThisEmpty) array else _jsonMissing()
+    override fun _toJsonInternal(options: SerializationOptions): JsonElement {
+        if (overlays.isEmpty() && !options.isKeepThisEmpty) return JsonNull
+        return _jsonArray(overlays.map { it._toJson(options.plus(SerializationOptions.Option.KEEP_ONE_EMPTY)) })
     }
 
     override fun _isElaborated(): Boolean {
@@ -85,9 +77,9 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>> {
     private fun fillWithJson() {
         value!!.clear()
         overlays.clear()
-        val iter = json!!.elements()
-        while (iter.hasNext()) {
-            val itemOverlay = itemFactory.create(iter.next(), this, refMgr)
+        if (json !is JsonArray) return
+        for (item in json!!.jsonArray) {
+            val itemOverlay = itemFactory.create(item, this, refMgr)
             overlays.add(itemOverlay)
             value!!.add(itemOverlay._get(false)!!)
         }
@@ -147,13 +139,23 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>> {
 
     private fun _setChildParentPaths(from: Int = 0, to: Int = overlays.size) {
         for (i in from until to) {
-            overlays[i]._setPathInParent(Integer.toString(i))
+            overlays[i]._setPathInParent(i.toString())
         }
     }
 
-    override fun equals(obj: Any?): Boolean {
-        if (obj is ListOverlay<*>) {
-            return overlays == obj.overlays
+    override fun _getPropertyNames(): List<String> {
+        return mutableListOf<String>().apply {
+            for (i in 0 until size) add(i.toString())
+        }
+    }
+
+    override fun _getKeyValueOverlay(name: String): JsonOverlay<*>? {
+        return name.toIntOrNull()?.let { overlays[it] }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is ListOverlay<*>) {
+            return overlays == other.overlays
         }
         return false
     }
@@ -185,7 +187,7 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>> {
         }
 
         override fun _create(
-            json: JsonNode,
+            json: JsonElement,
             parent: JsonOverlay<*>?,
             refMgr: ReferenceManager
         ): JsonOverlay<MutableList<V>> {

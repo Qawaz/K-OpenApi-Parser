@@ -14,14 +14,7 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.core.JsonPointer
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.node.*
-import java.math.BigDecimal
-import java.math.BigInteger
-import java.util.*
-import java.util.function.Consumer
+import kotlinx.serialization.json.*
 
 @Suppress("FunctionName")
 abstract class JsonOverlay<V> : IJsonOverlay<V> {
@@ -33,7 +26,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     protected var parent: JsonOverlay<*>? = null
 
     @JvmField
-    var json: JsonNode? = null
+    var json: JsonElement? = null
 
     @JvmField
     val refMgr: ReferenceManager
@@ -41,23 +34,23 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     @JvmField
     val factory: OverlayFactory<V>
 
+    private val present: Boolean
+        get() = (json != null || value != null)
+
     private var pathInParent: String? = null
-    private var present: Boolean
+
     private var refOverlay: RefOverlay<V>? = null
     private var creatingRef: Reference? = null
-    private var positionInfo: Optional<PositionInfo>? = null
 
     protected constructor(factory: OverlayFactory<V>, refMgr: ReferenceManager) {
         this.factory = factory
         this.refMgr = refMgr
-        this.present = false
     }
 
     protected fun load(value: V?, parent: JsonOverlay<*>?) {
         json = null
         this.value = value
         this.parent = parent
-        present = value != null
     }
 
     protected constructor(value: V?, parent: JsonOverlay<*>?, factory: OverlayFactory<V>, refMgr: ReferenceManager) {
@@ -66,10 +59,9 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         this.parent = parent
         this.factory = factory
         this.refMgr = refMgr
-        present = value != null
     }
 
-    protected fun load(json: JsonNode, parent: JsonOverlay<*>?) {
+    protected fun load(json: JsonElement, parent: JsonOverlay<*>?) {
         this.json = json
         if (Reference.isReferenceNode(json)) {
             refOverlay = RefOverlay(json, parent, factory, refMgr)
@@ -77,11 +69,10 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
             value = _fromJson(json)
         }
         this.parent = parent
-        present = !json.isMissingNode
     }
 
     protected constructor(
-        json: JsonNode,
+        json: JsonElement,
         parent: JsonOverlay<*>?,
         factory: OverlayFactory<V>,
         refMgr: ReferenceManager
@@ -95,7 +86,6 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         this.parent = parent
         this.factory = factory
         this.refMgr = refMgr
-        present = !json.isMissingNode
     }
 
     fun create(): JsonOverlay<V> {
@@ -124,13 +114,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     /* package */
     fun _set(value: V?) {
         this.value = value
-        present = value != null
         refOverlay = null
-    }
-
-    /* package */
-    fun _copy(): JsonOverlay<V> {
-        return factory.create(_get(), null, refMgr)
     }
 
     /* package */
@@ -139,7 +123,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     }
 
     private fun _isValidRef(): Boolean {
-        return if (refOverlay != null) refOverlay!!._getReference().isValid() else false
+        return if (refOverlay != null) refOverlay!!._getReference().isValid else false
     }
 
     /* package */
@@ -209,18 +193,6 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     }
 
     /* package */
-    fun _find(path: JsonPointer): JsonOverlay<*>? {
-        return if (path.matches()) thisOrRefTarget() else _findInternal(path)
-    }
-
-    /* package */
-    fun _find(path: String?): JsonOverlay<*>? {
-        return _find(JsonPointer.compile(path))
-    }
-
-    protected abstract fun _findInternal(path: JsonPointer?): JsonOverlay<*>?
-
-    /* package */
     fun _getPathFromRoot(): String? {
         return if (parent != null) {
             if (pathInParent!!.isEmpty()) {
@@ -249,12 +221,12 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         if (creatingRef != null) {
             return creatingRef!!.normalizedRef!!
         }
-        if (_isReference() && refOverlay!!._getReference().isValid() && !forRef) {
+        if (_isReference() && refOverlay!!._getReference().isValid && !forRef) {
             return refOverlay!!.overlay!!._getJsonReference(false)
         }
         return if (parent != null) {
             val ref = parent!!._getJsonReference()
-            ref + (if (ref.contains("#")) "" else "#") + "/" + pathInParent
+            ref + (if (ref.contains("#")) "" else "#") + "/" + pathInParent!!
         } else {
             "#"
         }
@@ -267,7 +239,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         return docUrl.ifEmpty { null }
     }
 
-    protected abstract fun _fromJson(json: JsonNode): V?
+    protected abstract fun _fromJson(json: JsonElement): V?
 
     fun _setParent(parent: JsonOverlay<*>?) {
         this.parent = parent
@@ -275,29 +247,27 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
 
     /* package */ /* package */
     @JvmOverloads
-    fun _toJson(options: SerializationOptions = SerializationOptions.EMPTY): JsonNode {
+    fun _toJson(options: SerializationOptions = SerializationOptions.EMPTY): JsonElement {
         return if (_isReference()) {
             if (!options.isFollowRefs || refOverlay!!._getReference().isInvalid) {
-                val obj = _jsonObject()
-                obj.put("\$ref", refOverlay!!._getReference().refString)
-                obj
+                _jsonObject(mapOf("\$ref" to JsonPrimitive(refOverlay!!._getReference().refString)))
             } else {
                 refOverlay!!.overlay!!._toJson(options)
             }
         } else {
-            _toJsonInternal(options)!!
+            _toJsonInternal(options) ?: JsonNull
         }
     }
 
     /* package */
-    fun _toJson(vararg options: SerializationOptions.Option): JsonNode {
+    fun _toJson(vararg options: SerializationOptions.Option): JsonElement {
         return _toJson(SerializationOptions(*options))
     }
 
-    protected abstract fun _toJsonInternal(options: SerializationOptions): JsonNode?
+    protected abstract fun _toJsonInternal(options: SerializationOptions): JsonElement?
 
     /* package */
-    fun _getParsedJson(): JsonNode? {
+    fun _getParsedJson(): JsonElement? {
         return json
     }
 
@@ -333,110 +303,45 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         this.pathInParent = pathInParent
     }
 
-    /* package */
-    fun _getPositionInfo(): Optional<PositionInfo>? {
-        if (positionInfo == null) {
-            val ptr = JsonPointer.compile(_getPathFromRoot())
-            positionInfo = refMgr.getPositionInfo(ptr)
-            positionInfo!!.ifPresent { info: PositionInfo -> info.documentUrl = _getDocumentUrl(true) }
-        }
-        return positionInfo
-    }
-
     abstract fun _getFactory(): OverlayFactory<*>
 
-    override fun toString(): String {
-        return _toJson().toString()
-    }
-
-    override fun equals(obj: Any?): Boolean {
-        return if (obj is JsonOverlay<*>) {
-            if (value != null) value == obj.value else obj.value == null
-        } else {
-            false // obj is null or not an overlay object
-        }
-    }
 
     override fun hashCode(): Int {
         return if (value != null) value.hashCode() else 0
     }
 
+    private fun compareValueAndJson(other: JsonOverlay<*>): Boolean {
+        if (value != null && value == other.value) return true
+        return json != null && json == other.json
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is JsonOverlay<*>) return false
+        return if (compareValueAndJson(other)) {
+            true
+        } else {
+            if (_isReference() && !other._isReference()) {
+                _getRefOverlay()?.overlay?.let { other.compareValueAndJson(it) } ?: false
+            } else if (!_isReference() && other._isReference()) {
+                other._getRefOverlay()?.overlay?.let { compareValueAndJson(it) } ?: false
+            } else {
+                false
+            }
+        }
+    }
+
     companion object {
 
         @JvmStatic
-        protected val mapper = ObjectMapper()
-
-        // some utility classes for overlays
-        private val fac: JsonNodeFactory = MinSharingJsonNodeFactory.instance
-
-        @JvmStatic
-        fun _jsonObject(): ObjectNode {
-            return fac.objectNode()
+        fun _jsonObject(content: Map<String, JsonElement>): JsonObject {
+            return JsonObject(content)
         }
 
         @JvmStatic
-        protected fun _jsonArray(): ArrayNode {
-            return fac.arrayNode()
+        protected fun _jsonArray(content: List<JsonElement>): JsonArray {
+            return JsonArray(content)
         }
 
-        @JvmStatic
-        protected fun _jsonScalar(s: String?): TextNode {
-            return fac.textNode(s)
-        }
-
-        @JvmStatic
-        protected fun _jsonScalar(n: Int): ValueNode {
-            return fac.numberNode(n)
-        }
-
-        @JvmStatic
-        protected fun _jsonScalar(n: Long): ValueNode {
-            return fac.numberNode(n)
-        }
-
-        @JvmStatic
-        protected fun _jsonScalar(n: Short): ValueNode {
-            return fac.numberNode(n)
-        }
-
-        @JvmStatic
-        protected fun _jsonScalar(n: Byte): ValueNode {
-            return fac.numberNode(n)
-        }
-
-        @JvmStatic
-        protected fun _jsonScalar(n: Double): ValueNode {
-            return fac.numberNode(n)
-        }
-
-        @JvmStatic
-        protected fun _jsonScalar(n: Float): ValueNode {
-            return fac.numberNode(n)
-        }
-
-        @JvmStatic
-        protected fun _jsonScalar(n: BigInteger?): ValueNode {
-            return fac.numberNode(n)
-        }
-
-        @JvmStatic
-        protected fun _jsonScalar(n: BigDecimal?): ValueNode {
-            return fac.numberNode(n)
-        }
-
-        @JvmStatic
-        protected fun _jsonBoolean(b: Boolean): ValueNode {
-            return fac.booleanNode(b)
-        }
-
-        @JvmStatic
-        protected fun _jsonMissing(): MissingNode {
-            return MissingNode.getInstance()
-        }
-
-        @JvmStatic
-        protected fun _jsonNull(): NullNode {
-            return fac.nullNode()
-        }
     }
 }

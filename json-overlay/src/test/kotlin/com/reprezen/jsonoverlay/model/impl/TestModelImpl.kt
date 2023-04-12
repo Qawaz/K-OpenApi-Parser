@@ -11,14 +11,15 @@ import com.reprezen.jsonoverlay.OverlayFactory;
 import com.reprezen.jsonoverlay.Builder;
 import com.reprezen.jsonoverlay.model.impl.EntryImpl;
 import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.reprezen.jsonoverlay.JsonPointer;
 import com.reprezen.jsonoverlay.ReferenceManager;
 import com.reprezen.jsonoverlay.IntegerOverlay;
 import com.reprezen.jsonoverlay.model.impl.ScalarsImpl;
+import kotlinx.serialization.json.JsonElement;
 import com.reprezen.jsonoverlay.model.impl.ItemImpl;
 import kotlin.collections.List;
 import com.reprezen.jsonoverlay.JsonOverlay;
 import com.reprezen.jsonoverlay.model.impl.ColorImpl;
-import kotlinx.serialization.json.JsonElement
 import kotlin.collections.Map;
 
 class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
@@ -32,45 +33,45 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Description
 	override fun getDescription() : String? {
-		return _get("description", String::class.java)
+		return _get("description")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setDescription(description : String) {
-		_setScalar("description", description, String::class.java)
+		_setScalar("description", description)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Width
 	override fun getWidth() : Int? {
-		return _get("width", Int::class.java)
+		return _get("width")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setWidth(width : Int) {
-		_setScalar("width", width, Int::class.java)
+		_setScalar("width", width)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Height
 	override fun getHeight() : Int? {
-		return _get("height", Int::class.java)
+		return _get("height")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setHeight(height : Int) {
-		_setScalar("height", height, Int::class.java)
+		_setScalar("height", height)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Entry
 	override fun getEntries() : MutableMap<String, Entry> {
-		return _getMap("entries", Entry::class.java)
+		return _getMap("entries")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getEntries(elaborate : Boolean) : MutableMap<String, Entry> {
-		return _getMap("entries", elaborate, Entry::class.java)
+		return _getMap("entries")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -80,38 +81,38 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasEntry(name : String) : Boolean {
-		return _getMap("entries", Entry::class.java).containsKey(name)
+		return _getMap<Entry>("entries").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getEntry(name : String) : Entry? {
-		return _get("entries", name, Entry::class.java)
+		return _get("entries", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setEntries(entries : MutableMap<String, Entry>) {
-		_setMap("entries", entries, Entry::class.java)
+		_setMap("entries", entries)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setEntry(name : String, entry : Entry) {
-		_set("entries", name, entry, Entry::class.java)
+		_set("entries", name, entry)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeEntry(name : String) {
-		_remove("entries", name, Entry::class.java)
+		_remove("entries", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Item
 	override fun getItems() : List<Item> {
-		return _getList("items", Item::class.java)
+		return _getList("items")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getItems(elaborate : Boolean) : List<Item> {
-		return _getList("items", elaborate, Item::class.java)
+		return _getList("items")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -121,43 +122,43 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getItem(index : Int) : Item {
-		return _get("items", index, Item::class.java)
+		return _get("items", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setItems(items : MutableList<Item>) {
-		_setList("items", items, Item::class.java)
+		_setList("items", items)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setItem(index : Int, item : Item) {
-		_set("items", index, item, Item::class.java)
+		_set("items", index, item)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun addItem(item : Item) {
-		_add("items", item, Item::class.java)
+		_add("items", item)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun insertItem(index : Int, item : Item) {
-		_insert("items", index, item, Item::class.java)
+		_insert("items", index, item)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeItem(index : Int) {
-		_remove("items", index, Item::class.java)
+		_remove("items", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Integer
 	override fun getIntegers() : List<Int> {
-		return _getList("integers", Int::class.java)
+		return _getList("integers")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getIntegers(elaborate : Boolean) : List<Int> {
-		return _getList("integers", elaborate, Int::class.java)
+		return _getList("integers")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -167,43 +168,43 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getInteger(index : Int) : Int {
-		return _get("integers", index, Int::class.java)
+		return _get("integers", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setIntegers(integers : MutableList<Int>) {
-		_setList("integers", integers, Int::class.java)
+		_setList("integers", integers)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setInteger(index : Int, integer : Int) {
-		_set("integers", index, integer, Int::class.java)
+		_set("integers", index, integer)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun addInteger(integer : Int) {
-		_add("integers", integer, Int::class.java)
+		_add("integers", integer)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun insertInteger(index : Int, integer : Int) {
-		_insert("integers", index, integer, Int::class.java)
+		_insert("integers", index, integer)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeInteger(index : Int) {
-		_remove("integers", index, Int::class.java)
+		_remove("integers", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// NamedInteger
 	override fun getNamedIntegers() : MutableMap<String, Int> {
-		return _getMap("namedIntegers", Int::class.java)
+		return _getMap("namedIntegers")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getNamedIntegers(elaborate : Boolean) : MutableMap<String, Int> {
-		return _getMap("namedIntegers", elaborate, Int::class.java)
+		return _getMap("namedIntegers")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -213,54 +214,54 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasNamedInteger(name : String) : Boolean {
-		return _getMap("namedIntegers", Int::class.java).containsKey(name)
+		return _getMap<Int>("namedIntegers").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getNamedInteger(name : String) : Int? {
-		return _get("namedIntegers", name, Int::class.java)
+		return _get("namedIntegers", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setNamedIntegers(namedIntegers : MutableMap<String, Int>) {
-		_setMap("namedIntegers", namedIntegers, Int::class.java)
+		_setMap("namedIntegers", namedIntegers)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setNamedInteger(name : String, namedInteger : Int) {
-		_set("namedIntegers", name, namedInteger, Int::class.java)
+		_set("namedIntegers", name, namedInteger)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeNamedInteger(name : String) {
-		_remove("namedIntegers", name, Int::class.java)
+		_remove("namedIntegers", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Color
 	override fun getColor() : Color? {
-		return _get("color", Color::class.java)
+		return _get("color")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getColor(elaborate : Boolean) : Color? {
-		return _get("color", elaborate, Color::class.java)
+		return _get("color")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setColor(color : Color) {
-		_setScalar("color", color, Color::class.java)
+		_setScalar("color", color)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Scalar
 	override fun getScalars() : MutableMap<String, Scalars> {
-		return _getMap("scalars", Scalars::class.java)
+		return _getMap("scalars")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getScalars(elaborate : Boolean) : MutableMap<String, Scalars> {
-		return _getMap("scalars", elaborate, Scalars::class.java)
+		return _getMap("scalars")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -270,27 +271,27 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasScalar(name : String) : Boolean {
-		return _getMap("scalars", Scalars::class.java).containsKey(name)
+		return _getMap<Scalars>("scalars").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getScalar(name : String) : Scalars? {
-		return _get("scalars", name, Scalars::class.java)
+		return _get("scalars", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setScalars(scalars : MutableMap<String, Scalars>) {
-		_setMap("scalars", scalars, Scalars::class.java)
+		_setMap("scalars", scalars)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setScalar(name : String, scalar : Scalars) {
-		_set("scalars", name, scalar, Scalars::class.java)
+		_set("scalars", name, scalar)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeScalar(name : String) {
-		_remove("scalars", name, Scalars::class.java)
+		_remove("scalars", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

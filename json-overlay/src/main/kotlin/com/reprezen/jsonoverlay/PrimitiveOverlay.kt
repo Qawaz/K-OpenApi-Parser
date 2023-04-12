@@ -14,7 +14,7 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.databind.JsonNode
+import kotlinx.serialization.json.*
 import java.math.BigDecimal
 import java.math.BigInteger
 
@@ -25,49 +25,20 @@ class PrimitiveOverlay private constructor(
 ) : ScalarOverlay<Any>(Companion.factory, refMgr) {
 
     init {
-        if (value != null && value is JsonNode) {
+        if (value != null && value is JsonElement) {
             load(value, parent)
         } else {
             load(value, parent)
         }
     }
 
-    override fun _fromJson(json: JsonNode): Any? {
-        return if (json.isTextual) {
-            json.textValue()
-        } else if (json.isNumber) {
-            json.numberValue()
-        } else if (json.isBoolean) {
-            json.booleanValue()
-        } else {
-            null
-        }
+    override fun _fromJson(json: JsonElement): Any? {
+        if (json !is JsonPrimitive) return null
+        return json.toValue()
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode? {
-        return if (value == null) {
-            _jsonMissing()
-        } else if (value is String) {
-            _jsonScalar(value as String)
-        } else if (value is BigDecimal) {
-            _jsonScalar(value as BigDecimal)
-        } else if (value is BigInteger) {
-            _jsonScalar(value as BigInteger)
-        } else if (value is Byte) {
-            _jsonScalar((value as Byte))
-        } else if (value is Double) {
-            _jsonScalar((value as Double))
-        } else if (value is Float) {
-            _jsonScalar((value as Float))
-        } else if (value is Int) {
-            _jsonScalar((value as Int))
-        } else if (value is Long) {
-            _jsonScalar((value as Long))
-        } else if (value is Short) {
-            _jsonScalar((value as Short))
-        } else {
-            null
-        }
+    override fun _toJsonInternal(options: SerializationOptions): JsonElement {
+        return value.toJsonElement()
     }
 
     override fun _getFactory(): OverlayFactory<*> {
@@ -86,7 +57,7 @@ class PrimitiveOverlay private constructor(
             }
 
             public override fun _create(
-                json: JsonNode,
+                json: JsonElement,
                 parent: JsonOverlay<*>?,
                 refMgr: ReferenceManager
             ): PrimitiveOverlay {

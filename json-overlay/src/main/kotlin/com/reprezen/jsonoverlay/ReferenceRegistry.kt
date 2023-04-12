@@ -14,13 +14,16 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.core.JsonPointer
-import com.fasterxml.jackson.databind.JsonNode
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.booleanOrNull
 import java.io.IOException
 import java.net.URL
 import java.util.*
 
 class ReferenceRegistry @JvmOverloads constructor(loader: JsonLoader? = null) {
+
     private val managers: MutableMap<String, ReferenceManager> = HashMap()
     private val loader: JsonLoader
     private val overlaysByRef: MutableMap<Pair<String, String>, JsonOverlay<*>> = HashMap()
@@ -28,7 +31,7 @@ class ReferenceRegistry @JvmOverloads constructor(loader: JsonLoader? = null) {
     // can't use Pair here because we need to index by JsonNode identity, not
     // using
     // its equals impl
-    private val overlaysByJson: MutableMap<JsonNode, MutableMap<String, JsonOverlay<*>>> = IdentityHashMap()
+    private val overlaysByJson: MutableMap<JsonElement, MutableMap<String, JsonOverlay<*>>> = IdentityHashMap()
 
     init {
         this.loader = loader ?: JsonLoader()
@@ -43,7 +46,7 @@ class ReferenceRegistry @JvmOverloads constructor(loader: JsonLoader? = null) {
     }
 
     @Throws(IOException::class)
-    fun loadDoc(url: URL?): JsonNode {
+    fun loadDoc(url: URL?): JsonElement {
         return loader.load(url!!)
     }
 
@@ -55,16 +58,16 @@ class ReferenceRegistry @JvmOverloads constructor(loader: JsonLoader? = null) {
         overlaysByRef[Pair(normalizedRef, factorySig)] = overlay
     }
 
-    fun getOverlay(json: JsonNode, factorySig: String): JsonOverlay<*>? {
+    fun getOverlay(json: JsonElement, factorySig: String): JsonOverlay<*>? {
         val overlaysBySig: Map<String, JsonOverlay<*>>? = overlaysByJson[json]
         return overlaysBySig?.get(factorySig)
     }
 
-    fun register(json: JsonNode, factorySig: String, overlay: JsonOverlay<*>) {
+    fun register(json: JsonElement, factorySig: String, overlay: JsonOverlay<*>) {
         // can't share boolean or nulls because they don't have a public
         // constructor,
         // and factory uses shared instances
-        if (!json.isMissingNode && !json.isBoolean && !json.isNull) {
+        if (json !is JsonNull && (json as? JsonPrimitive)?.booleanOrNull == null) {
             if (!overlaysByJson.containsKey(json)) {
                 overlaysByJson[json] = HashMap()
             }
@@ -72,7 +75,4 @@ class ReferenceRegistry @JvmOverloads constructor(loader: JsonLoader? = null) {
         }
     }
 
-    fun getPositionInfo(docUrl: String?, pointer: JsonPointer?): Optional<PositionInfo> {
-        return loader.getPositionInfo(docUrl!!, pointer!!)
-    }
 }

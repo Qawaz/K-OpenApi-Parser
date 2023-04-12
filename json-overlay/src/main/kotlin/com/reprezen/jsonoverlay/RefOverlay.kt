@@ -14,7 +14,7 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.databind.JsonNode
+import kotlinx.serialization.json.JsonElement
 
 class RefOverlay<V> {
 
@@ -24,7 +24,7 @@ class RefOverlay<V> {
     private var factory: OverlayFactory<V>
     private var refMgr: ReferenceManager
 
-    constructor(json: JsonNode, parent: JsonOverlay<*>?, factory: OverlayFactory<V>, refMgr: ReferenceManager) {
+    constructor(json: JsonElement, parent: JsonOverlay<*>?, factory: OverlayFactory<V>, refMgr: ReferenceManager) {
         reference = refMgr.getReference(json)
         this.parent = parent // parent of reference, not parent of referent
         this.factory = factory
@@ -44,7 +44,7 @@ class RefOverlay<V> {
             if (!reference.isResolved) {
                 reference.resolve()
             }
-            if (target == null && reference.isValid()) {
+            if (target == null && reference.isValid) {
                 val registry = refMgr.registry
                 run {
                     val castTarget = registry.getOverlay(
@@ -55,13 +55,14 @@ class RefOverlay<V> {
                 }
                 if (target == null) {
                     val castTarget = registry.getOverlay(
-                        reference.getJson()!!,
+                        reference.getJson() ?: return null,
                         factory.signature!!
                     ) as JsonOverlay<V>?
                     target = castTarget
                 }
                 if (target == null) {
-                    target = factory.create(reference.getJson()!!, null, reference.manager!!)
+                    val json = reference.getJson()!!
+                    target = factory.create(json, null, reference.manager!!)
                     target!!._setCreatingRef(reference)
                     refMgr.registry.register(reference.normalizedRef!!, factory.signature!!, target!!)
                 }

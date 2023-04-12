@@ -8,16 +8,17 @@ import com.reprezen.jsonoverlay.IJsonOverlay;
 import com.reprezen.jsonoverlay.OverlayFactory;
 import com.reprezen.jsonoverlay.Builder;
 import com.reprezen.jsonoverlay.PropertiesOverlay;
+import com.reprezen.jsonoverlay.JsonPointer;
 import com.reprezen.jsonoverlay.NumberOverlay;
 import com.reprezen.jsonoverlay.ReferenceManager;
 import com.reprezen.jsonoverlay.IntegerOverlay;
 import com.reprezen.jsonoverlay.PrimitiveOverlay;
 import com.reprezen.jsonoverlay.model.impl.ScalarsImpl;
+import kotlinx.serialization.json.JsonElement;
 import com.reprezen.jsonoverlay.ObjectOverlay;
 import com.reprezen.jsonoverlay.JsonOverlay;
 import com.reprezen.jsonoverlay.model.impl.ColorImpl;
 import com.reprezen.jsonoverlay.BooleanOverlay;
-import kotlinx.serialization.json.JsonElement
 
 class ScalarsImpl : PropertiesOverlay<Scalars> ,Scalars {
 
@@ -30,104 +31,104 @@ class ScalarsImpl : PropertiesOverlay<Scalars> ,Scalars {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// StringValue
 	override fun getStringValue() : String? {
-		return _get("stringValue", String::class.java)
+		return _get("stringValue")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setStringValue(stringValue : String) {
-		_setScalar("stringValue", stringValue, String::class.java)
+		_setScalar("stringValue", stringValue)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// IntValue
 	override fun getIntValue() : Int? {
-		return _get("intValue", Int::class.java)
+		return _get("intValue")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setIntValue(intValue : Int) {
-		_setScalar("intValue", intValue, Int::class.java)
+		_setScalar("intValue", intValue)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// NumberValue
 	override fun getNumberValue() : Number? {
-		return _get("numberValue", Number::class.java)
+		return _get("numberValue")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setNumberValue(numberValue : Number) {
-		_setScalar("numberValue", numberValue, Number::class.java)
+		_setScalar("numberValue", numberValue)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// BoolValue
 	override fun getBoolValue() : Boolean? {
-		return _get("boolValue", Boolean::class.java)
+		return _get("boolValue")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isBoolValue() : Boolean {
-		return _get("boolValue", Boolean::class.java) ?: false
+		return _get("boolValue") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setBoolValue(boolValue : Boolean) {
-		_setScalar("boolValue", boolValue, Boolean::class.java)
+		_setScalar("boolValue", boolValue)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ObjValue
 	override fun getObjValue() : Any? {
-		return _get("objValue", Any::class.java)
+		return _get("objValue")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setObjValue(objValue : Any) {
-		_setScalar("objValue", objValue, Any::class.java)
+		_setScalar("objValue", objValue)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// PrimValue
 	override fun getPrimValue() : Any? {
-		return _get("primValue", Any::class.java)
+		return _get("primValue")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setPrimValue(primValue : Any) {
-		_setScalar("primValue", primValue, Any::class.java)
+		_setScalar("primValue", primValue)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ColorValue
 	override fun getColorValue() : Color? {
-		return _get("colorValue", Color::class.java)
+		return _get("colorValue")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getColorValue(elaborate : Boolean) : Color? {
-		return _get("colorValue", elaborate, Color::class.java)
+		return _get("colorValue")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setColorValue(colorValue : Color) {
-		_setScalar("colorValue", colorValue, Color::class.java)
+		_setScalar("colorValue", colorValue)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// EmbeddedScalars
 	override fun getEmbeddedScalars() : Scalars? {
-		return _get("embeddedScalars", Scalars::class.java)
+		return _get("embeddedScalars")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getEmbeddedScalars(elaborate : Boolean) : Scalars? {
-		return _get("embeddedScalars", elaborate, Scalars::class.java)
+		return _get("embeddedScalars")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setEmbeddedScalars(embeddedScalars : Scalars) {
-		_setScalar("embeddedScalars", embeddedScalars, Scalars::class.java)
+		_setScalar("embeddedScalars", embeddedScalars)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

@@ -14,8 +14,9 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.core.JsonPointer
-import com.fasterxml.jackson.databind.JsonNode
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URI
@@ -24,11 +25,13 @@ import java.net.URL
 import java.util.*
 
 class ReferenceManager {
+
     var registry: ReferenceRegistry
         private set
+
     private var docUrl: URL?
-    private var doc: JsonNode? = null
-    private val positions: MutableMap<JsonPointer, Optional<PositionInfo>> = HashMap()
+    private var doc: JsonElement? = null
+
 
     @JvmOverloads
     constructor(rootUrl: URL? = null, loader: JsonLoader? = null) {
@@ -39,7 +42,7 @@ class ReferenceManager {
         }
     }
 
-    constructor(rootUrl: URL?, preloadedDoc: JsonNode?, loader: JsonLoader?) : this(rootUrl, loader) {
+    constructor(rootUrl: URL?, preloadedDoc: JsonElement?, loader: JsonLoader?) : this(rootUrl, loader) {
         doc = preloadedDoc
     }
 
@@ -47,9 +50,6 @@ class ReferenceManager {
         docUrl = baseUrl
         this.registry = registry
     }
-
-    val docReference: Reference
-        get() = getReference(docUrl.toString())
 
     fun getManagerFor(url: URL?): ReferenceManager {
         val normalized = normalize(url, true)
@@ -61,31 +61,28 @@ class ReferenceManager {
         return manager
     }
 
-    fun getReference(refNode: JsonNode): Reference {
-        val refString = refNode["\$ref"].asText()
-        return getReference(refString)
+    fun getReference(refNode: JsonElement): Reference {
+        return getReference(refNode.jsonObject["\$ref"]!!.jsonPrimitive.content)
     }
 
-    fun getReference(refString: String?): Reference {
+    fun getReference(refString: String): Reference {
         return try {
             val url = URL(docUrl, refString)
             val fragment = url.ref
             val manager = getManagerFor(url)
-            Reference(refString!!, fragment, normalize(url, false).toString(), manager)
+            if(refString.startsWith('#')){
+                InternalReference(doc!!,refString, fragment, normalize(url, false).toString(), manager)
+//                ReferenceImpl(refString, fragment, normalize(url, false).toString(), manager)
+            }else {
+                ReferenceImpl(refString, fragment, normalize(url, false).toString(), manager)
+            }
         } catch (e: MalformedURLException) {
-            Reference(refString!!, ResolutionException(null, e), null)
+            ReferenceImpl(refString, ResolutionException(null, e), null)
         }
-    }
-
-    fun getPositionInfo(pointer: JsonPointer): Optional<PositionInfo> {
-        if (!positions.containsKey(pointer)) {
-            positions[pointer] = registry.getPositionInfo(docUrl.toString(), pointer)
-        }
-        return positions[pointer]!!
     }
 
     @Throws(IOException::class)
-    fun loadDoc(): JsonNode {
+    fun loadDoc(): JsonElement {
         if (doc == null) {
             doc = registry.loadDoc(docUrl)
         }

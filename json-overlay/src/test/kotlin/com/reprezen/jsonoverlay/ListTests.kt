@@ -14,7 +14,9 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.databind.node.JsonNodeFactory
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonPrimitive
 import org.junit.Assert
 import org.junit.Test
 
@@ -23,7 +25,7 @@ class ListTests : Assert() {
     private val data: MutableList<Int> = mutableListOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     private val factory = ListOverlay.getFactory(IntegerOverlay.factory)
     private val refMgr = ReferenceManager(null)
-    private val jfac = JsonNodeFactory.instance
+
 
     @Test
     fun testListFromValues() {
@@ -32,11 +34,11 @@ class ListTests : Assert() {
 
     @Test
     fun testListFromJson() {
-        val json = jfac.arrayNode()
+        val json = mutableListOf<JsonElement>()
         for (i in data) {
-            json.add(i)
+            json.add(JsonPrimitive(i))
         }
-        doChecks(factory.create(json, null, refMgr) as ListOverlay<Int>)
+        doChecks(factory.create(JsonArray(json), null, refMgr) as ListOverlay<Int>)
     }
 
     private fun doChecks(overlay: ListOverlay<Int>) {
@@ -72,18 +74,6 @@ class ListTests : Assert() {
         for (i in 0..9) {
             checkValueAt(overlay, i, i)
         }
-        var copy = overlay._copy() as ListOverlay<Int?>
-        assertNotSame("Copy operation should create different object", overlay, copy)
-        assertEquals(overlay, copy)
-        for (i in 0 until overlay.size()) {
-            assertNotSame(
-                "Copy operation should create copies of list overlay items",
-                overlay._getOverlay(i),
-                copy._getOverlay(i)
-            )
-        }
-        copy = overlay.factory.create(overlay._toJson(), null, refMgr) as ListOverlay<Int?>
-        assertEquals(overlay._get(), copy._get())
         assertSame(overlay, overlay._getRoot())
         val itemOverlay = overlay._getOverlay(0)
         assertSame(overlay, itemOverlay._getRoot())

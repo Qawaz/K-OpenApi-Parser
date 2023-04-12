@@ -4,11 +4,11 @@ import com.reprezen.jsonoverlay.model.intf.*;
 import com.reprezen.jsonoverlay.parser.Generated;
 import com.reprezen.jsonoverlay.IJsonOverlay;
 import com.reprezen.jsonoverlay.OverlayFactory;
+import kotlinx.serialization.json.JsonElement;
 import com.reprezen.jsonoverlay.Builder;
 import com.reprezen.jsonoverlay.EnumOverlay;
 import com.reprezen.jsonoverlay.JsonOverlay;
 import com.reprezen.jsonoverlay.ReferenceManager;
-import kotlinx.serialization.json.JsonElement
 
 class ColorImpl : EnumOverlay<Color> {
 

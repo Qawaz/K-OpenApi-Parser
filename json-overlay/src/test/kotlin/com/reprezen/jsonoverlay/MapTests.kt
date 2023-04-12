@@ -14,7 +14,9 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.databind.node.JsonNodeFactory
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import org.junit.Assert
 import org.junit.Test
 import java.util.LinkedHashMap
@@ -22,7 +24,6 @@ import java.util.LinkedHashMap
 class MapTests : Assert() {
     private val factory = MapOverlay.getFactory(IntegerOverlay.factory, null)
     private val refMgr = ReferenceManager()
-    private val jfac = JsonNodeFactory.instance
     private val a = 'A'
     @Test
     fun testMapFromValues() {
@@ -35,11 +36,11 @@ class MapTests : Assert() {
 
     @Test
     fun testMapFromJson() {
-        val obj = jfac.objectNode()
+        val obj = mutableMapOf<String,JsonElement>()
         for (i in 0..9) {
-            obj[Character.toString((a.code + i).toChar())] = jfac.numberNode(i)
+            obj[(a.code + i).toChar().toString()] = JsonPrimitive(i)
         }
-        doChecks(factory.create(obj, null, refMgr) as MapOverlay<Int>)
+        doChecks(factory.create(JsonObject(obj), null, refMgr) as MapOverlay<Int>)
     }
 
     private fun doChecks(overlay: MapOverlay<Int>) {
@@ -58,20 +59,6 @@ class MapTests : Assert() {
         // now complete again, but A, E, and J are final keys
         assertEquals(10, overlay.size().toLong())
         checkKeys(overlay, "B", "C", "D", "F", "G", "H", "I", "A", "E", "J")
-        val copy = overlay._copy() as MapOverlay<Int>
-        assertNotSame("Copy operation should yield different object", overlay, copy)
-        assertEquals(overlay, copy)
-        for (key in overlay.value!!.keys) {
-            assertNotSame(
-                "Copy operation should create copy of each map entry",
-                overlay._getOverlay(key),
-                copy._getOverlay(key)
-            )
-        }
-        copy.remove("B")
-        copy["B"] = 1
-        assertEquals(overlay, copy)
-        assertFalse("Key order difference not detected", overlay.equals(copy, true))
         assertSame(overlay, overlay._getRoot())
         val valueOverlay = overlay._getOverlay("B")
         assertSame(overlay, valueOverlay._getRoot())

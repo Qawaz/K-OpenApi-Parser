@@ -19,6 +19,9 @@ import com.reprezen.jsonoverlay.model.TestModelParser
 import com.reprezen.jsonoverlay.model.intf.Color
 import com.reprezen.jsonoverlay.model.intf.Scalars
 import com.reprezen.jsonoverlay.model.intf.TestModel
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -28,10 +31,22 @@ class ReferenceTests : Assert() {
 
     lateinit var model: TestModel
 
+    private val isJson: Boolean get() = true
+    private val refTestRes: String get() = if (isJson) "/refTest.json" else "/refTest.yaml"
+    private val externalTestRes: String get() = if (isJson) "/external.json" else "./external.yaml"
+
+    @Test
+    fun testParseRef() {
+        val str = "{ \"\$ref\": \"#/components/schemas/hello\" }"
+        val ele = Json.parseToJsonElement(str)
+        assert(ele.jsonObject.containsKey("\$ref"))
+        assert(ele.jsonObject["\$ref"]?.jsonPrimitive?.content == "#/components/schemas/hello")
+    }
+
     @Before
     @Throws(IOException::class)
     fun setup() {
-        model = TestModelParser.parse(ReferenceTests::class.java.getResource("/refTest.yaml"))
+        model = TestModelParser.parse(ReferenceTests::class.java.getResource(refTestRes))
     }
 
     @Test
@@ -51,7 +66,7 @@ class ReferenceTests : Assert() {
         assertNotNull(s)
         assertEquals("hello", s!!.getStringValue())
         assertEquals(Integer.valueOf(10), s.getIntValue())
-        assertEquals(3.1, s.getNumberValue())
+        assertEquals(3.1f, s.getNumberValue())
         assertEquals(java.lang.Boolean.TRUE, s.getBoolValue())
         assertEquals(mutableListOf(1, 2, 3), s.getObjValue())
         assertEquals("abcde", s.getPrimValue())
@@ -88,8 +103,8 @@ class ReferenceTests : Assert() {
     }
 
     private fun checkBadRef(ref: Reference) {
-        assertTrue(ref.isInvalid)
-        assertTrue(ref.invalidReason is ResolutionException)
+        assertTrue("ref is valid , isInvalid : " + ref.isInvalid, ref.isInvalid)
+        assertTrue("ref invalid reason is not a resolution exception", ref.invalidReason is ResolutionException)
     }
 
     @Test
@@ -107,27 +122,37 @@ class ReferenceTests : Assert() {
 
     @Test
     fun testFind() {
-        assertSame(model.getScalar("s1"), Overlay.of(model).find("/scalars/s1"))
-        assertSame(model.getScalar("s3"), Overlay.of(model).find("/scalars/s1"))
-        assertSame(model.getScalar("s3"), Overlay.of(model).find("/scalars/s3"))
-        assertSame(model.getScalar("ext1"), Overlay.of(model).find("/scalars/ext1"))
-        assertSame(model.getScalar("ext2"), Overlay.of(model).find("/scalars/ext1"))
-        assertSame(model.getScalar("ext3"), Overlay.of(model).find("/scalars/s1"))
+        assertSame(model.getScalar("s1"), model.findByPath("/scalars/s1"))
+        assertSame(model.getScalar("s2"), model.findByPath("/scalars/s2"))
+        println(
+            "value : ${(model.getScalar("s3")!! as JsonOverlay<*>).value} to ${((model as KeyValueOverlay)._findByPath("/scalars/s3") as JsonOverlay<*>).value}"
+        )
+        assertTrue(model.getScalar("s3")!! == (model as KeyValueOverlay)._findByPath("/scalars/s3"))
+        assertTrue(model.getScalar("s3") == model.findByPath("/scalars/s3"))
+        assertSame(model.getScalar("s3"), model.getScalar("s3"))
+        assertSame(model.findByPath("/scalars/s3"), model.findByPath("/scalars/s3"))
+        assertEquals(model.getScalar("s3"), model.findByPath("/scalars/s3"))
+        assertEquals(model.getScalar("ext1"), model.findByPath("/scalars/ext1"))
+        assertEquals(model.getScalar("ext2"), model.findByPath("/scalars/ext1"))
+        assertEquals(model.getScalar("ext3"), model.findByPath("/scalars/s1"))
     }
 
     @Test
     fun testJsonRefs() {
-        val url = javaClass.getResource("/refTest.yaml")!!.toString()
-        val ext = javaClass.getResource("/external.yaml")!!.toString()
+        val url = javaClass.getResource(refTestRes)!!.toString()
+        val ext = javaClass.getResource(externalTestRes)!!.toString()
         assertEquals(url, Overlay.of(model).jsonReference)
+        assertNotNull(Overlay.of(model.getScalars(), "s1").also {
+//            println((model.getScalars()["s1"]!! as PropertiesOverlay<*>))
+        })
         assertEquals("$url#/scalars/s1", Overlay.of(model.getScalars(), "s1")?.jsonReference)
         assertEquals(
             "$url#/scalars/s1/stringValue",
-            Overlay.of(model.getScalar("s1"), "stringValue", String::class.java)?.jsonReference
+            Overlay.of(model.getScalar("s1")!!, "stringValue", String::class.java)?.jsonReference
         )
         assertEquals(
             "$url#/scalars/s1/stringValue",
-            Overlay.of(model.getScalar("s2"), "stringValue", String::class.java)?.jsonReference
+            Overlay.of(model.getScalar("s2")!!, "stringValue", String::class.java)?.jsonReference
         )
         assertEquals("$url#/scalars/s1", Overlay.of(model.getScalar("s3")!!).jsonReference)
         assertEquals("$ext#/scalar1", Overlay.of(model.getScalar("ext1")!!).jsonReference)

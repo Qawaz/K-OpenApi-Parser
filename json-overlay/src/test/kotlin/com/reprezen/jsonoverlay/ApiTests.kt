@@ -29,10 +29,14 @@ class ApiTests : Assert() {
 
     lateinit var model: TestModel
 
+    private val isJson : Boolean get() = true
+    private val resourcePath : String get() = if(isJson) "/apiTestModel.json" else "/apiTestModel.yaml"
+
+
     @Before
     @Throws(IOException::class)
     fun setup() {
-        model = TestModelParser.parse(javaClass.getResource("/apiTestModel.yaml"))
+        model = TestModelParser.parse(javaClass.getResource(resourcePath))
     }
 
     @Test
@@ -88,7 +92,7 @@ class ApiTests : Assert() {
 
     @Test
     fun testPathInParent() {
-        assertEquals("description", Overlay.of(model as TestModelImpl?, "description", String::class.java)?.pathInParent)
+        assertEquals("description", Overlay.of(model as TestModelImpl, "description", String::class.java)?.pathInParent)
         assertEquals(
             "0", Overlay.of(
                 model.getItems(), 0
@@ -161,16 +165,16 @@ class ApiTests : Assert() {
         checkScalarFind("width", Int::class.java, "/width")
         checkScalarFind("width", Int::class.java, "/width")
         checkScalarFind("color", Color::class.java, "/color")
-        assertSame(Overlay.of(model.getItems(), 0)?.overlay, Overlay.of(model).find("/items/0"))
-        assertSame(Overlay.of(model.getItems(), 1)?.overlay, Overlay.of(model).find("/items/1"))
+        assertSame(Overlay.of(model.getItems(), 0)?.overlay, model.findByPath("/items/0"))
+        assertSame(Overlay.of(model.getItems(), 1)?.overlay, model.findByPath("/items/1"))
         assertNotSame(
             Overlay.of(
                 model.getItems(), 1
-            )?.overlay, Overlay.of(model).find("/items/0")
+            )?.overlay, model.findByPath("/items/0")
         )
-        assertSame(Overlay.of(model.getNamedIntegers(), "I")?.overlay, Overlay.of(model).find("/namedIntegers/I"))
-        assertSame(Overlay.of(model.getNamedIntegers(), "II")?.overlay, Overlay.of(model).find("/namedIntegers/II"))
-        assertNotSame(Overlay.of(model.getNamedIntegers(), "I")?.overlay, Overlay.of(model).find("/namedIntegers/II"))
+        assertSame(Overlay.of(model.getNamedIntegers(), "I")?.overlay, model.findByPath("/namedIntegers/I"))
+        assertSame(Overlay.of(model.getNamedIntegers(), "II")?.overlay, model.findByPath("/namedIntegers/II"))
+        assertNotSame(Overlay.of(model.getNamedIntegers(), "I")?.overlay, model.findByPath("/namedIntegers/II"))
     }
 
     @Test
@@ -198,7 +202,7 @@ class ApiTests : Assert() {
 
     @Test
     fun testJsonRefs() {
-        val url = javaClass.getResource("/apiTestModel.yaml").toString()
+        val url = javaClass.getResource(resourcePath).toString()
         assertEquals("$url#/description", Overlay.of(model, "description", String::class.java)?.jsonReference)
         assertEquals("$url#/width", Overlay.of(model, "width", Int::class.java)?.jsonReference)
         assertEquals("$url#/color", Overlay.of(model, "color", Color::class.java)?.jsonReference)
@@ -244,6 +248,7 @@ class ApiTests : Assert() {
     }
 
     private fun <V> checkScalarFind(field: String, fieldType: Class<V>, path: String) {
+        println("${Overlay.of(model,field,fieldType)?.overlay} to ${model.findByPath(path)}")
         assertSame(Overlay.of(model, field, fieldType)?.overlay, Overlay.of(model).find(path))
     }
 }

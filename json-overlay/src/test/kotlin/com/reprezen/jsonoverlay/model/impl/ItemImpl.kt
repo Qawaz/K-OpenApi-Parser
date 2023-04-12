@@ -6,11 +6,12 @@ import com.reprezen.jsonoverlay.StringOverlay;
 import com.reprezen.jsonoverlay.parser.Generated;
 import com.reprezen.jsonoverlay.IJsonOverlay;
 import com.reprezen.jsonoverlay.OverlayFactory;
+import kotlinx.serialization.json.JsonElement;
 import com.reprezen.jsonoverlay.Builder;
 import com.reprezen.jsonoverlay.PropertiesOverlay;
 import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.jsonoverlay.JsonPointer;
 import com.reprezen.jsonoverlay.ReferenceManager;
-import kotlinx.serialization.json.JsonElement
 
 class ItemImpl : PropertiesOverlay<Item> ,Item {
 
@@ -23,12 +24,12 @@ class ItemImpl : PropertiesOverlay<Item> ,Item {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Title
 	override fun getTitle() : String? {
-		return _get("title", String::class.java)
+		return _get("title")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setTitle(title : String) {
-		_setScalar("title", title, String::class.java)
+		_setScalar("title", title)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

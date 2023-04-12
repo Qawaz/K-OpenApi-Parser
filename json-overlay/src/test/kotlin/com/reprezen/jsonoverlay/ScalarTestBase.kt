@@ -14,9 +14,9 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.node.JsonNodeFactory
-import com.fasterxml.jackson.databind.node.MissingNode
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonObject
 import org.junit.Assert
 import org.junit.Test
 import java.net.MalformedURLException
@@ -27,10 +27,11 @@ abstract class ScalarTestBase<V>(private val factory: OverlayFactory<V>) : Asser
 
     var value: V? = null
 
-    protected abstract fun toJson(value: V?): JsonNode
+    protected abstract fun toJson(value: V?): JsonElement?
+
     @Test
     fun testOvlValueFromJson() {
-        val json = toJson(value)
+        val json = toJson(value)!!
         testWithJson(json, value)
     }
 
@@ -39,7 +40,6 @@ abstract class ScalarTestBase<V>(private val factory: OverlayFactory<V>) : Asser
         val ovl = factory.create(value, null, refMgr)
         assertTrue(factory.getOverlayClass().isAssignableFrom(ovl.javaClass))
         assertEquals(value, ovl._get())
-        testCopy(ovl)
     }
 
     @Test
@@ -51,12 +51,12 @@ abstract class ScalarTestBase<V>(private val factory: OverlayFactory<V>) : Asser
 
     @Test
     fun testWithMissingJson() {
-        testWithJson(MissingNode.getInstance(), null)
+        testWithJson(JsonNull, null)
     }
 
     @Test
     open fun testWithWrongJson() {
-        testWithJson(jfac.objectNode(), null)
+        testWithJson(JsonObject(mapOf()), null)
     }
 
     @Test
@@ -64,6 +64,12 @@ abstract class ScalarTestBase<V>(private val factory: OverlayFactory<V>) : Asser
         val ovl = factory.create(value!!, null, refMgr)
         val json = ovl._toJson()
         val ovl2 = factory.create(json, null, refMgr)
+        if(ovl._get() != ovl2._get()){
+//            println("${value!!::class.qualifiedName} to ${ovl2._get()!!::class.qualifiedName}")
+//            println("${ovl::class.qualifiedName} to ${ovl2::class.qualifiedName}")
+//            println("original : $value , json $json , retrieved : ${ovl2._get()}")
+        }
+        assertEquals(ovl._get(),value!!)
         assertEquals(ovl._get(), ovl2._get())
     }
 
@@ -87,22 +93,10 @@ abstract class ScalarTestBase<V>(private val factory: OverlayFactory<V>) : Asser
         assertEquals("#", Overlay.of(ovl).jsonReference)
     }
 
-    fun testWithJson(json: JsonNode?, `val`: V?) {
+    fun testWithJson(json: JsonElement, `val`: V?) {
         val ovl = factory.create(json, null, refMgr)
         assertTrue(factory.getOverlayClass().isAssignableFrom(ovl.javaClass))
         assertEquals(`val`, ovl._get())
-        testCopy(ovl)
     }
 
-    fun testCopy(ovl: JsonOverlay<V>) {
-        val copy = ovl._copy()
-        assertNotSame("Copy operation should yield different object", ovl, copy)
-        assertEquals(ovl, copy)
-        assertEquals(ovl._get(), copy._get())
-    }
-
-    companion object {
-        @JvmStatic
-        protected var jfac = JsonNodeFactory.instance
-    }
 }

@@ -1,8 +1,7 @@
 package com.wakaztahir.generator
 
-import com.fasterxml.jackson.core.JsonPointer
-import com.fasterxml.jackson.databind.JsonNode
 import com.reprezen.jsonoverlay.*
+import kotlinx.serialization.json.JsonElement
 import java.io.File
 import java.util.stream.Collectors
 
@@ -105,10 +104,10 @@ class JavaImplGenerator : TypeGenerator {
 
     override fun getConstructors(type: KTypeData.Type): Members {
         val members = Members()
-        requireTypes(JsonNode::class, JsonOverlay::class)
+        requireTypes(JsonElement::class, JsonOverlay::class)
         val factoryEx = if (type.extensionOf == null) "Companion.factory, " else ""
         members.addMember(
-            """constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, ${factoryEx}refMgr)"""
+            """constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, ${factoryEx}refMgr)"""
         )
         members.addMember(
             """constructor(${type.lcName} : ${type.name}?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(${type.lcName}, parent, ${factoryEx}refMgr)"""
@@ -162,26 +161,26 @@ class JavaImplGenerator : TypeGenerator {
         val methods = Members()
         methods.addMember(
             """// ${f.name}${'\n'}override fun get${f.name}() : ${f.type}? {
-            |${"\t"}return _get("${f.propertyName}", ${f.type}::class.java)
+            |${"\t"}return _get("${f.propertyName}")
             |}""".trimMargin("|")
         )
         if (f.structure == KTypeData.Structure.scalar && !f.isScalarType) {
             methods.addMember(
                 """override fun get${f.name}(elaborate : Boolean) : ${f.type}? {
-                |${"\t"}return _get("${f.propertyName}", elaborate, ${f.type}::class.java)
+                |${"\t"}return _get("${f.propertyName}")
                 |}""".trimMargin("|")
             )
         }
         if (f.isBoolean) {
             methods.addMember(
                 """override fun is${f.name}() : Boolean {
-                |${"\t"}return _get("${f.propertyName}", Boolean::class.java) ?: ${f.boolDefault}
+                |${"\t"}return _get("${f.propertyName}") ?: ${f.boolDefault}
                 |}""".trimMargin("|")
             )
         }
         methods.addMember(
             """override fun set${f.name}(${f.lcName} : ${f.type}) {
-        |${"\t"}_setScalar("${f.propertyName}", ${f.lcName}, ${f.type}::class.java)
+        |${"\t"}_setScalar("${f.propertyName}", ${f.lcName})
         |}""".trimMargin("|")
         )
         return methods
@@ -193,12 +192,12 @@ class JavaImplGenerator : TypeGenerator {
         val methods = Members()
         methods.addMember(
             """// ${f.name}${'\n'}override fun get${f.plural}() : List<${f.type}> {
-            |${"\t"}return _getList("${f.propertyName}", ${f.type}::class.java)
+            |${"\t"}return _getList("${f.propertyName}")
             |}""".trimMargin("|")
         )
         methods.addMember(
             """override fun get${f.plural}(elaborate : Boolean) : List<${f.type}> {
-            |${"\t"}return _getList("${f.propertyName}", elaborate, ${f.type}::class.java)
+            |${"\t"}return _getList("${f.propertyName}")
             |}""".trimMargin("|")
         )
         methods.addMember(
@@ -208,33 +207,33 @@ class JavaImplGenerator : TypeGenerator {
         )
         methods.addMember(
             """override fun get${f.name}(index : Int) : ${f.type} {
-            |${"\t"}return _get("${f.propertyName}", index, ${f.type}::class.java)
+            |${"\t"}return _get("${f.propertyName}", index)
             |}""".trimMargin("|")
         )
         methods.addMember(
             """override fun set${f.plural}(${f.lcPlural} : MutableList<${f.type}>) {
-            |${"\t"}_setList("${f.propertyName}", ${f.lcPlural}, ${f.type}::class.java)
+            |${"\t"}_setList("${f.propertyName}", ${f.lcPlural})
             |}""".trimMargin("|")
         )
         methods.addMember(
             """override fun set${f.name}(index : Int, ${f.lcName} : ${f.type}) {
-            |${"\t"}_set("${f.propertyName}", index, ${f.lcName}, ${f.type}::class.java)
+            |${"\t"}_set("${f.propertyName}", index, ${f.lcName})
             |}""".trimMargin("|")
         )
         methods.addMember(
             """override fun add${f.name}(${f.lcName} : ${f.type}) {
-            |${"\t"}_add("${f.propertyName}", ${f.lcName}, ${f.type}::class.java)
+            |${"\t"}_add("${f.propertyName}", ${f.lcName})
             |}""".trimMargin("|")
         )
         methods.addMember(
             """override fun insert${f.name}(index : Int, ${f.lcName} : ${f.type}) {
-            |${"\t"}_insert("${f.propertyName}", index, ${f.lcName}, ${f.type}::class.java)
+            |${"\t"}_insert("${f.propertyName}", index, ${f.lcName})
             |}""".trimMargin("|")
         )
 
         methods.addMember(
             """override fun remove${f.name}(index : Int) {
-            |${"\t"}_remove("${f.propertyName}", index, ${f.type}::class.java)
+            |${"\t"}_remove("${f.propertyName}", index)
             |}""".trimMargin("|")
         )
         return methods
@@ -245,12 +244,12 @@ class JavaImplGenerator : TypeGenerator {
         val methods = Members()
         methods.addMember(
             """// ${f.name}${'\n'}override fun get${f.plural}() : MutableMap<String, ${f.type}> {
-            |${"\t"}return _getMap("${f.propertyName}", ${f.type}::class.java)
+            |${"\t"}return _getMap("${f.propertyName}")
             |}""".trimMargin("|")
         )
         methods.addMember(
             """override fun get${f.plural}(elaborate : Boolean) : MutableMap<String, ${f.type}> {
-            |${"\t"}return _getMap("${f.propertyName}", elaborate, ${f.type}::class.java)
+            |${"\t"}return _getMap("${f.propertyName}")
             |}""".trimMargin("|")
         )
 
@@ -261,27 +260,27 @@ class JavaImplGenerator : TypeGenerator {
         )
         methods.addMember(
             """override fun has${f.name}(${f.keyName} : String) : Boolean {
-            |${"\t"}return _getMap("${f.propertyName}", ${f.type}::class.java).containsKey(${f.keyName})
+            |${"\t"}return _getMap<${f.type}>("${f.propertyName}").containsKey(${f.keyName})
             |}""".trimMargin("|")
         )
         methods.addMember(
             """override fun get${f.name}(${f.keyName} : String) : ${f.type}? {
-            |${"\t"}return _get("${f.propertyName}", ${f.keyName}, ${f.type}::class.java)
+            |${"\t"}return _get("${f.propertyName}", ${f.keyName})
             |}""".trimMargin("|")
         )
         methods.addMember(
             """override fun set${f.plural}(${f.lcPlural} : MutableMap<String, ${f.type}>) {
-            |${"\t"}_setMap("${f.propertyName}", ${f.lcPlural}, ${f.type}::class.java)
+            |${"\t"}_setMap("${f.propertyName}", ${f.lcPlural})
             |}""".trimMargin("|")
         )
         methods.addMember(
             """override fun set${f.name}(${f.keyName} : String, ${f.lcName} : ${f.type}) {
-            |${"\t"}_set("${f.propertyName}", ${f.keyName}, ${f.lcName}, ${f.type}::class.java)
+            |${"\t"}_set("${f.propertyName}", ${f.keyName}, ${f.lcName})
             |}""".trimMargin("|")
         )
         methods.addMember(
             """override fun remove${f.name}(${f.keyName} : String) {
-            |${"\t"}_remove("${f.propertyName}", ${f.keyName}, ${f.type}::class.java)
+            |${"\t"}_remove("${f.propertyName}", ${f.keyName})
             |}""".trimMargin("|")
         )
         return methods
@@ -333,7 +332,7 @@ class JavaImplGenerator : TypeGenerator {
         requireTypes(
             OverlayFactory::class,
             JsonOverlay::class,
-            JsonNode::class,
+            JsonElement::class,
             ReferenceManager::class
         )
         return ClassMember(
@@ -346,7 +345,7 @@ class JavaImplGenerator : TypeGenerator {
         |${"\t"}${"\t"}return ${type.implType}(${type.lcName}, parent, refMgr)
         |${"\t"}}
         |
-        |${"\t"}override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<${type.name}> {
+        |${"\t"}override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<${type.name}> {
         |${"\t"}${"\t"}return ${type.implType}(json, parent, refMgr)
         |${"\t"}}
         |}""".trimMargin("|")
@@ -363,7 +362,7 @@ class JavaImplGenerator : TypeGenerator {
     private fun getFactoryMember(type: KTypeData.Type): ClassMember {
         requireTypes(
             OverlayFactory::class,
-            JsonNode::class,
+            JsonElement::class,
             ReferenceManager::class,
             JsonOverlay::class
         )
@@ -388,7 +387,7 @@ class JavaImplGenerator : TypeGenerator {
         |${"\t"}${"\t"}$_createSubTypesImpl
         |${"\t"}}
         |
-        |${"\t"}override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<${type.name}> {
+        |${"\t"}override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<${type.name}> {
         |${"\t"}${"\t"}$_createSubTypesImpl2
         |${"\t"}}
         |
@@ -430,10 +429,10 @@ class JavaImplGenerator : TypeGenerator {
         subTypes: Collection<KTypeData.Type>
     ): ClassMember {
         requireTypes(JsonPointer::class, Collectors::class)
-        val switchExpr = """json.at(JsonPointer.compile("/${t.discriminator}")).asText()"""
+        val switchExpr = """json.at(JsonPointer("/${t.discriminator}")).asText()"""
         val subTypeSwitch = getSubtypeSwitch(t, subTypes, switchExpr) { it.discriminatorValue }
         return ClassMember(
-            """private fun getSubtypeOf(json : JsonNode) : Class<out ${t.name}> {
+            """private fun getSubtypeOf(json : JsonElement) : Class<out ${t.name}> {
         |${"\t"}$subTypeSwitch
         |}
         |""".trimMargin("|")

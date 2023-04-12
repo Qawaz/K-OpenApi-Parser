@@ -7,7 +7,7 @@ import kotlinx.serialization.json.JsonObject
 class JsonPointer(val segments: List<String>) {
 
     constructor(path: String) : this(
-        segments = path
+        segments = if (path.isEmpty() || path == "/") emptyList() else path
             .removePrefix("/")
             .split("/")
             .map { segment ->
@@ -36,4 +36,9 @@ class JsonPointer(val segments: List<String>) {
         }
         return current
     }
+
+    override fun toString(): String {
+        return segments.joinToString("/")
+    }
+
 }

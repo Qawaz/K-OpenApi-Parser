@@ -14,27 +14,37 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.core.JsonPointer
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.node.ObjectNode
-import java.util.*
-import java.util.stream.Collectors
+import kotlinx.serialization.json.*
 
-abstract class PropertiesOverlay<V> : JsonOverlay<V> {
-    // retrieve property values from this map by property name
-    private val children: MutableMap<String?, JsonOverlay<*>> = HashMap()
+abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
 
-    // this queue sets ordering for serialization, so it matches parsed JSON
-    private val childOrder: MutableList<PropertyLocator> = ArrayList()
+    class FactoryMap(val path: String, val factory: OverlayFactory<*>) {
+        override fun equals(other: Any?): Boolean {
+            if (other !is FactoryMap) return false
+            return other.path == this.path && factory == other.factory
+        }
+
+        override fun hashCode(): Int {
+            var result = path.hashCode()
+            result = 31 * result + factory.hashCode()
+            return result
+        }
+    }
+
+    private val factoryMap: MutableMap<String, FactoryMap> = mutableMapOf()
+    private val overlays: MutableMap<FactoryMap, JsonOverlay<*>> = mutableMapOf()
+
     private var elaborated = false
     private var deferElaboration = false
     private var elaborationValue: V? = null
 
     protected constructor(
-        json: JsonNode, parent: JsonOverlay<*>?, factory: OverlayFactory<V>?,
+        json: JsonElement,
+        parent: JsonOverlay<*>?,
+        factory: OverlayFactory<V>?,
         refMgr: ReferenceManager?
     ) : super(json, parent, factory!!, refMgr!!) {
-        deferElaboration = json.isMissingNode
+        deferElaboration = false
     }
 
     protected constructor(
@@ -46,124 +56,173 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
         elaborationValue = value
     }
 
-    protected fun <T> _get(name: String?, cls: Class<T>?): T? {
-        return _get(name, true, cls)
+    fun _getFactoryKeys(): List<String> {
+        return factoryMap.keys.toList()
     }
 
     /* package */
-    fun _getPropertyNames(): List<String> {
-        return childOrder.stream().map { locator: PropertyLocator -> locator.name }.collect(Collectors.toList())
-    }
-
-    /* package */
-    fun <T> _getOverlay(name: String?): JsonOverlay<*> {
-        return children[name]!!
+    override fun _getPropertyNames(): List<String> {
+        for (key in factoryMap.keys) _getKeyValueOverlay(key)
+        val keys = mutableListOf<String>()
+        for (key in overlays.keys) if (key.path.isNotEmpty() && key.path != "/") keys.add(key.path)
+        keys.addAll(getSubMapKeys())
+        return keys
     }
 
     protected fun _isPresent(name: String?): Boolean {
-        val overlay = children[name]
-        return overlay != null && !overlay.json!!.isMissingNode
+        return _getKeyValueOverlay(name!!) != null
     }
 
-    protected fun <T> _get(name: String?, elaborate: Boolean, cls: Class<T>?): T? {
-        if (elaborate) {
-            _ensureElaborated()
+    // sub maps exist in a field as a property like
+    // object[name] = the map {}
+    // but they are actually just children of this map
+    // meaning when keys are queries of this map, contain its keys and keys of al the sub maps
+    private fun getSubMaps(): List<KeyValueOverlay> {
+        val list = mutableListOf<KeyValueOverlay>()
+        for (factory in factoryMap.values) {
+            if (factory.path.isEmpty() || factory.path == "/") {
+                (createOverlay(
+                    elem = json!!,
+                    factoryMap = factory,
+                    factory = factory.factory,
+                ) as? KeyValueOverlay)?.let { list.add(it) }
+            }
         }
-        val overlay = children[name] as JsonOverlay<T>
-        return overlay._get()
+        return list
     }
 
-    fun <T> _getOverlay(name: String?, cls: Class<T>?): JsonOverlay<T> {
-        return children[name] as JsonOverlay<T>
+    private fun getSubMapKeys(): MutableList<String> {
+        val keys = mutableListOf<String>()
+        val subMaps = getSubMaps()
+        for (map in subMaps) {
+            keys.addAll(map._getPropertyNames())
+        }
+        return keys
     }
 
-    protected fun <T> _setScalar(name: String?, `val`: T?, cls: Class<T>?) {
-        val overlay = children[name] as JsonOverlay<T>
-        overlay._set(`val`)
+    protected fun <T> _get(name: String?): T? {
+        factoryMap[name]?.let { factory ->
+            return (overlays[factory] as? JsonOverlay<T>)?._get() ?: _getOverlay(
+                factory,
+                factory.factory as OverlayFactory<T>
+            )?._get()
+        }
+        return null
     }
 
-    protected fun <T> _getList(name: String?, cls: Class<T>?): MutableList<T> {
-        return _get(name, MutableList::class.java)!! as MutableList<T>
+    private fun <T> createOverlay(
+        elem: JsonElement,
+        factoryMap: FactoryMap,
+        factory: OverlayFactory<T>,
+    ): JsonOverlay<T> {
+        return factory.create(elem, this, refMgr).also { ov ->
+            ov._setPathInParent(factoryMap.path)
+            overlays[factoryMap] = ov
+        }
     }
 
-    protected fun <T> _getList(
-        name: String?,
-        elaborate: Boolean,
-        cls: Class<T>?
-    ): MutableList<T> {
-        return _get(name, elaborate, MutableList::class.java)!! as MutableList<T>
+    private fun <T> createOverlay(
+        value: T?,
+        factoryMap: FactoryMap,
+        factory: OverlayFactory<T>,
+    ): JsonOverlay<T> {
+        return factory.create(value, this, refMgr).also { ov ->
+            ov._setPathInParent(factoryMap.path)
+            overlays[factoryMap] = ov
+        }
     }
 
-    protected fun <T> _get(name: String?, index: Int, cls: Class<T>?): T {
-        return _get(name, index, true, cls)
+    protected fun <T> _getOverlay(factoryMap: FactoryMap, factory: OverlayFactory<T>): JsonOverlay<T>? {
+        val pointer = JsonPointer(factoryMap.path)
+        val elem = pointer.navigate(json!!)
+        return elem?.let { createOverlay(it, factoryMap, factory) }
     }
 
-    protected fun <T> _get(name: String?, index: Int, elaborate: Boolean, cls: Class<T>?): T {
-        val overlay = children[name] as ListOverlay<T>
+    override fun _getKeyValueOverlay(name: String): JsonOverlay<*>? {
+        return factoryMap[name]?.let { factory ->
+            _getOverlay(factory, factory.factory)
+        }
+    }
+
+    fun <T> _getOverlay(name: String): JsonOverlay<T>? {
+        return _getKeyValueOverlay(name) as? JsonOverlay<T>
+    }
+
+    protected fun <T> _setScalar(name: String, value: T?) {
+        var overlay = _getOverlay<T>(name)
+        if (overlay == null && value != null) {
+            overlay = factoryMap[name]?.let {
+                createOverlay(value, it, it.factory as OverlayFactory<T>)
+            }
+        }
+        overlay?._set(value)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    protected fun <T> _getList(name: String): MutableList<T> {
+        return _get(name)!!
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    protected fun <T> _get(name: String, index: Int): T {
+        val overlay = _getOverlay<T>(name) as ListOverlay<T>
         return overlay[index]!!
     }
 
-    protected fun <T> _setList(name: String?, listVal: MutableList<T>?, cls: Class<T>?) {
-        val overlay = children[name] as ListOverlay<T>
+    @Suppress("UNCHECKED_CAST")
+    protected fun <T> _setList(name: String, listVal: MutableList<T>?) {
+        val overlay = _getOverlay<T>(name) as ListOverlay<T>
         overlay._set(listVal)
     }
 
-    protected fun <T> _set(name: String?, index: Int, `val`: T, cls: Class<T>?) {
-        val overlay = children[name] as ListOverlay<T>
-        overlay[index] = `val`
+    @Suppress("UNCHECKED_CAST")
+    protected fun <T> _set(name: String, index: Int, value: T) {
+        val overlay = _getOverlay<T>(name) as ListOverlay<T>
+        overlay[index] = value
     }
 
-    protected fun <T> _insert(name: String?, index: Int, `val`: T, cls: Class<T>?) {
-        val overlay = children[name] as ListOverlay<T>
-        overlay.insert(index, `val`)
+    @Suppress("UNCHECKED_CAST")
+    protected fun <T> _insert(name: String, index: Int, value: T) {
+        val overlay = _getOverlay<T>(name) as ListOverlay<T>
+        overlay.insert(index, value)
     }
 
-    protected fun <T> _add(name: String?, `val`: T, cls: Class<T>?) {
-        val overlay = children[name] as ListOverlay<T>
-        overlay.add(`val`)
+    @Suppress("UNCHECKED_CAST")
+    protected fun <T> _add(name: String, value: T) {
+        val overlay = _getOverlay<T>(name) as ListOverlay<T>
+        overlay.add(value)
     }
 
-    protected fun <T> _remove(name: String?, index: Int, cls: Class<T>?) {
-        val overlay = children[name] as ListOverlay<T>
+    protected fun _remove(name: String, index: Int) {
+        val overlay = _getKeyValueOverlay(name) as ListOverlay<*>
         overlay.remove(index)
     }
 
-    protected fun <T> _getMap(
-        name: String?,
-        cls: Class<T>?
-    ): MutableMap<String, T> {
-        return _get(name, MutableMap::class.java) as MutableMap<String, T>
+    @Suppress("UNCHECKED_CAST")
+    protected fun <T> _getMap(name: String): MutableMap<String, T> {
+        return _get(name)!!
     }
 
-    protected fun <T> _getMap(
-        name: String?,
-        elaborate: Boolean,
-        cls: Class<T>?
-    ): MutableMap<String, T> {
-        return _get(name, elaborate, MutableMap::class.java) as MutableMap<String, T>
-    }
-
-    protected fun <T> _get(name: String?, key: String, cls: Class<T>?): T? {
-        return _get(name, key, true, cls)
-    }
-
-    protected fun <T> _get(name: String?, key: String, elaborate: Boolean, cls: Class<T>?): T? {
-        val overlay = children[name] as MapOverlay<T>
+    @Suppress("UNCHECKED_CAST")
+    protected fun <T> _get(name: String, key: String): T? {
+        val overlay = _getOverlay<T>(name) as MapOverlay<T>
         return overlay[key]
     }
 
-    protected fun <T> _setMap(name: String?, mapVal: MutableMap<String, T>?, cls: Class<T>?) {
-        val overlay = children[name] as MapOverlay<T>
+    @Suppress("UNCHECKED_CAST")
+    protected fun <T> _setMap(name: String, mapVal: MutableMap<String, T>?) {
+        val overlay = _getOverlay<T>(name) as MapOverlay<T>
         overlay._set(mapVal)
     }
 
-    protected fun <T> _set(name: String?, key: String, `val`: T, cls: Class<T>?) {
-        val overlay = children[name] as MapOverlay<T>
-        overlay[key] = `val`
+    @Suppress("UNCHECKED_CAST")
+    protected fun <T> _set(name: String, key: String, value: T) {
+        val overlay = _getOverlay<T>(name) as MapOverlay<in T>
+        overlay[key] = value
     }
 
-    protected fun <T> _remove(name: String?, key: String, cls: Class<T>?) {
-        val overlay = children[name] as MapOverlay<T>
+    protected fun _remove(name: String, key: String) {
+        val overlay = _getKeyValueOverlay(name) as MapOverlay<*>
         overlay.remove(key)
     }
 
@@ -176,7 +235,6 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
         } else {
             _elaborateJson()
         }
-        Collections.sort(childOrder)
         elaborated = true
     }
 
@@ -187,13 +245,11 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
     }
 
     private fun _elaborateValue() {
-        val overlay = elaborationValue as PropertiesOverlay<V>?
-        children.clear()
-        for ((key, value1) in overlay!!.children) {
-            children[key] = value1._copy()
+        val overlay = elaborationValue as PropertiesOverlay<*>?
+        factoryMap.clear()
+        for ((key, value1) in overlay!!.factoryMap) {
+            factoryMap[key] = value1
         }
-        childOrder.clear()
-        childOrder.addAll(overlay.childOrder)
         elaborationValue = null
     }
 
@@ -201,74 +257,32 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
         return elaborated
     }
 
-    protected fun <X> _createScalar(name: String, path: String, factory: OverlayFactory<X>): JsonOverlay<X> {
+    protected fun <X> _createScalar(name: String, path: String, factory: OverlayFactory<X>) {
         return _addChild(name, path, factory)
     }
 
-    protected fun <X> _createList(name: String, path: String, itemFactory: OverlayFactory<X>): ListOverlay<X> {
-        return _addChild(name, path, ListOverlay.getFactory(itemFactory)) as ListOverlay<X>
+    protected fun <X> _createList(name: String, path: String, itemFactory: OverlayFactory<X>) {
+        return _addChild(name, path, ListOverlay.getFactory(itemFactory))
     }
 
     protected fun <X> _createMap(
-        name: String, path: String, valueFactory: OverlayFactory<X>,
+        name: String, path: String,
+        valueFactory: OverlayFactory<X>,
         keyPattern: String?
-    ): MapOverlay<X> {
-        return _addChild(name, path, MapOverlay.getFactory(valueFactory, keyPattern)) as MapOverlay<X>
+    ) {
+        return _addChild(name, path, MapOverlay.getFactory(valueFactory, keyPattern))
     }
 
-    private fun <X> _addChild(name: String, path: String, factory: OverlayFactory<X>): JsonOverlay<X> {
-        val pointer = JsonPointer.compile(if (path.isEmpty()) "" else "/$path")
-        val childJson = json!!.at(pointer)
-        val child = factory.create(childJson, this, refMgr)
-        child._setPathInParent(path)
-        val locator = PropertyLocator(name, path, json!!)
-        childOrder.add(locator)
-        children[name] = child
-        return child
-    }
-
-    override fun _findInternal(path: JsonPointer?): JsonOverlay<*>? {
-        for (child in children.values) {
-            if (matchesPath(child, path)) {
-                val found = child._find(tailPath(child, path)!!)
-                if (found != null) {
-                    return found
-                }
-            }
-        }
-        return null
-    }
-
-    private fun matchesPath(child: JsonOverlay<*>, path: JsonPointer?): Boolean {
-        var path = path
-        var childPath = getPointer(child)
-        while (!childPath.matches()) {
-            if (!childPath.matchesProperty(path!!.matchingProperty)) {
-                return false
-            } else {
-                path = path.tail()
-                childPath = childPath.tail()
-            }
-        }
-        return true
-    }
-
-    private fun tailPath(child: JsonOverlay<*>, path: JsonPointer?): JsonPointer? {
-        var path = path
-        var childPath = getPointer(child)
-        while (!childPath.matches()) {
-            path = path!!.tail()
-            childPath = childPath.tail()
-        }
-        return path
+    private fun <X> _addChild(name: String, path: String, factory: OverlayFactory<X>) {
+        factoryMap[name] = FactoryMap(path, factory)
     }
 
     private fun getPointer(child: JsonOverlay<*>): JsonPointer {
         val path = child._getPathInParent()
-        return JsonPointer.compile(if (path == null || path.isEmpty()) "" else "/$path")
+        return JsonPointer(if (path.isNullOrEmpty()) "" else "/$path")
     }
 
-    public override fun _fromJson(json: JsonNode): V? {
+    public override fun _fromJson(json: JsonElement): V? {
         // parsing of the json node is expected to be done in the constructor of
         // the
         // subclass, so nothing is done here. But we do establish this object as
@@ -277,68 +291,24 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
         return this as V
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode {
-        var obj: JsonNode = _jsonMissing()
-        for (child in childOrder) {
-            val childJson = children[child.name]!!._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY))
-            if (!childJson.isMissingNode) {
-                obj = _injectChild(obj, childJson, child.pointer)
-            }
-        }
-        val result = _fixJson(obj)
-        return if (result.size() > 0 || options.isKeepThisEmpty) result else _jsonMissing()
+    override fun _toJsonInternal(options: SerializationOptions): JsonElement {
+        val obj = overlays.mapKeys { it.key.path }
+            .mapValues { it.value._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY)) }
+        val result = _fixJson(JsonObject(obj))
+        return if (options.isKeepThisEmpty || obj.isNotEmpty()) result else JsonNull
     }
 
-    private fun _injectChild(node: JsonNode, child: JsonNode, pointer: JsonPointer?): JsonNode {
-        var node = node
-        return if (pointer!!.matches()) {
-            // inject into current node, which means:
-            // * If current is missing, return child
-            // * If current and child are both objects, merge child into current
-            // * Otherwise error
-            if (node.isMissingNode) {
-                child
-            } else if (node.isObject && child.isObject) {
-                (node as ObjectNode).setAll(child as ObjectNode)
-                node
-            } else {
-                throw IllegalArgumentException()
-            }
-        } else if (node.isObject || node.isMissingNode) {
-            val name = pointer.matchingProperty
-            val childNode = _injectChild(node.path(name), child, pointer.tail())
-            if (!childNode.isMissingNode) {
-                node = if (node.isObject) node else _jsonObject()
-                (node as ObjectNode)[name] = childNode
-            }
-            node
-        } else {
-            // can't add a property name to a non-object
-            throw IllegalArgumentException()
-        }
-    }
-
-    protected open fun _fixJson(json: JsonNode): JsonNode {
+    protected open fun _fixJson(json: JsonElement): JsonElement {
         return json
     }
 
     override fun equals(other: Any?): Boolean {
-        return equals(other, false)
-    }
-
-    fun equals(other: Any?, sameOrder: Boolean): Boolean {
-        if (other != null && javaClass == other.javaClass) {
-            val otherPO = other as PropertiesOverlay<*>
-            if (elaborated != otherPO.elaborated) {
-                return false
-            }
-            if (if (children != null) children != otherPO.children else otherPO.children != null) {
-                return false
-            }
-            return if (sameOrder) {
-                if (childOrder != null) childOrder == otherPO.childOrder else otherPO.childOrder == null
-            } else {
+        if (!super.equals(other)) return false
+        if (other is PropertiesOverlay<*>) {
+            return if (this.factoryMap == other.factoryMap) {
                 true
+            } else {
+                this.factoryMap == (other._getRefOverlay()?.overlay as PropertiesOverlay<*>).factoryMap
             }
         }
         return false
@@ -346,112 +316,8 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V> {
 
     override fun hashCode(): Int {
         var hash = 7
-        hash = 31 * hash + children.hashCode()
-        hash = 31 * hash + childOrder.hashCode()
+        hash = 31 * hash + factoryMap.hashCode()
         return hash
     }
 
-    protected class PropertyLocator(val name: String, path: String, json: JsonNode) : Comparable<PropertyLocator?> {
-
-        val pointer: JsonPointer?
-        private val vector: List<Int>?
-
-        init {
-            pointer = JsonPointer.compile(if (path.isEmpty()) "" else "/$path")
-            vector = computeVector(pointer, json)
-        }
-
-        private fun computeVector(pointer: JsonPointer?, json: JsonNode): List<Int>? {
-            // the "position vector" computed by this method is key to keeping our children
-            // sorted by the order in which they appeared in a parsed JSON object. The
-            // vector list contains the index, in each level of object nesting, of the
-            // property on the path to each child's value. The ordering of these vectors
-            // thus represents the order in which the properties appeared in the parsed
-            // JSON, with missing properties arbitrarily ordered at the end. Root-level maps
-            // are also ordered at the end. They are either partial, in which case their
-            // actual members may be scattered among other properties and we don't try to
-            // maintain that ordering, or they represent the entire root object, in which
-            // case the ordering is irrelevant.
-            var pointer = pointer
-            var currentJson = json
-            val result: MutableList<Int> = ArrayList()
-            // we only consider object nodes and continue until our pointer is
-            // fully
-            // consumed
-            while (currentJson is ObjectNode && !pointer!!.matches()) {
-                val key = pointer.matchingProperty
-                var found = false
-                var i = 0
-                val iter = currentJson.fieldNames()
-                while (iter.hasNext()) {
-                    if (key == iter.next()) {
-                        found = true
-                        result.add(i)
-                        currentJson = currentJson[key]
-                        pointer = pointer!!.tail()
-                        break
-                    }
-                    i += 1
-                }
-                if (!found) {
-                    // no match at current level, so child is not present -
-                    // exclude from ordering
-                    return null
-                }
-            }
-            // empty vector means the path was empty and matched the root json
-            // object. This
-            // occurs only with maps, which are excluded from ordering.
-            return if (result.isEmpty()) null else result
-        }
-
-        override operator fun compareTo(other: PropertyLocator?): Int {
-            if(other == null) return -1
-            return if (vector == null) {
-                if (other.vector == null) name.compareTo(other.name) else 1
-            } else if (other.vector == null) {
-                -1
-            } else {
-                var cmp = 0
-                // first component where paths differ determines relative
-                // ordering
-                var i = 0
-                while (cmp == 0 && i < vector.size && i < other.vector.size) {
-                    cmp = vector[i] - other.vector[i]
-                    i++
-                }
-                cmp
-            }
-        }
-
-        override fun hashCode(): Int {
-            val prime = 31
-            var result = 1
-            result = prime * result + name.hashCode()
-            result = prime * result + (pointer?.hashCode() ?: 0)
-            result = prime * result + (vector?.hashCode() ?: 0)
-            return result
-        }
-
-        override fun equals(obj: Any?): Boolean {
-            if (this === obj) return true
-            if (obj == null) return false
-            if (javaClass != obj.javaClass) return false
-            val other = obj as PropertyLocator
-            if (name == null) {
-                if (other.name != null) return false
-            } else if (name != other.name) return false
-            if (pointer == null) {
-                if (other.pointer != null) return false
-            } else if (pointer != other.pointer) return false
-            if (vector == null) {
-                if (other.vector != null) return false
-            } else if (vector != other.vector) return false
-            return true
-        }
-
-        override fun toString(): String {
-            return String.format("Loc[%s]=%s", name, vector)
-        }
-    }
 }

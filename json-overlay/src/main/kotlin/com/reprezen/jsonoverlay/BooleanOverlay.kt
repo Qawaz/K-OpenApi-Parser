@@ -14,7 +14,8 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.databind.JsonNode
+import kotlinx.serialization.json.*
+
 
 class BooleanOverlay : ScalarOverlay<Boolean> {
 
@@ -25,19 +26,19 @@ class BooleanOverlay : ScalarOverlay<Boolean> {
         refMgr
     )
 
-    private constructor(json: JsonNode, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
+    private constructor(json: JsonElement, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
         json,
         parent,
         Companion.factory,
         refMgr
     )
 
-    override fun _fromJson(json: JsonNode): Boolean? {
-        return if (json.isBoolean) json.booleanValue() else null
+    override fun _fromJson(json: JsonElement): Boolean? {
+        return (json as? JsonPrimitive)?.booleanOrNull
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode {
-        return if (value != null) _jsonBoolean(value!!) else _jsonMissing()
+    override fun _toJsonInternal(options: SerializationOptions): JsonElement {
+        return if (value != null) JsonPrimitive(value!!) else JsonNull
     }
 
     override fun _getFactory(): OverlayFactory<*> {
@@ -57,7 +58,7 @@ class BooleanOverlay : ScalarOverlay<Boolean> {
             }
 
             public override fun _create(
-                json: JsonNode,
+                json: JsonElement,
                 parent: JsonOverlay<*>?,
                 refMgr: ReferenceManager
             ): BooleanOverlay {

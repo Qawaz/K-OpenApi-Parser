@@ -14,18 +14,21 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.core.JsonPointer
-import com.fasterxml.jackson.databind.JsonNode
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 import java.util.regex.Pattern
 
-class MapOverlay<V> : JsonOverlay<MutableMap<String, V>> {
+class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
+
     private val valueFactory: OverlayFactory<V>
     private val keyPattern: Pattern?
     private val overlays: MutableMap<String, JsonOverlay<V>> = LinkedHashMap()
     private var elaborated = false
 
     private constructor(
-        json: JsonNode,
+        json: JsonElement,
         parent: JsonOverlay<*>?, factory: OverlayFactory<MutableMap<String, V>>,
         refMgr: ReferenceManager
     ) : super(json, parent, factory, refMgr) {
@@ -36,21 +39,22 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>> {
     }
 
     private constructor(
-        value: MutableMap<String, V>?, parent: JsonOverlay<*>?, factory: OverlayFactory<MutableMap<String, V>>,
+        value: MutableMap<String, V>?,
+        parent: JsonOverlay<*>?,
+        factory: OverlayFactory<MutableMap<String, V>>,
         refMgr: ReferenceManager
-    ) : super(LinkedHashMap<String, V>(value), parent, factory, refMgr) {
+    ) : super(LinkedHashMap<String, V>(value ?: mapOf()), parent, factory, refMgr) {
         val mapOverlayFactory = factory as MapOverlayFactory<V>
         valueFactory = mapOverlayFactory.valueFactory
         val keyPattern = mapOverlayFactory.keyPattern
         this.keyPattern = if (keyPattern != null) Pattern.compile(keyPattern) else null
     }
 
-    override fun _findInternal(path: JsonPointer?): JsonOverlay<*>? {
-        val key = path!!.matchingProperty
-        return if (overlays.containsKey(key)) overlays[key]!!._find(path.tail()) else null
+    override fun _getKeyValueOverlay(name: String): JsonOverlay<*> {
+        return _getOverlay(name)
     }
 
-    override fun _fromJson(json: JsonNode): MutableMap<String, V> {
+    override fun _fromJson(json: JsonElement): MutableMap<String, V> {
         return object : LinkedHashMap<String, V>() {
             private val serialVersionUID = 1L
 
@@ -60,12 +64,13 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>> {
         }
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode {
-        val obj = _jsonObject()
+    override fun _toJsonInternal(options: SerializationOptions): JsonElement {
+        if (overlays.isEmpty() && !options.isKeepThisEmpty) return JsonNull
+        val objMap = mutableMapOf<String, JsonElement>()
         for ((key, value1) in overlays) {
-            obj[key] = value1._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY))
+            objMap[key] = value1._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY))
         }
-        return if (obj.size() > 0 || options.isKeepThisEmpty) obj else _jsonMissing()
+        return _jsonObject(objMap)
     }
 
     override fun _isElaborated(): Boolean {
@@ -84,14 +89,13 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>> {
     private fun fillWithJson() {
         value!!.clear()
         overlays.clear()
-        val iter = json!!.fields()
-        while (iter.hasNext()) {
-            val (key, value1) = iter.next()
-            if (keyPattern == null || keyPattern.matcher(key).matches()) {
-                val valOverlay = valueFactory.create(value1, this, refMgr)
-                overlays[key] = valOverlay
-                valOverlay._setPathInParent(key)
-                valOverlay._get(false)?.let { value!!.put(key, it) }
+        if (json !is JsonObject) return
+        for (item in json!!.jsonObject) {
+            if (keyPattern == null || keyPattern.matcher(item.key).matches()) {
+                val valOverlay = valueFactory.create(item.value, this, refMgr)
+                overlays[item.key] = valOverlay
+                valOverlay._setPathInParent(item.key)
+                valOverlay._get(false)?.let { value!!.put(item.key, it) }
             }
         }
     }
@@ -119,6 +123,10 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>> {
         return overlays[key]!!
     }
 
+    override fun _getPropertyNames(): List<String> {
+        return overlays.keys.toList()
+    }
+
     fun keySet(): Set<String> {
         return value!!.keys
     }
@@ -137,8 +145,8 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>> {
         return overlays.size
     }
 
-    override fun equals(obj: Any?): Boolean {
-        return equals(obj, false)
+    override fun equals(other: Any?): Boolean {
+        return equals(other, false)
     }
 
     fun equals(obj: Any?, sameOrder: Boolean): Boolean {
@@ -188,7 +196,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>> {
         }
 
         override fun _create(
-            json: JsonNode,
+            json: JsonElement,
             parent: JsonOverlay<*>?,
             refMgr: ReferenceManager
         ): JsonOverlay<MutableMap<String, V>> {
@@ -197,7 +205,10 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>> {
     }
 
     companion object {
-        fun <V> getFactory(valueFactory: OverlayFactory<V>, keyPattern: String?): OverlayFactory<MutableMap<String, V>> {
+        fun <V> getFactory(
+            valueFactory: OverlayFactory<V>,
+            keyPattern: String?
+        ): OverlayFactory<MutableMap<String, V>> {
             return MapOverlayFactory(valueFactory, keyPattern)
         }
     }

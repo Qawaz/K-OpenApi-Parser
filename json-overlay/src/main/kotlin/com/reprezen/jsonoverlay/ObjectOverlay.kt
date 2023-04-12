@@ -14,24 +14,27 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.databind.JsonNode
+import kotlinx.serialization.json.*
 
 class ObjectOverlay : ScalarOverlay<Any> {
 
-    private constructor(value: Any?, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(Companion.factory, refMgr) {
-        if (value != null && value is JsonNode) {
+    private constructor(value: Any?, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
+        Companion.factory,
+        refMgr
+    ) {
+        if (value != null && value is JsonElement) {
             load(value, parent)
         } else {
             load(value, parent)
         }
     }
 
-    override fun _fromJson(json: JsonNode): Any? {
-        return if (json.isMissingNode) null else mapper.convertValue(json, Any::class.java)
+    override fun _fromJson(json: JsonElement): Any? {
+        return json.toValue()
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode? {
-        return if (value != null) mapper.convertValue(value, JsonNode::class.java) else _jsonMissing()
+    override fun _toJsonInternal(options: SerializationOptions): JsonElement {
+        return value.toJsonElement()
     }
 
     override fun _getFactory(): OverlayFactory<*> {
@@ -50,7 +53,7 @@ class ObjectOverlay : ScalarOverlay<Any> {
                 return ObjectOverlay(value, parent, refMgr)
             }
 
-            override fun _create(json: JsonNode, parent: JsonOverlay<*>?, refMgr: ReferenceManager): ObjectOverlay {
+            override fun _create(json: JsonElement, parent: JsonOverlay<*>?, refMgr: ReferenceManager): ObjectOverlay {
                 return ObjectOverlay(json, parent, refMgr)
             }
         }

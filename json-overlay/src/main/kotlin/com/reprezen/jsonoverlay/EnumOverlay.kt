@@ -14,12 +14,14 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.databind.JsonNode
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonPrimitive
 
 abstract class EnumOverlay<V : Enum<V>> : ScalarOverlay<V> {
 
     protected constructor(
-        json: JsonNode,
+        json: JsonElement,
         parent: JsonOverlay<*>?,
         factory: OverlayFactory<V>,
         refMgr: ReferenceManager
@@ -32,22 +34,20 @@ abstract class EnumOverlay<V : Enum<V>> : ScalarOverlay<V> {
         refMgr: ReferenceManager?
     ) : super(value, parent, factory, refMgr)
 
-    override fun _fromJson(json: JsonNode): V? {
-        if (!json.isTextual) {
-            return null
-        }
+    override fun _fromJson(json: JsonElement): V? {
+        if (json !is JsonPrimitive || !json.isString) return null
         return try {
-            getEnumValue(json.asText())
+            getEnumValue(json.content)
         } catch (e: IllegalArgumentException) {
             null
         }
     }
 
-    override fun _toJsonInternal(options: SerializationOptions): JsonNode? {
+    override fun _toJsonInternal(options: SerializationOptions): JsonElement? {
         return if (value != null) {
-            _jsonScalar(value!!.name)
+            JsonPrimitive(value!!.name)
         } else {
-            _jsonMissing()
+            JsonNull
         }
     }
 

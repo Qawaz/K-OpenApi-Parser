@@ -24,6 +24,7 @@ import com.wakaztahir.kate.InputSourceStream
 import com.wakaztahir.kate.OutputDestinationStream
 import com.wakaztahir.kate.RelativeResourceEmbeddingManager
 import com.wakaztahir.kate.TemplateContext
+import kotlinx.serialization.json.JsonElement
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
@@ -224,10 +225,11 @@ abstract class TypeGenerator(
                 MutableMap::class,  //
                 Optional::class,  //
                 Collectors::class,  //
-                JsonNode::class,  //
+                JsonElement::class,  //
                 ObjectNode::class,  //
-                JsonNodeFactory::class,  //
-                JsonPointer::class,  //
+                com.reprezen.jsonoverlay.JsonPointer::class,
+//                JsonNodeFactory::class,  //
+//                JsonPointer::class,  //
                 IJsonOverlay::class,  //
                 JsonOverlay::class,  //
                 IModelPart::class,  //

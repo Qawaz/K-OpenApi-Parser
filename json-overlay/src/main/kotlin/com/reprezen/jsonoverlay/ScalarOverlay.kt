@@ -14,18 +14,17 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.core.JsonPointer
-import com.fasterxml.jackson.databind.JsonNode
+import kotlinx.serialization.json.JsonElement
 
 abstract class ScalarOverlay<V> : JsonOverlay<V> {
 
     protected constructor(
         factory: OverlayFactory<V>,
         refMgr: ReferenceManager
-    ) : super(factory,refMgr)
+    ) : super(factory, refMgr)
 
     protected constructor(
-        json: JsonNode,
+        json: JsonElement,
         parent: JsonOverlay<*>?,
         factory: OverlayFactory<V>,
         refMgr: ReferenceManager
@@ -40,7 +39,4 @@ abstract class ScalarOverlay<V> : JsonOverlay<V> {
         refMgr: ReferenceManager?
     ) : super(value, parent, factory!!, refMgr!!)
 
-    public override fun _findInternal(path: JsonPointer?): JsonOverlay<*>? {
-        return null
-    }
 }

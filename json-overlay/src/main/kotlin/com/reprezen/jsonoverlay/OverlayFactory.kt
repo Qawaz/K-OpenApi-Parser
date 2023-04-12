@@ -14,7 +14,7 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.fasterxml.jackson.databind.JsonNode
+import kotlinx.serialization.json.JsonElement
 
 abstract class OverlayFactory<V> {
 
@@ -26,19 +26,19 @@ abstract class OverlayFactory<V> {
         return overlay
     }
 
-    fun create(json: JsonNode?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): JsonOverlay<V> {
+    fun create(json: JsonElement, parent: JsonOverlay<*>?, refMgr: ReferenceManager): JsonOverlay<V> {
         var overlay: JsonOverlay<V>?
         if (Reference.isReferenceNode(json)) {
-            val reference = refMgr.getReference(json!!)
+            val reference = refMgr.getReference(json)
             val refOverlay = RefOverlay(reference, null, this, refMgr)
             overlay = refOverlay.overlay
             if (overlay == null) {
                 overlay = _create(null as V?, parent, refMgr)
             }
-            overlay = (overlay._getFactory() as OverlayFactory<V>?)!!._create(null as V?, parent, refMgr)
+            overlay = (overlay._getFactory() as OverlayFactory<V>)._create(null as V?, parent, refMgr)
             overlay._setReference(refOverlay)
         } else {
-            val existing = refMgr.registry.getOverlay(json!!, signature!!)
+            val existing = refMgr.registry.getOverlay(json, signature!!)
             if (existing != null) {
                 overlay = existing as JsonOverlay<V>
                 if (parent != null) {
@@ -71,7 +71,7 @@ abstract class OverlayFactory<V> {
     protected abstract fun _create(value: V?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): JsonOverlay<V>
 
     protected abstract fun _create(
-        json: JsonNode,
+        json: JsonElement,
         parent: JsonOverlay<*>?,
         refMgr: ReferenceManager
     ): JsonOverlay<V>
