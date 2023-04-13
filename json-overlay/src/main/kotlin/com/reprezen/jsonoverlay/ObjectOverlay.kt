@@ -97,10 +97,11 @@ class ObjectOverlay : ScalarOverlay<Any>, KeyValueOverlay {
     }
 
     override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
-        return path.segments.firstOrNull()?.let { valueOfKey(it) }?.let { ov ->
+        path.segments.firstOrNull()?.let { valueOfKey(it) }?.let { ov ->
             if (path.segments.size == 1) return ov
-            ov.findByPointer(JsonPointer(path.segments.drop(1)))
+            return ov.findByPointer(JsonPointer(path.segments.drop(1)))
         }
+        return null
     }
 
     override fun _getKeyValueOverlayByName(name: String): JsonOverlay<*>? {

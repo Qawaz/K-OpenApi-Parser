@@ -20,7 +20,7 @@
                         _get<SchemaImpl>("additionalPropertiesSchema")?.findByPointer(tail)
                     }
                 } else {
-                    super<Schema>.findByPointer(path)
+                    super._findByPath(path)
                 }
             }
 

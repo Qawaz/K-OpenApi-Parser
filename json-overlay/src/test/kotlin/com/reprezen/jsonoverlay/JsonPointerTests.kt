@@ -14,6 +14,7 @@ class JsonPointerTests : Assert() {
         assertEquals(JsonPointer.Empty, pointer.minus(pointer))
         assertEquals(JsonPointer.Empty, other.minus(other))
         assertEquals("0/variables/x-foo",JsonPointer("servers/0/variables/x-foo").minus(JsonPointer("servers")).toString())
+        assertEquals("paths--/--foo--get--requestBody--required",JsonPointer("/paths/~1foo/get/requestBody/required").segments.joinToString("--"))
     }
 
 }

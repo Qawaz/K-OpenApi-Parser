@@ -47,7 +47,7 @@ class JsonPointer(val segments: List<String>) {
         return segments == other.segments
     }
 
-    fun isEmpty() : Boolean = segments.isEmpty()
+    fun isEmpty(): Boolean = segments.isEmpty()
 
     fun minus(pointer: JsonPointer): JsonPointer? {
         if (pointer.segments.size > segments.size) return null
@@ -68,7 +68,25 @@ class JsonPointer(val segments: List<String>) {
     }
 
     companion object {
+
         val Empty: JsonPointer = JsonPointer(emptyList())
+
+        private fun String.toPathSegments(): MutableList<String> {
+            val segments = mutableListOf<String>()
+            val splits = removePrefix("/").split("/")
+            for (split in splits) {
+                if (split.contains("~1")) {
+                    if (split.startsWith("~1")) segments.add("/")
+                    val endsWith = split.endsWith("~1")
+                    segments.add(split.removePrefix("~1").removeSuffix("~1").replace("~1", "/"))
+                    if (endsWith) segments.add("~1")
+                } else {
+                    segments.add(split.replace("~0", "~"))
+                }
+            }
+            return segments
+        }
+
     }
 
 }

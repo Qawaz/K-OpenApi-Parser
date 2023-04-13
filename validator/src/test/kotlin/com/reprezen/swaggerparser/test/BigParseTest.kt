@@ -52,7 +52,7 @@ class BigParseTest(
                 val overlay = model.findByPath(path.toString())
                 assertNotNull("No overlay object found for path: $path", overlay)
                 val value = Overlay[overlay!!]
-                val fromJson = getValue(node)
+                var fromJson = getValue(node)
                 val msg = String.format(
                     "Wrong overlay value for model '%s' and path '%s': expected '%s', got '%s'",
                     modelUrl.path,
@@ -60,6 +60,7 @@ class BigParseTest(
                     fromJson,
                     value
                 )
+                if (fromJson is Double) fromJson = fromJson.toFloat()
                 assertEquals(msg, fromJson, value)
             }
         }

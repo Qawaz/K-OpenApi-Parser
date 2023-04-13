@@ -128,17 +128,14 @@ class ReferenceTests : Assert() {
     fun testFind() {
         assertSame(model.getScalar("s1"), model.findByPath("/scalars/s1"))
         assertSame(model.getScalar("s2"), model.findByPath("/scalars/s2"))
-        println(
-            "value : ${(model.getScalar("s3")!! as JsonOverlay<*>).value} to ${((model as KeyValueOverlay)._findByPath("/scalars/s3") as JsonOverlay<*>).value}"
-        )
-        assertTrue(model.getScalar("s3")!! == (model as KeyValueOverlay)._findByPath("/scalars/s3"))
-        assertTrue(model.getScalar("s3") == model.findByPath("/scalars/s3"))
-        assertSame(model.getScalar("s3"), model.getScalar("s3"))
-        assertSame(model.findByPath("/scalars/s3"), model.findByPath("/scalars/s3"))
-        assertEquals(model.getScalar("s3"), model.findByPath("/scalars/s3"))
-        assertEquals(model.getScalar("ext1"), model.findByPath("/scalars/ext1"))
-        assertEquals(model.getScalar("ext2"), model.findByPath("/scalars/ext1"))
-        assertEquals(model.getScalar("ext3"), model.findByPath("/scalars/s1"))
+        assertTrue(model.getScalar("s3")!! == model.findByPath("/scalars/s3")!!._get()!!)
+        assertTrue(model.getScalar("s3")!! == model.findByPath("/scalars/s3")!!._get()!!)
+        assertSame(model.getScalar("s3")!!, model.getScalar("s3"))
+        assertSame(model.findByPath("/scalars/s3")!!, model.findByPath("/scalars/s3"))
+        assertEquals(model.getScalar("s3")!!, model.findByPath("/scalars/s3")!!._get()!!)
+        assertEquals(model.getScalar("ext1")!!, model.findByPath("/scalars/ext1")!!._get()!!)
+        assertEquals(model.getScalar("ext2")!!, model.findByPath("/scalars/ext1")!!._get()!!)
+        assertEquals(model.getScalar("ext3")!!, model.findByPath("/scalars/s1")!!._get()!!)
     }
 
     @Test

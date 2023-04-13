@@ -127,9 +127,9 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>>, KeyValueOverlay {
     override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
         val index = path.segments.firstOrNull()?.toIntOrNull()
         if (index != null) {
-            return _findByIndex(index)?.let {
+            _findByIndex(index)?.let {
                 if (path.segments.size == 1) return it
-                it.findByPointer(JsonPointer(path.segments.drop(1)))
+                return it.findByPointer(JsonPointer(path.segments.drop(1)))
             }
         }
         return null

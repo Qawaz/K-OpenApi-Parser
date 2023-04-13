@@ -35,7 +35,7 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
                 _get<SchemaImpl>("additionalPropertiesSchema")?.findByPointer(tail)
             }
         } else {
-            super<Schema>.findByPointer(path)
+            super._findByPath(path)
         }
     }
 

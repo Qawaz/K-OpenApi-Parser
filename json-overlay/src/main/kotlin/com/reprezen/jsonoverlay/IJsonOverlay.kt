@@ -24,7 +24,7 @@ interface IJsonOverlay<V> {
         if (this is KeyValueOverlay) {
             return this._findByPath(path)
         } else {
-            Throwable("pointer $path cannot navigate on overlay $this")
+            Throwable("pointer $path cannot navigate on overlay $this").printStackTrace()
         }
         return null
     }
