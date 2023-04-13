@@ -21,7 +21,7 @@ class TagValidator : ObjectValidatorBase<Tag>() {
         val tag = value.overlay as Tag
         validateStringField(TagImpl.F_name, true)
         validateStringField(TagImpl.F_description, false)
-        validateField<ExternalDocs>(TagImpl.F_externalDocs, false, ExternalDocs::class.java, ExternalDocsValidator())
+        validateField<ExternalDocs>(TagImpl.F_externalDocs, false, ExternalDocsValidator())
         validateExtensions(tag.getExtensions())
     }
 }

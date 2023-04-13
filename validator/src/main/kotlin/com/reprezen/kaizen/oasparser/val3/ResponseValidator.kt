@@ -22,15 +22,14 @@ class ResponseValidator : ObjectValidatorBase<Response>() {
     override fun runObjectValidations() {
         val response = value.overlay as Response
         validateStringField(ResponseImpl.F_description, false)
-        validateMapField<Header>(ResponseImpl.F_headers, false, false, Header::class.java, HeaderValidator())
+        validateMapField<Header>(ResponseImpl.F_headers, false, false, HeaderValidator())
         validateMapField<MediaType>(
             ResponseImpl.F_contentMediaTypes,
             false,
             false,
-            MediaType::class.java,
             MediaTypeValidator()
         )
-        validateMapField<Link>(ResponseImpl.F_links, false, false, Link::class.java, LinkValidator())
+        validateMapField<Link>(ResponseImpl.F_links, false, false, LinkValidator())
         validateExtensions(response.getExtensions())
     }
 }

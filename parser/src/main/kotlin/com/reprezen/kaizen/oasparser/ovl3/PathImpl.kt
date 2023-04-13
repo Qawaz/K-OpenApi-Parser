@@ -1,25 +1,14 @@
 package com.reprezen.kaizen.oasparser.ovl3
 
+import com.reprezen.jsonoverlay.*
 import com.reprezen.kaizen.oasparser.model3.*
-import com.reprezen.jsonoverlay.MapOverlay
 import java.util.stream.Collectors
-import com.reprezen.jsonoverlay.StringOverlay
 import com.reprezen.jsonoverlay.parser.Generated
-import com.reprezen.jsonoverlay.IJsonOverlay
-import com.reprezen.jsonoverlay.ListOverlay
-import com.reprezen.jsonoverlay.OverlayFactory
-import com.reprezen.jsonoverlay.Builder
-import com.reprezen.jsonoverlay.PropertiesOverlay
-import com.reprezen.jsonoverlay.JsonPointer
-import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.kaizen.oasparser.ovl3.OperationImpl
 import com.reprezen.kaizen.oasparser.ovl3.ServerImpl
 import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl
 import kotlinx.serialization.json.JsonElement
-import com.reprezen.jsonoverlay.ObjectOverlay
 import kotlin.collections.List
-import com.reprezen.jsonoverlay.JsonOverlay
-import com.reprezen.jsonoverlay.Overlay
 import kotlin.collections.Map
 
 class PathImpl : PropertiesOverlay<Path> ,Path {

@@ -14,24 +14,28 @@ package com.reprezen.swaggerparser.test
 import com.google.common.io.Resources
 import com.reprezen.kaizen.oasparser.OpenApiParser
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Test
 
 class PathsTest {
 
-    val isJson : Boolean get() = true
+    val isJson: Boolean get() = true
 
-    private val pathsTestRes : String = "models/" + (if(isJson) "json" else "yaml") + "/pathsTest" + (if(isJson) ".json" else ".yaml")
+    private val pathsTestRes: String =
+        "models/" + (if (isJson) "json" else "yaml") + "/pathsTest" + (if (isJson) ".json" else ".yaml")
 
     @Test
     @Throws(Exception::class)
     fun testGetPaths() {
         val model = OpenApiParser().parse(Resources.getResource(pathsTestRes))
-        Assert.assertEquals(2, model.getPaths().size.toLong())
-        Assert.assertTrue(model.hasPath("/"))
-        Assert.assertTrue(model.hasPath("/v2"))
-        Assert.assertEquals("/", model.getPath("/")?.getPathString())
-        Assert.assertEquals("/v2", model.getPath("/v2")?.getPathString())
-        Assert.assertNotNull(model.getPath("/"))
-        Assert.assertNotNull(model.getPath("/v2"))
+        assertEquals(2, model.getPaths().size.toLong())
+        assertTrue(model.hasPath("/"))
+        assertTrue(model.hasPath("/v2"))
+        assertEquals("/", model.getPath("/")?.getPathString())
+        assertNotNull(model.getPath("/v2"))
+        assertNotNull(model.getPath("/"))
+
+        // TODO these two cause recursive errors
+        assertEquals("/v2", model.getPath("/v2")?.getPathString())
     }
 }

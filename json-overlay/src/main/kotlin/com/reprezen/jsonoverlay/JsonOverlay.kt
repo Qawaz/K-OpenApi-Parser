@@ -306,6 +306,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         if (other !is JsonOverlay<*>) return false
         val value1 = _get()
         val value2 = other._get()
+        if(value === this || value2 === this) return false
         if ((value1 != null || value2 != null) && value1 == value2) return true
         return (json != null || other.json != null) && json == other.json
     }

@@ -147,12 +147,20 @@ class Overlay<V> {
             return Overlay(overlay)
         }
 
+        fun <V> ofOv(overlay : JsonOverlay<*>) : JsonOverlay<*>{
+            return overlay
+        }
+
         fun <V> of(overlay: IJsonOverlay<V>): Overlay<V> {
             return Overlay(overlay)
         }
 
         fun <V> of(overlay: MapOverlay<V>): Overlay<MutableMap<String, V>> {
             return Overlay(overlay)
+        }
+
+        fun <V> of(map: Map<String, V>): Overlay<MutableMap<String, V>>? {
+            return of(map, parent = null)
         }
 
         fun <V> of(
@@ -169,6 +177,10 @@ class Overlay<V> {
 
         fun <V> of(overlay: ListOverlay<V>): Overlay<MutableList<V>> {
             return Overlay(overlay)
+        }
+
+        fun <V> of(list: List<V>): Overlay<MutableList<V>>? {
+            return of(list = list, parent = null)
         }
 
         fun <V> of(

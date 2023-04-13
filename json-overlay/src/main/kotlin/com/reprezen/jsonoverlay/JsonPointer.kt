@@ -47,9 +47,28 @@ class JsonPointer(val segments: List<String>) {
         return segments == other.segments
     }
 
+    fun isEmpty() : Boolean = segments.isEmpty()
+
+    fun minus(pointer: JsonPointer): JsonPointer? {
+        if (pointer.segments.size > segments.size) return null
+        var index = 0
+        while (index < pointer.segments.size) {
+            if (segments[index] == pointer.segments[index]) {
+                index++
+            } else {
+                return null
+            }
+        }
+        if (index == segments.size) return Empty
+        return JsonPointer(segments.drop(index))
+    }
+
     override fun hashCode(): Int {
         return segments.hashCode()
     }
 
+    companion object {
+        val Empty: JsonPointer = JsonPointer(emptyList())
+    }
 
 }

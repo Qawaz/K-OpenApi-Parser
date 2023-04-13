@@ -24,7 +24,7 @@ class SecurityRequirementValidator : ObjectValidatorBase<SecurityRequirement>() 
     override fun runObjectValidations() {
         val requirements: Overlay<MutableMap<String, SecurityParameter>> = validateMapField<SecurityParameter>(
             SecurityRequirementImpl.F_requirements, false, false,
-            SecurityParameter::class.java, SecurityParameterValidator()
+            SecurityParameterValidator()
         )
         checkAllSchemesDefined(requirements)
     }

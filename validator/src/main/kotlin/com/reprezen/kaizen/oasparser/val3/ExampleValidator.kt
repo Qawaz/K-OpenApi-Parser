@@ -22,7 +22,7 @@ class ExampleValidator : ObjectValidatorBase<Example>() {
         val example = value.overlay as Example
         validateStringField(ExampleImpl.F_summary, false)
         validateStringField(ExampleImpl.F_description, false)
-        val valueField: Overlay<Any> = validateField<Any>(ExampleImpl.F_value, false, Any::class.java, null)!!
+        val valueField: Overlay<Any> = validateField<Any>(ExampleImpl.F_value, false, null)!!
         val externalField: Overlay<String> = validateUrlField(ExampleImpl.F_externalValue, false, true, false)!!
         validateExtensions(example.getExtensions())
         checkExactlyOneValue(valueField, externalField)

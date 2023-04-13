@@ -46,8 +46,8 @@ class ReferenceRegistry @JvmOverloads constructor(loader: JsonLoader? = null) {
     }
 
     @Throws(IOException::class)
-    fun loadDoc(url: URL?): JsonElement {
-        return loader.load(url!!)
+    fun loadDoc(url: URL): JsonElement {
+        return loader.load(url)
     }
 
     fun getOverlay(normalizedRef: String, factorySig: String): JsonOverlay<*>? {

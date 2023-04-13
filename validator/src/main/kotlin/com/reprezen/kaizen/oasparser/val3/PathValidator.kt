@@ -23,7 +23,7 @@ class PathValidator : ObjectValidatorBase<Path>() {
         val path = value.overlay as Path
         validateStringField(PathImpl.F_summary, false)
         validateStringField(PathImpl.F_description, false)
-        validateMapField<Operation>(PathImpl.F_operations, false, false, Operation::class.java, OperationValidator())
+        validateMapField<Operation>(PathImpl.F_operations, false, false, OperationValidator())
         validateListField<Server>(PathImpl.F_servers, false, false, ServerValidator())
         validateListField<Parameter>(PathImpl.F_parameters, false, false, ParameterValidator())
         validateExtensions(path.getExtensions())

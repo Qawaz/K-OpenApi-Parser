@@ -27,14 +27,14 @@ interface KeyValueOverlay {
         if (path.segments.isEmpty()) return this as JsonOverlay<*>
         if (path.segments.size == 1) return _traverseOverlaysOfSegment(path.segments.first()) { it }
         var currentProps: KeyValueOverlay = this
-//        println("Traversing begins")
+        println("Traversing begins")
         for (segment in path.segments.dropLast(1)) {
-//            println("Traversing $segment")
+            println("Traversing $segment")
             currentProps = (currentProps._traverseOverlaysOfSegment(segment){ it as? KeyValueOverlay } ?: return null).also {
-//                println("Got : ${it::class.qualifiedName}")
+                println("Got : ${it::class.qualifiedName}")
             }
         }
-//        println("Traversing last ${path.segments.lastOrNull()}")
+        println("Traversing last ${path.segments.lastOrNull()}")
         return currentProps._traverseOverlaysOfSegment(path.segments.last()){ it }//.also { println("FOUND2 $it") }
     }
 

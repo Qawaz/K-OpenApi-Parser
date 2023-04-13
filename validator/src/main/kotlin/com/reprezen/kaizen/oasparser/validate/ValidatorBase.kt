@@ -5,7 +5,6 @@ import com.reprezen.jsonoverlay.*
 import com.reprezen.kaizen.oasparser.validate.msg.Messages
 import kotlinx.serialization.json.*
 import java.io.IOException
-import java.lang.NullPointerException
 import java.net.MalformedURLException
 import java.net.URL
 import java.net.URLConnection
@@ -31,7 +30,7 @@ abstract class ValidatorBase<V> : Validator<V> {
     abstract fun runValidations()
 
     fun validateBooleanField(name: String, required: Boolean): Overlay<Boolean>? {
-        return validateField(name, required, Boolean::class.java, null)
+        return validateField(name, required, null)
     }
 
     fun validateStringField(name: String, required: Boolean): Overlay<String>? {
@@ -46,10 +45,10 @@ abstract class ValidatorBase<V> : Validator<V> {
     fun validateStringField(
         name: String, required: Boolean, pattern: Pattern?,
         vararg otherChecks: Consumer<Overlay<String>>
-    ): Overlay<String>? {
-        val field = validateField(name, required, String::class.java, null)
+    ): Overlay<String> {
+        val field = validateField<String>(name, required, null)
         checkMissing(field, required)
-        if (field != null && field.isPresent) {
+        if (field.isPresent) {
             pattern?.let { checkPattern(field, it) }
             for (otherCheck in otherChecks) {
                 otherCheck.accept(field)
@@ -174,7 +173,7 @@ abstract class ValidatorBase<V> : Validator<V> {
         test: Function<Number, Boolean>?,
         desc: String?
     ): Overlay<Number>? {
-        val field = validateField(name, required, Number::class.java, null)
+        val field = validateField<Number>(name, required, null)
         checkMissing(field, required)
         if (field?.isPresent == true && test != null) {
             val n = field.get()!!
@@ -187,20 +186,13 @@ abstract class ValidatorBase<V> : Validator<V> {
 
     @SafeVarargs
     fun <F> validateField(
-        name: String, required: Boolean, fieldClass: Class<F>?,
-        validator: Validator<F>?, vararg otherChecks: Consumer<Overlay<F>?>
-    ): Overlay<F>? {
-        val propValue: PropertiesOverlay<V> = value.get() as PropertiesOverlay<V>
-        val field = try {
-            Overlay.of(propValue, name)
-        } catch (e: NullPointerException) {
-            if (required) {
-                throw e
-            } else {
-                return null
-            }
-        }
-        checkJsonType(field, getAllowedJsonTypes(field), results)
+        name: String, required: Boolean, validator: Validator<F>?,
+        vararg otherChecks: Consumer<Overlay<F>?>
+    ): Overlay<F> {
+        val propValue: PropertiesOverlay<F> = value.get() as PropertiesOverlay<F>
+        val field = Overlay.of(propValue, name)
+        if(required && field == null) throw IllegalStateException("field $name is required $propValue")
+        checkJsonType(field, getAllowedJsonTypes(field!!), results)
         checkMissing(field, required)
         if (field.isPresent && validator != null) {
             validator.validate(field)
@@ -226,9 +218,9 @@ abstract class ValidatorBase<V> : Validator<V> {
         unique: Boolean,
         itemValidator: Validator<X>?
     ) {
-        ListValidator(itemValidator).validate(list)
+        if(itemValidator != null) ListValidator(itemValidator).validate(list)
         checkListNotEmpty(list, nonEmpty)
-        checkListUnique(list, unique)
+        checkListUnique(list, unique,nonEmpty = nonEmpty)
     }
 
     private fun <X> checkListNotEmpty(list: Overlay<List<X>>, nonEmpty: Boolean) {
@@ -242,12 +234,13 @@ abstract class ValidatorBase<V> : Validator<V> {
         }
     }
 
-    private fun <X> checkListUnique(list: Overlay<List<X>>, unique: Boolean) {
+    private fun <X> checkListUnique(list: Overlay<List<X>>, unique: Boolean,nonEmpty: Boolean) {
         if (unique) {
-            val listOverlay: ListOverlay<X> = Overlay.getListOverlay(list)!!
+            val listOverlay = Overlay.getListOverlay(list)
+            if(nonEmpty && listOverlay == null){ throw IllegalStateException("list overlay is null while required non empty") }
             val seen: MutableSet<X> = HashSet()
-            for (i in 0 until listOverlay.size()) {
-                val item: X = listOverlay[i]!!
+            for (i in 0 until (listOverlay?.size() ?: 0)) {
+                val item: X = listOverlay?.get(i)!!
                 if (seen.contains(item)) {
                     results.addError(
                         Messages.msg(BaseValidationMessages.DuplicateValue, item!!, i),
@@ -262,7 +255,7 @@ abstract class ValidatorBase<V> : Validator<V> {
 
     fun <X> validateMapField(
         name: String, nonEmpty: Boolean, unique: Boolean,
-        valueClass: Class<X>?, valueValidator: Validator<X>?
+        valueValidator: Validator<X>?
     ): Overlay<MutableMap<String, X>> {
         val map = Overlay.of(
             value.get() as PropertiesOverlay<V>,
@@ -277,7 +270,7 @@ abstract class ValidatorBase<V> : Validator<V> {
         nonEmpty: Boolean, unique: Boolean,
         valueValidator: Validator<X>?
     ) {
-        MapValidator(valueValidator).validate(map)
+        if(valueValidator != null) MapValidator(valueValidator).validate(map)
         checkMapNotEmpty(map, nonEmpty)
         checkMapUnique(map, unique)
     }
@@ -322,7 +315,7 @@ abstract class ValidatorBase<V> : Validator<V> {
         extensions: MutableMap<String, Any>,
         crumb: String? = null
     ): Overlay<MutableMap<String, Any>> {
-        val mapOverlay = Overlay.of(extensions)!!
+        val mapOverlay = Overlay.of(extensions,parent = null)!!
         validateMap(mapOverlay, nonEmpty = false, unique = false, valueValidator = null)
         return mapOverlay
     }

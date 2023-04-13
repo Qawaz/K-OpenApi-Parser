@@ -25,7 +25,6 @@ class ServerValidator : ObjectValidatorBase<Server>() {
             ServerImpl.F_serverVariables,
             false,
             false,
-            ServerVariable::class.java,
             ServerVariableValidator()
         )
         validateExtensions(server.getExtensions())

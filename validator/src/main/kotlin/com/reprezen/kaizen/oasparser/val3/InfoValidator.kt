@@ -23,8 +23,8 @@ class InfoValidator : ObjectValidatorBase<Info>() {
         validateStringField(InfoImpl.F_title, true)
         validateStringField(InfoImpl.F_description, false)
         validateUrlField(InfoImpl.F_termsOfService, false, true, false)
-        validateField<Contact>(InfoImpl.F_contact, false, Contact::class.java, ContactValidator())
-        validateField<License>(InfoImpl.F_license, false, License::class.java, LicenseValidator())
+        validateField<Contact>(InfoImpl.F_contact, false, ContactValidator())
+        validateField<License>(InfoImpl.F_license, false, LicenseValidator())
         validateStringField(InfoImpl.F_version, true)
         validateExtensions(info.getExtensions())
     }

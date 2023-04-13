@@ -25,21 +25,19 @@ class MediaTypeValidator : ObjectValidatorBase<MediaType>() {
     override fun runObjectValidations() {
         val mediaType = value.overlay as MediaType
         // TODO Q: Should schema be required in media type?
-        validateField<Schema>(MediaTypeImpl.F_schema, false, Schema::class.java, SchemaValidator())
+        validateField<Schema>(MediaTypeImpl.F_schema, false, SchemaValidator())
         validateMapField<EncodingProperty>(
             MediaTypeImpl.F_encodingProperties,
             false,
             false,
-            EncodingProperty::class.java,
             EncodingPropertyValidator()
         )
         checkEncodingPropsAreProps(mediaType, results)
         validateExtensions(mediaType.getExtensions())
         val examples: Overlay<MutableMap<String, Example>> = validateMapField<Example>(
-            MediaTypeImpl.F_examples, false, false, Example::class.java,
-            ExampleValidator()
+            MediaTypeImpl.F_examples, false, false, ExampleValidator()
         )
-        val example: Overlay<Any> = validateField<Any>(MediaTypeImpl.F_example, false, Any::class.java, null)!!
+        val example: Overlay<Any> = validateField<Any>(MediaTypeImpl.F_example, false, null)!!
         checkExampleExclusion(examples, example)
     }
 

@@ -19,74 +19,71 @@ class OpenApi3Validator : ObjectValidatorBase<OpenApi3>() {
     override fun runObjectValidations() {
         val model: OpenApi3 = value.overlay as OpenApi3
         validateStringField(OpenApi3Impl.F_openApi, true, "3\\.\\d+(\\.\\d+.*)?")
-        validateField<Info>(OpenApi3Impl.F_info, true, Info::class.java, InfoValidator())
+        validateField<Info>(OpenApi3Impl.F_info, true, InfoValidator())
         validateListField<Server>(
             OpenApi3Impl.F_servers,
             nonEmpty = false,
             unique = false,
             itemValidator = ServerValidator()
         )
-        validateMapField<Path>(OpenApi3Impl.F_paths, true,
+        validateMapField<Path>(
+            OpenApi3Impl.F_paths, true,
             unique = false,
-            valueClass = Path::class.java,
             valueValidator = PathValidator()
         )
         validateExtensions(model.getPathsExtensions())
-        validateMapField<Schema>(OpenApi3Impl.F_schemas,
+        validateMapField<Schema>(
+            OpenApi3Impl.F_schemas,
             nonEmpty = false,
             unique = false,
-            valueClass = Schema::class.java,
             valueValidator = SchemaValidator()
         )
-        validateMapField<Response>(OpenApi3Impl.F_responses,
+        validateMapField<Response>(
+            OpenApi3Impl.F_responses,
             nonEmpty = false,
             unique = false,
-            valueClass = Response::class.java,
             valueValidator = ResponseValidator()
         )
         validateMapField<Parameter>(
             OpenApi3Impl.F_parameters,
             false,
             false,
-            Parameter::class.java,
             ParameterValidator()
         )
-        validateMapField<Example>(OpenApi3Impl.F_examples,
+        validateMapField<Example>(
+            OpenApi3Impl.F_examples,
             nonEmpty = false,
             unique = false,
-            valueClass = Example::class.java,
             valueValidator = ExampleValidator()
         )
         validateMapField<RequestBody>(
             OpenApi3Impl.F_requestBodies,
             nonEmpty = false,
             unique = false,
-            valueClass = RequestBody::class.java,
             valueValidator = RequestBodyValidator()
         )
-        validateMapField<Header>(OpenApi3Impl.F_headers,
+        validateMapField<Header>(
+            OpenApi3Impl.F_headers,
             nonEmpty = false,
             unique = false,
-            valueClass = Header::class.java,
             valueValidator = HeaderValidator()
         )
         validateMapField<SecurityScheme>(
             OpenApi3Impl.F_securitySchemes,
             nonEmpty = false,
             unique = false,
-            valueClass = SecurityScheme::class.java,
             valueValidator = SecuritySchemeValidator()
         )
-        validateMapField<Link>(OpenApi3Impl.F_links,
+        validateMapField<Link>(
+            OpenApi3Impl.F_links,
             nonEmpty = false,
             unique = false,
-            valueClass = Link::class.java,
             valueValidator = LinkValidator()
         )
-        validateMapField<Callback>(OpenApi3Impl.F_callbacks,
+        validateMapField<Callback>(
+            OpenApi3Impl.F_callbacks,
             nonEmpty = false,
             unique = false,
-            valueClass = Callback::class.java,
             valueValidator = CallbackValidator()
         )
         validateExtensions(model.getComponentsExtensions())
@@ -105,7 +102,6 @@ class OpenApi3Validator : ObjectValidatorBase<OpenApi3>() {
         validateField<ExternalDocs>(
             OpenApi3Impl.F_externalDocs,
             false,
-            ExternalDocs::class.java,
             ExternalDocsValidator()
         )
         validateExtensions(model.getExtensions())

@@ -26,17 +26,16 @@ class HeaderValidator : ObjectValidatorBase<Header>() {
         validateBooleanField(HeaderImpl.F_deprecated, false)
         validateBooleanField(HeaderImpl.F_allowEmptyValue, false)
         validateBooleanField(HeaderImpl.F_explode, false)
-        validateField<Any>(HeaderImpl.F_example, false, Any::class.java, null)
-        validateMapField<Example>(HeaderImpl.F_examples, false, false, Example::class.java, ExampleValidator())
+        validateField<Any>(HeaderImpl.F_example, false, null)
+        validateMapField<Example>(HeaderImpl.F_examples, false, false, ExampleValidator())
         validateStringField(HeaderImpl.F_style, false, Regexes.STYLE_REGEX)
         checkAllowReserved(header)
         // TODO Q: Should schema be required in header object?
-        validateField<Schema>(HeaderImpl.F_schema, false, Schema::class.java, SchemaValidator())
+        validateField<Schema>(HeaderImpl.F_schema, false, SchemaValidator())
         validateMapField<MediaType>(
             HeaderImpl.F_contentMediaTypes,
             false,
             false,
-            MediaType::class.java,
             MediaTypeValidator()
         )
         validateExtensions(header.getExtensions())

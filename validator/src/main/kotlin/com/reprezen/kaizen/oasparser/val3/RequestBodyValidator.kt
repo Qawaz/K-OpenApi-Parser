@@ -25,7 +25,6 @@ class RequestBodyValidator : ObjectValidatorBase<RequestBody>() {
             RequestBodyImpl.F_contentMediaTypes,
             false,
             false,
-            MediaType::class.java,
             MediaTypeValidator()
         )
         validateExtensions(requestBody.getExtensions())

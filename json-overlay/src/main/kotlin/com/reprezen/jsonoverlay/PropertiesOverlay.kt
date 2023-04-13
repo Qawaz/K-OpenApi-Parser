@@ -83,7 +83,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     private fun getSubMaps(): Map<FactoryMap, KeyValueOverlay> {
         val map = mutableMapOf<FactoryMap, KeyValueOverlay>()
         for (factory in factoryMap.values) {
-            if (factory.path.isEmpty() || factory.path == "/") {
+            if (json != null && factory.path.isEmpty() || factory.path == "/") {
                 (createOverlay(
                     elem = json!!,
                     factoryMap = factory,
@@ -171,6 +171,21 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         return _traverseOverlaysOfSegment(segment) { it }
     }
 
+    override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
+        for (entry in factoryMap) {
+            println("NAVIGATING $path")
+            val remaining = path.minus(entry.value.pointer) ?: continue
+            println("REMAINING $remaining")
+            _getOverlay(entry.value, entry.value.factory)?.let {
+                if (remaining.isEmpty()) {
+                    return it
+                } else if (it is KeyValueOverlay) {
+                    it._findByPath(remaining)?.let { next -> return next }
+                }
+            }
+        }
+        return super._findByPath(path)
+    }
 
     override fun toString(): String {
         var value = "{"

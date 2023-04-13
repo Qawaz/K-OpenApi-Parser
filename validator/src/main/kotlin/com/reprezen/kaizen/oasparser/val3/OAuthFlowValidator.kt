@@ -21,10 +21,10 @@ class OAuthFlowValidator : ObjectValidatorBase<OAuthFlow>() {
         validateUrlField(OAuthFlowImpl.F_authorizationUrl, required = true, allowRelative = true, allowVars = false)
         validateUrlField(OAuthFlowImpl.F_tokenUrl, true, allowRelative = true, allowVars = false)
         validateUrlField(OAuthFlowImpl.F_refreshUrl, required = false, allowRelative = true, allowVars = false)
-        validateMapField<String>(OAuthFlowImpl.F_scopes,
+        validateMapField<String>(
+            OAuthFlowImpl.F_scopes,
             nonEmpty = true,
             unique = false,
-            valueClass = String::class.java,
             valueValidator = null
         )
         validateExtensions(oauthFlow.getExtensions())

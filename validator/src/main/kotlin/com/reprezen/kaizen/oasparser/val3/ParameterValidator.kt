@@ -28,10 +28,9 @@ class ParameterValidator : ObjectValidatorBase<Parameter>() {
         validateBooleanField(ParameterImpl.F_deprecated, false)
         validateBooleanField(ParameterImpl.F_allowEmptyValue, false)
         validateBooleanField(ParameterImpl.F_explode, false)
-        val example: Overlay<Any> = validateField<Any>(ParameterImpl.F_example, false, Any::class.java, null)!!
+        val example: Overlay<Any> = validateField<Any>(ParameterImpl.F_example, false, null)!!
         val examples = validateMapField<Example>(
-            ParameterImpl.F_examples, false, false, Example::class.java,
-            ExampleValidator()
+            ParameterImpl.F_examples, false, false, ExampleValidator()
         )
         checkExampleExclusion(examples, example)
         validateStringField(ParameterImpl.F_name, true)
@@ -41,12 +40,11 @@ class ParameterValidator : ObjectValidatorBase<Parameter>() {
         validateStringField(ParameterImpl.F_style, false, Regexes.STYLE_REGEX)
         checkAllowReserved(parameter)
         // TODO Q: Should schema be required in parameter object?
-        validateField<Schema>(ParameterImpl.F_schema, false, Schema::class.java, SchemaValidator())
+        validateField<Schema>(ParameterImpl.F_schema, false, SchemaValidator())
         validateMapField<MediaType>(
             ParameterImpl.F_contentMediaTypes,
             false,
             false,
-            MediaType::class.java,
             MediaTypeValidator()
         )
         validateExtensions(parameter.getExtensions())

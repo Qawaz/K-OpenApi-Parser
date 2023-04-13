@@ -32,7 +32,7 @@ class SchemaValidator : ObjectValidatorBase<Schema>() {
         validateBooleanField(SchemaImpl.F_exclusiveMinimum, false)
         validateBooleanField(SchemaImpl.F_uniqueItems, false)
         validateBooleanField(SchemaImpl.F_nullable, false)
-        validateField<Any>(SchemaImpl.F_example, false, Any::class.java, null)
+        validateField<Any>(SchemaImpl.F_example, false, null)
         validateBooleanField(SchemaImpl.F_deprecated, false)
         validatePositiveField(SchemaImpl.F_multipleOf, false)
         validateNonNegativeField(SchemaImpl.F_maxLength, false)
@@ -50,26 +50,24 @@ class SchemaValidator : ObjectValidatorBase<Schema>() {
             validateListField<Schema>(SchemaImpl.F_allOfSchemas, false, false, schemaValidator)
             validateListField<Schema>(SchemaImpl.F_oneOfSchemas, false, false, schemaValidator)
             validateListField<Schema>(SchemaImpl.F_anyOfSchemas, false, false, schemaValidator)
-            validateField<Schema>(SchemaImpl.F_notSchema, false, Schema::class.java, schemaValidator)
-            validateField<Schema>(SchemaImpl.F_itemsSchema, false, Schema::class.java, schemaValidator)
-            validateMapField<Schema>(SchemaImpl.F_properties, false, false, Schema::class.java, schemaValidator)
+            validateField<Schema>(SchemaImpl.F_notSchema, false, schemaValidator)
+            validateField<Schema>(SchemaImpl.F_itemsSchema, false, schemaValidator)
+            validateMapField<Schema>(SchemaImpl.F_properties, false, false, schemaValidator)
         }
         validateFormatField(SchemaImpl.F_format, false, schema.getType())
         validateField<Any>(
             SchemaImpl.F_defaultValue,
             false,
-            Any::class.java,
             null,
             Consumer { field: Overlay<Any>? -> checkDefault(field, schema.getType()) })
         validateField<Discriminator>(
             SchemaImpl.F_discriminator,
             false,
-            Discriminator::class.java,
             DiscriminatorValidator()
         )
         checkReadWrite(schema)
-        validateField<Xml>(SchemaImpl.F_xml, false, Xml::class.java, XmlValidator())
-        validateField<ExternalDocs>(SchemaImpl.F_externalDocs, false, ExternalDocs::class.java, ExternalDocsValidator())
+        validateField<Xml>(SchemaImpl.F_xml, false, XmlValidator())
+        validateField<ExternalDocs>(SchemaImpl.F_externalDocs, false, ExternalDocsValidator())
         validateExtensions(schema.getExtensions())
     }
 

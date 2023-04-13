@@ -84,7 +84,7 @@ class ReferenceManager {
     @Throws(IOException::class)
     fun loadDoc(): JsonElement {
         if (doc == null) {
-            doc = registry.loadDoc(docUrl)
+            doc = registry.loadDoc(docUrl!!)
         }
         return doc!!
     }

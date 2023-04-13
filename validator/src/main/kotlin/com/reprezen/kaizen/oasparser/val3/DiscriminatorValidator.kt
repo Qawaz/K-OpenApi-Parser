@@ -7,6 +7,6 @@ import com.reprezen.kaizen.oasparser.validate.ValidatorBase
 class DiscriminatorValidator : ValidatorBase<Discriminator>() {
     override fun runValidations() {
         validateStringField(DiscriminatorImpl.F_propertyName, true)
-        validateMapField<String>("mappings", false, false, String::class.java, null)
+        validateMapField<String>("mappings", false, false, null)
     }
 }

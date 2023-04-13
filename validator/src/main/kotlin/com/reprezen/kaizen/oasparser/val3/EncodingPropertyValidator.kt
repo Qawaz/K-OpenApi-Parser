@@ -27,7 +27,7 @@ class EncodingPropertyValidator : ObjectValidatorBase<EncodingProperty>() {
 
         // TODO Q: spec says "Headers" (capitalized) for property name -assuming it's a
         // typo
-        validateMapField<Header>(EncodingPropertyImpl.F_headers, false, false, Header::class.java, null)
+        validateMapField<Header>(EncodingPropertyImpl.F_headers, false, false, null)
         validateStringField(EncodingPropertyImpl.F_style, false, Regexes.STYLE_REGEX)
         validateBooleanField(EncodingPropertyImpl.F_explode, false)
         validateBooleanField(ParameterImpl.F_allowReserved, false)

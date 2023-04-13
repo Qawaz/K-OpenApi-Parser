@@ -42,25 +42,21 @@ class SecuritySchemeValidator : ObjectValidatorBase<SecurityScheme>() {
                     validateField(
                         SecuritySchemeImpl.F_implicitOAuthFlow,
                         false,
-                        OAuthFlow::class.java,
                         oauthFlowValidator
                     )
                     validateField<OAuthFlow>(
                         SecuritySchemeImpl.F_passwordOAuthFlow,
                         false,
-                        OAuthFlow::class.java,
                         oauthFlowValidator
                     )
                     validateField<OAuthFlow>(
                         SecuritySchemeImpl.F_clientCredentialsOAuthFlow,
                         false,
-                        OAuthFlow::class.java,
                         oauthFlowValidator
                     )
                     validateField<OAuthFlow>(
                         SecuritySchemeImpl.F_authorizationCodeOAuthFlow,
                         false,
-                        OAuthFlow::class.java,
                         oauthFlowValidator
                     )
                 }

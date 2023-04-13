@@ -24,7 +24,6 @@ class OperationValidator : ObjectValidatorBase<Operation>() {
         validateField<ExternalDocs>(
             OperationImpl.F_externalDocs,
             false,
-            ExternalDocs::class.java,
             ExternalDocsValidator()
         )
         // TODO Q: Not marked as required in spec, but spec says they all must be unique
@@ -36,9 +35,9 @@ class OperationValidator : ObjectValidatorBase<Operation>() {
             false,
             ParameterValidator()
         )
-        validateField<RequestBody>(OperationImpl.F_requestBody, false, RequestBody::class.java, RequestBodyValidator())
-        validateMapField<Response>(OperationImpl.F_responses, true, false, Response::class.java, ResponseValidator())
-        validateMapField<Callback>(OperationImpl.F_callbacks, false, false, Callback::class.java, CallbackValidator())
+        validateField<RequestBody>(OperationImpl.F_requestBody, false, RequestBodyValidator())
+        validateMapField<Response>(OperationImpl.F_responses, true, false, ResponseValidator())
+        validateMapField<Callback>(OperationImpl.F_callbacks, false, false, CallbackValidator())
         validateListField<SecurityRequirement>(
             OperationImpl.F_securityRequirements, false, false, SecurityRequirementValidator()
         )

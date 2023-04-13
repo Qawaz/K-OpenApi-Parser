@@ -19,7 +19,7 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 class CallbackValidator : ObjectValidatorBase<Callback>() {
     override fun runObjectValidations() {
         val callback = value.overlay as Callback
-        validateMapField<Path>(CallbackImpl.F_callbackPaths, false, false, Path::class.java, PathValidator())
+        validateMapField<Path>(CallbackImpl.F_callbackPaths, false, false, PathValidator())
         validateExtensions(callback.getExtensions())
     }
 }

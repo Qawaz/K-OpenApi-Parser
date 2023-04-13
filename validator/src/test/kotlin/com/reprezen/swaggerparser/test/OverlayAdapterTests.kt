@@ -29,9 +29,15 @@ class OverlayAdapterTests : Assert() {
 
     @Test
     fun testFieldAdapter() {
-        assertEquals(model!!.getOpenApi(), Overlay.of(model!!, "openApi")?.get())
-        val pathsMapOverlay = Overlay.of(model as PropertiesOverlay<*>, "paths").get()
-        assertTrue(model!!.getPath("/2.0/users/{username}") === pathsMapOverlay?.get("/2.0/users/{username}"))
+
+        // Testing retrieved value
+        assertEquals(model!!.getOpenApi(), Overlay.of(model!! as PropertiesOverlay<*>, "openApi")?.get())
+
+        // Testing values
+        assertEquals("3.0.0", model!!.getOpenApi())
+
+        val pathsMapOverlay = Overlay.of(model as PropertiesOverlay<*>, "paths")
+        assertSame(model!!.getPath("/2.0/users/{username}"), pathsMapOverlay?.find("/2.0/users/{username}")?._get())
     }
 
     @Test
@@ -63,6 +69,7 @@ class OverlayAdapterTests : Assert() {
         val resp200 = model!!.getPath("/2.0/users/{username}")?.getGet()?.getResponse("200")!!
         assertFalse(Overlay.of(resp200).isReference("description"))
         assertTrue(Overlay.of(resp200.getContentMediaType("application/json")!!).isReference("schema"))
+
         assertEquals(
             "#/components/schemas/user",
             Overlay.of(resp200.getContentMediaType("application/json")!!).getReference("schema")!!.refString

@@ -21,7 +21,7 @@ class ServerVariableValidator : ObjectValidatorBase<ServerVariable>() {
         validateStringField(ServerVariableImpl.F_description, false)
         validateListField<String>(ServerVariableImpl.F_enumValues, false, false, null)
         // TODO Q: What the heck is does the description in the spec mean???
-        validateField<String>(ServerVariableImpl.F_defaultValue, true, String::class.java, null)
+        validateField<String>(ServerVariableImpl.F_defaultValue, true, null)
         validateExtensions(`var`.getExtensions())
     }
 }
