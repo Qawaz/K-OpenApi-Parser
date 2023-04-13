@@ -17,8 +17,8 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class OperationValidator : ObjectValidatorBase<Operation>() {
     override fun runObjectValidations() {
-        val operation = value.getOverlay() as Operation
-        validateListField<String>(OperationImpl.F_tags, false, false, String::class.java, null)
+        val operation = value.overlay as Operation
+        validateListField<String>(OperationImpl.F_tags, false, false, null)
         validateStringField(OperationImpl.F_summary, false)
         validateStringField(OperationImpl.F_description, false)
         validateField<ExternalDocs>(
@@ -34,17 +34,15 @@ class OperationValidator : ObjectValidatorBase<Operation>() {
             OperationImpl.F_parameters,
             false,
             false,
-            Parameter::class.java,
             ParameterValidator()
         )
         validateField<RequestBody>(OperationImpl.F_requestBody, false, RequestBody::class.java, RequestBodyValidator())
         validateMapField<Response>(OperationImpl.F_responses, true, false, Response::class.java, ResponseValidator())
         validateMapField<Callback>(OperationImpl.F_callbacks, false, false, Callback::class.java, CallbackValidator())
         validateListField<SecurityRequirement>(
-            OperationImpl.F_securityRequirements, false, false, SecurityRequirement::class.java,
-            SecurityRequirementValidator()
+            OperationImpl.F_securityRequirements, false, false, SecurityRequirementValidator()
         )
-        validateListField<Server>(OperationImpl.F_servers, false, false, Server::class.java, ServerValidator())
+        validateListField<Server>(OperationImpl.F_servers, false, false, ServerValidator())
         validateExtensions(operation.getExtensions())
     }
 }

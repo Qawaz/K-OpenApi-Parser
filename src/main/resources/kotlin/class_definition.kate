@@ -3,7 +3,7 @@
     @embed_once ./imports.kate
 
     @function GenerateClassDefinition()
-        @default_no_raw package @var(packageName); @end_default_no_raw
+        @default_no_raw package @var(packageName) @end_default_no_raw
 
         @if(imports.size() > 0)
             @runtime.print_string("\n\n")

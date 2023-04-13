@@ -16,7 +16,7 @@ import com.reprezen.jsonoverlay.Overlay
 
 class MapValidator<T>(private val valueValidator: Validator<T>?) : ValidatorBase<MutableMap<String, T>>() {
     override fun runValidations() {
-        val mapOverlay: MapOverlay<T> = Overlay.getMapOverlay(value)!!
+        val mapOverlay = Overlay.getMapOverlay(value) ?: return
         if (valueValidator != null) {
             for (key in mapOverlay.keySet()) {
                 valueValidator.validate(Overlay.of<T>(mapOverlay, key))

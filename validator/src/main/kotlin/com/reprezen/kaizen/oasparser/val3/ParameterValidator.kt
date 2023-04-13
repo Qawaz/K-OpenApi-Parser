@@ -23,12 +23,12 @@ import kotlin.String
 
 class ParameterValidator : ObjectValidatorBase<Parameter>() {
     override fun runObjectValidations() {
-        val parameter = value.getOverlay() as Parameter
+        val parameter = value.overlay as Parameter
         validateStringField(ParameterImpl.F_description, false)
         validateBooleanField(ParameterImpl.F_deprecated, false)
         validateBooleanField(ParameterImpl.F_allowEmptyValue, false)
         validateBooleanField(ParameterImpl.F_explode, false)
-        val example: Overlay<Any> = validateField<Any>(ParameterImpl.F_example, false, Any::class.java, null)
+        val example: Overlay<Any> = validateField<Any>(ParameterImpl.F_example, false, Any::class.java, null)!!
         val examples = validateMapField<Example>(
             ParameterImpl.F_examples, false, false, Example::class.java,
             ExampleValidator()
@@ -82,7 +82,7 @@ class ParameterValidator : ObjectValidatorBase<Parameter>() {
         while (parent != null && parent !is Path) {
             parent = Overlay.of(parent).parentPropertiesOverlay
         }
-        return if (parent != null && parent is Path) Overlay.getPathInParent(parent) else null
+        return parent?._getPathInParent()
     }
 
     fun checkExampleExclusion(examples: Overlay<MutableMap<String, Example>>?, example: Overlay<Any>?) {

@@ -22,11 +22,11 @@ class LinkValidator : ObjectValidatorBase<Link>() {
     override fun runObjectValidations() {
         // TODO: Validate operationRef value (why didn't they must make it a ref
         // object???!)
-        val link = value.getOverlay() as Link
+        val link = value.overlay as Link
         validateStringField(LinkImpl.F_description, false)
         val op = checkValidOperation(link)
         op?.let { checkParameters(link, it) }
-        val requestBody: Overlay<Any> = validateField<Any>(LinkImpl.F_requestBody, false, Any::class.java, null)
+        val requestBody: Overlay<Any> = validateField<Any>(LinkImpl.F_requestBody, false, Any::class.java, null)!!
         checkRequestBody(requestBody)
         validateField<Server>(LinkImpl.F_server, false, Server::class.java, ServerValidator())
         validateExtensions(link.getExtensions())

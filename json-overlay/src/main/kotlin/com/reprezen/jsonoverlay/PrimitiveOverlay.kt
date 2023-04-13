@@ -32,6 +32,10 @@ class PrimitiveOverlay private constructor(
         }
     }
 
+    override fun toString(): String {
+        return _get().toString()
+    }
+
     override fun _fromJson(json: JsonElement): Any? {
         if (json !is JsonPrimitive) return null
         return json.toValue()

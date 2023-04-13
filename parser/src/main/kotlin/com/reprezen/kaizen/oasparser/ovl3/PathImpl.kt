@@ -1,26 +1,26 @@
-package com.reprezen.kaizen.oasparser.ovl3;
+package com.reprezen.kaizen.oasparser.ovl3
 
-import com.reprezen.kaizen.oasparser.model3.*;
-import com.reprezen.jsonoverlay.MapOverlay;
-import java.util.stream.Collectors;
-import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.ListOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.Builder;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.fasterxml.jackson.core.JsonPointer;
-import com.reprezen.jsonoverlay.ReferenceManager;
-import com.reprezen.kaizen.oasparser.ovl3.OperationImpl;
-import com.reprezen.kaizen.oasparser.ovl3.ServerImpl;
-import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import kotlin.collections.List;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.Overlay;
-import kotlin.collections.Map;
+import com.reprezen.kaizen.oasparser.model3.*
+import com.reprezen.jsonoverlay.MapOverlay
+import java.util.stream.Collectors
+import com.reprezen.jsonoverlay.StringOverlay
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.ListOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.JsonPointer
+import com.reprezen.jsonoverlay.ReferenceManager
+import com.reprezen.kaizen.oasparser.ovl3.OperationImpl
+import com.reprezen.kaizen.oasparser.ovl3.ServerImpl
+import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.ObjectOverlay
+import kotlin.collections.List
+import com.reprezen.jsonoverlay.JsonOverlay
+import com.reprezen.jsonoverlay.Overlay
+import kotlin.collections.Map
 
 class PathImpl : PropertiesOverlay<Path> ,Path {
 
@@ -127,7 +127,7 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(path : Path?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(path, parent, Companion.factory, refMgr)
@@ -135,34 +135,34 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Summary
 	override fun getSummary() : String? {
-		return _get("summary", String::class.java)
+		return _get("summary")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setSummary(summary : String) {
-		_setScalar("summary", summary, String::class.java)
+		_setScalar("summary", summary)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Description
 	override fun getDescription() : String? {
-		return _get("description", String::class.java)
+		return _get("description")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setDescription(description : String) {
-		_setScalar("description", description, String::class.java)
+		_setScalar("description", description)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Operation
 	override fun getOperations() : MutableMap<String, Operation> {
-		return _getMap("operations", Operation::class.java)
+		return _getMap("operations")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getOperations(elaborate : Boolean) : MutableMap<String, Operation> {
-		return _getMap("operations", elaborate, Operation::class.java)
+		return _getMap("operations")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -172,38 +172,38 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasOperation(name : String) : Boolean {
-		return _getMap("operations", Operation::class.java).containsKey(name)
+		return _getMap<Operation>("operations").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getOperation(name : String) : Operation? {
-		return _get("operations", name, Operation::class.java)
+		return _get("operations", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setOperations(operations : MutableMap<String, Operation>) {
-		_setMap("operations", operations, Operation::class.java)
+		_setMap("operations", operations)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setOperation(name : String, operation : Operation) {
-		_set("operations", name, operation, Operation::class.java)
+		_set("operations", name, operation)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeOperation(name : String) {
-		_remove("operations", name, Operation::class.java)
+		_remove("operations", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Server
 	override fun getServers() : List<Server> {
-		return _getList("servers", Server::class.java)
+		return _getList("servers")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getServers(elaborate : Boolean) : List<Server> {
-		return _getList("servers", elaborate, Server::class.java)
+		return _getList("servers")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -213,43 +213,43 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getServer(index : Int) : Server {
-		return _get("servers", index, Server::class.java)
+		return _get("servers", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setServers(servers : MutableList<Server>) {
-		_setList("servers", servers, Server::class.java)
+		_setList("servers", servers)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setServer(index : Int, server : Server) {
-		_set("servers", index, server, Server::class.java)
+		_set("servers", index, server)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun addServer(server : Server) {
-		_add("servers", server, Server::class.java)
+		_add("servers", server)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun insertServer(index : Int, server : Server) {
-		_insert("servers", index, server, Server::class.java)
+		_insert("servers", index, server)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeServer(index : Int) {
-		_remove("servers", index, Server::class.java)
+		_remove("servers", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Parameter
 	override fun getParameters() : List<Parameter> {
-		return _getList("parameters", Parameter::class.java)
+		return _getList("parameters")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getParameters(elaborate : Boolean) : List<Parameter> {
-		return _getList("parameters", elaborate, Parameter::class.java)
+		return _getList("parameters")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -259,43 +259,43 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getParameter(index : Int) : Parameter {
-		return _get("parameters", index, Parameter::class.java)
+		return _get("parameters", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setParameters(parameters : MutableList<Parameter>) {
-		_setList("parameters", parameters, Parameter::class.java)
+		_setList("parameters", parameters)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setParameter(index : Int, parameter : Parameter) {
-		_set("parameters", index, parameter, Parameter::class.java)
+		_set("parameters", index, parameter)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun addParameter(parameter : Parameter) {
-		_add("parameters", parameter, Parameter::class.java)
+		_add("parameters", parameter)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun insertParameter(index : Int, parameter : Parameter) {
-		_insert("parameters", index, parameter, Parameter::class.java)
+		_insert("parameters", index, parameter)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeParameter(index : Int) {
-		_remove("parameters", index, Parameter::class.java)
+		_remove("parameters", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions", Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("extensions", elaborate, Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -305,27 +305,27 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasExtension(name : String) : Boolean {
-		return _getMap("extensions", Any::class.java).containsKey(name)
+		return _getMap<Any>("extensions").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtension(name : String) : Any? {
-		return _get("extensions", name, Any::class.java)
+		return _get("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtensions(extensions : MutableMap<String, Any>) {
-		_setMap("extensions", extensions, Any::class.java)
+		_setMap("extensions", extensions)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtension(name : String, extension : Any) {
-		_set("extensions", name, extension, Any::class.java)
+		_set("extensions", name, extension)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeExtension(name : String) {
-		_remove("extensions", name, Any::class.java)
+		_remove("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -372,7 +372,7 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 				return PathImpl(path, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Path> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Path> {
 				return PathImpl(json, parent, refMgr)
 			}
 		
@@ -383,7 +383,7 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 			return Path::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out Path> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out Path> {
 			return Path::class.java
 		}
 		

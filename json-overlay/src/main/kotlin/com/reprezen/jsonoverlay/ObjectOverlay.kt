@@ -29,6 +29,10 @@ class ObjectOverlay : ScalarOverlay<Any> {
         }
     }
 
+    override fun toString(): String {
+        return _get().toString()
+    }
+
     override fun _fromJson(json: JsonElement): Any? {
         return json.toValue()
     }
@@ -44,7 +48,7 @@ class ObjectOverlay : ScalarOverlay<Any> {
     companion object {
 
         @JvmField
-        var factory: OverlayFactory<Any> = object : OverlayFactory<Any>() {
+        val factory: OverlayFactory<Any> = object : OverlayFactory<Any>() {
             override fun getOverlayClass(): Class<ObjectOverlay> {
                 return ObjectOverlay::class.java
             }
@@ -72,4 +76,33 @@ class ObjectOverlay : ScalarOverlay<Any> {
             return result
         }
     }
+
+    private val emptyPropertyNames by lazy { emptyList<String>() }
+
+    @Suppress("UNCHECKED_CAST")
+    private val getMap: Map<String, *>?
+        get() {
+            if (value != null && value is Map<*, *>) {
+                (value as? Map<String, *>)?.let { return it }
+            }
+            if (json != null && json is JsonObject) {
+                return (json as JsonObject)
+            }
+            return null
+        }
+
+    fun _getPropertyNames(): List<String> {
+        getMap?.let { return it.keys.toList() }
+        return emptyPropertyNames
+    }
+
+    fun _getKeyValueOverlayByName(name: String): JsonOverlay<*>? {
+        getMap?.let {
+            it[name]?.let { value ->
+                return factory.create(value, null, refMgr)
+            }
+        }
+        return null
+    }
+
 }

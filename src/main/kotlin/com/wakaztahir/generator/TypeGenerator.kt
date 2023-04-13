@@ -24,7 +24,7 @@ import com.wakaztahir.kate.InputSourceStream
 import com.wakaztahir.kate.OutputDestinationStream
 import com.wakaztahir.kate.RelativeResourceEmbeddingManager
 import com.wakaztahir.kate.TemplateContext
-import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.*
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
@@ -226,10 +226,11 @@ abstract class TypeGenerator(
                 Optional::class,  //
                 Collectors::class,  //
                 JsonElement::class,  //
-                ObjectNode::class,  //
+                JsonObject::class,  //
+                JsonNull::class,
+                JsonPrimitive::class,
+                JsonArray::class,
                 com.reprezen.jsonoverlay.JsonPointer::class,
-//                JsonNodeFactory::class,  //
-//                JsonPointer::class,  //
                 IJsonOverlay::class,  //
                 JsonOverlay::class,  //
                 IModelPart::class,  //

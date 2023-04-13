@@ -17,7 +17,7 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class LicenseValidator : ObjectValidatorBase<License>() {
     override fun runObjectValidations() {
-        val license = value.getOverlay() as License
+        val license = value.overlay as License
         validateStringField(LicenseImpl.F_name, true)
         validateUrlField(LicenseImpl.F_url, false, true, false)
         validateExtensions(license.getExtensions())

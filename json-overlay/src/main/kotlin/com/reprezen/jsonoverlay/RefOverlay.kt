@@ -70,9 +70,9 @@ class RefOverlay<V> {
             return target
         }
 
-    fun _get(elaborate: Boolean): V? {
+    fun _get(): V? {
         overlay
-        return if (target != null) target!!._get(elaborate) else null
+        return if (target != null) target!!._get() else null
     }
 
     fun _getReference(): Reference {

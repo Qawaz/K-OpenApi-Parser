@@ -1,25 +1,25 @@
-package com.reprezen.kaizen.oasparser.ovl3;
+package com.reprezen.kaizen.oasparser.ovl3
 
-import com.reprezen.kaizen.oasparser.model3.*;
-import com.reprezen.jsonoverlay.MapOverlay;
-import java.util.stream.Collectors;
-import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.Builder;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.fasterxml.jackson.core.JsonPointer;
-import com.reprezen.jsonoverlay.ReferenceManager;
-import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl;
-import com.reprezen.kaizen.oasparser.ovl3.MediaTypeImpl;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.Overlay;
-import com.reprezen.kaizen.oasparser.ovl3.ExampleImpl;
-import kotlin.collections.Map;
-import com.reprezen.jsonoverlay.BooleanOverlay;
+import com.reprezen.kaizen.oasparser.model3.*
+import com.reprezen.jsonoverlay.MapOverlay
+import java.util.stream.Collectors
+import com.reprezen.jsonoverlay.StringOverlay
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.JsonPointer
+import com.reprezen.jsonoverlay.ReferenceManager
+import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.kaizen.oasparser.ovl3.MediaTypeImpl
+import com.reprezen.jsonoverlay.ObjectOverlay
+import com.reprezen.jsonoverlay.JsonOverlay
+import com.reprezen.jsonoverlay.Overlay
+import com.reprezen.kaizen.oasparser.ovl3.ExampleImpl
+import kotlin.collections.Map
+import com.reprezen.jsonoverlay.BooleanOverlay
 
 class HeaderImpl : PropertiesOverlay<Header> ,Header {
 
@@ -30,7 +30,7 @@ class HeaderImpl : PropertiesOverlay<Header> ,Header {
     }
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(header : Header?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(header, parent, Companion.factory, refMgr)
@@ -38,141 +38,141 @@ class HeaderImpl : PropertiesOverlay<Header> ,Header {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Description
 	override fun getDescription() : String? {
-		return _get("description", String::class.java)
+		return _get("description")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setDescription(description : String) {
-		_setScalar("description", description, String::class.java)
+		_setScalar("description", description)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Required
 	override fun getRequired() : Boolean? {
-		return _get("required", Boolean::class.java)
+		return _get("required")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isRequired() : Boolean {
-		return _get("required", Boolean::class.java) ?: false
+		return _get("required") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setRequired(required : Boolean) {
-		_setScalar("required", required, Boolean::class.java)
+		_setScalar("required", required)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Deprecated
 	override fun getDeprecated() : Boolean? {
-		return _get("deprecated", Boolean::class.java)
+		return _get("deprecated")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isDeprecated() : Boolean {
-		return _get("deprecated", Boolean::class.java) ?: false
+		return _get("deprecated") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setDeprecated(deprecated : Boolean) {
-		_setScalar("deprecated", deprecated, Boolean::class.java)
+		_setScalar("deprecated", deprecated)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// AllowEmptyValue
 	override fun getAllowEmptyValue() : Boolean? {
-		return _get("allowEmptyValue", Boolean::class.java)
+		return _get("allowEmptyValue")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isAllowEmptyValue() : Boolean {
-		return _get("allowEmptyValue", Boolean::class.java) ?: false
+		return _get("allowEmptyValue") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setAllowEmptyValue(allowEmptyValue : Boolean) {
-		_setScalar("allowEmptyValue", allowEmptyValue, Boolean::class.java)
+		_setScalar("allowEmptyValue", allowEmptyValue)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Style
 	override fun getStyle() : String? {
-		return _get("style", String::class.java)
+		return _get("style")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setStyle(style : String) {
-		_setScalar("style", style, String::class.java)
+		_setScalar("style", style)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Explode
 	override fun getExplode() : Boolean? {
-		return _get("explode", Boolean::class.java)
+		return _get("explode")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isExplode() : Boolean {
-		return _get("explode", Boolean::class.java) ?: false
+		return _get("explode") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExplode(explode : Boolean) {
-		_setScalar("explode", explode, Boolean::class.java)
+		_setScalar("explode", explode)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// AllowReserved
 	override fun getAllowReserved() : Boolean? {
-		return _get("allowReserved", Boolean::class.java)
+		return _get("allowReserved")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isAllowReserved() : Boolean {
-		return _get("allowReserved", Boolean::class.java) ?: false
+		return _get("allowReserved") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setAllowReserved(allowReserved : Boolean) {
-		_setScalar("allowReserved", allowReserved, Boolean::class.java)
+		_setScalar("allowReserved", allowReserved)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Schema
 	override fun getSchema() : Schema? {
-		return _get("schema", Schema::class.java)
+		return _get("schema")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getSchema(elaborate : Boolean) : Schema? {
-		return _get("schema", elaborate, Schema::class.java)
+		return _get("schema")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setSchema(schema : Schema) {
-		_setScalar("schema", schema, Schema::class.java)
+		_setScalar("schema", schema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Example
 	override fun getExample() : Any? {
-		return _get("example", Any::class.java)
+		return _get("example")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExample(example : Any) {
-		_setScalar("example", example, Any::class.java)
+		_setScalar("example", example)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Example
 	override fun getExamples() : MutableMap<String, Example> {
-		return _getMap("examples", Example::class.java)
+		return _getMap("examples")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExamples(elaborate : Boolean) : MutableMap<String, Example> {
-		return _getMap("examples", elaborate, Example::class.java)
+		return _getMap("examples")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -182,38 +182,38 @@ class HeaderImpl : PropertiesOverlay<Header> ,Header {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasExample(name : String) : Boolean {
-		return _getMap("examples", Example::class.java).containsKey(name)
+		return _getMap<Example>("examples").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExample(name : String) : Example? {
-		return _get("examples", name, Example::class.java)
+		return _get("examples", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExamples(examples : MutableMap<String, Example>) {
-		_setMap("examples", examples, Example::class.java)
+		_setMap("examples", examples)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExample(name : String, example : Example) {
-		_set("examples", name, example, Example::class.java)
+		_set("examples", name, example)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeExample(name : String) {
-		_remove("examples", name, Example::class.java)
+		_remove("examples", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ContentMediaType
 	override fun getContentMediaTypes() : MutableMap<String, MediaType> {
-		return _getMap("contentMediaTypes", MediaType::class.java)
+		return _getMap("contentMediaTypes")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getContentMediaTypes(elaborate : Boolean) : MutableMap<String, MediaType> {
-		return _getMap("contentMediaTypes", elaborate, MediaType::class.java)
+		return _getMap("contentMediaTypes")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -223,38 +223,38 @@ class HeaderImpl : PropertiesOverlay<Header> ,Header {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasContentMediaType(name : String) : Boolean {
-		return _getMap("contentMediaTypes", MediaType::class.java).containsKey(name)
+		return _getMap<MediaType>("contentMediaTypes").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getContentMediaType(name : String) : MediaType? {
-		return _get("contentMediaTypes", name, MediaType::class.java)
+		return _get("contentMediaTypes", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setContentMediaTypes(contentMediaTypes : MutableMap<String, MediaType>) {
-		_setMap("contentMediaTypes", contentMediaTypes, MediaType::class.java)
+		_setMap("contentMediaTypes", contentMediaTypes)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setContentMediaType(name : String, contentMediaType : MediaType) {
-		_set("contentMediaTypes", name, contentMediaType, MediaType::class.java)
+		_set("contentMediaTypes", name, contentMediaType)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeContentMediaType(name : String) {
-		_remove("contentMediaTypes", name, MediaType::class.java)
+		_remove("contentMediaTypes", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions", Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("extensions", elaborate, Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -264,27 +264,27 @@ class HeaderImpl : PropertiesOverlay<Header> ,Header {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasExtension(name : String) : Boolean {
-		return _getMap("extensions", Any::class.java).containsKey(name)
+		return _getMap<Any>("extensions").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtension(name : String) : Any? {
-		return _get("extensions", name, Any::class.java)
+		return _get("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtensions(extensions : MutableMap<String, Any>) {
-		_setMap("extensions", extensions, Any::class.java)
+		_setMap("extensions", extensions)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtension(name : String, extension : Any) {
-		_set("extensions", name, extension, Any::class.java)
+		_set("extensions", name, extension)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeExtension(name : String) {
-		_remove("extensions", name, Any::class.java)
+		_remove("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -349,7 +349,7 @@ class HeaderImpl : PropertiesOverlay<Header> ,Header {
 				return HeaderImpl(header, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Header> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Header> {
 				return HeaderImpl(json, parent, refMgr)
 			}
 		
@@ -360,7 +360,7 @@ class HeaderImpl : PropertiesOverlay<Header> ,Header {
 			return Header::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out Header> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out Header> {
 			return Header::class.java
 		}
 		

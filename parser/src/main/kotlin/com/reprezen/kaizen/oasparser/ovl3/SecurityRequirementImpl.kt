@@ -1,24 +1,24 @@
-package com.reprezen.kaizen.oasparser.ovl3;
+package com.reprezen.kaizen.oasparser.ovl3
 
-import com.reprezen.kaizen.oasparser.model3.*;
-import com.reprezen.jsonoverlay.MapOverlay;
-import java.util.stream.Collectors;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.Builder;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.fasterxml.jackson.core.JsonPointer;
-import com.reprezen.jsonoverlay.ReferenceManager;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import kotlin.collections.Map;
-import com.reprezen.kaizen.oasparser.ovl3.SecurityParameterImpl;
+import com.reprezen.kaizen.oasparser.model3.*
+import com.reprezen.jsonoverlay.MapOverlay
+import java.util.stream.Collectors
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.JsonPointer
+import com.reprezen.jsonoverlay.ReferenceManager
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.JsonOverlay
+import kotlin.collections.Map
+import com.reprezen.kaizen.oasparser.ovl3.SecurityParameterImpl
 
 class SecurityRequirementImpl : PropertiesOverlay<SecurityRequirement> ,SecurityRequirement {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(securityRequirement : SecurityRequirement?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(securityRequirement, parent, Companion.factory, refMgr)
@@ -26,12 +26,12 @@ class SecurityRequirementImpl : PropertiesOverlay<SecurityRequirement> ,Security
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Requirement
 	override fun getRequirements() : MutableMap<String, SecurityParameter> {
-		return _getMap("requirements", SecurityParameter::class.java)
+		return _getMap("requirements")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getRequirements(elaborate : Boolean) : MutableMap<String, SecurityParameter> {
-		return _getMap("requirements", elaborate, SecurityParameter::class.java)
+		return _getMap("requirements")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -41,27 +41,27 @@ class SecurityRequirementImpl : PropertiesOverlay<SecurityRequirement> ,Security
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasRequirement(name : String) : Boolean {
-		return _getMap("requirements", SecurityParameter::class.java).containsKey(name)
+		return _getMap<SecurityParameter>("requirements").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getRequirement(name : String) : SecurityParameter? {
-		return _get("requirements", name, SecurityParameter::class.java)
+		return _get("requirements", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setRequirements(requirements : MutableMap<String, SecurityParameter>) {
-		_setMap("requirements", requirements, SecurityParameter::class.java)
+		_setMap("requirements", requirements)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setRequirement(name : String, requirement : SecurityParameter) {
-		_set("requirements", name, requirement, SecurityParameter::class.java)
+		_set("requirements", name, requirement)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeRequirement(name : String) {
-		_remove("requirements", name, SecurityParameter::class.java)
+		_remove("requirements", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -93,7 +93,7 @@ class SecurityRequirementImpl : PropertiesOverlay<SecurityRequirement> ,Security
 				return SecurityRequirementImpl(securityRequirement, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<SecurityRequirement> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<SecurityRequirement> {
 				return SecurityRequirementImpl(json, parent, refMgr)
 			}
 		
@@ -104,7 +104,7 @@ class SecurityRequirementImpl : PropertiesOverlay<SecurityRequirement> ,Security
 			return SecurityRequirement::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out SecurityRequirement> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out SecurityRequirement> {
 			return SecurityRequirement::class.java
 		}
 		

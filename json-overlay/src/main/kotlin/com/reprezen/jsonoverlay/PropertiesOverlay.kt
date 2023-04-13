@@ -19,41 +19,44 @@ import kotlinx.serialization.json.*
 abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
 
     class FactoryMap(val path: String, val factory: OverlayFactory<*>) {
+
+        val pointer = JsonPointer(path)
+
         override fun equals(other: Any?): Boolean {
             if (other !is FactoryMap) return false
-            return other.path == this.path && factory == other.factory
+            return other.pointer == this.pointer
         }
 
         override fun hashCode(): Int {
-            var result = path.hashCode()
+            var result = pointer.hashCode()
             result = 31 * result + factory.hashCode()
             return result
         }
+
     }
 
     private val factoryMap: MutableMap<String, FactoryMap> = mutableMapOf()
     private val overlays: MutableMap<FactoryMap, JsonOverlay<*>> = mutableMapOf()
 
     private var elaborated = false
-    private var deferElaboration = false
     private var elaborationValue: V? = null
 
     protected constructor(
         json: JsonElement,
         parent: JsonOverlay<*>?,
-        factory: OverlayFactory<V>?,
+        factory: OverlayFactory<V>,
         refMgr: ReferenceManager?
-    ) : super(json, parent, factory!!, refMgr!!) {
-        deferElaboration = false
+    ) : super(json, parent, factory, refMgr!!) {
+        _elaborate()
     }
 
     protected constructor(
         value: V?,
         parent: JsonOverlay<*>?,
-        factory: OverlayFactory<V>?,
+        factory: OverlayFactory<V>,
         refMgr: ReferenceManager?
-    ) : super(value, parent, factory!!, refMgr!!) {
-        elaborationValue = value
+    ) : super(value, parent, factory, refMgr!!) {
+        _elaborate()
     }
 
     fun _getFactoryKeys(): List<String> {
@@ -62,7 +65,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
 
     /* package */
     override fun _getPropertyNames(): List<String> {
-        for (key in factoryMap.keys) _getKeyValueOverlay(key)
+        for (key in factoryMap.keys) _getKeyValueOverlayByName(key)
         val keys = mutableListOf<String>()
         for (key in overlays.keys) if (key.path.isNotEmpty() && key.path != "/") keys.add(key.path)
         keys.addAll(getSubMapKeys())
@@ -70,34 +73,43 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     protected fun _isPresent(name: String?): Boolean {
-        return _getKeyValueOverlay(name!!) != null
+        return _getKeyValueOverlayByName(name!!) != null
     }
 
     // sub maps exist in a field as a property like
     // object[name] = the map {}
     // but they are actually just children of this map
     // meaning when keys are queries of this map, contain its keys and keys of al the sub maps
-    private fun getSubMaps(): List<KeyValueOverlay> {
-        val list = mutableListOf<KeyValueOverlay>()
+    private fun getSubMaps(): Map<FactoryMap, KeyValueOverlay> {
+        val map = mutableMapOf<FactoryMap, KeyValueOverlay>()
         for (factory in factoryMap.values) {
             if (factory.path.isEmpty() || factory.path == "/") {
                 (createOverlay(
                     elem = json!!,
                     factoryMap = factory,
                     factory = factory.factory,
-                ) as? KeyValueOverlay)?.let { list.add(it) }
+                ) as? KeyValueOverlay)?.let { map.put(factory, it) }
             }
         }
-        return list
+        return map
     }
 
     private fun getSubMapKeys(): MutableList<String> {
         val keys = mutableListOf<String>()
         val subMaps = getSubMaps()
-        for (map in subMaps) {
-            keys.addAll(map._getPropertyNames())
-        }
+        for (map in subMaps) keys.addAll(map.value._getPropertyNames())
         return keys
+    }
+
+    override fun _getPathOfChild(child: JsonOverlay<*>): String {
+        for (factory in overlays) {
+            if (factory.value == child) {
+                return factory.key.path
+            }
+        }
+        return "-1"//.also {
+        //Throwable("returning child path -1 for child in properties overlay child : $child \n\n\n props : $this").printStackTrace()
+        //}
     }
 
     protected fun <T> _get(name: String?): T? {
@@ -116,7 +128,6 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         factory: OverlayFactory<T>,
     ): JsonOverlay<T> {
         return factory.create(elem, this, refMgr).also { ov ->
-            ov._setPathInParent(factoryMap.path)
             overlays[factoryMap] = ov
         }
     }
@@ -127,25 +138,64 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         factory: OverlayFactory<T>,
     ): JsonOverlay<T> {
         return factory.create(value, this, refMgr).also { ov ->
-            ov._setPathInParent(factoryMap.path)
             overlays[factoryMap] = ov
         }
     }
 
     protected fun <T> _getOverlay(factoryMap: FactoryMap, factory: OverlayFactory<T>): JsonOverlay<T>? {
+        if (json == null) return null
         val pointer = JsonPointer(factoryMap.path)
         val elem = pointer.navigate(json!!)
         return elem?.let { createOverlay(it, factoryMap, factory) }
     }
 
-    override fun _getKeyValueOverlay(name: String): JsonOverlay<*>? {
+    override fun <T> _traverseOverlaysOfSegment(segment: String, block: (JsonOverlay<*>) -> T?): T? {
+        for (factory in factoryMap.values) {
+            if (factory.pointer.segments.firstOrNull() == segment) {
+                _getOverlay(factory, factory.factory)?.let(block)?.let { return it }
+            }
+        }
+        for (subMap in getSubMaps()) {
+            for (subMapKey in subMap.value._getPropertyNames()) {
+                if (subMapKey == segment) {
+//                    println("found $subMapKey , $segment")
+                    subMap.value._getValueOverlayByPath(subMapKey)?.let(block)?.let { return it }
+//                    println("NOT RETURNED")
+                }
+            }
+        }
+        return null
+    }
+
+    override fun _getValueOverlayByPath(segment: String): JsonOverlay<*>? {
+        return _traverseOverlaysOfSegment(segment) { it }
+    }
+
+
+    override fun toString(): String {
+        var value = "{"
+        for (factory in factoryMap.values) {
+            if (factory.path != "/" && factory.path.isNotEmpty()) {
+                value += "\n${factory.path} : " + _getOverlay(factory, factory.factory).toString()
+                    .replace("\n", "\n\t")
+            }
+        }
+        for (subMap in getSubMaps()) {
+            for (subMapKey in subMap.value._getPropertyNames()) {
+                value += "\n$subMapKey : ${subMap.value._getValueOverlayByPath(subMapKey)}"
+            }
+        }
+        return "$value\n}"
+    }
+
+    override fun _getKeyValueOverlayByName(name: String): JsonOverlay<*>? {
         return factoryMap[name]?.let { factory ->
             _getOverlay(factory, factory.factory)
         }
     }
 
     fun <T> _getOverlay(name: String): JsonOverlay<T>? {
-        return _getKeyValueOverlay(name) as? JsonOverlay<T>
+        return _getKeyValueOverlayByName(name) as? JsonOverlay<T>
     }
 
     protected fun <T> _setScalar(name: String, value: T?) {
@@ -158,7 +208,6 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         overlay?._set(value)
     }
 
-    @Suppress("UNCHECKED_CAST")
     protected fun <T> _getList(name: String): MutableList<T> {
         return _get(name)!!
     }
@@ -194,13 +243,12 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     protected fun _remove(name: String, index: Int) {
-        val overlay = _getKeyValueOverlay(name) as ListOverlay<*>
+        val overlay = _getKeyValueOverlayByName(name) as ListOverlay<*>
         overlay.remove(index)
     }
 
-    @Suppress("UNCHECKED_CAST")
     protected fun <T> _getMap(name: String): MutableMap<String, T> {
-        return _get(name)!!
+        return _get(name) ?: mutableMapOf()
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -222,16 +270,13 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     protected fun _remove(name: String, key: String) {
-        val overlay = _getKeyValueOverlay(name) as MapOverlay<*>
+        val overlay = _getKeyValueOverlayByName(name) as MapOverlay<*>
         overlay.remove(key)
     }
 
-    override fun _elaborate(atCreation: Boolean) {
-        if (atCreation && deferElaboration) {
-            return
-        }
+    fun _elaborate() {
         if (elaborationValue != null) {
-            _elaborateValue()
+            (value as? PropertiesOverlay<*>)?.let { _elaborateValue(it) }
         } else {
             _elaborateJson()
         }
@@ -244,17 +289,12 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         // support type extensions
     }
 
-    private fun _elaborateValue() {
-        val overlay = elaborationValue as PropertiesOverlay<*>?
+    private fun _elaborateValue(value: PropertiesOverlay<*>) {
         factoryMap.clear()
-        for ((key, value1) in overlay!!.factoryMap) {
+        for ((key, value1) in value.factoryMap) {
             factoryMap[key] = value1
         }
         elaborationValue = null
-    }
-
-    override fun _isElaborated(): Boolean {
-        return elaborated
     }
 
     protected fun <X> _createScalar(name: String, path: String, factory: OverlayFactory<X>) {
@@ -274,12 +314,13 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     private fun <X> _addChild(name: String, path: String, factory: OverlayFactory<X>) {
-        factoryMap[name] = FactoryMap(path, factory)
+        val map = FactoryMap(path, factory)
+        factoryMap[name] = map
     }
 
     private fun getPointer(child: JsonOverlay<*>): JsonPointer {
         val path = child._getPathInParent()
-        return JsonPointer(if (path.isNullOrEmpty()) "" else "/$path")
+        return JsonPointer(if (path.isEmpty()) "" else "/$path")
     }
 
     public override fun _fromJson(json: JsonElement): V? {
@@ -300,18 +341,6 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
 
     protected open fun _fixJson(json: JsonElement): JsonElement {
         return json
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (!super.equals(other)) return false
-        if (other is PropertiesOverlay<*>) {
-            return if (this.factoryMap == other.factoryMap) {
-                true
-            } else {
-                this.factoryMap == (other._getRefOverlay()?.overlay as PropertiesOverlay<*>).factoryMap
-            }
-        }
-        return false
     }
 
     override fun hashCode(): Int {

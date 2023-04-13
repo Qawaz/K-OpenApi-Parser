@@ -1,10 +1,11 @@
 package com.reprezen.kaizen.oasparser.validate
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.*
 import com.reprezen.jsonoverlay.*
 import com.reprezen.kaizen.oasparser.validate.msg.Messages
+import kotlinx.serialization.json.*
 import java.io.IOException
+import java.lang.NullPointerException
 import java.net.MalformedURLException
 import java.net.URL
 import java.net.URLConnection
@@ -13,8 +14,6 @@ import java.util.*
 import java.util.function.Consumer
 import java.util.function.Function
 import java.util.regex.Pattern
-import java.util.regex.PatternSyntaxException
-import java.util.stream.Collectors
 
 abstract class ValidatorBase<V> : Validator<V> {
 
@@ -31,23 +30,23 @@ abstract class ValidatorBase<V> : Validator<V> {
 
     abstract fun runValidations()
 
-    fun validateBooleanField(name: String?, required: Boolean): Overlay<Boolean> {
+    fun validateBooleanField(name: String, required: Boolean): Overlay<Boolean>? {
         return validateField(name, required, Boolean::class.java, null)
     }
 
-    fun validateStringField(name: String?, required: Boolean): Overlay<String> {
+    fun validateStringField(name: String, required: Boolean): Overlay<String>? {
         return validateStringField(name, required, null as Pattern?)
     }
 
-    fun validateStringField(name: String?, required: Boolean, pattern: String?): Overlay<String> {
+    fun validateStringField(name: String, required: Boolean, pattern: String?): Overlay<String>? {
         return validateStringField(name, required, Pattern.compile(pattern))
     }
 
     @SafeVarargs
     fun validateStringField(
-        name: String?, required: Boolean, pattern: Pattern?,
+        name: String, required: Boolean, pattern: Pattern?,
         vararg otherChecks: Consumer<Overlay<String>>
-    ): Overlay<String> {
+    ): Overlay<String>? {
         val field = validateField(name, required, String::class.java, null)
         checkMissing(field, required)
         if (field != null && field.isPresent) {
@@ -65,7 +64,7 @@ abstract class ValidatorBase<V> : Validator<V> {
         }
     }
 
-    fun validatePatternField(name: String?, required: Boolean): Overlay<String> {
+    fun validatePatternField(name: String, required: Boolean): Overlay<String>? {
         return validateStringField(name, required, null, Consumer { field: Overlay<String> -> checkRegex(field) })
     }
 
@@ -79,17 +78,17 @@ abstract class ValidatorBase<V> : Validator<V> {
     }
 
     fun validateUrlField(
-        name: String?, required: Boolean, allowRelative: Boolean, allowVars: Boolean,
+        name: String, required: Boolean, allowRelative: Boolean, allowVars: Boolean,
         pattern: String?
-    ): Overlay<String> {
+    ): Overlay<String>? {
         return validateUrlField(name, required, allowRelative, allowVars, Pattern.compile(pattern))
     }
 
     @JvmOverloads
     fun validateUrlField(
-        name: String?, required: Boolean, allowRelative: Boolean, allowVars: Boolean,
+        name: String, required: Boolean, allowRelative: Boolean, allowVars: Boolean,
         pattern: Pattern? = null
-    ): Overlay<String> {
+    ): Overlay<String>? {
         return validateStringField(
             name,
             required,
@@ -130,12 +129,12 @@ abstract class ValidatorBase<V> : Validator<V> {
         }
     }
 
-    fun validateUrlField(name: String?, required: Boolean, pattern: String?): Overlay<String> {
+    fun validateUrlField(name: String, required: Boolean, pattern: String?): Overlay<String>? {
         return validateEmailField(name, required, Pattern.compile(pattern))
     }
 
     @JvmOverloads
-    fun validateEmailField(name: String?, required: Boolean, pattern: Pattern? = null): Overlay<String> {
+    fun validateEmailField(name: String, required: Boolean, pattern: Pattern? = null): Overlay<String>? {
         return validateStringField(
             name,
             required,
@@ -161,23 +160,23 @@ abstract class ValidatorBase<V> : Validator<V> {
         }
     }
 
-    fun validatePositiveField(name: String?, required: Boolean): Overlay<Number> {
+    fun validatePositiveField(name: String, required: Boolean): Overlay<Number>? {
         return validateNumericField(name, required, { x: Number -> NumericUtils.isPositive(x) }, "be positive")
     }
 
-    fun validateNonNegativeField(name: String?, required: Boolean): Overlay<Number> {
+    fun validateNonNegativeField(name: String, required: Boolean): Overlay<Number>? {
         return validateNumericField(name, required, { x: Number -> NumericUtils.isNonNegative(x) }, "not be positive")
     }
 
     fun validateNumericField(
-        name: String?,
+        name: String,
         required: Boolean,
         test: Function<Number, Boolean>?,
         desc: String?
-    ): Overlay<Number> {
+    ): Overlay<Number>? {
         val field = validateField(name, required, Number::class.java, null)
         checkMissing(field, required)
-        if (field.isPresent && test != null) {
+        if (field?.isPresent == true && test != null) {
             val n = field.get()!!
             if (!test.apply(n)) {
                 results.addError(Messages.msg(BaseValidationMessages.NumberConstraint, desc!!, n), field)
@@ -188,11 +187,19 @@ abstract class ValidatorBase<V> : Validator<V> {
 
     @SafeVarargs
     fun <F> validateField(
-        name: String?, required: Boolean, fieldClass: Class<F>?,
+        name: String, required: Boolean, fieldClass: Class<F>?,
         validator: Validator<F>?, vararg otherChecks: Consumer<Overlay<F>?>
-    ): Overlay<F> {
+    ): Overlay<F>? {
         val propValue: PropertiesOverlay<V> = value.get() as PropertiesOverlay<V>
-        val field = Overlay.of(propValue, name, fieldClass)
+        val field = try {
+            Overlay.of(propValue, name)
+        } catch (e: NullPointerException) {
+            if (required) {
+                throw e
+            } else {
+                return null
+            }
+        }
         checkJsonType(field, getAllowedJsonTypes(field), results)
         checkMissing(field, required)
         if (field.isPresent && validator != null) {
@@ -205,14 +212,10 @@ abstract class ValidatorBase<V> : Validator<V> {
     }
 
     fun <X> validateListField(
-        name: String?, nonEmpty: Boolean, unique: Boolean,
-        itemClass: Class<X>?,
+        name: String, nonEmpty: Boolean, unique: Boolean,
         itemValidator: Validator<X>?
     ): Overlay<List<X>> {
-        val list = Overlay.of(
-            value.get() as PropertiesOverlay<V>, name,
-            MutableList::class.java
-        ) as Overlay<List<X>>
+        val list = Overlay.of(value.get() as PropertiesOverlay<V>, name) as Overlay<List<X>>
         validateList(list, nonEmpty, unique, itemValidator)
         return list
     }
@@ -258,12 +261,12 @@ abstract class ValidatorBase<V> : Validator<V> {
     }
 
     fun <X> validateMapField(
-        name: String?, nonEmpty: Boolean, unique: Boolean,
+        name: String, nonEmpty: Boolean, unique: Boolean,
         valueClass: Class<X>?, valueValidator: Validator<X>?
     ): Overlay<MutableMap<String, X>> {
         val map = Overlay.of(
             value.get() as PropertiesOverlay<V>,
-            name, MutableMap::class.java
+            name
         ) as Overlay<MutableMap<String, X>>
         validateMap(map, nonEmpty, unique, valueValidator)
         return map
@@ -324,9 +327,9 @@ abstract class ValidatorBase<V> : Validator<V> {
         return mapOverlay
     }
 
-    fun validateFormatField(name: String?, required: Boolean, type: String?): Overlay<String> {
+    fun validateFormatField(name: String, required: Boolean, type: String?): Overlay<String>? {
         val field = validateStringField(name, required)
-        if (field.isPresent) {
+        if (field?.isPresent == true) {
             var normalType: String? = null
             when (field.get()) {
                 "int32", "int64" -> normalType = "integer"
@@ -364,18 +367,17 @@ abstract class ValidatorBase<V> : Validator<V> {
     }
 
     fun checkJsonType(
-        value: Overlay<*>?, allowedJsonTypes: Collection<Class<out JsonNode?>>,
+        value: Overlay<*>?,
+        verify: (JsonElement) -> Boolean,
         results: ValidationResults?
     ) {
-        val json = value!!.parsedJson
-        if (json != null && !json.isMissingNode) {
-            for (type in allowedJsonTypes) {
-                if (type.isAssignableFrom(json.javaClass)) {
-                    return
-                }
+        val json = value!!.overlay?.json
+        if (json != null && json !is JsonNull) {
+            if (verify(json)) {
+                return
             }
-            val allowed = allowedJsonTypes.stream().map { type: Class<out JsonNode?> -> getJsonValueType(type) }
-                .collect(Collectors.joining(", "))
+            val allowed = allowedJsonTypes!!.map { "${it.key} verifies " + if (it.value(json)) "true" else "false" }
+                .joinToString(",")
             results!!.addError(
                 Messages.msg(
                     BaseValidationMessages.WrongTypeJson,
@@ -386,17 +388,19 @@ abstract class ValidatorBase<V> : Validator<V> {
         }
     }
 
-    private fun getJsonValueType(node: Class<out JsonNode?>): String {
+    private fun getJsonValueType(node: Class<out JsonElement?>): String {
         val type = node.simpleName
         return if (type.endsWith("Node")) type.substring(0, type.length - 4) else type
     }
 
-    protected open fun getAllowedJsonTypes(value: Overlay<*>?): Collection<Class<out JsonNode>> {
+    protected open fun getAllowedJsonTypes(value: Overlay<*>): (JsonElement) -> Boolean {
         if (allowedJsonTypes == null) {
             createAllowedJsonTypes()
         }
-        val overlay: JsonOverlay<*> = value!!.overlay
-        return allowedJsonTypes!![if (overlay is PropertiesOverlay<*>) PropertiesOverlay::class.java else overlay.javaClass]!!
+        if (value.overlay == null) {
+            return { false }
+        }
+        return allowedJsonTypes!![if (value.overlay is PropertiesOverlay<*>) PropertiesOverlay::class.java else value.overlay!!.javaClass]!!
     }
 
     companion object {
@@ -407,36 +411,23 @@ abstract class ValidatorBase<V> : Validator<V> {
                 return null
             }
         }
-        protected var allowedJsonTypes: Map<Class<*>, List<Class<out JsonNode>>>? = null
+        protected var allowedJsonTypes: Map<Class<*>, (JsonElement) -> Boolean>? = null
+
         private fun createAllowedJsonTypes() {
-            val types: MutableMap<Class<*>, List<Class<out JsonNode>>> = HashMap()
-            types[StringOverlay::class.java] = listOf<Class<out JsonNode>>(
-                TextNode::class.java
-            )
-            types[BooleanOverlay::class.java] = listOf<Class<out JsonNode>>(
-                BooleanNode::class.java
-            )
-            types[IntegerOverlay::class.java] = listOf<Class<out JsonNode>>(
-                IntNode::class.java, ShortNode::class.java, BigIntegerNode::class.java
-            )
-            types[NumberOverlay::class.java] = listOf<Class<out JsonNode>>(
-                NumericNode::class.java
-            )
-            types[PrimitiveOverlay::class.java] = listOf<Class<out JsonNode>>(
-                TextNode::class.java, NumericNode::class.java, BooleanNode::class.java
-            )
-            types[ObjectOverlay::class.java] = listOf<Class<out JsonNode>>(
-                JsonNode::class.java
-            )
-            types[MapOverlay::class.java] = listOf<Class<out JsonNode>>(
-                ObjectNode::class.java
-            )
-            types[ListOverlay::class.java] = listOf<Class<out JsonNode>>(
-                ArrayNode::class.java
-            )
-            types[PropertiesOverlay::class.java] = listOf<Class<out JsonNode>>(
-                ObjectNode::class.java
-            )
+            val types: MutableMap<Class<*>, (JsonElement) -> Boolean> = HashMap()
+            types[StringOverlay::class.java] = { it is JsonPrimitive && it.isString }
+            types[BooleanOverlay::class.java] = { it is JsonPrimitive && it.booleanOrNull != null }
+            types[IntegerOverlay::class.java] = { it is JsonPrimitive && it.intOrNull != null }
+            types[NumberOverlay::class.java] = {
+                it is JsonPrimitive && it.toValue()?.let { o -> o is Number } ?: false
+            }
+            types[PrimitiveOverlay::class.java] = {
+                it is JsonPrimitive && it.toValue()?.let { o -> o is Number || o is String || o is Boolean } ?: false
+            }
+            types[ObjectOverlay::class.java] = { true }
+            types[MapOverlay::class.java] = { it is JsonObject }
+            types[ListOverlay::class.java] = { it is JsonArray }
+            types[PropertiesOverlay::class.java] = { it is JsonObject }
             allowedJsonTypes = types
         }
     }

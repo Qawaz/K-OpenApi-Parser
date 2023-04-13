@@ -21,7 +21,7 @@ import com.reprezen.kaizen.oasparser.validate.msg.Messages.Companion.msg
 
 class HeaderValidator : ObjectValidatorBase<Header>() {
     override fun runObjectValidations() {
-        val header = value.getOverlay() as Header
+        val header = value.overlay as Header
         validateStringField(HeaderImpl.F_description, false)
         validateBooleanField(HeaderImpl.F_deprecated, false)
         validateBooleanField(HeaderImpl.F_allowEmptyValue, false)

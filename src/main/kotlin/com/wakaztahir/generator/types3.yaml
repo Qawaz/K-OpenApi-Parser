@@ -25,8 +25,8 @@ types:
     impl:
     - ReferenceRegistry
     - Overlay
-    - ObjectNode
-    - JsonNodeFactory
+    - JsonObject
+    - JsonNull
     - Collection
   fields:
     openapi:
@@ -320,7 +320,8 @@ types:
 - name: SecurityParameter
   imports:
     impl:
-    - JsonNodeFactory
+      - JsonNull
+      - JsonArray
   fields:
     parameter:
       type: String

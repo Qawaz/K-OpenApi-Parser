@@ -5,13 +5,13 @@
     @var(GenerateClassDefinition())
 
     @default_no_raw
-            override fun _fixJson(json : JsonNode) : JsonNode {
+            override fun _fixJson(json : JsonElement) : JsonElement {
                 var json = json
-                if (json.isMissingNode) {
-                    json = _jsonObject()
+                if (json is JsonNull) {
+                    json = JsonObject(mapOf())
                 }
-                if (!json.has("paths")) {
-                    (json as ObjectNode).putObject("paths")
+                if (json is JsonObject && !json.containsKey("paths")) {
+                    json = JsonObject(json.toMutableMap().apply { put("paths", _jsonObject(mapOf())) })
                 }
                 return json
             }

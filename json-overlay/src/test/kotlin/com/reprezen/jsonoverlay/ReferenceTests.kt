@@ -32,8 +32,8 @@ class ReferenceTests : Assert() {
     lateinit var model: TestModel
 
     private val isJson: Boolean get() = true
-    private val refTestRes: String get() = if (isJson) "/refTest.json" else "/refTest.yaml"
-    private val externalTestRes: String get() = if (isJson) "/external.json" else "./external.yaml"
+    private val refTestRes: String get() = if (isJson) "/json/refTest.json" else "/yaml/refTest.yaml"
+    private val externalTestRes: String get() = if (isJson) "/json/external.json" else "yaml/external.yaml"
 
     @Test
     fun testParseRef() {
@@ -95,16 +95,20 @@ class ReferenceTests : Assert() {
     @Test
     fun checkBadRefs() {
         assertNull(model.getScalar("badPointer"))
-        checkBadRef(Overlay.of(model.getScalars())?.getReference("badPointer")!!)
-        checkBadRef(Overlay.of(model.getScalars())?.getReference("cycle")!!)
+        checkBadRef(Overlay.of(model.getScalars(), parent = model as JsonOverlay<*>)?.getReference("badPointer"))
+        checkBadRef(Overlay.of(model.getScalars(), parent = model as JsonOverlay<*>)?.getReference("cycle"))
         assertTrue(
-            Overlay.of(model.getScalars())?.getReference("cycle")?.invalidReason is ReferenceCycleException
+            Overlay.of(model.getScalars(), parent = model as JsonOverlay<*>)
+                ?.getReference("cycle").let { it == null || it.invalidReason is ReferenceCycleException }
         )
     }
 
-    private fun checkBadRef(ref: Reference) {
-        assertTrue("ref is valid , isInvalid : " + ref.isInvalid, ref.isInvalid)
-        assertTrue("ref invalid reason is not a resolution exception", ref.invalidReason is ResolutionException)
+    private fun checkBadRef(ref: Reference?) {
+        assertTrue("ref is valid , isInvalid : " + ref?.isInvalid, ref?.isInvalid ?: true)
+        assertTrue(
+            "ref invalid reason is not a resolution exception",
+            (ref == null || ref.invalidReason is ResolutionException)
+        )
     }
 
     @Test
@@ -142,17 +146,20 @@ class ReferenceTests : Assert() {
         val url = javaClass.getResource(refTestRes)!!.toString()
         val ext = javaClass.getResource(externalTestRes)!!.toString()
         assertEquals(url, Overlay.of(model).jsonReference)
-        assertNotNull(Overlay.of(model.getScalars(), "s1").also {
+        assertNotNull(Overlay.of(model.getScalars(), "s1", parent = model as JsonOverlay<*>).also {
 //            println((model.getScalars()["s1"]!! as PropertiesOverlay<*>))
         })
-        assertEquals("$url#/scalars/s1", Overlay.of(model.getScalars(), "s1")?.jsonReference)
         assertEquals(
-            "$url#/scalars/s1/stringValue",
-            Overlay.of(model.getScalar("s1")!!, "stringValue", String::class.java)?.jsonReference
+            "$url#/scalars/s1",
+            Overlay.of(model.getScalars(), "s1", parent = model as JsonOverlay<*>)?.jsonReference
         )
         assertEquals(
             "$url#/scalars/s1/stringValue",
-            Overlay.of(model.getScalar("s2")!!, "stringValue", String::class.java)?.jsonReference
+            Overlay.of(model.getScalar("s1")!!, "stringValue")?.jsonReference
+        )
+        assertEquals(
+            "$url#/scalars/s1/stringValue",
+            Overlay.of(model.getScalar("s2")!!, "stringValue")?.jsonReference
         )
         assertEquals("$url#/scalars/s1", Overlay.of(model.getScalar("s3")!!).jsonReference)
         assertEquals("$ext#/scalar1", Overlay.of(model.getScalar("ext1")!!).jsonReference)

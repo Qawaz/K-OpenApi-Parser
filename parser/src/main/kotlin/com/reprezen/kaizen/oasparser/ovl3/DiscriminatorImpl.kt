@@ -1,24 +1,24 @@
-package com.reprezen.kaizen.oasparser.ovl3;
+package com.reprezen.kaizen.oasparser.ovl3
 
-import com.reprezen.kaizen.oasparser.model3.*;
-import com.reprezen.jsonoverlay.MapOverlay;
-import java.util.stream.Collectors;
-import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.Builder;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.fasterxml.jackson.core.JsonPointer;
-import com.reprezen.jsonoverlay.ReferenceManager;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import kotlin.collections.Map;
+import com.reprezen.kaizen.oasparser.model3.*
+import com.reprezen.jsonoverlay.MapOverlay
+import java.util.stream.Collectors
+import com.reprezen.jsonoverlay.StringOverlay
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.JsonPointer
+import com.reprezen.jsonoverlay.ReferenceManager
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.JsonOverlay
+import kotlin.collections.Map
 
 class DiscriminatorImpl : PropertiesOverlay<Discriminator> ,Discriminator {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(discriminator : Discriminator?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(discriminator, parent, Companion.factory, refMgr)
@@ -26,23 +26,23 @@ class DiscriminatorImpl : PropertiesOverlay<Discriminator> ,Discriminator {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// PropertyName
 	override fun getPropertyName() : String? {
-		return _get("propertyName", String::class.java)
+		return _get("propertyName")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setPropertyName(propertyName : String) {
-		_setScalar("propertyName", propertyName, String::class.java)
+		_setScalar("propertyName", propertyName)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Mapping
 	override fun getMappings() : MutableMap<String, String> {
-		return _getMap("mappings", String::class.java)
+		return _getMap("mappings")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getMappings(elaborate : Boolean) : MutableMap<String, String> {
-		return _getMap("mappings", elaborate, String::class.java)
+		return _getMap("mappings")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -52,27 +52,27 @@ class DiscriminatorImpl : PropertiesOverlay<Discriminator> ,Discriminator {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasMapping(name : String) : Boolean {
-		return _getMap("mappings", String::class.java).containsKey(name)
+		return _getMap<String>("mappings").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getMapping(name : String) : String? {
-		return _get("mappings", name, String::class.java)
+		return _get("mappings", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setMappings(mappings : MutableMap<String, String>) {
-		_setMap("mappings", mappings, String::class.java)
+		_setMap("mappings", mappings)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setMapping(name : String, mapping : String) {
-		_set("mappings", name, mapping, String::class.java)
+		_set("mappings", name, mapping)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeMapping(name : String) {
-		_remove("mappings", name, String::class.java)
+		_remove("mappings", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -107,7 +107,7 @@ class DiscriminatorImpl : PropertiesOverlay<Discriminator> ,Discriminator {
 				return DiscriminatorImpl(discriminator, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Discriminator> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Discriminator> {
 				return DiscriminatorImpl(json, parent, refMgr)
 			}
 		
@@ -118,7 +118,7 @@ class DiscriminatorImpl : PropertiesOverlay<Discriminator> ,Discriminator {
 			return Discriminator::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out Discriminator> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out Discriminator> {
 			return Discriminator::class.java
 		}
 		

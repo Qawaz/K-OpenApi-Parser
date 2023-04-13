@@ -1,58 +1,58 @@
-package com.reprezen.kaizen.oasparser.ovl3;
+package com.reprezen.kaizen.oasparser.ovl3
 
-import com.reprezen.kaizen.oasparser.model3.*;
-import com.reprezen.jsonoverlay.MapOverlay;
-import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.kaizen.oasparser.ovl3.CallbackImpl;
-import com.reprezen.jsonoverlay.ListOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.kaizen.oasparser.ovl3.HeaderImpl;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.kaizen.oasparser.ovl3.SecuritySchemeImpl;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.core.JsonPointer;
-import com.reprezen.jsonoverlay.ReferenceManager;
-import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl;
-import com.reprezen.kaizen.oasparser.ovl3.ServerImpl;
-import com.reprezen.kaizen.oasparser.ovl3.SecurityRequirementImpl;
-import com.reprezen.kaizen.oasparser.ovl3.LinkImpl;
-import kotlin.collections.List;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.Overlay;
-import com.reprezen.kaizen.oasparser.ovl3.ExampleImpl;
-import java.util.stream.Collectors;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.kaizen.oasparser.ovl3.TagImpl;
-import com.reprezen.kaizen.oasparser.ovl3.RequestBodyImpl;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.kaizen.oasparser.ovl3.PathImpl;
-import com.reprezen.kaizen.oasparser.ovl3.ResponseImpl;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl;
-import kotlin.collections.Collection;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.ReferenceRegistry;
-import kotlin.collections.Map;
-import com.reprezen.kaizen.oasparser.ovl3.InfoImpl;
-import com.reprezen.kaizen.oasparser.ovl3.ExternalDocsImpl;
+import com.reprezen.kaizen.oasparser.model3.*
+import com.reprezen.jsonoverlay.MapOverlay
+import com.reprezen.jsonoverlay.StringOverlay
+import com.reprezen.kaizen.oasparser.ovl3.CallbackImpl
+import com.reprezen.jsonoverlay.ListOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import com.reprezen.kaizen.oasparser.ovl3.HeaderImpl
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.kaizen.oasparser.ovl3.SecuritySchemeImpl
+import kotlinx.serialization.json.JsonObject
+import com.reprezen.jsonoverlay.JsonPointer
+import kotlinx.serialization.json.JsonNull
+import com.reprezen.jsonoverlay.ReferenceManager
+import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
+import com.reprezen.kaizen.oasparser.ovl3.ServerImpl
+import com.reprezen.kaizen.oasparser.ovl3.SecurityRequirementImpl
+import com.reprezen.kaizen.oasparser.ovl3.LinkImpl
+import kotlin.collections.List
+import com.reprezen.jsonoverlay.JsonOverlay
+import com.reprezen.jsonoverlay.Overlay
+import com.reprezen.kaizen.oasparser.ovl3.ExampleImpl
+import java.util.stream.Collectors
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.kaizen.oasparser.ovl3.TagImpl
+import com.reprezen.kaizen.oasparser.ovl3.RequestBodyImpl
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.kaizen.oasparser.ovl3.PathImpl
+import com.reprezen.kaizen.oasparser.ovl3.ResponseImpl
+import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl
+import kotlinx.serialization.json.JsonElement
+import kotlin.collections.Collection
+import com.reprezen.jsonoverlay.ObjectOverlay
+import com.reprezen.jsonoverlay.ReferenceRegistry
+import kotlin.collections.Map
+import com.reprezen.kaizen.oasparser.ovl3.InfoImpl
+import com.reprezen.kaizen.oasparser.ovl3.ExternalDocsImpl
 
 class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
-    override fun _fixJson(json : JsonNode) : JsonNode {
+    override fun _fixJson(json : JsonElement) : JsonElement {
         var json = json
-        if (json.isMissingNode) {
-            json = _jsonObject()
+        if (json is JsonNull) {
+            json = JsonObject(mapOf())
         }
-        if (!json.has("paths")) {
-            (json as ObjectNode).putObject("paths")
+        if (json is JsonObject && !json.containsKey("paths")) {
+            json = JsonObject(json.toMutableMap().apply { put("paths", _jsonObject(mapOf())) })
         }
         return json
     }
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(openApi3 : OpenApi3?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(openApi3, parent, Companion.factory, refMgr)
@@ -60,39 +60,39 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// OpenApi
 	override fun getOpenApi() : String? {
-		return _get("openApi", String::class.java)
+		return _get("openApi")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setOpenApi(openApi : String) {
-		_setScalar("openApi", openApi, String::class.java)
+		_setScalar("openApi", openApi)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Info
 	override fun getInfo() : Info? {
-		return _get("info", Info::class.java)
+		return _get("info")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getInfo(elaborate : Boolean) : Info? {
-		return _get("info", elaborate, Info::class.java)
+		return _get("info")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setInfo(info : Info) {
-		_setScalar("info", info, Info::class.java)
+		_setScalar("info", info)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Server
 	override fun getServers() : List<Server> {
-		return _getList("servers", Server::class.java)
+		return _getList("servers")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getServers(elaborate : Boolean) : List<Server> {
-		return _getList("servers", elaborate, Server::class.java)
+		return _getList("servers")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -102,43 +102,43 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getServer(index : Int) : Server {
-		return _get("servers", index, Server::class.java)
+		return _get("servers", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setServers(servers : MutableList<Server>) {
-		_setList("servers", servers, Server::class.java)
+		_setList("servers", servers)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setServer(index : Int, server : Server) {
-		_set("servers", index, server, Server::class.java)
+		_set("servers", index, server)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun addServer(server : Server) {
-		_add("servers", server, Server::class.java)
+		_add("servers", server)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun insertServer(index : Int, server : Server) {
-		_insert("servers", index, server, Server::class.java)
+		_insert("servers", index, server)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeServer(index : Int) {
-		_remove("servers", index, Server::class.java)
+		_remove("servers", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Path
 	override fun getPaths() : MutableMap<String, Path> {
-		return _getMap("paths", Path::class.java)
+		return _getMap("paths")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getPaths(elaborate : Boolean) : MutableMap<String, Path> {
-		return _getMap("paths", elaborate, Path::class.java)
+		return _getMap("paths")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -148,38 +148,38 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasPath(name : String) : Boolean {
-		return _getMap("paths", Path::class.java).containsKey(name)
+		return _getMap<Path>("paths").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getPath(name : String) : Path? {
-		return _get("paths", name, Path::class.java)
+		return _get("paths", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setPaths(paths : MutableMap<String, Path>) {
-		_setMap("paths", paths, Path::class.java)
+		_setMap("paths", paths)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setPath(name : String, path : Path) {
-		_set("paths", name, path, Path::class.java)
+		_set("paths", name, path)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removePath(name : String) {
-		_remove("paths", name, Path::class.java)
+		_remove("paths", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// PathsExtension
 	override fun getPathsExtensions() : MutableMap<String, Any> {
-		return _getMap("pathsExtensions", Any::class.java)
+		return _getMap("pathsExtensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getPathsExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("pathsExtensions", elaborate, Any::class.java)
+		return _getMap("pathsExtensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -189,38 +189,38 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasPathsExtension(name : String) : Boolean {
-		return _getMap("pathsExtensions", Any::class.java).containsKey(name)
+		return _getMap<Any>("pathsExtensions").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getPathsExtension(name : String) : Any? {
-		return _get("pathsExtensions", name, Any::class.java)
+		return _get("pathsExtensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setPathsExtensions(pathsExtensions : MutableMap<String, Any>) {
-		_setMap("pathsExtensions", pathsExtensions, Any::class.java)
+		_setMap("pathsExtensions", pathsExtensions)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setPathsExtension(name : String, pathsExtension : Any) {
-		_set("pathsExtensions", name, pathsExtension, Any::class.java)
+		_set("pathsExtensions", name, pathsExtension)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removePathsExtension(name : String) {
-		_remove("pathsExtensions", name, Any::class.java)
+		_remove("pathsExtensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Schema
 	override fun getSchemas() : MutableMap<String, Schema> {
-		return _getMap("schemas", Schema::class.java)
+		return _getMap("schemas")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getSchemas(elaborate : Boolean) : MutableMap<String, Schema> {
-		return _getMap("schemas", elaborate, Schema::class.java)
+		return _getMap("schemas")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -230,38 +230,38 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasSchema(name : String) : Boolean {
-		return _getMap("schemas", Schema::class.java).containsKey(name)
+		return _getMap<Schema>("schemas").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getSchema(name : String) : Schema? {
-		return _get("schemas", name, Schema::class.java)
+		return _get("schemas", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setSchemas(schemas : MutableMap<String, Schema>) {
-		_setMap("schemas", schemas, Schema::class.java)
+		_setMap("schemas", schemas)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setSchema(name : String, schema : Schema) {
-		_set("schemas", name, schema, Schema::class.java)
+		_set("schemas", name, schema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeSchema(name : String) {
-		_remove("schemas", name, Schema::class.java)
+		_remove("schemas", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Response
 	override fun getResponses() : MutableMap<String, Response> {
-		return _getMap("responses", Response::class.java)
+		return _getMap("responses")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getResponses(elaborate : Boolean) : MutableMap<String, Response> {
-		return _getMap("responses", elaborate, Response::class.java)
+		return _getMap("responses")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -271,38 +271,38 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasResponse(name : String) : Boolean {
-		return _getMap("responses", Response::class.java).containsKey(name)
+		return _getMap<Response>("responses").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getResponse(name : String) : Response? {
-		return _get("responses", name, Response::class.java)
+		return _get("responses", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setResponses(responses : MutableMap<String, Response>) {
-		_setMap("responses", responses, Response::class.java)
+		_setMap("responses", responses)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setResponse(name : String, response : Response) {
-		_set("responses", name, response, Response::class.java)
+		_set("responses", name, response)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeResponse(name : String) {
-		_remove("responses", name, Response::class.java)
+		_remove("responses", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Parameter
 	override fun getParameters() : MutableMap<String, Parameter> {
-		return _getMap("parameters", Parameter::class.java)
+		return _getMap("parameters")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getParameters(elaborate : Boolean) : MutableMap<String, Parameter> {
-		return _getMap("parameters", elaborate, Parameter::class.java)
+		return _getMap("parameters")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -312,38 +312,38 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasParameter(name : String) : Boolean {
-		return _getMap("parameters", Parameter::class.java).containsKey(name)
+		return _getMap<Parameter>("parameters").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getParameter(name : String) : Parameter? {
-		return _get("parameters", name, Parameter::class.java)
+		return _get("parameters", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setParameters(parameters : MutableMap<String, Parameter>) {
-		_setMap("parameters", parameters, Parameter::class.java)
+		_setMap("parameters", parameters)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setParameter(name : String, parameter : Parameter) {
-		_set("parameters", name, parameter, Parameter::class.java)
+		_set("parameters", name, parameter)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeParameter(name : String) {
-		_remove("parameters", name, Parameter::class.java)
+		_remove("parameters", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Example
 	override fun getExamples() : MutableMap<String, Example> {
-		return _getMap("examples", Example::class.java)
+		return _getMap("examples")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExamples(elaborate : Boolean) : MutableMap<String, Example> {
-		return _getMap("examples", elaborate, Example::class.java)
+		return _getMap("examples")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -353,38 +353,38 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasExample(name : String) : Boolean {
-		return _getMap("examples", Example::class.java).containsKey(name)
+		return _getMap<Example>("examples").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExample(name : String) : Example? {
-		return _get("examples", name, Example::class.java)
+		return _get("examples", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExamples(examples : MutableMap<String, Example>) {
-		_setMap("examples", examples, Example::class.java)
+		_setMap("examples", examples)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExample(name : String, example : Example) {
-		_set("examples", name, example, Example::class.java)
+		_set("examples", name, example)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeExample(name : String) {
-		_remove("examples", name, Example::class.java)
+		_remove("examples", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// RequestBody
 	override fun getRequestBodies() : MutableMap<String, RequestBody> {
-		return _getMap("requestBodies", RequestBody::class.java)
+		return _getMap("requestBodies")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getRequestBodies(elaborate : Boolean) : MutableMap<String, RequestBody> {
-		return _getMap("requestBodies", elaborate, RequestBody::class.java)
+		return _getMap("requestBodies")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -394,38 +394,38 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasRequestBody(name : String) : Boolean {
-		return _getMap("requestBodies", RequestBody::class.java).containsKey(name)
+		return _getMap<RequestBody>("requestBodies").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getRequestBody(name : String) : RequestBody? {
-		return _get("requestBodies", name, RequestBody::class.java)
+		return _get("requestBodies", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setRequestBodies(requestBodies : MutableMap<String, RequestBody>) {
-		_setMap("requestBodies", requestBodies, RequestBody::class.java)
+		_setMap("requestBodies", requestBodies)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setRequestBody(name : String, requestBody : RequestBody) {
-		_set("requestBodies", name, requestBody, RequestBody::class.java)
+		_set("requestBodies", name, requestBody)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeRequestBody(name : String) {
-		_remove("requestBodies", name, RequestBody::class.java)
+		_remove("requestBodies", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Header
 	override fun getHeaders() : MutableMap<String, Header> {
-		return _getMap("headers", Header::class.java)
+		return _getMap("headers")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getHeaders(elaborate : Boolean) : MutableMap<String, Header> {
-		return _getMap("headers", elaborate, Header::class.java)
+		return _getMap("headers")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -435,38 +435,38 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasHeader(name : String) : Boolean {
-		return _getMap("headers", Header::class.java).containsKey(name)
+		return _getMap<Header>("headers").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getHeader(name : String) : Header? {
-		return _get("headers", name, Header::class.java)
+		return _get("headers", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setHeaders(headers : MutableMap<String, Header>) {
-		_setMap("headers", headers, Header::class.java)
+		_setMap("headers", headers)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setHeader(name : String, header : Header) {
-		_set("headers", name, header, Header::class.java)
+		_set("headers", name, header)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeHeader(name : String) {
-		_remove("headers", name, Header::class.java)
+		_remove("headers", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// SecurityScheme
 	override fun getSecuritySchemes() : MutableMap<String, SecurityScheme> {
-		return _getMap("securitySchemes", SecurityScheme::class.java)
+		return _getMap("securitySchemes")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getSecuritySchemes(elaborate : Boolean) : MutableMap<String, SecurityScheme> {
-		return _getMap("securitySchemes", elaborate, SecurityScheme::class.java)
+		return _getMap("securitySchemes")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -476,38 +476,38 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasSecurityScheme(name : String) : Boolean {
-		return _getMap("securitySchemes", SecurityScheme::class.java).containsKey(name)
+		return _getMap<SecurityScheme>("securitySchemes").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getSecurityScheme(name : String) : SecurityScheme? {
-		return _get("securitySchemes", name, SecurityScheme::class.java)
+		return _get("securitySchemes", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setSecuritySchemes(securitySchemes : MutableMap<String, SecurityScheme>) {
-		_setMap("securitySchemes", securitySchemes, SecurityScheme::class.java)
+		_setMap("securitySchemes", securitySchemes)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setSecurityScheme(name : String, securityScheme : SecurityScheme) {
-		_set("securitySchemes", name, securityScheme, SecurityScheme::class.java)
+		_set("securitySchemes", name, securityScheme)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeSecurityScheme(name : String) {
-		_remove("securitySchemes", name, SecurityScheme::class.java)
+		_remove("securitySchemes", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Link
 	override fun getLinks() : MutableMap<String, Link> {
-		return _getMap("links", Link::class.java)
+		return _getMap("links")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getLinks(elaborate : Boolean) : MutableMap<String, Link> {
-		return _getMap("links", elaborate, Link::class.java)
+		return _getMap("links")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -517,38 +517,38 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasLink(name : String) : Boolean {
-		return _getMap("links", Link::class.java).containsKey(name)
+		return _getMap<Link>("links").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getLink(name : String) : Link? {
-		return _get("links", name, Link::class.java)
+		return _get("links", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setLinks(links : MutableMap<String, Link>) {
-		_setMap("links", links, Link::class.java)
+		_setMap("links", links)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setLink(name : String, link : Link) {
-		_set("links", name, link, Link::class.java)
+		_set("links", name, link)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeLink(name : String) {
-		_remove("links", name, Link::class.java)
+		_remove("links", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Callback
 	override fun getCallbacks() : MutableMap<String, Callback> {
-		return _getMap("callbacks", Callback::class.java)
+		return _getMap("callbacks")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getCallbacks(elaborate : Boolean) : MutableMap<String, Callback> {
-		return _getMap("callbacks", elaborate, Callback::class.java)
+		return _getMap("callbacks")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -558,38 +558,38 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasCallback(name : String) : Boolean {
-		return _getMap("callbacks", Callback::class.java).containsKey(name)
+		return _getMap<Callback>("callbacks").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getCallback(name : String) : Callback? {
-		return _get("callbacks", name, Callback::class.java)
+		return _get("callbacks", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setCallbacks(callbacks : MutableMap<String, Callback>) {
-		_setMap("callbacks", callbacks, Callback::class.java)
+		_setMap("callbacks", callbacks)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setCallback(name : String, callback : Callback) {
-		_set("callbacks", name, callback, Callback::class.java)
+		_set("callbacks", name, callback)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeCallback(name : String) {
-		_remove("callbacks", name, Callback::class.java)
+		_remove("callbacks", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ComponentsExtension
 	override fun getComponentsExtensions() : MutableMap<String, Any> {
-		return _getMap("componentsExtensions", Any::class.java)
+		return _getMap("componentsExtensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getComponentsExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("componentsExtensions", elaborate, Any::class.java)
+		return _getMap("componentsExtensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -599,38 +599,38 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasComponentsExtension(name : String) : Boolean {
-		return _getMap("componentsExtensions", Any::class.java).containsKey(name)
+		return _getMap<Any>("componentsExtensions").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getComponentsExtension(name : String) : Any? {
-		return _get("componentsExtensions", name, Any::class.java)
+		return _get("componentsExtensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setComponentsExtensions(componentsExtensions : MutableMap<String, Any>) {
-		_setMap("componentsExtensions", componentsExtensions, Any::class.java)
+		_setMap("componentsExtensions", componentsExtensions)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setComponentsExtension(name : String, componentsExtension : Any) {
-		_set("componentsExtensions", name, componentsExtension, Any::class.java)
+		_set("componentsExtensions", name, componentsExtension)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeComponentsExtension(name : String) {
-		_remove("componentsExtensions", name, Any::class.java)
+		_remove("componentsExtensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// SecurityRequirement
 	override fun getSecurityRequirements() : List<SecurityRequirement> {
-		return _getList("securityRequirements", SecurityRequirement::class.java)
+		return _getList("securityRequirements")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getSecurityRequirements(elaborate : Boolean) : List<SecurityRequirement> {
-		return _getList("securityRequirements", elaborate, SecurityRequirement::class.java)
+		return _getList("securityRequirements")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -640,43 +640,43 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getSecurityRequirement(index : Int) : SecurityRequirement {
-		return _get("securityRequirements", index, SecurityRequirement::class.java)
+		return _get("securityRequirements", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setSecurityRequirements(securityRequirements : MutableList<SecurityRequirement>) {
-		_setList("securityRequirements", securityRequirements, SecurityRequirement::class.java)
+		_setList("securityRequirements", securityRequirements)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setSecurityRequirement(index : Int, securityRequirement : SecurityRequirement) {
-		_set("securityRequirements", index, securityRequirement, SecurityRequirement::class.java)
+		_set("securityRequirements", index, securityRequirement)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun addSecurityRequirement(securityRequirement : SecurityRequirement) {
-		_add("securityRequirements", securityRequirement, SecurityRequirement::class.java)
+		_add("securityRequirements", securityRequirement)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun insertSecurityRequirement(index : Int, securityRequirement : SecurityRequirement) {
-		_insert("securityRequirements", index, securityRequirement, SecurityRequirement::class.java)
+		_insert("securityRequirements", index, securityRequirement)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeSecurityRequirement(index : Int) {
-		_remove("securityRequirements", index, SecurityRequirement::class.java)
+		_remove("securityRequirements", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Tag
 	override fun getTags() : List<Tag> {
-		return _getList("tags", Tag::class.java)
+		return _getList("tags")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getTags(elaborate : Boolean) : List<Tag> {
-		return _getList("tags", elaborate, Tag::class.java)
+		return _getList("tags")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -686,59 +686,59 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getTag(index : Int) : Tag {
-		return _get("tags", index, Tag::class.java)
+		return _get("tags", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setTags(tags : MutableList<Tag>) {
-		_setList("tags", tags, Tag::class.java)
+		_setList("tags", tags)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setTag(index : Int, tag : Tag) {
-		_set("tags", index, tag, Tag::class.java)
+		_set("tags", index, tag)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun addTag(tag : Tag) {
-		_add("tags", tag, Tag::class.java)
+		_add("tags", tag)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun insertTag(index : Int, tag : Tag) {
-		_insert("tags", index, tag, Tag::class.java)
+		_insert("tags", index, tag)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeTag(index : Int) {
-		_remove("tags", index, Tag::class.java)
+		_remove("tags", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ExternalDocs
 	override fun getExternalDocs() : ExternalDocs? {
-		return _get("externalDocs", ExternalDocs::class.java)
+		return _get("externalDocs")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExternalDocs(elaborate : Boolean) : ExternalDocs? {
-		return _get("externalDocs", elaborate, ExternalDocs::class.java)
+		return _get("externalDocs")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExternalDocs(externalDocs : ExternalDocs) {
-		_setScalar("externalDocs", externalDocs, ExternalDocs::class.java)
+		_setScalar("externalDocs", externalDocs)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions", Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("extensions", elaborate, Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -748,27 +748,27 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasExtension(name : String) : Boolean {
-		return _getMap("extensions", Any::class.java).containsKey(name)
+		return _getMap<Any>("extensions").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtension(name : String) : Any? {
-		return _get("extensions", name, Any::class.java)
+		return _get("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtensions(extensions : MutableMap<String, Any>) {
-		_setMap("extensions", extensions, Any::class.java)
+		_setMap("extensions", extensions)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtension(name : String, extension : Any) {
-		_set("extensions", name, extension, Any::class.java)
+		_set("extensions", name, extension)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeExtension(name : String) {
-		_remove("extensions", name, Any::class.java)
+		_remove("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -854,7 +854,7 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 				return OpenApi3Impl(openApi3, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<OpenApi3> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<OpenApi3> {
 				return OpenApi3Impl(json, parent, refMgr)
 			}
 		
@@ -865,7 +865,7 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 			return OpenApi3::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out OpenApi3> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out OpenApi3> {
 			return OpenApi3::class.java
 		}
 		

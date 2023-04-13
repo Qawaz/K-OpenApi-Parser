@@ -59,6 +59,11 @@ class ExampleTest {
     }
 
     companion object {
-        private var model: OpenApi3? = OpenApiParser().parse(Resources.getResource("models/examplesTest.yaml")).also { it.validate() }
+        val isJson : Boolean get() = true
+
+        val examplesTestRes : String = "models/" + (if(isJson) "json" else "yaml") + "/examplesTest" + (if(isJson) ".json" else ".yaml")
+
+        private var model: OpenApi3? = OpenApiParser().parse(Resources.getResource(examplesTestRes)).also { it.validate() }
+
     }
 }

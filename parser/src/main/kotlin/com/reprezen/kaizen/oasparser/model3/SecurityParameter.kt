@@ -1,9 +1,9 @@
 package com.reprezen.kaizen.oasparser.model3
 
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.IModelPart;
-import kotlin.collections.List;
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.IModelPart
+import kotlin.collections.List
 
 interface SecurityParameter : IJsonOverlay<SecurityParameter>, IModelPart<OpenApi3, SecurityParameter> {
 

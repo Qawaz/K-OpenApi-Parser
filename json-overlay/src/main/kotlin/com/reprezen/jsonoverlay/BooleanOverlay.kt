@@ -45,6 +45,10 @@ class BooleanOverlay : ScalarOverlay<Boolean> {
         return Companion.factory
     }
 
+    override fun toString(): String {
+        return if((_get() == true)) "true" else "false"
+    }
+
     companion object {
 
         @JvmField

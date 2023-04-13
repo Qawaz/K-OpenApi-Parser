@@ -1,10 +1,10 @@
 package com.reprezen.kaizen.oasparser.model3
 
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.kaizen.oasparser.model3.Server;
-import com.reprezen.jsonoverlay.IModelPart;
-import kotlin.collections.Map;
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.kaizen.oasparser.model3.Server
+import com.reprezen.jsonoverlay.IModelPart
+import kotlin.collections.Map
 
 interface Link : IJsonOverlay<Link>, IModelPart<OpenApi3, Link> {
 

@@ -20,7 +20,7 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class ResponseValidator : ObjectValidatorBase<Response>() {
     override fun runObjectValidations() {
-        val response = value.getOverlay() as Response
+        val response = value.overlay as Response
         validateStringField(ResponseImpl.F_description, false)
         validateMapField<Header>(ResponseImpl.F_headers, false, false, Header::class.java, HeaderValidator())
         validateMapField<MediaType>(

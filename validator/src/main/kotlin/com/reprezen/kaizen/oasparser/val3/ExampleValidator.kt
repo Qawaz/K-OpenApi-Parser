@@ -19,11 +19,11 @@ import com.reprezen.kaizen.oasparser.validate.msg.Messages.Companion.msg
 
 class ExampleValidator : ObjectValidatorBase<Example>() {
     override fun runObjectValidations() {
-        val example = value.getOverlay() as Example
+        val example = value.overlay as Example
         validateStringField(ExampleImpl.F_summary, false)
         validateStringField(ExampleImpl.F_description, false)
-        val valueField: Overlay<Any> = validateField<Any>(ExampleImpl.F_value, false, Any::class.java, null)
-        val externalField: Overlay<String> = validateUrlField(ExampleImpl.F_externalValue, false, true, false)
+        val valueField: Overlay<Any> = validateField<Any>(ExampleImpl.F_value, false, Any::class.java, null)!!
+        val externalField: Overlay<String> = validateUrlField(ExampleImpl.F_externalValue, false, true, false)!!
         validateExtensions(example.getExtensions())
         checkExactlyOneValue(valueField, externalField)
         // TODO check that a direct value is compatible with the containng parameter or

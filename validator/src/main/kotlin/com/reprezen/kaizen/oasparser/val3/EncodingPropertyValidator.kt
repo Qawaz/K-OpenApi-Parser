@@ -19,7 +19,7 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class EncodingPropertyValidator : ObjectValidatorBase<EncodingProperty>() {
     override fun runObjectValidations() {
-        val encodingProperty: EncodingProperty = value.getOverlay() as EncodingProperty
+        val encodingProperty: EncodingProperty = value.overlay as EncodingProperty
 
         // TODO ought to have a pattern for acceptable values "a/b", "a/*", comma-lists
         // of those.

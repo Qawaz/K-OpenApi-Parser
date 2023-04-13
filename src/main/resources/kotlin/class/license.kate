@@ -5,7 +5,7 @@
     @var(GenerateClassDefinition())
 
     @default_no_raw
-            val initJson = _jsonMissing()
+            val initJson = kotlinx.serialization.json.JsonNull
 
 
     @end_default_no_raw

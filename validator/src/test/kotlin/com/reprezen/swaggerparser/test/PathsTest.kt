@@ -13,15 +13,19 @@ package com.reprezen.swaggerparser.test
 
 import com.google.common.io.Resources
 import com.reprezen.kaizen.oasparser.OpenApiParser
-import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import org.junit.Assert
 import org.junit.Test
 
 class PathsTest {
+
+    val isJson : Boolean get() = true
+
+    private val pathsTestRes : String = "models/" + (if(isJson) "json" else "yaml") + "/pathsTest" + (if(isJson) ".json" else ".yaml")
+
     @Test
     @Throws(Exception::class)
     fun testGetPaths() {
-        val model = OpenApiParser().parse(Resources.getResource("models/pathsTest.yaml"))
+        val model = OpenApiParser().parse(Resources.getResource(pathsTestRes))
         Assert.assertEquals(2, model.getPaths().size.toLong())
         Assert.assertTrue(model.hasPath("/"))
         Assert.assertTrue(model.hasPath("/v2"))

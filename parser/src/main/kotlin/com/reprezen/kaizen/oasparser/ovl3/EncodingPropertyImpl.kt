@@ -1,26 +1,26 @@
-package com.reprezen.kaizen.oasparser.ovl3;
+package com.reprezen.kaizen.oasparser.ovl3
 
-import com.reprezen.kaizen.oasparser.model3.*;
-import com.reprezen.jsonoverlay.MapOverlay;
-import java.util.stream.Collectors;
-import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.Builder;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.fasterxml.jackson.core.JsonPointer;
-import com.reprezen.jsonoverlay.ReferenceManager;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import kotlin.collections.Map;
-import com.reprezen.jsonoverlay.BooleanOverlay;
+import com.reprezen.kaizen.oasparser.model3.*
+import com.reprezen.jsonoverlay.MapOverlay
+import java.util.stream.Collectors
+import com.reprezen.jsonoverlay.StringOverlay
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.JsonPointer
+import com.reprezen.jsonoverlay.ReferenceManager
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.ObjectOverlay
+import com.reprezen.jsonoverlay.JsonOverlay
+import kotlin.collections.Map
+import com.reprezen.jsonoverlay.BooleanOverlay
 
 class EncodingPropertyImpl : PropertiesOverlay<EncodingProperty> ,EncodingProperty {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(encodingProperty : EncodingProperty?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(encodingProperty, parent, Companion.factory, refMgr)
@@ -28,23 +28,23 @@ class EncodingPropertyImpl : PropertiesOverlay<EncodingProperty> ,EncodingProper
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ContentType
 	override fun getContentType() : String? {
-		return _get("contentType", String::class.java)
+		return _get("contentType")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setContentType(contentType : String) {
-		_setScalar("contentType", contentType, String::class.java)
+		_setScalar("contentType", contentType)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Header
 	override fun getHeaders() : MutableMap<String, String> {
-		return _getMap("headers", String::class.java)
+		return _getMap("headers")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getHeaders(elaborate : Boolean) : MutableMap<String, String> {
-		return _getMap("headers", elaborate, String::class.java)
+		return _getMap("headers")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -54,81 +54,81 @@ class EncodingPropertyImpl : PropertiesOverlay<EncodingProperty> ,EncodingProper
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasHeader(name : String) : Boolean {
-		return _getMap("headers", String::class.java).containsKey(name)
+		return _getMap<String>("headers").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getHeader(name : String) : String? {
-		return _get("headers", name, String::class.java)
+		return _get("headers", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setHeaders(headers : MutableMap<String, String>) {
-		_setMap("headers", headers, String::class.java)
+		_setMap("headers", headers)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setHeader(name : String, header : String) {
-		_set("headers", name, header, String::class.java)
+		_set("headers", name, header)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeHeader(name : String) {
-		_remove("headers", name, String::class.java)
+		_remove("headers", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Style
 	override fun getStyle() : String? {
-		return _get("style", String::class.java)
+		return _get("style")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setStyle(style : String) {
-		_setScalar("style", style, String::class.java)
+		_setScalar("style", style)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Explode
 	override fun getExplode() : Boolean? {
-		return _get("explode", Boolean::class.java)
+		return _get("explode")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isExplode() : Boolean {
-		return _get("explode", Boolean::class.java) ?: false
+		return _get("explode") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExplode(explode : Boolean) {
-		_setScalar("explode", explode, Boolean::class.java)
+		_setScalar("explode", explode)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// AllowReserved
 	override fun getAllowReserved() : Boolean? {
-		return _get("allowReserved", Boolean::class.java)
+		return _get("allowReserved")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isAllowReserved() : Boolean {
-		return _get("allowReserved", Boolean::class.java) ?: false
+		return _get("allowReserved") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setAllowReserved(allowReserved : Boolean) {
-		_setScalar("allowReserved", allowReserved, Boolean::class.java)
+		_setScalar("allowReserved", allowReserved)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions", Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("extensions", elaborate, Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -138,27 +138,27 @@ class EncodingPropertyImpl : PropertiesOverlay<EncodingProperty> ,EncodingProper
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasExtension(name : String) : Boolean {
-		return _getMap("extensions", Any::class.java).containsKey(name)
+		return _getMap<Any>("extensions").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtension(name : String) : Any? {
-		return _get("extensions", name, Any::class.java)
+		return _get("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtensions(extensions : MutableMap<String, Any>) {
-		_setMap("extensions", extensions, Any::class.java)
+		_setMap("extensions", extensions)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtension(name : String, extension : Any) {
-		_set("extensions", name, extension, Any::class.java)
+		_set("extensions", name, extension)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeExtension(name : String) {
-		_remove("extensions", name, Any::class.java)
+		_remove("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -205,7 +205,7 @@ class EncodingPropertyImpl : PropertiesOverlay<EncodingProperty> ,EncodingProper
 				return EncodingPropertyImpl(encodingProperty, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<EncodingProperty> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<EncodingProperty> {
 				return EncodingPropertyImpl(json, parent, refMgr)
 			}
 		
@@ -216,7 +216,7 @@ class EncodingPropertyImpl : PropertiesOverlay<EncodingProperty> ,EncodingProper
 			return EncodingProperty::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out EncodingProperty> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out EncodingProperty> {
 			return EncodingProperty::class.java
 		}
 		

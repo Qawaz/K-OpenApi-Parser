@@ -1,31 +1,31 @@
-package com.reprezen.kaizen.oasparser.ovl3;
+package com.reprezen.kaizen.oasparser.ovl3
 
-import com.reprezen.kaizen.oasparser.model3.*;
-import com.reprezen.jsonoverlay.MapOverlay;
-import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.ListOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.Builder;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.core.JsonPointer;
-import com.reprezen.kaizen.oasparser.ovl3.XmlImpl;
-import com.reprezen.jsonoverlay.ReferenceManager;
-import com.reprezen.jsonoverlay.IntegerOverlay;
-import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl;
-import kotlin.collections.List;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.Overlay;
-import java.util.stream.Collectors;
-import com.reprezen.kaizen.oasparser.ovl3.DiscriminatorImpl;
-import com.reprezen.jsonoverlay.parser.Generated;
-import java.util.Optional;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.NumberOverlay;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import kotlin.collections.Map;
-import com.reprezen.jsonoverlay.BooleanOverlay;
-import com.reprezen.kaizen.oasparser.ovl3.ExternalDocsImpl;
+import com.reprezen.kaizen.oasparser.model3.*
+import com.reprezen.jsonoverlay.MapOverlay
+import com.reprezen.jsonoverlay.StringOverlay
+import com.reprezen.jsonoverlay.ListOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.JsonPointer
+import com.reprezen.kaizen.oasparser.ovl3.XmlImpl
+import com.reprezen.jsonoverlay.ReferenceManager
+import com.reprezen.jsonoverlay.IntegerOverlay
+import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
+import kotlin.collections.List
+import com.reprezen.jsonoverlay.JsonOverlay
+import com.reprezen.jsonoverlay.Overlay
+import java.util.stream.Collectors
+import com.reprezen.kaizen.oasparser.ovl3.DiscriminatorImpl
+import com.reprezen.jsonoverlay.parser.Generated
+import java.util.Optional
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.NumberOverlay
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.ObjectOverlay
+import kotlin.collections.Map
+import com.reprezen.jsonoverlay.BooleanOverlay
+import com.reprezen.kaizen.oasparser.ovl3.ExternalDocsImpl
 
 class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 
@@ -35,20 +35,21 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
         return if(overlay.parent is MapOverlay<*>) overlay.pathInParent else null
     }
 
-    override fun _findInternal(path : JsonPointer?) : JsonOverlay<*>? {
-        return if (path?.matchesProperty("additionalProperties") == true) {
-            if(path.tail().matches()){
-                _getOverlay("additionalProperties", BooleanOverlay::class.java)
+    override fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
+        return if(path.segments.firstOrNull() == "additionalProperties"){
+            val tail = JsonPointer(path.segments.drop(1))
+            if(json != null && tail.navigate(json!!) != null){
+                _getOverlay<Boolean>("additionalProperties") as BooleanOverlay
             } else {
-                _get("additionalPropertiesSchema",SchemaImpl::class.java)?._findInternal(path.tail())
+                _get<SchemaImpl>("additionalPropertiesSchema")?.findByPointer(tail)
             }
         } else {
-            super._findInternal(path)
+            super<Schema>.findByPointer(path)
         }
     }
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(schema : Schema?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(schema, parent, Companion.factory, refMgr)
@@ -56,181 +57,181 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Title
 	override fun getTitle() : String? {
-		return _get("title", String::class.java)
+		return _get("title")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setTitle(title : String) {
-		_setScalar("title", title, String::class.java)
+		_setScalar("title", title)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// MultipleOf
 	override fun getMultipleOf() : Number? {
-		return _get("multipleOf", Number::class.java)
+		return _get("multipleOf")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setMultipleOf(multipleOf : Number) {
-		_setScalar("multipleOf", multipleOf, Number::class.java)
+		_setScalar("multipleOf", multipleOf)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Maximum
 	override fun getMaximum() : Number? {
-		return _get("maximum", Number::class.java)
+		return _get("maximum")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setMaximum(maximum : Number) {
-		_setScalar("maximum", maximum, Number::class.java)
+		_setScalar("maximum", maximum)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ExclusiveMaximum
 	override fun getExclusiveMaximum() : Boolean? {
-		return _get("exclusiveMaximum", Boolean::class.java)
+		return _get("exclusiveMaximum")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isExclusiveMaximum() : Boolean {
-		return _get("exclusiveMaximum", Boolean::class.java) ?: false
+		return _get("exclusiveMaximum") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExclusiveMaximum(exclusiveMaximum : Boolean) {
-		_setScalar("exclusiveMaximum", exclusiveMaximum, Boolean::class.java)
+		_setScalar("exclusiveMaximum", exclusiveMaximum)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Minimum
 	override fun getMinimum() : Number? {
-		return _get("minimum", Number::class.java)
+		return _get("minimum")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setMinimum(minimum : Number) {
-		_setScalar("minimum", minimum, Number::class.java)
+		_setScalar("minimum", minimum)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ExclusiveMinimum
 	override fun getExclusiveMinimum() : Boolean? {
-		return _get("exclusiveMinimum", Boolean::class.java)
+		return _get("exclusiveMinimum")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isExclusiveMinimum() : Boolean {
-		return _get("exclusiveMinimum", Boolean::class.java) ?: false
+		return _get("exclusiveMinimum") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExclusiveMinimum(exclusiveMinimum : Boolean) {
-		_setScalar("exclusiveMinimum", exclusiveMinimum, Boolean::class.java)
+		_setScalar("exclusiveMinimum", exclusiveMinimum)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// MaxLength
 	override fun getMaxLength() : Int? {
-		return _get("maxLength", Int::class.java)
+		return _get("maxLength")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setMaxLength(maxLength : Int) {
-		_setScalar("maxLength", maxLength, Int::class.java)
+		_setScalar("maxLength", maxLength)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// MinLength
 	override fun getMinLength() : Int? {
-		return _get("minLength", Int::class.java)
+		return _get("minLength")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setMinLength(minLength : Int) {
-		_setScalar("minLength", minLength, Int::class.java)
+		_setScalar("minLength", minLength)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Pattern
 	override fun getPattern() : String? {
-		return _get("pattern", String::class.java)
+		return _get("pattern")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setPattern(pattern : String) {
-		_setScalar("pattern", pattern, String::class.java)
+		_setScalar("pattern", pattern)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// MaxItems
 	override fun getMaxItems() : Int? {
-		return _get("maxItems", Int::class.java)
+		return _get("maxItems")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setMaxItems(maxItems : Int) {
-		_setScalar("maxItems", maxItems, Int::class.java)
+		_setScalar("maxItems", maxItems)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// MinItems
 	override fun getMinItems() : Int? {
-		return _get("minItems", Int::class.java)
+		return _get("minItems")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setMinItems(minItems : Int) {
-		_setScalar("minItems", minItems, Int::class.java)
+		_setScalar("minItems", minItems)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// UniqueItems
 	override fun getUniqueItems() : Boolean? {
-		return _get("uniqueItems", Boolean::class.java)
+		return _get("uniqueItems")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isUniqueItems() : Boolean {
-		return _get("uniqueItems", Boolean::class.java) ?: false
+		return _get("uniqueItems") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setUniqueItems(uniqueItems : Boolean) {
-		_setScalar("uniqueItems", uniqueItems, Boolean::class.java)
+		_setScalar("uniqueItems", uniqueItems)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// MaxProperties
 	override fun getMaxProperties() : Int? {
-		return _get("maxProperties", Int::class.java)
+		return _get("maxProperties")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setMaxProperties(maxProperties : Int) {
-		_setScalar("maxProperties", maxProperties, Int::class.java)
+		_setScalar("maxProperties", maxProperties)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// MinProperties
 	override fun getMinProperties() : Int? {
-		return _get("minProperties", Int::class.java)
+		return _get("minProperties")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setMinProperties(minProperties : Int) {
-		_setScalar("minProperties", minProperties, Int::class.java)
+		_setScalar("minProperties", minProperties)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// RequiredField
 	override fun getRequiredFields() : List<String> {
-		return _getList("requiredFields", String::class.java)
+		return _getList("requiredFields")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getRequiredFields(elaborate : Boolean) : List<String> {
-		return _getList("requiredFields", elaborate, String::class.java)
+		return _getList("requiredFields")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -240,43 +241,43 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getRequiredField(index : Int) : String {
-		return _get("requiredFields", index, String::class.java)
+		return _get("requiredFields", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setRequiredFields(requiredFields : MutableList<String>) {
-		_setList("requiredFields", requiredFields, String::class.java)
+		_setList("requiredFields", requiredFields)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setRequiredField(index : Int, requiredField : String) {
-		_set("requiredFields", index, requiredField, String::class.java)
+		_set("requiredFields", index, requiredField)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun addRequiredField(requiredField : String) {
-		_add("requiredFields", requiredField, String::class.java)
+		_add("requiredFields", requiredField)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun insertRequiredField(index : Int, requiredField : String) {
-		_insert("requiredFields", index, requiredField, String::class.java)
+		_insert("requiredFields", index, requiredField)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeRequiredField(index : Int) {
-		_remove("requiredFields", index, String::class.java)
+		_remove("requiredFields", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Enum
 	override fun getEnums() : List<Any> {
-		return _getList("enums", Any::class.java)
+		return _getList("enums")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getEnums(elaborate : Boolean) : List<Any> {
-		return _getList("enums", elaborate, Any::class.java)
+		return _getList("enums")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -286,54 +287,54 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getEnum(index : Int) : Any {
-		return _get("enums", index, Any::class.java)
+		return _get("enums", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setEnums(enums : MutableList<Any>) {
-		_setList("enums", enums, Any::class.java)
+		_setList("enums", enums)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setEnum(index : Int, enumValue : Any) {
-		_set("enums", index, enumValue, Any::class.java)
+		_set("enums", index, enumValue)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun addEnum(enumValue : Any) {
-		_add("enums", enumValue, Any::class.java)
+		_add("enums", enumValue)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun insertEnum(index : Int, enumValue : Any) {
-		_insert("enums", index, enumValue, Any::class.java)
+		_insert("enums", index, enumValue)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeEnum(index : Int) {
-		_remove("enums", index, Any::class.java)
+		_remove("enums", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Type
 	override fun getType() : String? {
-		return _get("type", String::class.java)
+		return _get("type")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setType(type : String) {
-		_setScalar("type", type, String::class.java)
+		_setScalar("type", type)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// AllOfSchema
 	override fun getAllOfSchemas() : List<Schema> {
-		return _getList("allOfSchemas", Schema::class.java)
+		return _getList("allOfSchemas")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getAllOfSchemas(elaborate : Boolean) : List<Schema> {
-		return _getList("allOfSchemas", elaborate, Schema::class.java)
+		return _getList("allOfSchemas")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -343,43 +344,43 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getAllOfSchema(index : Int) : Schema {
-		return _get("allOfSchemas", index, Schema::class.java)
+		return _get("allOfSchemas", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setAllOfSchemas(allOfSchemas : MutableList<Schema>) {
-		_setList("allOfSchemas", allOfSchemas, Schema::class.java)
+		_setList("allOfSchemas", allOfSchemas)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setAllOfSchema(index : Int, allOfSchema : Schema) {
-		_set("allOfSchemas", index, allOfSchema, Schema::class.java)
+		_set("allOfSchemas", index, allOfSchema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun addAllOfSchema(allOfSchema : Schema) {
-		_add("allOfSchemas", allOfSchema, Schema::class.java)
+		_add("allOfSchemas", allOfSchema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun insertAllOfSchema(index : Int, allOfSchema : Schema) {
-		_insert("allOfSchemas", index, allOfSchema, Schema::class.java)
+		_insert("allOfSchemas", index, allOfSchema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeAllOfSchema(index : Int) {
-		_remove("allOfSchemas", index, Schema::class.java)
+		_remove("allOfSchemas", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// OneOfSchema
 	override fun getOneOfSchemas() : List<Schema> {
-		return _getList("oneOfSchemas", Schema::class.java)
+		return _getList("oneOfSchemas")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getOneOfSchemas(elaborate : Boolean) : List<Schema> {
-		return _getList("oneOfSchemas", elaborate, Schema::class.java)
+		return _getList("oneOfSchemas")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -389,43 +390,43 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getOneOfSchema(index : Int) : Schema {
-		return _get("oneOfSchemas", index, Schema::class.java)
+		return _get("oneOfSchemas", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setOneOfSchemas(oneOfSchemas : MutableList<Schema>) {
-		_setList("oneOfSchemas", oneOfSchemas, Schema::class.java)
+		_setList("oneOfSchemas", oneOfSchemas)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setOneOfSchema(index : Int, oneOfSchema : Schema) {
-		_set("oneOfSchemas", index, oneOfSchema, Schema::class.java)
+		_set("oneOfSchemas", index, oneOfSchema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun addOneOfSchema(oneOfSchema : Schema) {
-		_add("oneOfSchemas", oneOfSchema, Schema::class.java)
+		_add("oneOfSchemas", oneOfSchema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun insertOneOfSchema(index : Int, oneOfSchema : Schema) {
-		_insert("oneOfSchemas", index, oneOfSchema, Schema::class.java)
+		_insert("oneOfSchemas", index, oneOfSchema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeOneOfSchema(index : Int) {
-		_remove("oneOfSchemas", index, Schema::class.java)
+		_remove("oneOfSchemas", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// AnyOfSchema
 	override fun getAnyOfSchemas() : List<Schema> {
-		return _getList("anyOfSchemas", Schema::class.java)
+		return _getList("anyOfSchemas")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getAnyOfSchemas(elaborate : Boolean) : List<Schema> {
-		return _getList("anyOfSchemas", elaborate, Schema::class.java)
+		return _getList("anyOfSchemas")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -435,75 +436,75 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getAnyOfSchema(index : Int) : Schema {
-		return _get("anyOfSchemas", index, Schema::class.java)
+		return _get("anyOfSchemas", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setAnyOfSchemas(anyOfSchemas : MutableList<Schema>) {
-		_setList("anyOfSchemas", anyOfSchemas, Schema::class.java)
+		_setList("anyOfSchemas", anyOfSchemas)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setAnyOfSchema(index : Int, anyOfSchema : Schema) {
-		_set("anyOfSchemas", index, anyOfSchema, Schema::class.java)
+		_set("anyOfSchemas", index, anyOfSchema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun addAnyOfSchema(anyOfSchema : Schema) {
-		_add("anyOfSchemas", anyOfSchema, Schema::class.java)
+		_add("anyOfSchemas", anyOfSchema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun insertAnyOfSchema(index : Int, anyOfSchema : Schema) {
-		_insert("anyOfSchemas", index, anyOfSchema, Schema::class.java)
+		_insert("anyOfSchemas", index, anyOfSchema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeAnyOfSchema(index : Int) {
-		_remove("anyOfSchemas", index, Schema::class.java)
+		_remove("anyOfSchemas", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// NotSchema
 	override fun getNotSchema() : Schema? {
-		return _get("notSchema", Schema::class.java)
+		return _get("notSchema")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getNotSchema(elaborate : Boolean) : Schema? {
-		return _get("notSchema", elaborate, Schema::class.java)
+		return _get("notSchema")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setNotSchema(notSchema : Schema) {
-		_setScalar("notSchema", notSchema, Schema::class.java)
+		_setScalar("notSchema", notSchema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ItemsSchema
 	override fun getItemsSchema() : Schema? {
-		return _get("itemsSchema", Schema::class.java)
+		return _get("itemsSchema")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getItemsSchema(elaborate : Boolean) : Schema? {
-		return _get("itemsSchema", elaborate, Schema::class.java)
+		return _get("itemsSchema")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setItemsSchema(itemsSchema : Schema) {
-		_setScalar("itemsSchema", itemsSchema, Schema::class.java)
+		_setScalar("itemsSchema", itemsSchema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Property
 	override fun getProperties() : MutableMap<String, Schema> {
-		return _getMap("properties", Schema::class.java)
+		return _getMap("properties")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getProperties(elaborate : Boolean) : MutableMap<String, Schema> {
-		return _getMap("properties", elaborate, Schema::class.java)
+		return _getMap("properties")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -513,226 +514,226 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasProperty(name : String) : Boolean {
-		return _getMap("properties", Schema::class.java).containsKey(name)
+		return _getMap<Schema>("properties").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getProperty(name : String) : Schema? {
-		return _get("properties", name, Schema::class.java)
+		return _get("properties", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setProperties(properties : MutableMap<String, Schema>) {
-		_setMap("properties", properties, Schema::class.java)
+		_setMap("properties", properties)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setProperty(name : String, property : Schema) {
-		_set("properties", name, property, Schema::class.java)
+		_set("properties", name, property)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeProperty(name : String) {
-		_remove("properties", name, Schema::class.java)
+		_remove("properties", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// AdditionalPropertiesSchema
 	override fun getAdditionalPropertiesSchema() : Schema? {
-		return _get("additionalPropertiesSchema", Schema::class.java)
+		return _get("additionalPropertiesSchema")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getAdditionalPropertiesSchema(elaborate : Boolean) : Schema? {
-		return _get("additionalPropertiesSchema", elaborate, Schema::class.java)
+		return _get("additionalPropertiesSchema")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setAdditionalPropertiesSchema(additionalPropertiesSchema : Schema) {
-		_setScalar("additionalPropertiesSchema", additionalPropertiesSchema, Schema::class.java)
+		_setScalar("additionalPropertiesSchema", additionalPropertiesSchema)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// AdditionalProperties
 	override fun getAdditionalProperties() : Boolean? {
-		return _get("additionalProperties", Boolean::class.java)
+		return _get("additionalProperties")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isAdditionalProperties() : Boolean {
-		return _get("additionalProperties", Boolean::class.java) ?: false
+		return _get("additionalProperties") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setAdditionalProperties(additionalProperties : Boolean) {
-		_setScalar("additionalProperties", additionalProperties, Boolean::class.java)
+		_setScalar("additionalProperties", additionalProperties)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Description
 	override fun getDescription() : String? {
-		return _get("description", String::class.java)
+		return _get("description")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setDescription(description : String) {
-		_setScalar("description", description, String::class.java)
+		_setScalar("description", description)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Format
 	override fun getFormat() : String? {
-		return _get("format", String::class.java)
+		return _get("format")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setFormat(format : String) {
-		_setScalar("format", format, String::class.java)
+		_setScalar("format", format)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Default
 	override fun getDefault() : Any? {
-		return _get("defaultValue", Any::class.java)
+		return _get("defaultValue")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setDefault(defaultValue : Any) {
-		_setScalar("defaultValue", defaultValue, Any::class.java)
+		_setScalar("defaultValue", defaultValue)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Nullable
 	override fun getNullable() : Boolean? {
-		return _get("nullable", Boolean::class.java)
+		return _get("nullable")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isNullable() : Boolean {
-		return _get("nullable", Boolean::class.java) ?: false
+		return _get("nullable") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setNullable(nullable : Boolean) {
-		_setScalar("nullable", nullable, Boolean::class.java)
+		_setScalar("nullable", nullable)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Discriminator
 	override fun getDiscriminator() : Discriminator? {
-		return _get("discriminator", Discriminator::class.java)
+		return _get("discriminator")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getDiscriminator(elaborate : Boolean) : Discriminator? {
-		return _get("discriminator", elaborate, Discriminator::class.java)
+		return _get("discriminator")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setDiscriminator(discriminator : Discriminator) {
-		_setScalar("discriminator", discriminator, Discriminator::class.java)
+		_setScalar("discriminator", discriminator)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ReadOnly
 	override fun getReadOnly() : Boolean? {
-		return _get("readOnly", Boolean::class.java)
+		return _get("readOnly")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isReadOnly() : Boolean {
-		return _get("readOnly", Boolean::class.java) ?: false
+		return _get("readOnly") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setReadOnly(readOnly : Boolean) {
-		_setScalar("readOnly", readOnly, Boolean::class.java)
+		_setScalar("readOnly", readOnly)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// WriteOnly
 	override fun getWriteOnly() : Boolean? {
-		return _get("writeOnly", Boolean::class.java)
+		return _get("writeOnly")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isWriteOnly() : Boolean {
-		return _get("writeOnly", Boolean::class.java) ?: false
+		return _get("writeOnly") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setWriteOnly(writeOnly : Boolean) {
-		_setScalar("writeOnly", writeOnly, Boolean::class.java)
+		_setScalar("writeOnly", writeOnly)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Xml
 	override fun getXml() : Xml? {
-		return _get("xml", Xml::class.java)
+		return _get("xml")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getXml(elaborate : Boolean) : Xml? {
-		return _get("xml", elaborate, Xml::class.java)
+		return _get("xml")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setXml(xml : Xml) {
-		_setScalar("xml", xml, Xml::class.java)
+		_setScalar("xml", xml)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ExternalDocs
 	override fun getExternalDocs() : ExternalDocs? {
-		return _get("externalDocs", ExternalDocs::class.java)
+		return _get("externalDocs")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExternalDocs(elaborate : Boolean) : ExternalDocs? {
-		return _get("externalDocs", elaborate, ExternalDocs::class.java)
+		return _get("externalDocs")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExternalDocs(externalDocs : ExternalDocs) {
-		_setScalar("externalDocs", externalDocs, ExternalDocs::class.java)
+		_setScalar("externalDocs", externalDocs)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Example
 	override fun getExample() : Any? {
-		return _get("example", Any::class.java)
+		return _get("example")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExample(example : Any) {
-		_setScalar("example", example, Any::class.java)
+		_setScalar("example", example)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Deprecated
 	override fun getDeprecated() : Boolean? {
-		return _get("deprecated", Boolean::class.java)
+		return _get("deprecated")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isDeprecated() : Boolean {
-		return _get("deprecated", Boolean::class.java) ?: false
+		return _get("deprecated") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setDeprecated(deprecated : Boolean) {
-		_setScalar("deprecated", deprecated, Boolean::class.java)
+		_setScalar("deprecated", deprecated)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions", Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("extensions", elaborate, Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -742,27 +743,27 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasExtension(name : String) : Boolean {
-		return _getMap("extensions", Any::class.java).containsKey(name)
+		return _getMap<Any>("extensions").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtension(name : String) : Any? {
-		return _get("extensions", name, Any::class.java)
+		return _get("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtensions(extensions : MutableMap<String, Any>) {
-		_setMap("extensions", extensions, Any::class.java)
+		_setMap("extensions", extensions)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtension(name : String, extension : Any) {
-		_set("extensions", name, extension, Any::class.java)
+		_set("extensions", name, extension)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeExtension(name : String) {
-		_remove("extensions", name, Any::class.java)
+		_remove("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -902,7 +903,7 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 				return SchemaImpl(schema, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Schema> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Schema> {
 				return SchemaImpl(json, parent, refMgr)
 			}
 		
@@ -913,7 +914,7 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 			return Schema::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out Schema> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out Schema> {
 			return Schema::class.java
 		}
 		

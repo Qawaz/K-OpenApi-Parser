@@ -17,9 +17,9 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class ServerVariableValidator : ObjectValidatorBase<ServerVariable>() {
     override fun runObjectValidations() {
-        val `var`: ServerVariable = value.getOverlay() as ServerVariable
+        val `var`: ServerVariable = value.overlay as ServerVariable
         validateStringField(ServerVariableImpl.F_description, false)
-        validateListField<String>(ServerVariableImpl.F_enumValues, false, false, String::class.java, null)
+        validateListField<String>(ServerVariableImpl.F_enumValues, false, false, null)
         // TODO Q: What the heck is does the description in the spec mean???
         validateField<String>(ServerVariableImpl.F_defaultValue, true, String::class.java, null)
         validateExtensions(`var`.getExtensions())

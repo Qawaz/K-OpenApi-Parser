@@ -21,9 +21,12 @@ abstract class OverlayFactory<V> {
     private val overlayClass: Class<out IJsonOverlay<in V>> = getOverlayClass()
 
     fun create(value: V?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): JsonOverlay<V> {
-        val overlay = _create(value, parent, refMgr)
-        overlay._elaborate(true)
-        return overlay
+        return _create(value, parent, refMgr)
+    }
+
+    fun tryCreate(value: Any, parent: JsonOverlay<*>?, refMgr: ReferenceManager): JsonOverlay<*> {
+        @Suppress("UNCHECKED_CAST")
+        return _create(value as? V, parent = parent, refMgr = refMgr)
     }
 
     fun create(json: JsonElement, parent: JsonOverlay<*>?, refMgr: ReferenceManager): JsonOverlay<V> {
@@ -48,9 +51,7 @@ abstract class OverlayFactory<V> {
                 overlay = _create(json, parent, refMgr)
                 overlay._setParent(parent)
                 refMgr.registry.register(json, signature!!, overlay)
-                if (!overlay._isElaborated()) {
-                    overlay._elaborate(true)
-                }
+//                overlay._elaborate()
             }
         }
         return overlay

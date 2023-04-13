@@ -39,4 +39,8 @@ abstract class ScalarOverlay<V> : JsonOverlay<V> {
         refMgr: ReferenceManager?
     ) : super(value, parent, factory!!, refMgr!!)
 
+    override fun _getPathOfChild(child: JsonOverlay<*>): String {
+        return ""
+    }
+
 }

@@ -11,11 +11,14 @@
  */
 package com.reprezen.kaizen.oasparser
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.reprezen.jsonoverlay.JsonLoader
 import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.contentOrNull
 import java.io.File
 import java.io.IOException
 import java.net.MalformedURLException
@@ -24,11 +27,11 @@ import java.net.URL
 
 open class OpenApiParser {
 
-    open fun parse(spec: String?, resolutionBase: URL?): OpenApi3 {
+    open fun parse(spec: String, resolutionBase: URL?): OpenApi3 {
         return parse(spec, resolutionBase, true)
     }
 
-    open fun parse(spec: String?, resolutionBase: URL?, validate: Boolean): OpenApi3 {
+    open fun parse(spec: String, resolutionBase: URL?, validate: Boolean): OpenApi3 {
         return try {
             val loader = JsonLoader()
             val tree = loader.loadString(resolutionBase, spec)
@@ -77,26 +80,27 @@ open class OpenApiParser {
         return parse(manager)
     }
 
-    open fun parse(tree: JsonNode?, resolutionBase: URL?): OpenApi3 {
+    open fun parse(tree: JsonElement?, resolutionBase: URL?): OpenApi3 {
         return parse(tree, resolutionBase, true)
     }
 
-    open fun parse(tree: JsonNode?, resolutionBase: URL?, validate: Boolean): OpenApi3 {
+    open fun parse(tree: JsonElement?, resolutionBase: URL?, validate: Boolean): OpenApi3 {
         return parse(tree, resolutionBase, null)
     }
 
-    fun parse(tree: JsonNode?, resolutionBase: URL?, loader: JsonLoader?): OpenApi3 {
+    fun parse(tree: JsonElement?, resolutionBase: URL?, loader: JsonLoader?): OpenApi3 {
         val manager = ReferenceManager(resolutionBase, tree, loader)
         return parse(manager)
     }
 
     private fun parse(manager: ReferenceManager): OpenApi3 {
-        val tree: JsonNode
+        val tree: JsonElement
         return try {
             tree = manager.loadDoc()
             if (isVersion3(tree)) {
                 val model = OpenApi3Impl.factory.create(tree, null, manager) as OpenApi3
-                (model as OpenApi3Impl)._setCreatingRef(manager.docReference)
+                // TODO
+//                (model as OpenApi3Impl)._setCreatingRef(manager.getReference(tree))
                 model
             } else {
                 throw OpenApiParserException(
@@ -108,9 +112,14 @@ open class OpenApiParser {
         }
     }
 
-    protected open fun isVersion3(tree: JsonNode): Boolean {
-        val versionNode = tree.path("openapi")
-        return versionNode.isTextual && versionNode.asText().startsWith("3.")
+    protected open fun isVersion3(tree: JsonElement): Boolean {
+        if (tree is JsonObject) {
+            val primitive = tree["openapi"] as? JsonPrimitive
+            if (primitive?.isString == true) {
+                return primitive.contentOrNull?.startsWith("3.") == true
+            }
+        }
+        return false
     }
 
     class OpenApiParserException : RuntimeException {

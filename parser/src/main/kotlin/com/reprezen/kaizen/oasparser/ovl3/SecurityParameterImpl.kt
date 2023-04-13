@@ -1,29 +1,30 @@
-package com.reprezen.kaizen.oasparser.ovl3;
+package com.reprezen.kaizen.oasparser.ovl3
 
-import com.reprezen.kaizen.oasparser.model3.*;
-import java.util.stream.Collectors;
-import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.ListOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.Builder;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.fasterxml.jackson.core.JsonPointer;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.reprezen.jsonoverlay.ReferenceManager;
-import kotlin.collections.List;
-import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.kaizen.oasparser.model3.*
+import java.util.stream.Collectors
+import com.reprezen.jsonoverlay.StringOverlay
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.ListOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.JsonPointer
+import kotlinx.serialization.json.JsonNull
+import com.reprezen.jsonoverlay.ReferenceManager
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlin.collections.List
+import com.reprezen.jsonoverlay.JsonOverlay
 
 class SecurityParameterImpl : PropertiesOverlay<SecurityParameter> ,SecurityParameter {
 
-    override fun _fixJson(json : JsonNode) : JsonNode {
-        return if(json.isMissingNode()) _jsonArray() else json
+    override fun _fixJson(json : JsonElement) : JsonElement {
+        return if(json is JsonNull) JsonArray(listOf()) else json
     }
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(securityParameter : SecurityParameter?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(securityParameter, parent, Companion.factory, refMgr)
@@ -31,12 +32,12 @@ class SecurityParameterImpl : PropertiesOverlay<SecurityParameter> ,SecurityPara
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Parameter
 	override fun getParameters() : List<String> {
-		return _getList("parameters", String::class.java)
+		return _getList("parameters")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getParameters(elaborate : Boolean) : List<String> {
-		return _getList("parameters", elaborate, String::class.java)
+		return _getList("parameters")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -46,32 +47,32 @@ class SecurityParameterImpl : PropertiesOverlay<SecurityParameter> ,SecurityPara
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getParameter(index : Int) : String {
-		return _get("parameters", index, String::class.java)
+		return _get("parameters", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setParameters(parameters : MutableList<String>) {
-		_setList("parameters", parameters, String::class.java)
+		_setList("parameters", parameters)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setParameter(index : Int, parameter : String) {
-		_set("parameters", index, parameter, String::class.java)
+		_set("parameters", index, parameter)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun addParameter(parameter : String) {
-		_add("parameters", parameter, String::class.java)
+		_add("parameters", parameter)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun insertParameter(index : Int, parameter : String) {
-		_insert("parameters", index, parameter, String::class.java)
+		_insert("parameters", index, parameter)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeParameter(index : Int) {
-		_remove("parameters", index, String::class.java)
+		_remove("parameters", index)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -103,7 +104,7 @@ class SecurityParameterImpl : PropertiesOverlay<SecurityParameter> ,SecurityPara
 				return SecurityParameterImpl(securityParameter, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<SecurityParameter> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<SecurityParameter> {
 				return SecurityParameterImpl(json, parent, refMgr)
 			}
 		
@@ -114,7 +115,7 @@ class SecurityParameterImpl : PropertiesOverlay<SecurityParameter> ,SecurityPara
 			return SecurityParameter::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out SecurityParameter> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out SecurityParameter> {
 			return SecurityParameter::class.java
 		}
 		

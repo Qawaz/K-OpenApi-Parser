@@ -41,4 +41,15 @@ class JsonPointer(val segments: List<String>) {
         return segments.joinToString("/")
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is JsonPointer) return false
+        return segments == other.segments
+    }
+
+    override fun hashCode(): Int {
+        return segments.hashCode()
+    }
+
+
 }

@@ -23,7 +23,7 @@ import java.util.function.Consumer
 
 class SchemaValidator : ObjectValidatorBase<Schema>() {
     override fun runObjectValidations() {
-        val schema = value.getOverlay() as Schema
+        val schema = value.overlay as Schema
         validateStringField(SchemaImpl.F_title, false)
         validateStringField(SchemaImpl.F_description, false)
         validateNumericField(SchemaImpl.F_maximum, false, null, null)
@@ -42,14 +42,14 @@ class SchemaValidator : ObjectValidatorBase<Schema>() {
         validateNonNegativeField(SchemaImpl.F_minItems, false)
         validateNonNegativeField(SchemaImpl.F_maxProperties, false)
         validateNonNegativeField(SchemaImpl.F_minProperties, false)
-        validateListField<String>(SchemaImpl.F_requiredFields, false, true, String::class.java, null)
-        validateListField<Any>(SchemaImpl.F_enums, false, true, Any::class.java, null)
+        validateListField<String>(SchemaImpl.F_requiredFields, false, true, null)
+        validateListField<Any>(SchemaImpl.F_enums, false, true, null)
         validateStringField(SchemaImpl.F_type, false, "boolean|object|array|number|integer|string")
         run {
             val schemaValidator = SchemaValidator()
-            validateListField<Schema>(SchemaImpl.F_allOfSchemas, false, false, Schema::class.java, schemaValidator)
-            validateListField<Schema>(SchemaImpl.F_oneOfSchemas, false, false, Schema::class.java, schemaValidator)
-            validateListField<Schema>(SchemaImpl.F_anyOfSchemas, false, false, Schema::class.java, schemaValidator)
+            validateListField<Schema>(SchemaImpl.F_allOfSchemas, false, false, schemaValidator)
+            validateListField<Schema>(SchemaImpl.F_oneOfSchemas, false, false, schemaValidator)
+            validateListField<Schema>(SchemaImpl.F_anyOfSchemas, false, false, schemaValidator)
             validateField<Schema>(SchemaImpl.F_notSchema, false, Schema::class.java, schemaValidator)
             validateField<Schema>(SchemaImpl.F_itemsSchema, false, Schema::class.java, schemaValidator)
             validateMapField<Schema>(SchemaImpl.F_properties, false, false, Schema::class.java, schemaValidator)

@@ -25,7 +25,6 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
     private val valueFactory: OverlayFactory<V>
     private val keyPattern: Pattern?
     private val overlays: MutableMap<String, JsonOverlay<V>> = LinkedHashMap()
-    private var elaborated = false
 
     private constructor(
         json: JsonElement,
@@ -36,6 +35,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         valueFactory = mapOverlayFactory.valueFactory
         val keyPattern = mapOverlayFactory.keyPattern
         this.keyPattern = if (keyPattern != null) Pattern.compile(keyPattern) else null
+        _elaborate()
     }
 
     private constructor(
@@ -48,10 +48,22 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         valueFactory = mapOverlayFactory.valueFactory
         val keyPattern = mapOverlayFactory.keyPattern
         this.keyPattern = if (keyPattern != null) Pattern.compile(keyPattern) else null
+        _elaborate()
     }
 
-    override fun _getKeyValueOverlay(name: String): JsonOverlay<*> {
-        return _getOverlay(name)
+    override fun _getKeyValueOverlayByName(name: String): JsonOverlay<V>? {
+        return overlays[name]
+    }
+
+    override fun _getPathOfChild(child: JsonOverlay<*>): String {
+        for (item in overlays) if (item.value == child) return item.key
+        return "-1".also {
+            Throwable("returning child path -1 in map overlay child :  $child \n\n\n map : $this").printStackTrace()
+        }
+    }
+
+    override fun toString(): String {
+        return '{' + overlays.entries.joinToString(",") { it.key + " : " + it.value } + '}'
     }
 
     override fun _fromJson(json: JsonElement): MutableMap<String, V> {
@@ -73,17 +85,12 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         return _jsonObject(objMap)
     }
 
-    override fun _isElaborated(): Boolean {
-        return elaborated
-    }
-
-    override fun _elaborate(atCreation: Boolean) {
+    fun _elaborate() {
         if (json != null) {
             fillWithJson()
         } else {
             fillWithValues()
         }
-        elaborated = true
     }
 
     private fun fillWithJson() {
@@ -94,8 +101,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
             if (keyPattern == null || keyPattern.matcher(item.key).matches()) {
                 val valOverlay = valueFactory.create(item.value, this, refMgr)
                 overlays[item.key] = valOverlay
-                valOverlay._setPathInParent(item.key)
-                valOverlay._get(false)?.let { value!!.put(item.key, it) }
+                valOverlay._get()?.let { value!!.put(item.key, it) }
             }
         }
     }
@@ -105,7 +111,6 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         for ((key, value1) in value!!) {
             val valOverlay = valueOverlayFor(value1)
             overlays[key] = valOverlay
-            valOverlay._setPathInParent(key)
         }
     }
 
@@ -118,11 +123,6 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         return valOverlay?._get()
     }
 
-    /* package */
-    fun _getOverlay(key: String): JsonOverlay<V> {
-        return overlays[key]!!
-    }
-
     override fun _getPropertyNames(): List<String> {
         return overlays.keys.toList()
     }
@@ -131,9 +131,9 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         return value!!.keys
     }
 
-    operator fun set(key: String, `val`: V) {
-        value!!.put(key, `val`)
-        overlays[key] = valueOverlayFor(`val`)
+    operator fun set(key: String, value: V) {
+        this.value!![key] = value
+        overlays[key] = valueOverlayFor(value)
     }
 
     fun remove(key: String) {
@@ -145,18 +145,6 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         return overlays.size
     }
 
-    override fun equals(other: Any?): Boolean {
-        return equals(other, false)
-    }
-
-    fun equals(obj: Any?, sameOrder: Boolean): Boolean {
-        if (obj is MapOverlay<*>) {
-            val castObj = obj
-            return overlays == castObj.overlays && (!sameOrder || checkOrder(castObj))
-        }
-        return false
-    }
-
     private fun checkOrder(other: MapOverlay<*>): Boolean {
         val myKeys: Iterator<String> = overlays.keys.iterator()
         val theirKeys: Iterator<String> = other.overlays.keys.iterator()
@@ -166,10 +154,6 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
             }
         }
         return !myKeys.hasNext() && !theirKeys.hasNext()
-    }
-
-    override fun hashCode(): Int {
-        return overlays.hashCode()
     }
 
     override fun _getFactory(): OverlayFactory<*> {

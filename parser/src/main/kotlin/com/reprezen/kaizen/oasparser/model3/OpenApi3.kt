@@ -1,26 +1,26 @@
 package com.reprezen.kaizen.oasparser.model3
 
-import com.reprezen.kaizen.oasparser.model3.Path;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.kaizen.oasparser.model3.Server;
-import com.reprezen.kaizen.oasparser.model3.Schema;
-import com.reprezen.kaizen.oasparser.model3.Info;
-import com.reprezen.kaizen.oasparser.model3.ExternalDocs;
-import com.reprezen.kaizen.oasparser.model3.Response;
-import com.reprezen.kaizen.oasparser.model3.Callback;
-import com.reprezen.kaizen.oasparser.model3.Header;
-import com.reprezen.kaizen.oasparser.model3.Example;
-import kotlin.collections.Collection;
-import com.reprezen.kaizen.oasparser.model3.Parameter;
-import com.reprezen.jsonoverlay.IModelPart;
-import kotlin.collections.List;
-import com.reprezen.kaizen.oasparser.model3.Tag;
-import kotlin.collections.Map;
-import com.reprezen.kaizen.oasparser.model3.SecurityScheme;
-import com.reprezen.kaizen.oasparser.model3.Link;
-import com.reprezen.kaizen.oasparser.model3.RequestBody;
-import com.reprezen.kaizen.oasparser.model3.SecurityRequirement;
+import com.reprezen.kaizen.oasparser.model3.Path
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.kaizen.oasparser.model3.Server
+import com.reprezen.kaizen.oasparser.model3.Schema
+import com.reprezen.kaizen.oasparser.model3.Info
+import com.reprezen.kaizen.oasparser.model3.ExternalDocs
+import com.reprezen.kaizen.oasparser.model3.Response
+import com.reprezen.kaizen.oasparser.model3.Callback
+import com.reprezen.kaizen.oasparser.model3.Header
+import com.reprezen.kaizen.oasparser.model3.Example
+import kotlin.collections.Collection
+import com.reprezen.kaizen.oasparser.model3.Parameter
+import com.reprezen.jsonoverlay.IModelPart
+import kotlin.collections.List
+import com.reprezen.kaizen.oasparser.model3.Tag
+import kotlin.collections.Map
+import com.reprezen.kaizen.oasparser.model3.SecurityScheme
+import com.reprezen.kaizen.oasparser.model3.Link
+import com.reprezen.kaizen.oasparser.model3.RequestBody
+import com.reprezen.kaizen.oasparser.model3.SecurityRequirement
 
 interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 

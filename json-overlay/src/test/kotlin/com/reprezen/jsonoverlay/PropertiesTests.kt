@@ -25,7 +25,7 @@ class PropertiesTests : Assert() {
 
     private val refMgr = ReferenceManager()
 
-    enum class Values { List,Map,RootMap,End }
+    enum class Values { List, Map, RootMap, End }
 
     private val LIST = Values.List
     private val MAP = Values.Map
@@ -165,6 +165,45 @@ class PropertiesTests : Assert() {
         }
         return JsonObject(map)
     }
+
+//    class Joo(private val currentVal: Any?, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : PropertiesOverlay<Joo>() {
+//
+//
+//
+//        override fun _getFactory(): OverlayFactory<*> {
+//            return factory
+//        }
+//
+//        override fun _elaborateJson() {
+//            _createMap(
+//                "serverVariables",
+//                "variables",
+//                ListOverlay.getFactory(IntegerOverlay.factory),
+//                "(?!x-)[a-zA-Z0-9\\._-]+"
+//            )
+//            _createMap("variablesExtensions", "variables", ObjectOverlay.factory, "x-.+")
+//        }
+//
+//        companion object {
+//            val factory = object : OverlayFactory<Joo>() {
+//                override fun getOverlayClass(): Class<out JsonOverlay<in Joo>> {
+//                    return Joo::class.java
+//                }
+//
+//                override fun _create(
+//                    json: JsonElement,
+//                    parent: JsonOverlay<*>?,
+//                    refMgr: ReferenceManager
+//                ): JsonOverlay<Joo> {
+//                    return Joo(json, parent, refMgr)
+//                }
+//
+//                override fun _create(value: Joo?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): JsonOverlay<Joo> {
+//                    return Joo(value, parent, refMgr)
+//                }
+//            }
+//        }
+//    }
 
     class Foo : PropertiesOverlay<Foo> {
         private constructor(json: JsonElement, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(

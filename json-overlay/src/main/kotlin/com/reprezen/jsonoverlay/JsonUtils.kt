@@ -36,7 +36,7 @@ internal fun JsonPrimitive.toNumber(): Number? {
     return content.parseJsonLiteralAsNumber()
 }
 
-internal fun JsonElement.toValue(): Any? {
+fun JsonElement.toValue(): Any? {
     return when (this) {
         is JsonPrimitive -> {
             if (contentOrNull == null) return null
@@ -69,6 +69,39 @@ internal fun Any?.toJsonElement(): JsonElement {
 
         else -> {
             JsonNull
+        }
+    }
+}
+
+internal fun Any.toJsonOverlay(parent: JsonOverlay<*>?, refMgr: ReferenceManager): JsonOverlay<*> {
+    return when (this) {
+        is JsonOverlay<*> -> this
+        is String -> StringOverlay.factory.create(value = this, parent = parent, refMgr = refMgr)
+        is Number -> {
+            when (this) {
+                is Int -> IntegerOverlay.factory.create(value = this, parent = parent, refMgr = refMgr)
+                else -> NumberOverlay.factory.create(value = this, parent = parent, refMgr = refMgr)
+            }
+        }
+
+        is Boolean -> BooleanOverlay.factory.create(value = this, parent = parent, refMgr = refMgr)
+        is MutableList<*> -> {
+            ListOverlay.getFactory(
+                itemFactory = firstOrNull()?.toJsonOverlay(parent = parent, refMgr = refMgr)?.factory
+                    ?: ObjectOverlay.factory
+            ).tryCreate(value = this, parent = parent, refMgr = refMgr)
+        }
+
+        is MutableMap<*, *> -> {
+            MapOverlay.getFactory(
+                valueFactory = values.firstOrNull()?.toJsonOverlay(parent = parent, refMgr = refMgr)?.factory
+                    ?: ObjectOverlay.factory,
+                keyPattern = null
+            ).tryCreate(value = this, parent = parent, refMgr = refMgr)
+        }
+
+        else -> {
+            ObjectOverlay.factory.create(value = this, parent = parent, refMgr = refMgr)
         }
     }
 }

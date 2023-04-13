@@ -1,10 +1,10 @@
 package com.reprezen.kaizen.oasparser.model3
 
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.IModelPart;
-import kotlin.collections.Map;
-import com.reprezen.kaizen.oasparser.model3.ExternalDocs;
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.IModelPart
+import kotlin.collections.Map
+import com.reprezen.kaizen.oasparser.model3.ExternalDocs
 
 interface Tag : IJsonOverlay<Tag>, IModelPart<OpenApi3, Tag> {
 

@@ -1,27 +1,27 @@
-package com.reprezen.kaizen.oasparser.ovl3;
+package com.reprezen.kaizen.oasparser.ovl3
 
-import com.reprezen.kaizen.oasparser.model3.*;
-import com.reprezen.jsonoverlay.MapOverlay;
-import java.util.stream.Collectors;
-import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.Builder;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.fasterxml.jackson.core.JsonPointer;
-import com.reprezen.jsonoverlay.ReferenceManager;
-import com.reprezen.kaizen.oasparser.ovl3.LicenseImpl;
-import com.reprezen.kaizen.oasparser.ovl3.ContactImpl;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import kotlin.collections.Map;
+import com.reprezen.kaizen.oasparser.model3.*
+import com.reprezen.jsonoverlay.MapOverlay
+import java.util.stream.Collectors
+import com.reprezen.jsonoverlay.StringOverlay
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.JsonPointer
+import com.reprezen.jsonoverlay.ReferenceManager
+import com.reprezen.kaizen.oasparser.ovl3.LicenseImpl
+import com.reprezen.kaizen.oasparser.ovl3.ContactImpl
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.ObjectOverlay
+import com.reprezen.jsonoverlay.JsonOverlay
+import kotlin.collections.Map
 
 class InfoImpl : PropertiesOverlay<Info> ,Info {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(info : Info?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(info, parent, Companion.factory, refMgr)
@@ -29,88 +29,88 @@ class InfoImpl : PropertiesOverlay<Info> ,Info {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Title
 	override fun getTitle() : String? {
-		return _get("title", String::class.java)
+		return _get("title")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setTitle(title : String) {
-		_setScalar("title", title, String::class.java)
+		_setScalar("title", title)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Description
 	override fun getDescription() : String? {
-		return _get("description", String::class.java)
+		return _get("description")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setDescription(description : String) {
-		_setScalar("description", description, String::class.java)
+		_setScalar("description", description)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// TermsOfService
 	override fun getTermsOfService() : String? {
-		return _get("termsOfService", String::class.java)
+		return _get("termsOfService")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setTermsOfService(termsOfService : String) {
-		_setScalar("termsOfService", termsOfService, String::class.java)
+		_setScalar("termsOfService", termsOfService)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Contact
 	override fun getContact() : Contact? {
-		return _get("contact", Contact::class.java)
+		return _get("contact")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getContact(elaborate : Boolean) : Contact? {
-		return _get("contact", elaborate, Contact::class.java)
+		return _get("contact")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setContact(contact : Contact) {
-		_setScalar("contact", contact, Contact::class.java)
+		_setScalar("contact", contact)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// License
 	override fun getLicense() : License? {
-		return _get("license", License::class.java)
+		return _get("license")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getLicense(elaborate : Boolean) : License? {
-		return _get("license", elaborate, License::class.java)
+		return _get("license")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setLicense(license : License) {
-		_setScalar("license", license, License::class.java)
+		_setScalar("license", license)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Version
 	override fun getVersion() : String? {
-		return _get("version", String::class.java)
+		return _get("version")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setVersion(version : String) {
-		_setScalar("version", version, String::class.java)
+		_setScalar("version", version)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions", Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("extensions", elaborate, Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -120,27 +120,27 @@ class InfoImpl : PropertiesOverlay<Info> ,Info {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasExtension(name : String) : Boolean {
-		return _getMap("extensions", Any::class.java).containsKey(name)
+		return _getMap<Any>("extensions").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtension(name : String) : Any? {
-		return _get("extensions", name, Any::class.java)
+		return _get("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtensions(extensions : MutableMap<String, Any>) {
-		_setMap("extensions", extensions, Any::class.java)
+		_setMap("extensions", extensions)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtension(name : String, extension : Any) {
-		_set("extensions", name, extension, Any::class.java)
+		_set("extensions", name, extension)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeExtension(name : String) {
-		_remove("extensions", name, Any::class.java)
+		_remove("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -190,7 +190,7 @@ class InfoImpl : PropertiesOverlay<Info> ,Info {
 				return InfoImpl(info, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Info> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Info> {
 				return InfoImpl(json, parent, refMgr)
 			}
 		
@@ -201,7 +201,7 @@ class InfoImpl : PropertiesOverlay<Info> ,Info {
 			return Info::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out Info> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out Info> {
 			return Info::class.java
 		}
 		

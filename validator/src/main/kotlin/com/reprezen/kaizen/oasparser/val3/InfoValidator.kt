@@ -19,7 +19,7 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class InfoValidator : ObjectValidatorBase<Info>() {
     override fun runObjectValidations() {
-        val info = value.getOverlay() as Info
+        val info = value.overlay as Info
         validateStringField(InfoImpl.F_title, true)
         validateStringField(InfoImpl.F_description, false)
         validateUrlField(InfoImpl.F_termsOfService, false, true, false)

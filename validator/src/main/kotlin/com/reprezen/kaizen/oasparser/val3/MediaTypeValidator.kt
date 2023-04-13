@@ -23,7 +23,7 @@ import com.reprezen.kaizen.oasparser.validate.msg.Messages.Companion.msg
 
 class MediaTypeValidator : ObjectValidatorBase<MediaType>() {
     override fun runObjectValidations() {
-        val mediaType = value.getOverlay() as MediaType
+        val mediaType = value.overlay as MediaType
         // TODO Q: Should schema be required in media type?
         validateField<Schema>(MediaTypeImpl.F_schema, false, Schema::class.java, SchemaValidator())
         validateMapField<EncodingProperty>(
@@ -39,7 +39,7 @@ class MediaTypeValidator : ObjectValidatorBase<MediaType>() {
             MediaTypeImpl.F_examples, false, false, Example::class.java,
             ExampleValidator()
         )
-        val example: Overlay<Any> = validateField<Any>(MediaTypeImpl.F_example, false, Any::class.java, null)
+        val example: Overlay<Any> = validateField<Any>(MediaTypeImpl.F_example, false, Any::class.java, null)!!
         checkExampleExclusion(examples, example)
     }
 
@@ -47,14 +47,14 @@ class MediaTypeValidator : ObjectValidatorBase<MediaType>() {
         // TODO Q: do allOf, anyOf, oneOf schemas participate? what about
         // additionalProperties?
         val schema = mediaType.getSchema(false)
-        if (schema != null && Overlay.of(schema).isElaborated) {
+        if (schema != null) {
             val propNames: Set<String> = schema.getProperties().keys
-            val encProps: Map<String, EncodingProperty> = mediaType.getEncodingProperties()
+            val encProps: MutableMap<String, EncodingProperty> = mediaType.getEncodingProperties()
             for (encodingPropertyName in encProps.keys) {
                 if (!propNames.contains(encodingPropertyName)) {
                     results.addError(
                         msg(OpenApi3Messages.EncPropNotSchemaProp, encodingPropertyName),
-                        Overlay.of<EncodingProperty>(encProps, encodingPropertyName)!!
+                        Overlay.of(encProps, encodingPropertyName)!!
                     )
                 }
             }

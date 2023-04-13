@@ -48,9 +48,7 @@ class StringOverlay : ScalarOverlay<String> {
     }
 
     override fun toString(): String {
-        // we don't want quotes here; the default rendering uses toJson, which does
-        // include them.
-        return if (value != null) value!! else ""
+        return _get()?.let { '"' + it +  '"' } ?: "null"
     }
 
     companion object {

@@ -17,11 +17,16 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class OAuthFlowValidator : ObjectValidatorBase<OAuthFlow>() {
     override fun runObjectValidations() {
-        val oauthFlow: OAuthFlow = value.getOverlay() as OAuthFlow
-        validateUrlField(OAuthFlowImpl.F_authorizationUrl, true, true, false)
-        validateUrlField(OAuthFlowImpl.F_tokenUrl, true, true, false)
-        validateUrlField(OAuthFlowImpl.F_refreshUrl, false, true, false)
-        validateMapField<String>(OAuthFlowImpl.F_scopes, true, false, String::class.java, null)
+        val oauthFlow: OAuthFlow = value.overlay as OAuthFlow
+        validateUrlField(OAuthFlowImpl.F_authorizationUrl, required = true, allowRelative = true, allowVars = false)
+        validateUrlField(OAuthFlowImpl.F_tokenUrl, true, allowRelative = true, allowVars = false)
+        validateUrlField(OAuthFlowImpl.F_refreshUrl, required = false, allowRelative = true, allowVars = false)
+        validateMapField<String>(OAuthFlowImpl.F_scopes,
+            nonEmpty = true,
+            unique = false,
+            valueClass = String::class.java,
+            valueValidator = null
+        )
         validateExtensions(oauthFlow.getExtensions())
     }
 }

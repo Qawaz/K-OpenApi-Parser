@@ -14,11 +14,9 @@ package com.reprezen.swaggerparser.test
 import com.fasterxml.jackson.core.JsonPointer
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
-import com.google.common.io.Resources
 import com.reprezen.jsonoverlay.JsonOverlay
 import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.kaizen.oasparser.OpenApiParser
-import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -51,8 +49,8 @@ class BigParseTest(
         val valueChecker = object : JsonTreeWalker.WalkMethod {
             override fun run(node: JsonNode?, path: JsonPointer?) {
                 require(node != null && path != null)
-                val overlay = Overlay.find(model as JsonOverlay<*>, path)
-                assertNotNull("No overlay object found for path: $path", overlay)
+                val overlay = model.findByPath(path.toString())
+                assertNotNull("No overlay object found for path: $path in $model", overlay)
                 val value = Overlay[overlay!!]
                 val fromJson = getValue(node)
                 val msg = String.format(
@@ -83,16 +81,14 @@ class BigParseTest(
     }
 
     companion object {
+
+        val isJson: Boolean get() = true
+        val resourceUrl: String get() = if (isJson) "/models/json/parseTest.json" else "/models/yaml/parseTest.yaml"
+
         @JvmStatic
         @Parameterized.Parameters
         fun resources(): Iterable<Array<URL>> {
-            return listOf(
-                *arrayOf<Array<URL>>(
-                    arrayOf<URL>(
-                        object {}.javaClass.getResource("/models/parseTest.yaml")!!
-                    )
-                )
-            )
+            return listOf(arrayOf(object {}.javaClass.getResource(resourceUrl)!!))
         }
     }
 }

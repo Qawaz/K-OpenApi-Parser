@@ -18,7 +18,7 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class ServerValidator : ObjectValidatorBase<Server>() {
     override fun runObjectValidations() {
-        val server = value.getOverlay() as Server
+        val server = value.overlay as Server
         validateStringField(ServerImpl.F_description, false)
         validateUrlField(ServerImpl.F_url, true, true, true)
         validateMapField<ServerVariable>(

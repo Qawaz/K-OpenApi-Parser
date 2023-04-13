@@ -11,8 +11,8 @@
  */
 package com.reprezen.kaizen.oasparser
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
+import kotlinx.serialization.json.JsonElement
 import java.io.File
 import java.net.URI
 import java.net.URL
@@ -34,7 +34,7 @@ class OpenApi3Parser : OpenApiParser() {
         return super.parse(resolutionBase)
     }
 
-    override fun isVersion3(tree: JsonNode): Boolean {
+    override fun isVersion3(tree: JsonElement): Boolean {
         return true // if 'openapi' property is missing or incorrect, that will
         // show up as a
         // validation error

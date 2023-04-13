@@ -37,8 +37,6 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     private val present: Boolean
         get() = (json != null || value != null)
 
-    private var pathInParent: String? = null
-
     private var refOverlay: RefOverlay<V>? = null
     private var creatingRef: Reference? = null
 
@@ -97,16 +95,12 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     }
 
     /* package */ /* package */
-    @JvmOverloads
-    fun _get(elaborate: Boolean = true): V? {
+    fun _get(): V? {
         return if (_isValidRef()) {
-            refOverlay!!._get(elaborate)
+            refOverlay!!._get()
         } else if (_isReference()) {
             null
         } else {
-            if (elaborate) {
-                _ensureElaborated()
-            }
             value
         }
     }
@@ -192,21 +186,38 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         return if (_isValidRef()) refOverlay!!.overlay?._getModelType() else null
     }
 
-    /* package */
-    fun _getPathFromRoot(): String? {
+    abstract fun _getPathOfChild(child: JsonOverlay<*>): String
+
+    fun _getPathInParent(): String {
         return if (parent != null) {
-            if (pathInParent!!.isEmpty()) {
-                parent!!._getPathFromRoot()
-            } else {
-                val parentPath = parent!!._getPathFromRoot()
-                if (parentPath != null) parentPath + "/" + encodePointerPart(pathInParent) else null
-            }
+            parent!!._getPathOfChild(this)
         } else if (creatingRef != null) {
-            creatingRef!!.fragment
-        } else {
-            null
-        }
+            creatingRef!!.fragment ?: ""
+        } else ""
     }
+
+    fun _getPathFromRoot(): String {
+        val parentPath = if (parent != null) parent!!._getPathFromRoot() else null
+        val childPath = _getPathInParent()
+        if (parentPath == null) return childPath
+        return parentPath + '/' + encodePointerPart(childPath)
+    }
+
+    /* package */
+//    fun _getPathFromRoot(): String? {
+//        return if (parent != null) {
+//            if (pathInParent.isNullOrEmpty()) {
+//                parent!!._getPathFromRoot()
+//            } else {
+//                val parentPath = parent!!._getPathFromRoot()
+//                if (parentPath != null) parentPath + "/" + encodePointerPart(pathInParent) else null
+//            }
+//        } else if (creatingRef != null) {
+//            creatingRef!!.fragment
+//        } else {
+//            null
+//        }
+//    }
 
     private fun encodePointerPart(part: String?): String {
         // TODO fix this bogus special case
@@ -226,11 +237,13 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         }
         return if (parent != null) {
             val ref = parent!!._getJsonReference()
-            ref + (if (ref.contains("#")) "" else "#") + "/" + pathInParent!!
+            ref + (if (ref.contains("#")) "" else "#") + "/" + _getPathInParent()
         } else {
             "#"
         }
     }
+
+    abstract override fun toString(): String
 
     /* package */
     fun _getDocumentUrl(forRef: Boolean): String? {
@@ -279,56 +292,22 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         }
     }
 
-    open fun _elaborate(atCreation: Boolean) {
-        // most types of overlay don't need to do any elaboration
+    open fun _getFactory(): OverlayFactory<*> {
+        return factory
     }
-
-    open fun _isElaborated(): Boolean {
-        return true
-    }
-
-    protected fun _ensureElaborated() {
-        if (!_isElaborated() && refOverlay == null) {
-            _elaborate(false)
-        }
-    }
-
-    /* package */
-    fun _getPathInParent(): String? {
-        return pathInParent
-    }
-
-    /* package */
-    fun _setPathInParent(pathInParent: String?) {
-        this.pathInParent = pathInParent
-    }
-
-    abstract fun _getFactory(): OverlayFactory<*>
 
 
     override fun hashCode(): Int {
         return if (value != null) value.hashCode() else 0
     }
 
-    private fun compareValueAndJson(other: JsonOverlay<*>): Boolean {
-        if (value != null && value == other.value) return true
-        return json != null && json == other.json
-    }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is JsonOverlay<*>) return false
-        return if (compareValueAndJson(other)) {
-            true
-        } else {
-            if (_isReference() && !other._isReference()) {
-                _getRefOverlay()?.overlay?.let { other.compareValueAndJson(it) } ?: false
-            } else if (!_isReference() && other._isReference()) {
-                other._getRefOverlay()?.overlay?.let { compareValueAndJson(it) } ?: false
-            } else {
-                false
-            }
-        }
+        val value1 = _get()
+        val value2 = other._get()
+        if ((value1 != null || value2 != null) && value1 == value2) return true
+        return (json != null || other.json != null) && json == other.json
     }
 
     companion object {

@@ -1,21 +1,21 @@
-package com.reprezen.kaizen.oasparser.ovl3;
+package com.reprezen.kaizen.oasparser.ovl3
 
-import com.reprezen.kaizen.oasparser.model3.*;
-import com.reprezen.jsonoverlay.MapOverlay;
-import java.util.stream.Collectors;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.Builder;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.fasterxml.jackson.core.JsonPointer;
-import com.reprezen.kaizen.oasparser.ovl3.PathImpl;
-import com.reprezen.jsonoverlay.ReferenceManager;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.Overlay;
-import kotlin.collections.Map;
+import com.reprezen.kaizen.oasparser.model3.*
+import com.reprezen.jsonoverlay.MapOverlay
+import java.util.stream.Collectors
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.JsonPointer
+import com.reprezen.kaizen.oasparser.ovl3.PathImpl
+import com.reprezen.jsonoverlay.ReferenceManager
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.ObjectOverlay
+import com.reprezen.jsonoverlay.JsonOverlay
+import com.reprezen.jsonoverlay.Overlay
+import kotlin.collections.Map
 
 class CallbackImpl : PropertiesOverlay<Callback> ,Callback {
 
@@ -26,7 +26,7 @@ class CallbackImpl : PropertiesOverlay<Callback> ,Callback {
     }
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(callback : Callback?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(callback, parent, Companion.factory, refMgr)
@@ -34,12 +34,12 @@ class CallbackImpl : PropertiesOverlay<Callback> ,Callback {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// CallbackPath
 	override fun getCallbackPaths() : MutableMap<String, Path> {
-		return _getMap("callbackPaths", Path::class.java)
+		return _getMap("callbackPaths")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getCallbackPaths(elaborate : Boolean) : MutableMap<String, Path> {
-		return _getMap("callbackPaths", elaborate, Path::class.java)
+		return _getMap("callbackPaths")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -49,38 +49,38 @@ class CallbackImpl : PropertiesOverlay<Callback> ,Callback {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasCallbackPath(expression : String) : Boolean {
-		return _getMap("callbackPaths", Path::class.java).containsKey(expression)
+		return _getMap<Path>("callbackPaths").containsKey(expression)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getCallbackPath(expression : String) : Path? {
-		return _get("callbackPaths", expression, Path::class.java)
+		return _get("callbackPaths", expression)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setCallbackPaths(callbackPaths : MutableMap<String, Path>) {
-		_setMap("callbackPaths", callbackPaths, Path::class.java)
+		_setMap("callbackPaths", callbackPaths)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setCallbackPath(expression : String, callbackPath : Path) {
-		_set("callbackPaths", expression, callbackPath, Path::class.java)
+		_set("callbackPaths", expression, callbackPath)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeCallbackPath(expression : String) {
-		_remove("callbackPaths", expression, Path::class.java)
+		_remove("callbackPaths", expression)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions", Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("extensions", elaborate, Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -90,27 +90,27 @@ class CallbackImpl : PropertiesOverlay<Callback> ,Callback {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasExtension(name : String) : Boolean {
-		return _getMap("extensions", Any::class.java).containsKey(name)
+		return _getMap<Any>("extensions").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtension(name : String) : Any? {
-		return _get("extensions", name, Any::class.java)
+		return _get("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtensions(extensions : MutableMap<String, Any>) {
-		_setMap("extensions", extensions, Any::class.java)
+		_setMap("extensions", extensions)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtension(name : String, extension : Any) {
-		_set("extensions", name, extension, Any::class.java)
+		_set("extensions", name, extension)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeExtension(name : String) {
-		_remove("extensions", name, Any::class.java)
+		_remove("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -145,7 +145,7 @@ class CallbackImpl : PropertiesOverlay<Callback> ,Callback {
 				return CallbackImpl(callback, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Callback> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Callback> {
 				return CallbackImpl(json, parent, refMgr)
 			}
 		
@@ -156,7 +156,7 @@ class CallbackImpl : PropertiesOverlay<Callback> ,Callback {
 			return Callback::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out Callback> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out Callback> {
 			return Callback::class.java
 		}
 		

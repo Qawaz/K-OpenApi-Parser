@@ -11,15 +11,16 @@
                 return if(overlay.parent is MapOverlay<*>) overlay.pathInParent else null
             }
 
-            override fun _findInternal(path : JsonPointer?) : JsonOverlay<*>? {
-                return if (path?.matchesProperty("additionalProperties") == true) {
-                    if(path.tail().matches()){
-                        _getOverlay("additionalProperties", BooleanOverlay::class.java)
+            override fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
+                return if(path.segments.firstOrNull() == "additionalProperties"){
+                    val tail = JsonPointer(path.segments.drop(1))
+                    if(json != null && tail.navigate(json!!) != null){
+                        _getOverlay<Boolean>("additionalProperties") as BooleanOverlay
                     } else {
-                        _get("additionalPropertiesSchema",SchemaImpl::class.java)?._findInternal(path.tail())
+                        _get<SchemaImpl>("additionalPropertiesSchema")?.findByPointer(tail)
                     }
                 } else {
-                    super._findInternal(path)
+                    super<Schema>.findByPointer(path)
                 }
             }
 

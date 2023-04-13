@@ -14,14 +14,9 @@
  */
 package com.reprezen.jsonoverlay
 
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonNull
-import java.lang.reflect.InvocationTargetException
-import java.util.*
-
 class Overlay<V> {
 
-    var overlay: JsonOverlay<V>
+    var overlay: JsonOverlay<V>? = null
         private set
 
     constructor(overlay: JsonOverlay<V>) {
@@ -29,25 +24,28 @@ class Overlay<V> {
     }
 
     constructor(overlay: IJsonOverlay<*>) {
-        val castOverlay = overlay as JsonOverlay<V>
+        val castOverlay = overlay as? JsonOverlay<V>
         this.overlay = castOverlay
     }
 
     constructor(map: MapOverlay<V>, key: String) {
-        overlay = map._getOverlay(key)
+        overlay = map._getKeyValueOverlayByName(key)
     }
 
     constructor(list: ListOverlay<V>, index: Int) {
-        overlay = list._getOverlay(index)
+        overlay = list._findByIndex(index)
     }
 
-    constructor(props: PropertiesOverlay<*>, fieldName: String) {
-        val overlay = props._getKeyValueOverlay(fieldName) as JsonOverlay<V>
+    constructor(props: KeyValueOverlay, fieldName: String) {
+        val overlay = props._getKeyValueOverlayByName(fieldName) as? JsonOverlay<V>
         this.overlay = overlay
     }
 
+    val isPresent: Boolean
+        get() = overlay?._isPresent() ?: false
+
     fun get(): V? {
-        return overlay._get()
+        return overlay?._get()
     }
 
     fun find(path: String): JsonOverlay<*>? {
@@ -58,21 +56,23 @@ class Overlay<V> {
     }
 
     val parent: JsonOverlay<*>?
-        get() = overlay._getParent()
+        get() = overlay?._getParent()
+
     val pathInParent: String?
-        get() = overlay._getPathInParent()
+        get() = overlay?._getPathInParent()
+
     val root: JsonOverlay<*>?
-        get() = overlay._getRoot()
+        get() = overlay?._getRoot()
 
     fun <Model> getModel(): Model? {
-        return overlay._getModel() as Model?
+        return overlay?._getModel() as Model?
     }
 
     val pathFromRoot: String?
-        get() = overlay._getPathFromRoot()
+        get() = overlay?._getPathFromRoot()
 
     val jsonReference: String
-        get() = overlay._getJsonReference()
+        get() = overlay?._getJsonReference() ?: throw IllegalArgumentException("overlay is null")
 
     val propertyNames: List<String>?
         get() = if (overlay is PropertiesOverlay<*>) {
@@ -104,23 +104,45 @@ class Overlay<V> {
 
     private fun getMapReference(key: String): Reference? {
         val mapOverlay = overlay as MapOverlay<V>
-        return getReference(mapOverlay._getOverlay(key))
+        return getReference(mapOverlay._getKeyValueOverlayByName(key))
     }
 
     private fun getListReference(index: Int): Reference? {
         val listOverlay = overlay as ListOverlay<V>
-        return getReference(listOverlay._getOverlay(index))
+        return getReference(listOverlay._findByIndex(index))
     }
 
     private fun getReference(overlay: JsonOverlay<*>?): Reference? {
         return overlay?._getReference()
     }
 
+    val parentPropertiesOverlay: PropertiesOverlay<*>?
+        get() {
+            var parent = overlay?._getParent()
+            while (parent != null) {
+                parent = if (parent is PropertiesOverlay<*>) {
+                    return parent
+                } else {
+                    getParent(parent)
+                }
+            }
+            return null
+        }
+
     override fun toString(): String {
         return overlay.toString()
     }
 
+    fun isReference(key: String): Boolean {
+        return getReference(key) != null
+    }
+
+    fun isReference(index: Int): Boolean {
+        return getReference(index.toString()) != null
+    }
+
     companion object {
+
         fun <V> of(overlay: JsonOverlay<V>): Overlay<V> {
             return Overlay(overlay)
         }
@@ -133,8 +155,15 @@ class Overlay<V> {
             return Overlay(overlay)
         }
 
-        fun <V> of(map: Map<String, V>): Overlay<MutableMap<String, V>>? {
-            val overlay = getSidebandOverlay(map)
+        fun <V> of(
+            map: Map<String, V>,
+            parent: JsonOverlay<*>?,
+            refMgr: ReferenceManager = parent?.refMgr ?: ReferenceManager()
+        ): Overlay<MutableMap<String, V>>? {
+            val overlay = map.toJsonOverlay(
+                parent = parent,
+                refMgr = refMgr
+            ) as? MapOverlay<V>
             return if (overlay != null) Overlay(overlay) else null
         }
 
@@ -142,29 +171,52 @@ class Overlay<V> {
             return Overlay(overlay)
         }
 
-        fun <V> of(list: List<V>): Overlay<MutableList<V>>? {
-            val overlay = getSidebandOverlay(list)
+        fun <V> of(
+            list: List<V>,
+            parent: JsonOverlay<*>?,
+            refMgr: ReferenceManager = parent?.refMgr ?: ReferenceManager()
+        ): Overlay<MutableList<V>>? {
+            val overlay = list.toJsonOverlay(
+                parent = parent,
+                refMgr = refMgr
+            ) as? ListOverlay<V>
             return if (overlay != null) Overlay(overlay) else null
         }
 
-        fun <V> of(map: Map<String, V>, key: String): Overlay<V>? {
-            val mapOverlay = of(map)
-            return if (mapOverlay != null) Overlay(mapOverlay.overlay as MapOverlay<V>, key) else null
+        fun <V> of(mapOverlay: MapOverlay<V>, key: String): Overlay<V> {
+            return Overlay(mapOverlay, key)
+        }
+
+        fun <V> of(mapOverlay: Overlay<MutableMap<String, V>>, key: String): Overlay<V> {
+            return of(mapOverlay.overlay as MapOverlay<V>, key)
+        }
+
+        fun <V> of(map: MutableMap<String, V>, key: String): Overlay<V>? {
+            return map[key]?.let { it as? JsonOverlay<V> }?.let { Overlay(it) }
+                ?: of(map, parent = null)?.let { of(it, key) }
+        }
+
+        fun <V> of(map: MutableMap<String, V>, key: String, parent: JsonOverlay<*>): Overlay<V>? {
+            return of(map, parent = parent)?.let { of(it, key) }
+        }
+
+        fun <V> of(list: ListOverlay<V>, index: Int): Overlay<V> {
+            return Overlay(list, index)
         }
 
         fun <V> of(list: List<V>, index: Int): Overlay<V>? {
-            val listOverlay = of(list)
-            return if (listOverlay != null) Overlay(listOverlay.overlay as ListOverlay<V>, index) else null
+            return (list.getOrNull(index) as? JsonOverlay<V>)?.let { Overlay(it) }
+                ?: of(list, parent = null)?.let { of(it.overlay as ListOverlay<V>, index) }
         }
 
-        fun <X> of(props: PropertiesOverlay<*>, fieldName: String, type: Class<X>?): Overlay<X> {
-            return Overlay(props, fieldName)
+        fun <V> of(list: List<V>, index: Int, parent: JsonOverlay<*>): Overlay<V>? {
+            return of(list, parent = parent)?.let { of(it.overlay as ListOverlay<V>, index) }
         }
 
-        fun <X> of(props: IJsonOverlay<*>, fieldName: String, type: Class<X>?): Overlay<X>? {
+        fun <X> of(props: IJsonOverlay<X>, fieldName: String): Overlay<X>? {
             return if (props is PropertiesOverlay<*>) {
                 val castProps = props as PropertiesOverlay<X>
-                of(castProps, fieldName, type)
+                Overlay(castProps, fieldName)
             } else {
                 null
             }
@@ -178,36 +230,29 @@ class Overlay<V> {
             return overlay._getParent()
         }
 
-        private fun <X> getSidebandOverlay(list: List<X>): ListOverlay<X>? {
-            return try {
-                list.javaClass.getMethod("getOverlay").invoke(list) as ListOverlay<X>
-            } catch (e: IllegalAccessException) {
-                null
-            } catch (e: IllegalArgumentException) {
-                null
-            } catch (e: InvocationTargetException) {
-                null
-            } catch (e: NoSuchMethodException) {
-                null
-            } catch (e: SecurityException) {
+        fun <X> getListOverlay(overlay: Overlay<List<X>>): ListOverlay<X>? {
+            return if (overlay.overlay is ListOverlay<*>) {
+                overlay.overlay as ListOverlay<X>
+            } else {
                 null
             }
         }
 
-        private fun <X> getSidebandOverlay(map: Map<String, X>): MapOverlay<X>? {
-            return try {
-                map.javaClass.getMethod("getOverlay").invoke(map) as MapOverlay<X>
-            } catch (e: IllegalAccessException) {
-                null
-            } catch (e: IllegalArgumentException) {
-                null
-            } catch (e: InvocationTargetException) {
-                null
-            } catch (e: NoSuchMethodException) {
-                null
-            } catch (e: SecurityException) {
+        fun <X> getMapOverlay(overlay: Overlay<MutableMap<String, X>>): MapOverlay<X>? {
+            return if (overlay.overlay is MapOverlay<*>) {
+                overlay.overlay as MapOverlay<X>
+            } else {
                 null
             }
         }
+
+        fun getPropertiesOverlay(overlay: Overlay<PropertiesOverlay<*>>): PropertiesOverlay<*>? {
+            return if (overlay.overlay is PropertiesOverlay<*>) {
+                overlay.overlay as? PropertiesOverlay<*>
+            } else {
+                null
+            }
+        }
+
     }
 }

@@ -19,7 +19,7 @@ object ReferencesChecker {
         val listAdapter: Overlay<*> = Overlay.of(list)
         for (i in 0 until list.size()) {
             if (listAdapter.isReference(i)) {
-                checkReference(listAdapter.getReference(i)!!, results, Overlay.of(list, i))
+                checkReference(listAdapter.getReference(i.toString())!!, results, Overlay.of(list, i))
             }
         }
     }
@@ -34,12 +34,10 @@ object ReferencesChecker {
     }
 
     fun checkReferences(props: PropertiesOverlay<*>, results: ValidationResults) {
-        if (props._isElaborated()) {
-            val propsAdapter: Overlay<*> = Overlay.of(props)
-            for (name in propsAdapter.propertyNames!!) {
-                if (propsAdapter.isReference(name)) {
-                    checkReference(propsAdapter.getReference(name)!!, results, Overlay.of(props, name, Any::class.java))
-                }
+        val propsAdapter: Overlay<*> = Overlay.of(props)
+        for (name in propsAdapter.propertyNames!!) {
+            if (propsAdapter.isReference(name)) {
+                checkReference(propsAdapter.getReference(name)!!, results, Overlay.of(props, name))
             }
         }
     }

@@ -19,7 +19,7 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class SecuritySchemeValidator : ObjectValidatorBase<SecurityScheme>() {
     override fun runObjectValidations() {
-        val securityScheme: SecurityScheme = value.getOverlay() as SecurityScheme
+        val securityScheme: SecurityScheme = value.overlay as SecurityScheme
         validateStringField(SecuritySchemeImpl.F_description, false)
         validateStringField(SecuritySchemeImpl.F_type, true, "apiKey|http|oauth2|openIdConnect")
         val type = securityScheme.getType()

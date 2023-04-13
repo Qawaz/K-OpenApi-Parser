@@ -20,12 +20,12 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class PathValidator : ObjectValidatorBase<Path>() {
     override fun runObjectValidations() {
-        val path = value.getOverlay() as Path
+        val path = value.overlay as Path
         validateStringField(PathImpl.F_summary, false)
         validateStringField(PathImpl.F_description, false)
         validateMapField<Operation>(PathImpl.F_operations, false, false, Operation::class.java, OperationValidator())
-        validateListField<Server>(PathImpl.F_servers, false, false, Server::class.java, ServerValidator())
-        validateListField<Parameter>(PathImpl.F_parameters, false, false, Parameter::class.java, ParameterValidator())
+        validateListField<Server>(PathImpl.F_servers, false, false, ServerValidator())
+        validateListField<Parameter>(PathImpl.F_parameters, false, false, ParameterValidator())
         validateExtensions(path.getExtensions())
     }
 }

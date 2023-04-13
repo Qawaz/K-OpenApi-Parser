@@ -60,8 +60,8 @@ class MapTests : Assert() {
         assertEquals(10, overlay.size().toLong())
         checkKeys(overlay, "B", "C", "D", "F", "G", "H", "I", "A", "E", "J")
         assertSame(overlay, overlay._getRoot())
-        val valueOverlay = overlay._getOverlay("B")
-        assertSame(overlay, valueOverlay._getRoot())
+        val valueOverlay = overlay._getKeyValueOverlayByName("B")
+        assertSame(overlay, valueOverlay?._getRoot())
         assertNull(Overlay.of(overlay).getModel())
     }
 

@@ -17,7 +17,7 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class XmlValidator : ObjectValidatorBase<Xml>() {
     override fun runObjectValidations() {
-        val xml: Xml = value.getOverlay() as Xml
+        val xml: Xml = value.overlay as Xml
         validateStringField(XmlImpl.F_name, false)
         validateStringField(XmlImpl.F_prefix, false)
         validateBooleanField(XmlImpl.F_attribute, false)

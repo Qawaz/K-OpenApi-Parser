@@ -18,7 +18,7 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class RequestBodyValidator : ObjectValidatorBase<RequestBody>() {
     override fun runObjectValidations() {
-        val requestBody: RequestBody = value.getOverlay() as RequestBody
+        val requestBody: RequestBody = value.overlay as RequestBody
         validateStringField(RequestBodyImpl.F_description, false)
         validateBooleanField(RequestBodyImpl.F_required, false)
         validateMapField<MediaType>(

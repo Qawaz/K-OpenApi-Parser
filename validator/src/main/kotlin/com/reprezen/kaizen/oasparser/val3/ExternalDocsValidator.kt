@@ -17,9 +17,9 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class ExternalDocsValidator : ObjectValidatorBase<ExternalDocs>() {
     override fun runObjectValidations() {
-        val externalDocs: ExternalDocs = value.getOverlay() as ExternalDocs
+        val externalDocs: ExternalDocs = value.overlay as ExternalDocs
         validateStringField(ExternalDocsImpl.F_description, false)
-        validateUrlField(ExternalDocsImpl.F_url, true, true, false)
+        validateUrlField(ExternalDocsImpl.F_url, required = true, allowRelative = true, allowVars = false)
         validateExtensions(externalDocs.getExtensions())
     }
 }

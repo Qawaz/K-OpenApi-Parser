@@ -64,12 +64,12 @@ abstract class ScalarTestBase<V>(private val factory: OverlayFactory<V>) : Asser
         val ovl = factory.create(value!!, null, refMgr)
         val json = ovl._toJson()
         val ovl2 = factory.create(json, null, refMgr)
-        if(ovl._get() != ovl2._get()){
+        if (ovl._get() != ovl2._get()) {
 //            println("${value!!::class.qualifiedName} to ${ovl2._get()!!::class.qualifiedName}")
 //            println("${ovl::class.qualifiedName} to ${ovl2::class.qualifiedName}")
 //            println("original : $value , json $json , retrieved : ${ovl2._get()}")
         }
-        assertEquals(ovl._get(),value!!)
+        assertEquals(ovl._get(), value!!)
         assertEquals(ovl._get(), ovl2._get())
     }
 
@@ -83,7 +83,7 @@ abstract class ScalarTestBase<V>(private val factory: OverlayFactory<V>) : Asser
     @Test
     fun testPathFromRoot() {
         val ovl = factory.create(value!!, null, refMgr)
-        assertNull(Overlay.of(ovl).pathFromRoot)
+        assertEquals("", Overlay.of(ovl).pathFromRoot)
     }
 
     @Test

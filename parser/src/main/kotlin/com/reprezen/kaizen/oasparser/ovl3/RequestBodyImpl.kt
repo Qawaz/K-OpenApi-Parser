@@ -1,23 +1,23 @@
-package com.reprezen.kaizen.oasparser.ovl3;
+package com.reprezen.kaizen.oasparser.ovl3
 
-import com.reprezen.kaizen.oasparser.model3.*;
-import com.reprezen.jsonoverlay.MapOverlay;
-import java.util.stream.Collectors;
-import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.Builder;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.fasterxml.jackson.core.JsonPointer;
-import com.reprezen.jsonoverlay.ReferenceManager;
-import com.reprezen.kaizen.oasparser.ovl3.MediaTypeImpl;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.Overlay;
-import kotlin.collections.Map;
-import com.reprezen.jsonoverlay.BooleanOverlay;
+import com.reprezen.kaizen.oasparser.model3.*
+import com.reprezen.jsonoverlay.MapOverlay
+import java.util.stream.Collectors
+import com.reprezen.jsonoverlay.StringOverlay
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.JsonPointer
+import com.reprezen.jsonoverlay.ReferenceManager
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.kaizen.oasparser.ovl3.MediaTypeImpl
+import com.reprezen.jsonoverlay.ObjectOverlay
+import com.reprezen.jsonoverlay.JsonOverlay
+import com.reprezen.jsonoverlay.Overlay
+import kotlin.collections.Map
+import com.reprezen.jsonoverlay.BooleanOverlay
 
 class RequestBodyImpl : PropertiesOverlay<RequestBody> ,RequestBody {
 
@@ -28,7 +28,7 @@ class RequestBodyImpl : PropertiesOverlay<RequestBody> ,RequestBody {
     }
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	constructor(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
+	constructor(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(json, parent, Companion.factory, refMgr)
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	constructor(requestBody : RequestBody?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : super(requestBody, parent, Companion.factory, refMgr)
@@ -36,23 +36,23 @@ class RequestBodyImpl : PropertiesOverlay<RequestBody> ,RequestBody {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Description
 	override fun getDescription() : String? {
-		return _get("description", String::class.java)
+		return _get("description")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setDescription(description : String) {
-		_setScalar("description", description, String::class.java)
+		_setScalar("description", description)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ContentMediaType
 	override fun getContentMediaTypes() : MutableMap<String, MediaType> {
-		return _getMap("contentMediaTypes", MediaType::class.java)
+		return _getMap("contentMediaTypes")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getContentMediaTypes(elaborate : Boolean) : MutableMap<String, MediaType> {
-		return _getMap("contentMediaTypes", elaborate, MediaType::class.java)
+		return _getMap("contentMediaTypes")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -62,54 +62,54 @@ class RequestBodyImpl : PropertiesOverlay<RequestBody> ,RequestBody {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasContentMediaType(name : String) : Boolean {
-		return _getMap("contentMediaTypes", MediaType::class.java).containsKey(name)
+		return _getMap<MediaType>("contentMediaTypes").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getContentMediaType(name : String) : MediaType? {
-		return _get("contentMediaTypes", name, MediaType::class.java)
+		return _get("contentMediaTypes", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setContentMediaTypes(contentMediaTypes : MutableMap<String, MediaType>) {
-		_setMap("contentMediaTypes", contentMediaTypes, MediaType::class.java)
+		_setMap("contentMediaTypes", contentMediaTypes)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setContentMediaType(name : String, contentMediaType : MediaType) {
-		_set("contentMediaTypes", name, contentMediaType, MediaType::class.java)
+		_set("contentMediaTypes", name, contentMediaType)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeContentMediaType(name : String) {
-		_remove("contentMediaTypes", name, MediaType::class.java)
+		_remove("contentMediaTypes", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Required
 	override fun getRequired() : Boolean? {
-		return _get("required", Boolean::class.java)
+		return _get("required")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun isRequired() : Boolean {
-		return _get("required", Boolean::class.java) ?: false
+		return _get("required") ?: false
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setRequired(required : Boolean) {
-		_setScalar("required", required, Boolean::class.java)
+		_setScalar("required", required)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions", Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("extensions", elaborate, Any::class.java)
+		return _getMap("extensions")
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -119,27 +119,27 @@ class RequestBodyImpl : PropertiesOverlay<RequestBody> ,RequestBody {
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasExtension(name : String) : Boolean {
-		return _getMap("extensions", Any::class.java).containsKey(name)
+		return _getMap<Any>("extensions").containsKey(name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun getExtension(name : String) : Any? {
-		return _get("extensions", name, Any::class.java)
+		return _get("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtensions(extensions : MutableMap<String, Any>) {
-		_setMap("extensions", extensions, Any::class.java)
+		_setMap("extensions", extensions)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExtension(name : String, extension : Any) {
-		_set("extensions", name, extension, Any::class.java)
+		_set("extensions", name, extension)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun removeExtension(name : String) {
-		_remove("extensions", name, Any::class.java)
+		_remove("extensions", name)
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -180,7 +180,7 @@ class RequestBodyImpl : PropertiesOverlay<RequestBody> ,RequestBody {
 				return RequestBodyImpl(requestBody, parent, refMgr)
 			}
 		
-			override fun _create(json : JsonNode, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<RequestBody> {
+			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<RequestBody> {
 				return RequestBodyImpl(json, parent, refMgr)
 			}
 		
@@ -191,7 +191,7 @@ class RequestBodyImpl : PropertiesOverlay<RequestBody> ,RequestBody {
 			return RequestBody::class.java
 		}
 
-		private fun getSubtypeOf(json : JsonNode) : Class<out RequestBody> {
+		private fun getSubtypeOf(json : JsonElement) : Class<out RequestBody> {
 			return RequestBody::class.java
 		}
 		

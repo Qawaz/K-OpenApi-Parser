@@ -19,6 +19,10 @@ import com.reprezen.kaizen.oasparser.OpenApiParser
 import com.reprezen.kaizen.oasparser.getValidationItems
 import com.reprezen.kaizen.oasparser.isValid
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -68,16 +72,17 @@ class ExamplesTest(
             dirs.add(URL(request))
             while (!dirs.isEmpty()) {
                 val url = dirs.remove()
-                val tree: JsonNode = JsonLoader().load(url)
-                for (result in iterable(tree.elements())) {
-                    val type = result["type"].asText()
-                    val path = result["path"].asText()
-                    val resultUrl = result["url"].asText()
+                val tree = JsonLoader().load(url) as JsonArray
+                for (resultItem in tree) {
+                    val result = resultItem as JsonObject
+                    val type = result["type"]!!.jsonPrimitive.content
+                    val path = result["path"]!!.jsonPrimitive.content
+                    val resultUrl = result["url"]!!.jsonPrimitive.content
                     if (type == "dir") {
                         dirs.add(URL(resultUrl))
                     } else if (type == "file" && (path.endsWith(".yaml") || path.endsWith(".json"))) {
-                        val downloadUrl = result["download_url"].asText()
-                        examples.add(arrayOf(Pair(URL(downloadUrl), result["name"].asText())))
+                        val downloadUrl = result["download_url"]!!.jsonPrimitive.content
+                        examples.add(arrayOf(Pair(URL(downloadUrl), result["name"]!!.jsonPrimitive.content)))
                     }
                 }
             }

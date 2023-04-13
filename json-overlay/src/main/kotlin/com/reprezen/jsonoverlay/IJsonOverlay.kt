@@ -21,7 +21,11 @@ interface IJsonOverlay<V> {
     }
 
     fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
-        if (this is KeyValueOverlay) return this._findByPath(path)
+        if (this is KeyValueOverlay) {
+            return this._findByPath(path)
+        } else {
+            Throwable("pointer $path cannot navigate on overlay $this")
+        }
         return null
     }
 

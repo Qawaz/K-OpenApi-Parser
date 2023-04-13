@@ -1,17 +1,17 @@
 package com.reprezen.kaizen.oasparser.model3
 
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.kaizen.oasparser.model3.Server;
-import com.reprezen.kaizen.oasparser.model3.ExternalDocs;
-import com.reprezen.kaizen.oasparser.model3.Response;
-import com.reprezen.kaizen.oasparser.model3.Callback;
-import com.reprezen.kaizen.oasparser.model3.Parameter;
-import com.reprezen.jsonoverlay.IModelPart;
-import kotlin.collections.List;
-import kotlin.collections.Map;
-import com.reprezen.kaizen.oasparser.model3.RequestBody;
-import com.reprezen.kaizen.oasparser.model3.SecurityRequirement;
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.kaizen.oasparser.model3.Server
+import com.reprezen.kaizen.oasparser.model3.ExternalDocs
+import com.reprezen.kaizen.oasparser.model3.Response
+import com.reprezen.kaizen.oasparser.model3.Callback
+import com.reprezen.kaizen.oasparser.model3.Parameter
+import com.reprezen.jsonoverlay.IModelPart
+import kotlin.collections.List
+import kotlin.collections.Map
+import com.reprezen.kaizen.oasparser.model3.RequestBody
+import com.reprezen.kaizen.oasparser.model3.SecurityRequirement
 
 interface Operation : IJsonOverlay<Operation>, IModelPart<OpenApi3, Operation> {
 

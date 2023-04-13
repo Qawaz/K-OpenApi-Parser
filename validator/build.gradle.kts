@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    kotlin("plugin.serialization") version "1.8.10"
 }
 
 repositories {
@@ -11,6 +12,8 @@ dependencies {
     val jacksonVersion = property("jackson.version") as String
 
     api(project(":parser"))
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")

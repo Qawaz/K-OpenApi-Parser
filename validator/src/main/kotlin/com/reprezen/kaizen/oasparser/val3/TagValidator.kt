@@ -18,7 +18,7 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class TagValidator : ObjectValidatorBase<Tag>() {
     override fun runObjectValidations() {
-        val tag = value.getOverlay() as Tag
+        val tag = value.overlay as Tag
         validateStringField(TagImpl.F_name, true)
         validateStringField(TagImpl.F_description, false)
         validateField<ExternalDocs>(TagImpl.F_externalDocs, false, ExternalDocs::class.java, ExternalDocsValidator())

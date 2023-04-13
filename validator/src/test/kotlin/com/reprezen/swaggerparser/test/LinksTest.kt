@@ -13,15 +13,19 @@ package com.reprezen.swaggerparser.test
 
 import com.google.common.io.Resources
 import com.reprezen.kaizen.oasparser.OpenApiParser
-import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import org.junit.Assert
 import org.junit.Test
 
 class LinksTest {
+
+    val isJson : Boolean get() = true
+
+    private val linksTestRes : String = "models/" + (if(isJson) "json" else "yaml") + "/linksTest" + (if(isJson) ".json" else ".yaml")
+
     @Test
     @Throws(Exception::class)
     fun testLinks() {
-        val model = OpenApiParser().parse(Resources.getResource("models/linksTest.yaml"))
+        val model = OpenApiParser().parse(Resources.getResource(linksTestRes))
         Assert.assertNotNull(model.getLink("PullRequestMerge")?.getOperationId())
         Assert.assertNotNull(model.getLink("PullRequestMerge")?.getOperationRef())
         Assert.assertNotNull(model.getLink("PullRequestMerge")?.getServer())

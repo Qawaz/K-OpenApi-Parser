@@ -17,11 +17,16 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.google.common.collect.Lists
 import com.google.common.collect.Queues
 import com.reprezen.jsonoverlay.JsonLoader
+import com.reprezen.jsonoverlay.JsonPointer
 import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.jsonoverlay.SerializationOptions
 import com.reprezen.kaizen.oasparser.OpenApiParser
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
+import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert
 import org.junit.Test
 import org.junit.experimental.runners.Enclosed
@@ -67,7 +72,7 @@ object SimpleSerializationTest : Assert() {
         fun serializeExample() {
             if (!exampleUrl.toString().contains("callback-example")) {
                 val model = OpenApiParser().parse(exampleUrl)
-                val serialized = Overlay.toJson<OpenApi3>(model as OpenApi3Impl)
+                val serialized = (model as OpenApi3Impl)._toJson()
                 val expected = yamlMapper.readTree(exampleUrl)
                 JSONAssert.assertEquals(
                     mapper.writeValueAsString(expected), mapper.writeValueAsString(serialized),
@@ -91,16 +96,17 @@ object SimpleSerializationTest : Assert() {
                 dirs.add(URL(request))
                 while (!dirs.isEmpty()) {
                     val url = dirs.remove()
-                    val tree: JsonNode = JsonLoader().load(url)
-                    for (result in iterable(tree.elements())) {
-                        val type = result["type"].asText()
-                        val path = result["path"].asText()
-                        val resultUrl = result["url"].asText()
+                    val tree = JsonLoader().load(url) as JsonObject
+                    for (resultItem in tree) {
+                        val result = resultItem.value as JsonObject
+                        val type = result["type"]!!.jsonPrimitive.content
+                        val path = result["path"]!!.jsonPrimitive.content
+                        val resultUrl = result["url"]!!.jsonPrimitive.content
                         if (type == "dir") {
                             dirs.add(URL(resultUrl))
                         } else if (type == "file" && (path.endsWith(".yaml") || path.endsWith(".json"))) {
-                            val downloadUrl = result["download_url"].asText()
-                            examples.add(arrayOf(Pair(URL(downloadUrl), result["name"].asText())))
+                            val downloadUrl = result["download_url"]!!.jsonPrimitive.content
+                            examples.add(arrayOf(Pair(URL(downloadUrl), result["name"]!!.jsonPrimitive.content)))
                         }
                     }
                 }
@@ -115,13 +121,16 @@ object SimpleSerializationTest : Assert() {
         fun toJsonNoticesChanges() {
             val model = parseLocalModel("simpleTest")
             assertEquals("simple model", model.getInfo()?.getTitle())
-            assertEquals("simple model", Overlay.of(model).toJson().at("/info/title").asText())
+            assertEquals(
+                "simple model",
+                JsonPointer("/info/title").navigate((model as OpenApi3Impl)._toJson())!!.jsonPrimitive.content
+            )
             // this changes the overlay value but does not refresh cached JSON -
             // just marks
             // it as out-of-date
             model.getInfo()?.setTitle("changed title")
             assertEquals("changed title", model.getInfo()?.getTitle())
-            assertEquals("changed title", Overlay.of(model).toJson().at("/info/title").asText())
+            assertEquals("changed title", JsonPointer("/info/title").navigate(model._toJson())!!.jsonPrimitive.content)
         }
 
         @Test
@@ -129,10 +138,13 @@ object SimpleSerializationTest : Assert() {
         fun toJsonFollowsRefs() {
             val model = parseLocalModel("simpleTest")
             val xSchema = model.getSchema("X")!!
-            assertEquals("#/components/schemas/Y", Overlay.of(xSchema).toJson().at("/properties/y/\$ref").asText())
+            assertEquals(
+                "#/components/schemas/Y",
+                JsonPointer("/properties/y/\$ref").navigate((xSchema as SchemaImpl)._toJson())!!.jsonPrimitive.content
+            )
             assertEquals(
                 "integer",
-                Overlay.of(xSchema).toJson(SerializationOptions.Option.FOLLOW_REFS).at("/properties/y/type").asText()
+                JsonPointer("/properties/y/type").navigate(xSchema._toJson(SerializationOptions.Option.FOLLOW_REFS))!!.jsonPrimitive.content
             )
         }
     }

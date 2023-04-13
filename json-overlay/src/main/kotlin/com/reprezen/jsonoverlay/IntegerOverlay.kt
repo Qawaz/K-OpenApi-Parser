@@ -47,6 +47,10 @@ class IntegerOverlay : ScalarOverlay<Int> {
         return Companion.factory
     }
 
+    override fun toString(): String {
+        return _get().toString()
+    }
+
     companion object {
         @JvmField
         var factory: OverlayFactory<Int> = object : OverlayFactory<Int>() {

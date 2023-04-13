@@ -12,7 +12,6 @@
 package com.reprezen.kaizen.oasparser.validate
 
 import com.reprezen.jsonoverlay.Overlay
-import com.reprezen.jsonoverlay.PositionInfo
 
 class ValidationResults {
     enum class Severity {
@@ -74,16 +73,5 @@ class ValidationResults {
             return severity
         }
 
-    class ValidationItem(val severity: Severity, val msg: String, context: Overlay<*>) {
-        val positionInfo: PositionInfo?
-
-        init {
-            positionInfo = context.positionInfo!!.orElse(null)
-        }
-
-        override fun toString(): String {
-            val posString = if (positionInfo != null) positionInfo.toString(true) + ": " else ""
-            return posString + msg
-        }
-    }
+    class ValidationItem(val severity: Severity, val msg: String, context: Overlay<*>)
 }

@@ -13,7 +13,7 @@ package com.reprezen.kaizen.oasparser.validate
 
 abstract class ObjectValidatorBase<V> : ValidatorBase<V>() {
     override fun runValidations() {
-        if (value.isElaborated && ValidationContext.visitIfUnvisited(value)) {
+        if (ValidationContext.visitIfUnvisited(value)) {
             runObjectValidations()
         }
     }

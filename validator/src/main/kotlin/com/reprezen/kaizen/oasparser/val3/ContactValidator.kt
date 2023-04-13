@@ -17,7 +17,7 @@ import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class ContactValidator : ObjectValidatorBase<Contact>() {
     override fun runObjectValidations() {
-        val contact: Contact = value.getOverlay() as Contact
+        val contact: Contact = value.overlay as Contact
         validateStringField(ContactImpl.F_name, false)
         validateUrlField(ContactImpl.F_url, false, true, false)
         validateEmailField(ContactImpl.F_email, false)

@@ -103,7 +103,6 @@ paths:
           text/plain:
             schema:
               title: title
-        required: true
       responses:
         default:
           description: description

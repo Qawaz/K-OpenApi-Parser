@@ -5,8 +5,8 @@
     @var(GenerateClassDefinition())
 
     @default_no_raw
-            override fun _fixJson(json : JsonNode) : JsonNode {
-                return if(json.isMissingNode()) _jsonArray() else json
+            override fun _fixJson(json : JsonElement) : JsonElement {
+                return if(json is JsonNull) JsonArray(listOf()) else json
             }
 
 
