@@ -13,6 +13,7 @@ class JsonPointerTests : Assert() {
         assertNull(other.minus(pointer))
         assertEquals(JsonPointer.Empty, pointer.minus(pointer))
         assertEquals(JsonPointer.Empty, other.minus(other))
+        assertEquals("0/variables/x-foo",JsonPointer("servers/0/variables/x-foo").minus(JsonPointer("servers")).toString())
     }
 
 }

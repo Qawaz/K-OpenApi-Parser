@@ -55,6 +55,15 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         return overlays[name]
     }
 
+    override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
+        return path.segments.firstOrNull()?.let { key ->
+            overlays[key]?.let { ov ->
+                if (path.segments.size == 1) return ov
+                ov.findByPointer(JsonPointer(path.segments.drop(1)))
+            }
+        }
+    }
+
     override fun _getPathOfChild(child: JsonOverlay<*>): String {
         for (item in overlays) if (item.value == child) return item.key
         return "-1".also {

@@ -34,8 +34,6 @@ class PathsTest {
         assertEquals("/", model.getPath("/")?.getPathString())
         assertNotNull(model.getPath("/v2"))
         assertNotNull(model.getPath("/"))
-
-        // TODO these two cause recursive errors
         assertEquals("/v2", model.getPath("/v2")?.getPathString())
     }
 }

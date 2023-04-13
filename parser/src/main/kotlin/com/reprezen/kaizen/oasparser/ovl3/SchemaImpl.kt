@@ -3,29 +3,20 @@ package com.reprezen.kaizen.oasparser.ovl3
 import com.reprezen.kaizen.oasparser.model3.*
 import com.reprezen.jsonoverlay.MapOverlay
 import com.reprezen.jsonoverlay.StringOverlay
-import com.reprezen.jsonoverlay.ListOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.JsonPointer
-import com.reprezen.kaizen.oasparser.ovl3.XmlImpl
 import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.jsonoverlay.IntegerOverlay
-import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
 import kotlin.collections.List
 import com.reprezen.jsonoverlay.JsonOverlay
 import com.reprezen.jsonoverlay.Overlay
-import java.util.stream.Collectors
-import com.reprezen.kaizen.oasparser.ovl3.DiscriminatorImpl
 import com.reprezen.jsonoverlay.parser.Generated
-import java.util.Optional
-import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.NumberOverlay
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.ObjectOverlay
-import kotlin.collections.Map
 import com.reprezen.jsonoverlay.BooleanOverlay
-import com.reprezen.kaizen.oasparser.ovl3.ExternalDocsImpl
 
 class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 
@@ -35,7 +26,7 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
         return if(overlay.parent is MapOverlay<*>) overlay.pathInParent else null
     }
 
-    override fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
+    override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
         return if(path.segments.firstOrNull() == "additionalProperties"){
             val tail = JsonPointer(path.segments.drop(1))
             if(json != null && tail.navigate(json!!) != null){

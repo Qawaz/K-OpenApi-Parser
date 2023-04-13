@@ -35,7 +35,7 @@ class ParameterValidatorTest {
     @Throws(Exception::class)
     fun shouldFail_OnInvalidParam() {
         val model = OpenApi3Parser().parse(javaClass.getResource(invalidParamRes)).also { it.validate() }
-        Assert.assertEquals(1, model.getValidationItems().size.toLong())
+        Assert.assertEquals(1, model.getValidationItems().size)
         Assert.assertEquals(
             Messages.msg(OpenApi3Messages.MissingPathTplt, "id", "/"),
             model.getValidationItems().stream().findFirst().get().msg

@@ -19,7 +19,6 @@ class MapValidator<T>(private val valueValidator: Validator<T>) : ValidatorBase<
         val mapOverlay = Overlay.getMapOverlay(value) ?: return
         for (key in mapOverlay.keySet()) {
             val value = Overlay.of<T>(mapOverlay, key)
-            ValidationContext.visitIfUnvisited(value)
             valueValidator.validate(value)
         }
     }

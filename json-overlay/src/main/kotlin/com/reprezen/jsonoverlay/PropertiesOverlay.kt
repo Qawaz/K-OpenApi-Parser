@@ -172,15 +172,17 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
+        val debug = path == JsonPointer("/servers/0/variables/x-foo")
+        if(debug) println("NAVIGATING $path")
         for (entry in factoryMap) {
-            println("NAVIGATING $path")
             val remaining = path.minus(entry.value.pointer) ?: continue
-            println("REMAINING $remaining")
+            if(debug) println("REMAINING $remaining")
             _getOverlay(entry.value, entry.value.factory)?.let {
                 if (remaining.isEmpty()) {
                     return it
                 } else if (it is KeyValueOverlay) {
-                    it._findByPath(remaining)?.let { next -> return next }
+                    if(debug) println("FINDING REMAINING $remaining IN ${it::class.qualifiedName}")
+                    it.findByPointer(remaining)?.let { next -> return next }
                 }
             }
         }

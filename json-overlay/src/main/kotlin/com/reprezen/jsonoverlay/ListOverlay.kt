@@ -124,6 +124,17 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>>, KeyValueOverlay {
         return name.toIntOrNull()?.let { overlays[it] }
     }
 
+    override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
+        val index = path.segments.firstOrNull()?.toIntOrNull()
+        if (index != null) {
+            return _findByIndex(index)?.let {
+                if (path.segments.size == 1) return it
+                it.findByPointer(JsonPointer(path.segments.drop(1)))
+            }
+        }
+        return null
+    }
+
     override fun _findByIndex(index: Int): JsonOverlay<V>? {
         return overlays.getOrNull(index)
     }

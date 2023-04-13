@@ -16,7 +16,7 @@ package com.reprezen.jsonoverlay
 
 import kotlinx.serialization.json.*
 
-class ObjectOverlay : ScalarOverlay<Any> {
+class ObjectOverlay : ScalarOverlay<Any>, KeyValueOverlay {
 
     private constructor(value: Any?, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
         Companion.factory,
@@ -80,28 +80,31 @@ class ObjectOverlay : ScalarOverlay<Any> {
     private val emptyPropertyNames by lazy { emptyList<String>() }
 
     @Suppress("UNCHECKED_CAST")
-    private val getMap: Map<String, *>?
-        get() {
-            if (value != null && value is Map<*, *>) {
-                (value as? Map<String, *>)?.let { return it }
-            }
-            if (json != null && json is JsonObject) {
-                return (json as JsonObject)
-            }
-            return null
-        }
+    private val Any.valueMap: Map<String, *>? get() = (this as? Map<String, *>)
 
-    fun _getPropertyNames(): List<String> {
-        getMap?.let { return it.keys.toList() }
+    override fun _getPropertyNames(): List<String> {
+        if (json != null && json is JsonObject) (json as JsonObject).keys.toList()
+        _get()?.valueMap?.keys?.toList()?.let { return it }
         return emptyPropertyNames
     }
 
-    fun _getKeyValueOverlayByName(name: String): JsonOverlay<*>? {
-        getMap?.let {
-            it[name]?.let { value ->
-                return factory.create(value, null, refMgr)
-            }
+    private fun valueOfKey(key: String): JsonOverlay<*>? {
+        if (json != null && json is JsonObject) {
+            (json as JsonObject)[key]?.toJsonOverlay(parent = this, refMgr = refMgr)?.let { return it }
         }
+        _get()?.valueMap?.getOrDefault(key, null)?.toJsonOverlay(parent = this, refMgr = refMgr)?.let { return it }
+        return null
+    }
+
+    override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
+        return path.segments.firstOrNull()?.let { valueOfKey(it) }?.let { ov ->
+            if (path.segments.size == 1) return ov
+            ov.findByPointer(JsonPointer(path.segments.drop(1)))
+        }
+    }
+
+    override fun _getKeyValueOverlayByName(name: String): JsonOverlay<*>? {
+        valueOfKey(name)?.let { return it }
         return null
     }
 

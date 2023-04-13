@@ -24,6 +24,7 @@ import com.reprezen.kaizen.oasparser.OpenApiParser
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
 import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -70,6 +71,7 @@ object SimpleSerializationTest : Assert() {
         @Test
         @Throws(Exception::class)
         fun serializeExample() {
+            assertTrue(false)
             if (!exampleUrl.toString().contains("callback-example")) {
                 val model = OpenApiParser().parse(exampleUrl)
                 val serialized = (model as OpenApi3Impl)._toJson()
@@ -96,9 +98,9 @@ object SimpleSerializationTest : Assert() {
                 dirs.add(URL(request))
                 while (!dirs.isEmpty()) {
                     val url = dirs.remove()
-                    val tree = JsonLoader().load(url) as JsonObject
+                    val tree = JsonLoader().load(url) as JsonArray
                     for (resultItem in tree) {
-                        val result = resultItem.value as JsonObject
+                        val result = resultItem as JsonObject
                         val type = result["type"]!!.jsonPrimitive.content
                         val path = result["path"]!!.jsonPrimitive.content
                         val resultUrl = result["url"]!!.jsonPrimitive.content

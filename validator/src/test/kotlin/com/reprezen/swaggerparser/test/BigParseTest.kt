@@ -50,7 +50,7 @@ class BigParseTest(
             override fun run(node: JsonNode?, path: JsonPointer?) {
                 require(node != null && path != null)
                 val overlay = model.findByPath(path.toString())
-                assertNotNull("No overlay object found for path: $path in $model", overlay)
+                assertNotNull("No overlay object found for path: $path", overlay)
                 val value = Overlay[overlay!!]
                 val fromJson = getValue(node)
                 val msg = String.format(
