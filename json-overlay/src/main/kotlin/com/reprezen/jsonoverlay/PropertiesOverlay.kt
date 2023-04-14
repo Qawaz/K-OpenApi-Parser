@@ -70,7 +70,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         for (key in factoryMap.keys) _getValueOverlayByName(key)
         val keys = mutableListOf<String>()
         for (key in overlays.keys) if (!key.isSubMap) keys.add(key.path)
-        for(subMap in getSubMaps()) keys.addAll(subMap.value._getPropertyNames())
+        for (subMap in getSubMaps()) keys.addAll(subMap.value._getPropertyNames())
         return keys
     }
 

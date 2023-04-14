@@ -84,9 +84,10 @@ class OverlayAdapterTests : Assert() {
 
         // list reference
         val params = model!!.getPath("/2.0/repositories/{username}/{slug}")?.getGet()?.getParameters()!!
-        assertFalse(Overlay.of(params)!!.isReference(1))
-        assertTrue(Overlay.of(params)!!.isReference(0))
-        assertEquals("#/components/parameters/username", Overlay.of(params)!!.getReference(0.toString())!!.refString)
+        assertFalse(Overlay.of(params)!!.isReference(0))
+        assertEquals("slug", params[0].getName())
+        assertTrue(Overlay.of(params)!!.isReference(1))
+        assertEquals("#/components/parameters/username", Overlay.of(params)!!.getReference(1.toString())!!.refString)
     }
 
     companion object {

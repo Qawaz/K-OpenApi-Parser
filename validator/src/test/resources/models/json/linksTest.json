@@ -67,15 +67,15 @@
         "operationId": "getRepository",
         "parameters": [
           {
-            "$ref": "#/components/parameters/username"
-          },
-          {
             "name": "slug",
             "in": "path",
             "required": true,
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "$ref": "#/components/parameters/username"
           }
         ],
         "responses": {
