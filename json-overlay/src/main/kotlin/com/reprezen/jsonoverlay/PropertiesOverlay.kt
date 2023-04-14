@@ -172,22 +172,32 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
-        val debug = path == JsonPointer("/paths/~1foo/get/requestBody/required")
-        if(debug) println("NAVIGATING ${path.segments.joinToString("-") { it }}")
+        val debug = path == JsonPointer("/2.0/users/{username}") //JsonPointer("required") || path == JsonPointer("requestBody/required")
+        if (debug) println("NAVIGATING $path")
         for (entry in factoryMap) {
             val remaining = path.minus(entry.value.pointer) ?: continue
-//            if(debug) println("REMAINING $remaining")
             _getOverlay(entry.value, entry.value.factory)?.let {
+                if (debug) println("FOUND ${path.minusEnd(remaining).toString().ifEmpty { "OVERLAY ${it::class.qualifiedName}" }}")
                 if (remaining.isEmpty()) {
+                    if(debug) println("FOUND $it")
                     return it
                 } else if (it is KeyValueOverlay) {
-//                    if(debug) println("FINDING REMAINING $remaining IN $it")
+                    if (debug) println("FINDING $remaining IN ${it::class.qualifiedName}")
                     it.findByPointer(remaining)?.let { next -> return next }
+//                    if (debug) println("FINDING /")
+//                    if (remaining.segments.firstOrNull()?.startsWith("/") == true) {
+//                        println("FINDING WITHOUT F-SLASH $remaining")
+//                        it.findByPointer(
+//                            JsonPointer(
+//                                remaining.segments.first().removePrefix("/") + remaining.segments.drop(1)
+//                            )
+//                        )?.let { next -> return next }
+//                    }
                 }
             }
         }
-//        return null
-        return super._findByPath(path)
+        return null
+//        return super._findByPath(path)
     }
 
     override fun toString(): String {

@@ -37,7 +37,7 @@ class OverlayAdapterTests : Assert() {
         assertEquals("3.0.0", model!!.getOpenApi())
 
         val pathsMapOverlay = Overlay.of(model as PropertiesOverlay<*>, "paths")
-        assertSame(model!!.getPath("/2.0/users/{username}"), pathsMapOverlay?.find("/2.0/users/{username}")?._get())
+        assertSame(model!!.getPath("/2.0/users/{username}"), pathsMapOverlay?.find("/2.0/users/{username}"))
     }
 
     @Test

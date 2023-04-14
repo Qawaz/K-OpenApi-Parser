@@ -56,11 +56,23 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
     }
 
     override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
+//        val debug = path == JsonPointer("/2.0/users/{username}")
+//        if (debug) println("FINDING $path IN MapOverlay")
+        overlays[path.toString()]?.let { return it }
+//        if(debug) println("FINDING SEGMENT ${path.segments.firstOrNull()} IN MapOverlay")
         path.segments.firstOrNull()?.let { key ->
-            overlays[key]?.let { ov ->
+            (overlays[key])?.let { ov ->
+//                if(debug) println("FOUND $key , FINDING ${JsonPointer(path.segments.drop(1))} IN ${ov::class.qualifiedName}")
                 if (path.segments.size == 1) return ov
                 return ov.findByPointer(JsonPointer(path.segments.drop(1)))
             }
+//            if (debug) println("FINDING F-SLASH")
+//            if (key.getOrNull(0) == '/') {
+//                overlays["/"]?.let { ov ->
+//                    if (debug) println("FINDING AFTER F-SLASH")
+//                    return ov.findByPointer(JsonPointer(key.removePrefix("/") + path.segments.drop(1)))
+//                }
+//            }
         }
         return null
     }

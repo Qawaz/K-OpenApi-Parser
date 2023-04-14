@@ -4,7 +4,7 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
-class JsonPointer(val segments: List<String>) {
+class JsonPointer(val segments: List<String>, val isPrefixedWithFSlash: Boolean = false) {
 
     constructor(path: String) : this(
         segments = if (path.isEmpty() || path == "/") emptyList() else path
@@ -14,7 +14,8 @@ class JsonPointer(val segments: List<String>) {
                 segment
                     .replace("~1", "/")
                     .replace("~0", "~")
-            }
+            },
+        isPrefixedWithFSlash = path.getOrNull(0) == '/'
     )
 
     fun navigate(json: JsonElement): JsonElement? {
@@ -38,7 +39,7 @@ class JsonPointer(val segments: List<String>) {
     }
 
     override fun toString(): String {
-        return segments.joinToString("/")
+        return segments.joinToString("/").let { if (isPrefixedWithFSlash) "/$it" else it }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -61,6 +62,20 @@ class JsonPointer(val segments: List<String>) {
         }
         if (index == segments.size) return Empty
         return JsonPointer(segments.drop(index))
+    }
+
+    fun minusEnd(pointer: JsonPointer): JsonPointer? {
+        if (pointer.segments.size > segments.size) return null
+        var index = pointer.segments.size - 1
+        while (index > 0) {
+            if (segments[index] == pointer.segments[index]) {
+                index--
+            } else {
+                return null
+            }
+        }
+        if (index == -1) return Empty
+        return JsonPointer(segments.dropLast(index + 1))
     }
 
     override fun hashCode(): Int {
