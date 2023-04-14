@@ -67,7 +67,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
 
     /* package */
     override fun _getPropertyNames(): List<String> {
-        for (key in factoryMap.keys) _getKeyValueOverlayByName(key)
+        for (key in factoryMap.keys) _getValueOverlayByName(key)
         val keys = mutableListOf<String>()
         for (key in overlays.keys) if (!key.isSubMap) keys.add(key.path)
         for(subMap in getSubMaps()) keys.addAll(subMap.value._getPropertyNames())
@@ -75,7 +75,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     protected fun _isPresent(name: String?): Boolean {
-        return _getKeyValueOverlayByName(name!!) != null
+        return _getValueOverlayByName(name!!) != null
     }
 
     // sub maps exist in a field as a property like
@@ -213,14 +213,14 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         return "$value\n}"
     }
 
-    override fun _getKeyValueOverlayByName(name: String): JsonOverlay<*>? {
+    override fun _getValueOverlayByName(name: String): JsonOverlay<*>? {
         return factoryMap[name]?.let { factory ->
             _getOverlay(factory, factory.factory)
         }
     }
 
     fun <T> _getOverlay(name: String): JsonOverlay<T>? {
-        return _getKeyValueOverlayByName(name) as? JsonOverlay<T>
+        return _getValueOverlayByName(name) as? JsonOverlay<T>
     }
 
     protected fun <T> _setScalar(name: String, value: T?) {
@@ -268,7 +268,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     protected fun _remove(name: String, index: Int) {
-        val overlay = _getKeyValueOverlayByName(name) as ListOverlay<*>
+        val overlay = _getValueOverlayByName(name) as ListOverlay<*>
         overlay.remove(index)
     }
 
@@ -295,7 +295,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     protected fun _remove(name: String, key: String) {
-        val overlay = _getKeyValueOverlayByName(name) as MapOverlay<*>
+        val overlay = _getValueOverlayByName(name) as MapOverlay<*>
         overlay.remove(key)
     }
 
@@ -358,7 +358,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     override fun _toJsonInternal(options: SerializationOptions): JsonElement {
-        for (key in factoryMap.keys) _getKeyValueOverlayByName(key)
+        for (key in factoryMap.keys) _getValueOverlayByName(key)
         val obj = overlays.mapKeys { it.key.path }
             .mapValues { it.value._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY)) }
         val result = _fixJson(JsonObject(obj))

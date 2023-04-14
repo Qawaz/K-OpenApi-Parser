@@ -29,15 +29,15 @@ class Overlay<V> {
     }
 
     constructor(map: MapOverlay<V>, key: String) {
-        overlay = map._getKeyValueOverlayByName(key)
+        overlay = map._getValueOverlayByName(key)
     }
 
     constructor(list: ListOverlay<V>, index: Int) {
-        overlay = list._findByIndex(index)
+        overlay = list._getValueOverlayByIndex(index)
     }
 
     constructor(props: KeyValueOverlay, fieldName: String) {
-        val overlay = props._getKeyValueOverlayByName(fieldName) as? JsonOverlay<V>
+        val overlay = props._getValueOverlayByName(fieldName) as? JsonOverlay<V>
         this.overlay = overlay
     }
 
@@ -90,7 +90,7 @@ class Overlay<V> {
 
     fun getReference(key : Int) : Reference? {
         val propsOverlay = overlay as? KeyValueOverlay
-        return propsOverlay?._findByIndex(key)?._getReference()
+        return propsOverlay?._getValueOverlayByIndex(key)?._getReference()
     }
 
     val parentPropertiesOverlay: PropertiesOverlay<*>?

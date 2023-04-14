@@ -51,7 +51,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         _elaborate()
     }
 
-    override fun _getKeyValueOverlayByName(name: String): JsonOverlay<V>? {
+    override fun _getValueOverlayByName(name: String): JsonOverlay<V>? {
         return overlays[name]
     }
 

@@ -104,7 +104,7 @@ class ObjectOverlay : ScalarOverlay<Any>, KeyValueOverlay {
         return null
     }
 
-    override fun _getKeyValueOverlayByName(name: String): JsonOverlay<*>? {
+    override fun _getValueOverlayByName(name: String): JsonOverlay<*>? {
         valueOfKey(name)?.let { return it }
         return null
     }

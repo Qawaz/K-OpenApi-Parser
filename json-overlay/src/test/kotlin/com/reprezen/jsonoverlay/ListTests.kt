@@ -75,7 +75,7 @@ class ListTests : Assert() {
             checkValueAt(overlay, i, i)
         }
         assertSame(overlay, overlay._getRoot())
-        val itemOverlay = overlay._findByIndex(0)
+        val itemOverlay = overlay._getValueOverlayByIndex(0)
         assertSame(overlay, itemOverlay?._getRoot())
         assertNull(Overlay.of(overlay).getModel())
     }

@@ -4,10 +4,14 @@ interface KeyValueOverlay {
 
     fun _getPropertyNames(): List<String>
 
-    fun _getKeyValueOverlayByName(name: String): JsonOverlay<*>?
+    fun _getValueOverlayByName(name: String): JsonOverlay<*>?
 
     fun _getValueOverlayByPath(segment: String): JsonOverlay<*>? {
-        return _getKeyValueOverlayByName(segment)
+        return _getValueOverlayByName(segment)
+    }
+
+    fun _getValueOverlayByIndex(index : Int) : JsonOverlay<*>? {
+        return _getValueOverlayByPath(index.toString())
     }
 
     fun <T> _traverseOverlaysOfSegment(segment: String, block: (JsonOverlay<*>) -> T?): T? {
@@ -17,10 +21,6 @@ interface KeyValueOverlay {
 
     fun _findByPath(path: String): JsonOverlay<*>? {
         return _findByPath(JsonPointer(path))
-    }
-
-    fun _findByIndex(index : Int) : JsonOverlay<*>? {
-        return _findByPath(index.toString())
     }
 
     fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
