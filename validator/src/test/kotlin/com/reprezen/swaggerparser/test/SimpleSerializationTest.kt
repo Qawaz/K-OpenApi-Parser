@@ -42,6 +42,9 @@ import java.util.*
 @RunWith(Enclosed::class)
 object SimpleSerializationTest : Assert() {
 
+    private val isJson : Boolean get() = true
+    private val extension : String get() = if(isJson) "json" else "yaml"
+    private val folderName : String get() = if(isJson) "json" else "yaml"
     private const val SPEC_REPO = "OAI/OpenAPI-Specification"
     private const val EXAMPLES_BRANCH = "main"
     private const val EXAMPLES_ROOT = "examples/v3.0"
@@ -50,7 +53,7 @@ object SimpleSerializationTest : Assert() {
 
     @Throws(Exception::class)
     private fun parseLocalModel(name: String): OpenApi3 {
-        val url = SimpleSerializationTest::class.java.getResource("/models/$name.yaml")
+        val url = SimpleSerializationTest::class.java.getResource("/models/$folderName/$name.$extension")
         return OpenApiParser().parse(url)
     }
 

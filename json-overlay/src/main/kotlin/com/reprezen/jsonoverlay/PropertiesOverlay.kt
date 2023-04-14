@@ -172,17 +172,19 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
-        val debug = path == JsonPointer("/2.0/users/{username}") //JsonPointer("required") || path == JsonPointer("requestBody/required")
-        if (debug) println("NAVIGATING $path")
+//        val debug = path == JsonPointer("/2.0/users/{username}")
+//        if (debug) println("NAVIGATING $path")
         for (entry in factoryMap) {
             val remaining = path.minus(entry.value.pointer) ?: continue
             _getOverlay(entry.value, entry.value.factory)?.let {
-                if (debug) println("FOUND ${path.minusEnd(remaining).toString().ifEmpty { "OVERLAY ${it::class.qualifiedName}" }}")
+//                if (debug) {
+//                    println("FOUND ${path.minusEnd(remaining).toString().ifEmpty { "${it::class.qualifiedName}" }}")
+//                }
                 if (remaining.isEmpty()) {
-                    if(debug) println("FOUND $it")
+//                    if (debug) println("FOUND $it")
                     return it
                 } else if (it is KeyValueOverlay) {
-                    if (debug) println("FINDING $remaining IN ${it::class.qualifiedName}")
+//                    if (debug) println("FINDING $remaining IN ${it::class.qualifiedName}")
                     it.findByPointer(remaining)?.let { next -> return next }
 //                    if (debug) println("FINDING /")
 //                    if (remaining.segments.firstOrNull()?.startsWith("/") == true) {
@@ -361,6 +363,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     override fun _toJsonInternal(options: SerializationOptions): JsonElement {
+        for (key in factoryMap.keys) _getKeyValueOverlayByName(key)
         val obj = overlays.mapKeys { it.key.path }
             .mapValues { it.value._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY)) }
         val result = _fixJson(JsonObject(obj))
