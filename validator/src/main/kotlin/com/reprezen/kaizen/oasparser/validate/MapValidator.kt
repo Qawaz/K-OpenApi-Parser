@@ -17,9 +17,11 @@ import com.reprezen.jsonoverlay.Overlay
 class MapValidator<T>(private val valueValidator: Validator<T>) : ValidatorBase<MutableMap<String, T>>() {
     override fun runValidations() {
         val mapOverlay = Overlay.getMapOverlay(value) ?: return
-        for (key in mapOverlay.keySet()) {
-            val value = Overlay.of<T>(mapOverlay, key)
-            valueValidator.validate(value)
+        if (ValidationContext.visitIfUnvisited(mapOverlay)) {
+            for (key in mapOverlay.keySet()) {
+                val value = Overlay.of<T>(mapOverlay, key)
+                valueValidator.validate(value)
+            }
         }
     }
 }
