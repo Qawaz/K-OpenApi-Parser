@@ -16,20 +16,23 @@ import com.reprezen.kaizen.oasparser.OpenApiParser
 import org.junit.Assert
 import org.junit.Test
 
-class LinksTest {
+class LinksTest : Assert() {
 
-    val isJson : Boolean get() = true
+    val isJson: Boolean get() = true
 
-    private val linksTestRes : String = "models/" + (if(isJson) "json" else "yaml") + "/linksTest" + (if(isJson) ".json" else ".yaml")
+    private val linksTestRes: String =
+        "models/" + (if (isJson) "json" else "yaml") + "/linksTest" + (if (isJson) ".json" else ".yaml")
 
     @Test
     @Throws(Exception::class)
     fun testLinks() {
         val model = OpenApiParser().parse(Resources.getResource(linksTestRes))
-        Assert.assertNotNull(model.getLink("PullRequestMerge")?.getOperationId())
-        Assert.assertNotNull(model.getLink("PullRequestMerge")?.getOperationRef())
-        Assert.assertNotNull(model.getLink("PullRequestMerge")?.getServer())
-        Assert.assertEquals("http://localhost", model.getLink("PullRequestMerge")?.getServer()?.getUrl())
-        Assert.assertEquals("server", model.getLink("PullRequestMerge")?.getServer()?.getDescription())
+        assertEquals("mergePullRequest", model.getLink("PullRequestMerge")?.getOperationId())
+        assertEquals(
+            "#/paths/~12.0~1repositories~1%7Busername%7D~1%7Bslug%7D~1pullrequests~1%7Bpid%7D~1merge",
+            model.getLink("PullRequestMerge")?.getOperationRef()
+        )
+        assertEquals("http://localhost", model.getLink("PullRequestMerge")?.getServer()?.getUrl())
+        assertEquals("server", model.getLink("PullRequestMerge")?.getServer()?.getDescription())
     }
 }
