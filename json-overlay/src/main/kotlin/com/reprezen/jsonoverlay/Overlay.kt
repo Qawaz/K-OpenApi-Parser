@@ -84,38 +84,13 @@ class Overlay<V> {
         }
 
     fun getReference(key: String): Reference? {
-        return when (overlay) {
-            is PropertiesOverlay<*> -> {
-                getPropertyReference(key)
-            }
-
-            is MapOverlay<*> -> {
-                getMapReference(key)
-            }
-
-            else -> {
-                null
-            }
-        }
+        val propsOverlay = overlay as? KeyValueOverlay
+        return propsOverlay?._getValueOverlayByPath(key)?._getReference()
     }
 
-    private fun getPropertyReference(name: String): Reference? {
-        val propsOverlay = overlay as PropertiesOverlay<V>
-        return getReference(propsOverlay._getOverlay<Any>(name))
-    }
-
-    private fun getMapReference(key: String): Reference? {
-        val mapOverlay = overlay as MapOverlay<V>
-        return getReference(mapOverlay._getKeyValueOverlayByName(key))
-    }
-
-    private fun getListReference(index: Int): Reference? {
-        val listOverlay = overlay as ListOverlay<V>
-        return getReference(listOverlay._findByIndex(index))
-    }
-
-    private fun getReference(overlay: JsonOverlay<*>?): Reference? {
-        return overlay?._getReference()
+    fun getReference(key : Int) : Reference? {
+        val propsOverlay = overlay as? KeyValueOverlay
+        return propsOverlay?._findByIndex(key)?._getReference()
     }
 
     val parentPropertiesOverlay: PropertiesOverlay<*>?
@@ -135,12 +110,16 @@ class Overlay<V> {
         return overlay.toString()
     }
 
+    fun isReference(): Boolean {
+        return overlay?._getReference() != null
+    }
+
     fun isReference(key: String): Boolean {
         return getReference(key) != null
     }
 
     fun isReference(index: Int): Boolean {
-        return getReference(index.toString()) != null
+        return getReference(index) != null
     }
 
     companion object {
@@ -161,10 +140,14 @@ class Overlay<V> {
             return Overlay(overlay)
         }
 
+        @Suppress("UNCHECKED_CAST")
         fun <V> of(map: Map<String, V>): Overlay<MutableMap<String, V>>? {
-            return of(map, parent = null)
+            return map.values.firstOrNull()?.let {
+                (it as? JsonOverlay<*>)?._getParent()
+            }?.let { it as? MapOverlay<V> }?.let { Overlay(it) } ?: of(map, parent = null)
         }
 
+        @Suppress("UNCHECKED_CAST")
         fun <V> of(
             map: Map<String, V>,
             parent: JsonOverlay<*>?,
@@ -181,8 +164,11 @@ class Overlay<V> {
             return Overlay(overlay)
         }
 
+        @Suppress("UNCHECKED_CAST")
         fun <V> of(list: List<V>): Overlay<MutableList<V>>? {
-            return of(list = list, parent = null)
+            return list.firstOrNull()?.let { (it as? JsonOverlay<*>)?._getParent() }?.let {
+                it as? ListOverlay<V>
+            }?.let { Overlay(it) } ?: of(list = list, parent = null)
         }
 
         fun <V> of(

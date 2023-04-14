@@ -1,9 +1,6 @@
 package com.reprezen.swaggerparser.test
 
-import com.reprezen.jsonoverlay.ListOverlay
-import com.reprezen.jsonoverlay.MapOverlay
-import com.reprezen.jsonoverlay.Overlay
-import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.*
 import com.reprezen.kaizen.oasparser.OpenApiParser
 import com.reprezen.kaizen.oasparser.model3.*
 import org.junit.Assert
