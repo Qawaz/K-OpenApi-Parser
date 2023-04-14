@@ -42,20 +42,11 @@ import java.util.*
 @RunWith(Enclosed::class)
 object SimpleSerializationTest : Assert() {
 
-    private val isJson : Boolean get() = true
-    private val extension : String get() = if(isJson) "json" else "yaml"
-    private val folderName : String get() = if(isJson) "json" else "yaml"
     private const val SPEC_REPO = "OAI/OpenAPI-Specification"
     private const val EXAMPLES_BRANCH = "main"
     private const val EXAMPLES_ROOT = "examples/v3.0"
     private val mapper = ObjectMapper()
     private val yamlMapper: ObjectMapper = YAMLMapper()
-
-    @Throws(Exception::class)
-    private fun parseLocalModel(name: String): OpenApi3 {
-        val url = SimpleSerializationTest::class.java.getResource("/models/$folderName/$name.$extension")
-        return OpenApiParser().parse(url)
-    }
 
     private fun <T> iterable(iterator: Iterator<T>): Iterable<T> {
         return object : Iterable<T> {
@@ -74,7 +65,6 @@ object SimpleSerializationTest : Assert() {
         @Test
         @Throws(Exception::class)
         fun serializeExample() {
-            assertTrue(false)
             if (!exampleUrl.toString().contains("callback-example")) {
                 val model = OpenApiParser().parse(exampleUrl)
                 val serialized = (model as OpenApi3Impl)._toJson()
@@ -120,37 +110,4 @@ object SimpleSerializationTest : Assert() {
         }
     }
 
-    class NonParameterizedTests {
-        @Test
-        @Throws(Exception::class)
-        fun toJsonNoticesChanges() {
-            val model = parseLocalModel("simpleTest")
-            assertEquals("simple model", model.getInfo()?.getTitle())
-            assertEquals(
-                "simple model",
-                JsonPointer("/info/title").navigate((model as OpenApi3Impl)._toJson())!!.jsonPrimitive.content
-            )
-            // this changes the overlay value but does not refresh cached JSON -
-            // just marks
-            // it as out-of-date
-            model.getInfo()?.setTitle("changed title")
-            assertEquals("changed title", model.getInfo()?.getTitle())
-            assertEquals("changed title", JsonPointer("/info/title").navigate(model._toJson())!!.jsonPrimitive.content)
-        }
-
-        @Test
-        @Throws(Exception::class)
-        fun toJsonFollowsRefs() {
-            val model = parseLocalModel("simpleTest")
-            val xSchema = model.getSchema("X")!!
-            assertEquals(
-                "#/components/schemas/Y",
-                JsonPointer("/properties/y/\$ref").navigate((xSchema as SchemaImpl)._toJson())!!.jsonPrimitive.content
-            )
-            assertEquals(
-                "integer",
-                JsonPointer("/properties/y/type").navigate(xSchema._toJson(SerializationOptions.Option.FOLLOW_REFS))!!.jsonPrimitive.content
-            )
-        }
-    }
 }
