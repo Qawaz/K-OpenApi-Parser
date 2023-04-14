@@ -16,9 +16,19 @@ class JsonPointer(val segments: List<String>, val isPrefixedWithFSlash: Boolean 
         isPrefixedWithFSlash = path.getOrNull(0) == '/'
     )
 
-    fun navigate(json: JsonElement, segments: List<String> = this.segments): JsonElement? {
+    fun navigate(json: JsonElement): JsonElement? {
         var current: JsonElement = json
         for (segment in segments) current = navigate(current, segment) ?: return null
+        return current
+    }
+
+    fun navigateToMutable(elements: MutableMap<String, JsonElement>): MutableMap<String, JsonElement> {
+        var current = elements
+        for (segment in segments) {
+            current = ((current[segment] as? JsonObject)?.toMutableMap() ?: mutableMapOf()).also {
+                current[segment] = JsonObject(it)
+            }
+        }
         return current
     }
 

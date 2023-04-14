@@ -2,6 +2,26 @@ package com.reprezen.jsonoverlay
 
 import kotlinx.serialization.json.*
 
+internal fun Map<String, JsonElement>.withValue(key: String, value: JsonElement): JsonObject {
+    return JsonObject(toMutableMap().apply { put(key, value) })
+}
+
+internal fun MutableMap<String, JsonElement>.putValue(pointer: JsonPointer, value: JsonElement) {
+    if (pointer.segments.size == 1) {
+        put(pointer.segments.first(), value)
+        return
+    }
+    val parent = JsonPointer(pointer.segments.dropLast(1)).navigateToMutable(this)
+    parent[pointer.segments.last()] = value
+}
+
+internal fun Map<String, JsonElement>.withValue(pointer: JsonPointer, value: JsonElement): JsonObject {
+    if (pointer.segments.size == 1) return withValue(pointer.segments.first(), value)
+    val root = toMutableMap()
+    root.putValue(pointer, value)
+    return JsonObject(root)
+}
+
 private const val MAX_INT_DIGITS = 10
 private const val MAX_LONG_DIGITS = 19
 private const val MAX_FLOAT_DIGITS = 7

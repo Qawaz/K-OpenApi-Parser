@@ -342,31 +342,6 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         return this as V
     }
 
-    private fun MutableMap<String, JsonElement>.putValue(pointer: JsonPointer, value: JsonElement) {
-        if (pointer.segments.size == 1) {
-            this[pointer.segments.first()] = value
-            return
-        }
-        if (!this.containsKey(pointer.segments.first())) {
-            this[pointer.segments.first()] = JsonObject(mapOf())
-        } else {
-            if (this[pointer.segments.first()] !is JsonObject) {
-                throw IllegalArgumentException("element with key ${pointer.segments.first()} from path $pointer already present inside given map and isn't an object")
-            }
-        }
-        val root = this[pointer.segments.first()]!! as JsonObject
-        var currentObj = root
-        var i = 1
-        while (i < pointer.segments.size) {
-            currentObj = JsonPointer.navigate(currentObj, pointer.segments[i])?.let {
-                (it as? JsonObject) ?: throw IllegalStateException()
-            } ?: run {
-                JsonObject(currentObj)
-            }
-            i++
-        }
-    }
-
     override fun _toJsonInternal(options: SerializationOptions): JsonElement {
         val elements = mutableMapOf<String, JsonElement>()
         val obj = JsonObject(elements)
@@ -384,8 +359,12 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
                     elements.putAll(subObject)
                 }
             } else {
-                elements[factory.value.path] =
-                    overlay._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY))
+                overlay._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY)).let {
+                    if (it !is JsonNull) {
+                        elements.putValue(factory.value.pointer, it)
+//                        elements[factory.value.path] = it
+                    }
+                }
             }
         }
         val result = _fixJson(obj)

@@ -17,6 +17,7 @@ package com.reprezen.jsonoverlay
 import java.util.*
 
 class SerializationOptions {
+
     enum class Option {
         KEEP_EMPTY,
         KEEP_ONE_EMPTY,
@@ -29,15 +30,15 @@ class SerializationOptions {
         this.options = HashSet(listOf(*options))
     }
 
-    constructor(options: Collection<Option>?) {
+    constructor(options: Collection<Option>) {
         this.options = HashSet(options)
     }
 
-    operator fun plus(addOptions: Collection<Option>?): SerializationOptions {
+    operator fun plus(addOptions: Collection<Option>): SerializationOptions {
         val newOptions: MutableSet<Option> = HashSet(
             options
         )
-        newOptions.addAll(addOptions!!)
+        newOptions.addAll(addOptions)
         return SerializationOptions(newOptions)
     }
 
@@ -45,11 +46,9 @@ class SerializationOptions {
         return plus(listOf(*addOptions))
     }
 
-    operator fun minus(removeOptions: Collection<Option>?): SerializationOptions {
-        val newOptions: MutableSet<Option> = HashSet(
-            options
-        )
-        newOptions.removeAll(removeOptions!!)
+    operator fun minus(removeOptions: Collection<Option>): SerializationOptions {
+        val newOptions: MutableSet<Option> = HashSet(options)
+        newOptions.removeAll(removeOptions)
         return SerializationOptions(newOptions)
     }
 
@@ -59,10 +58,13 @@ class SerializationOptions {
 
     val isKeepEmpty: Boolean
         get() = options.contains(Option.KEEP_EMPTY)
+
     val isKeepOneEmpty: Boolean
         get() = options.contains(Option.KEEP_ONE_EMPTY)
+
     val isKeepThisEmpty: Boolean
         get() = isKeepEmpty || isKeepOneEmpty
+
     val isFollowRefs: Boolean
         get() = options.contains(Option.FOLLOW_REFS)
 
