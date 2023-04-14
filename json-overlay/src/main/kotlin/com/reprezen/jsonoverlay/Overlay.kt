@@ -49,12 +49,7 @@ class Overlay<V> {
     }
 
     fun find(path: String): JsonOverlay<*>? {
-        if (overlay is KeyValueOverlay) {
-            return (overlay as KeyValueOverlay)._findByPath(path)
-        }// else {
-//            if (overlay != null) println("searching for path $path in ${overlay!!::class.qualifiedName}")
-//        }
-        return null
+        return overlay?.findByPath(path)
     }
 
     val parent: JsonOverlay<*>?

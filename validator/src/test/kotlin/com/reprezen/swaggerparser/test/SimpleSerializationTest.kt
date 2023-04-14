@@ -67,7 +67,7 @@ object SimpleSerializationTest : Assert() {
                 entries.joinToString(
                     separator = ",\n",
                     prefix = "{\n",
-                    postfix = "\n}",
+                    postfix = "\n$indent}",
                     transform = { (k, v) ->
                         buildString {
                             append(indent + '"' + k + '"')

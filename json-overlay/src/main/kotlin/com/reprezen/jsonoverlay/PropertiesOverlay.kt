@@ -144,28 +144,6 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         return elem?.let { createOverlay(it, factoryMap, factory) }
     }
 
-    override fun <T> _traverseOverlaysOfSegment(segment: String, block: (JsonOverlay<*>) -> T?): T? {
-        for (factory in factoryMap.values) {
-            if (factory.pointer.segments.firstOrNull() == segment) {
-                _getOverlay(factory, factory.factory)?.let(block)?.let { return it }
-            }
-        }
-        for (subMap in getSubMaps()) {
-            for (subMapKey in subMap.value._getPropertyNames()) {
-                if (subMapKey == segment) {
-//                    println("found $subMapKey , $segment")
-                    subMap.value._getValueOverlayByPath(subMapKey)?.let(block)?.let { return it }
-//                    println("NOT RETURNED")
-                }
-            }
-        }
-        return null
-    }
-
-    override fun _getValueOverlayByPath(segment: String): JsonOverlay<*>? {
-        return _traverseOverlaysOfSegment(segment) { it }
-    }
-
     override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
 //        val debug = path == JsonPointer("/2.0/users/{username}")
 //        if (debug) println("NAVIGATING $path")
@@ -194,7 +172,6 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
             }
         }
         return null
-//        return super._findByPath(path)
     }
 
     override fun toString(): String {
@@ -214,9 +191,14 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     override fun _getValueOverlayByName(name: String): JsonOverlay<*>? {
-        return factoryMap[name]?.let { factory ->
-            _getOverlay(factory, factory.factory)
+        factoryMap[name]?.let { factory ->
+            return _getOverlay(factory, factory.factory)
         }
+        return null
+    }
+
+    override fun _getValueOverlayByPath(segment: String): JsonOverlay<*>? {
+        return factoryMap.values.find { it.path == segment }?.let { _getOverlay(it, it.factory) }
     }
 
     fun <T> _getOverlay(name: String): JsonOverlay<T>? {
@@ -340,6 +322,9 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
 
     private fun <X> _addChild(name: String, path: String, factory: OverlayFactory<X>) {
         val map = FactoryMap(path, factory)
+        if (factoryMap.containsKey(name)) {
+            throw IllegalArgumentException("child with name $name already exists , children of properties must have different names")
+        }
         factoryMap[name] = map
     }
 
@@ -357,12 +342,42 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         return this as V
     }
 
+    private fun MutableMap<String, JsonElement>.putValue(pointer: JsonPointer, value: JsonElement) {
+        if (pointer.segments.size == 1) {
+            this[pointer.segments.first()] = value
+            return
+        }
+        if (!this.containsKey(pointer.segments.first())) {
+            this[pointer.segments.first()] = JsonObject(mapOf())
+        } else {
+            if (this[pointer.segments.first()] !is JsonObject) {
+                throw IllegalArgumentException("element with key ${pointer.segments.first()} from path $pointer already present inside given map and isn't an object")
+            }
+        }
+        val root = this[pointer.segments.first()]!! as JsonObject
+        var currentObj = root
+        var i = 1
+        while (i < pointer.segments.size) {
+            currentObj = JsonPointer.navigate(currentObj, pointer.segments[i])?.let {
+                (it as? JsonObject) ?: throw IllegalStateException()
+            } ?: run {
+                JsonObject(currentObj)
+            }
+            i++
+        }
+    }
+
     override fun _toJsonInternal(options: SerializationOptions): JsonElement {
         val elements = mutableMapOf<String, JsonElement>()
+        val obj = JsonObject(elements)
         for (factory in factoryMap) {
+//            val debug = factory.value.pointer == JsonPointer("/components/links")
+//            if (debug) println("Serializing json factory key : ${factory.key} , path : ${factory.value.path}")
             val overlay =
-                (if (factory.value.isSubMap) _getValueOverlayByName(factory.key) else _getValueOverlayByPath(factory.value.path))
-                    ?: continue
+                (if (factory.value.isSubMap) _getValueOverlayByName(factory.key) else _getValueOverlayByPath(factory.value.path)).also {
+//                    if (debug) println("FOUND OVERLAY ${_getValueOverlayByName(factory.key)}")
+                } ?: continue
+//            if (debug) println("CONTINUING")
             if (factory.value.isSubMap) {
                 val subObject = overlay._toJson(options)
                 if (subObject is JsonObject) {
@@ -373,7 +388,6 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
                     overlay._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY))
             }
         }
-        val obj = JsonObject(elements)
         val result = _fixJson(obj)
         return if (options.isKeepThisEmpty || obj.isNotEmpty()) result else JsonNull
     }

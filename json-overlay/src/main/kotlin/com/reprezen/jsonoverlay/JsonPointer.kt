@@ -1,8 +1,6 @@
 package com.reprezen.jsonoverlay
 
-import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.*
 
 class JsonPointer(val segments: List<String>, val isPrefixedWithFSlash: Boolean = false) {
 
@@ -18,23 +16,9 @@ class JsonPointer(val segments: List<String>, val isPrefixedWithFSlash: Boolean 
         isPrefixedWithFSlash = path.getOrNull(0) == '/'
     )
 
-    fun navigate(json: JsonElement): JsonElement? {
-        var current: JsonElement? = json
-        for (segment in segments) {
-            current = when (current) {
-                is JsonObject -> current[segment]
-                is JsonArray -> {
-                    val index = segment.toIntOrNull()
-                    if (index != null && index < current.size) {
-                        current[index]
-                    } else {
-                        return null
-                    }
-                }
-
-                else -> return null
-            }
-        }
+    fun navigate(json: JsonElement, segments: List<String> = this.segments): JsonElement? {
+        var current: JsonElement = json
+        for (segment in segments) current = navigate(current, segment) ?: return null
         return current
     }
 
@@ -85,6 +69,22 @@ class JsonPointer(val segments: List<String>, val isPrefixedWithFSlash: Boolean 
     companion object {
 
         val Empty: JsonPointer = JsonPointer(emptyList())
+
+        fun navigate(element: JsonElement, segment: String): JsonElement? = with(element) {
+            return when (this) {
+                is JsonArray -> {
+                    val index = segment.toIntOrNull()
+                    if (index != null && index < size) {
+                        this[index]
+                    } else {
+                        null
+                    }
+                }
+
+                is JsonObject -> this[segment]
+                else -> null
+            }
+        }
 
         private fun String.toPathSegments(): MutableList<String> {
             val segments = mutableListOf<String>()
