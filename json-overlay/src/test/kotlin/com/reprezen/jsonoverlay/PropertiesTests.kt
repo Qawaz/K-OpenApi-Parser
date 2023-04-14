@@ -119,6 +119,7 @@ class PropertiesTests : Assert() {
     }
 
     private fun checkPropertyNames(foo: Foo, vararg expected: String) {
+//        println("${expected.toList()} == ${foo._getPropertyNames()}")
         assertEquals(expected.size, foo._getPropertyNames().size)
         assertTrue(foo._getPropertyNames().containsAll(expected.toList()))
     }

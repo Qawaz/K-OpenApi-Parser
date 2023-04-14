@@ -22,6 +22,8 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
 
         val pointer = JsonPointer(path)
 
+        val isSubMap: Boolean get() = path == "/" || path.isEmpty()
+
         override fun equals(other: Any?): Boolean {
             if (other !is FactoryMap) return false
             return other.pointer == this.pointer
@@ -67,8 +69,8 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     override fun _getPropertyNames(): List<String> {
         for (key in factoryMap.keys) _getKeyValueOverlayByName(key)
         val keys = mutableListOf<String>()
-        for (key in overlays.keys) if (key.path.isNotEmpty() && key.path != "/") keys.add(key.path)
-        keys.addAll(getSubMapKeys())
+        for (key in overlays.keys) if (!key.isSubMap) keys.add(key.path)
+        for(subMap in getSubMaps()) keys.addAll(subMap.value._getPropertyNames())
         return keys
     }
 
@@ -83,7 +85,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     private fun getSubMaps(): Map<FactoryMap, KeyValueOverlay> {
         val map = mutableMapOf<FactoryMap, KeyValueOverlay>()
         for (factory in factoryMap.values) {
-            if (json != null && factory.path.isEmpty() || factory.path == "/") {
+            if (json != null && factory.isSubMap) {
                 (createOverlay(
                     elem = json!!,
                     factoryMap = factory,
@@ -92,13 +94,6 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
             }
         }
         return map
-    }
-
-    private fun getSubMapKeys(): MutableList<String> {
-        val keys = mutableListOf<String>()
-        val subMaps = getSubMaps()
-        for (map in subMaps) keys.addAll(map.value._getPropertyNames())
-        return keys
     }
 
     override fun _getPathOfChild(child: JsonOverlay<*>): String {
