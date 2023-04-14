@@ -100,11 +100,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
 
     override fun _toJsonInternal(options: SerializationOptions): JsonElement {
         if (overlays.isEmpty() && !options.isKeepThisEmpty) return JsonNull
-        val objMap = mutableMapOf<String, JsonElement>()
-        for ((key, value1) in overlays) {
-            objMap[key] = value1._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY))
-        }
-        return _jsonObject(objMap)
+        return _jsonObject(overlays.mapValues { it.value._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY)) })
     }
 
     fun _elaborate() {

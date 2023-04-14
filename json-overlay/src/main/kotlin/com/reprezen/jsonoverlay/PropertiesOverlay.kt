@@ -358,21 +358,28 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     override fun _toJsonInternal(options: SerializationOptions): JsonElement {
-        for (key in factoryMap.keys) _getValueOverlayByName(key)
-        val obj = overlays.mapKeys { it.key.path }
-            .mapValues { it.value._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY)) }
-        val result = _fixJson(JsonObject(obj))
+        val elements = mutableMapOf<String, JsonElement>()
+        for (factory in factoryMap) {
+            val overlay =
+                (if (factory.value.isSubMap) _getValueOverlayByName(factory.key) else _getValueOverlayByPath(factory.value.path))
+                    ?: continue
+            if (factory.value.isSubMap) {
+                val subObject = overlay._toJson(options)
+                if (subObject is JsonObject) {
+                    elements.putAll(subObject)
+                }
+            } else {
+                elements[factory.value.path] =
+                    overlay._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY))
+            }
+        }
+        val obj = JsonObject(elements)
+        val result = _fixJson(obj)
         return if (options.isKeepThisEmpty || obj.isNotEmpty()) result else JsonNull
     }
 
     protected open fun _fixJson(json: JsonElement): JsonElement {
         return json
-    }
-
-    override fun hashCode(): Int {
-        var hash = 7
-        hash = 31 * hash + factoryMap.hashCode()
-        return hash
     }
 
 }

@@ -21,13 +21,13 @@ import com.reprezen.jsonoverlay.JsonPointer
 import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.jsonoverlay.SerializationOptions
 import com.reprezen.kaizen.oasparser.OpenApiParser
+import com.reprezen.kaizen.oasparser.json.equalTo
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
 import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
-import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.*
 import org.junit.Assert
 import org.junit.Test
 import org.junit.experimental.runners.Enclosed
@@ -62,17 +62,40 @@ object SimpleSerializationTest : Assert() {
         var exampleUrl: URL = pair.first
         var fileName: String = pair.second
 
+        private fun JsonElement.customToString(indent: String = ""): String {
+            return if (this is JsonObject) {
+                entries.joinToString(
+                    separator = ",\n",
+                    prefix = "{\n",
+                    postfix = "\n}",
+                    transform = { (k, v) ->
+                        buildString {
+                            append(indent + '"' + k + '"')
+                            append(':')
+                            append(v.customToString(indent + "\t"))
+                        }
+                    }
+                )
+            } else toString()
+        }
+
+        @OptIn(ExperimentalSerializationApi::class)
         @Test
         @Throws(Exception::class)
         fun serializeExample() {
             if (!exampleUrl.toString().contains("callback-example")) {
+                if (fileName.contains(".yaml")) {
+                    throw IllegalArgumentException("yaml serialization not supported yet")
+                }
                 val model = OpenApiParser().parse(exampleUrl)
                 val serialized = (model as OpenApi3Impl)._toJson()
-                val expected = yamlMapper.readTree(exampleUrl)
-                JSONAssert.assertEquals(
-                    mapper.writeValueAsString(expected), mapper.writeValueAsString(serialized),
-                    JSONCompareMode.STRICT
-                )
+                val expected = Json.decodeFromStream<JsonElement>(exampleUrl.openStream()!!)
+                val result = expected.equalTo(serialized, "")
+                result.exceptionOrNull()?.let {
+                    it.printStackTrace()
+                    assertEquals(expected.customToString(), serialized.customToString())
+                }
+                assertTrue(result.isSuccess)
             }
         }
 
