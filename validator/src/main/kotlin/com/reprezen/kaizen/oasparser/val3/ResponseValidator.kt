@@ -11,11 +11,13 @@
  */
 package com.reprezen.kaizen.oasparser.val3
 
+import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.kaizen.oasparser.model3.Header
 import com.reprezen.kaizen.oasparser.model3.Link
 import com.reprezen.kaizen.oasparser.model3.MediaType
 import com.reprezen.kaizen.oasparser.model3.Response
 import com.reprezen.kaizen.oasparser.ovl3.ResponseImpl
+import com.reprezen.kaizen.oasparser.validate.MapValidator
 import com.reprezen.kaizen.oasparser.validate.ObjectValidatorBase
 
 class ResponseValidator : ObjectValidatorBase<Response>() {
@@ -29,7 +31,7 @@ class ResponseValidator : ObjectValidatorBase<Response>() {
             false,
             MediaTypeValidator()
         )
-        validateMapField<Link>(ResponseImpl.F_links, false, false, LinkValidator())
+        MapValidator(valueValidator = LinkValidator(), isNonEmpty = false, isUnique = false).validate(Overlay.of(response.getLinks())!!)
         validateExtensions(response.getExtensions())
     }
 }

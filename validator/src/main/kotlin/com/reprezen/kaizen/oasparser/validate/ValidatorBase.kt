@@ -29,15 +29,15 @@ abstract class ValidatorBase<V> : Validator<V> {
 
     abstract fun runValidations()
 
-    fun validateBooleanField(name: String, required: Boolean): Overlay<Boolean>? {
+    fun validateBooleanField(name: String, required: Boolean): Overlay<Boolean> {
         return validateField(name, required, null)
     }
 
-    fun validateStringField(name: String, required: Boolean): Overlay<String>? {
+    fun validateStringField(name: String, required: Boolean): Overlay<String> {
         return validateStringField(name, required, null as Pattern?)
     }
 
-    fun validateStringField(name: String, required: Boolean, pattern: String?): Overlay<String>? {
+    fun validateStringField(name: String, required: Boolean, pattern: String?): Overlay<String> {
         return validateStringField(name, required, Pattern.compile(pattern))
     }
 
@@ -63,7 +63,7 @@ abstract class ValidatorBase<V> : Validator<V> {
         }
     }
 
-    fun validatePatternField(name: String, required: Boolean): Overlay<String>? {
+    fun validatePatternField(name: String, required: Boolean): Overlay<String> {
         return validateStringField(name, required, null, Consumer { field: Overlay<String> -> checkRegex(field) })
     }
 
@@ -79,7 +79,7 @@ abstract class ValidatorBase<V> : Validator<V> {
     fun validateUrlField(
         name: String, required: Boolean, allowRelative: Boolean, allowVars: Boolean,
         pattern: String?
-    ): Overlay<String>? {
+    ): Overlay<String> {
         return validateUrlField(name, required, allowRelative, allowVars, Pattern.compile(pattern))
     }
 
@@ -87,7 +87,7 @@ abstract class ValidatorBase<V> : Validator<V> {
     fun validateUrlField(
         name: String, required: Boolean, allowRelative: Boolean, allowVars: Boolean,
         pattern: Pattern? = null
-    ): Overlay<String>? {
+    ): Overlay<String> {
         return validateStringField(
             name,
             required,
@@ -128,12 +128,12 @@ abstract class ValidatorBase<V> : Validator<V> {
         }
     }
 
-    fun validateUrlField(name: String, required: Boolean, pattern: String?): Overlay<String>? {
+    fun validateUrlField(name: String, required: Boolean, pattern: String?): Overlay<String> {
         return validateEmailField(name, required, Pattern.compile(pattern))
     }
 
     @JvmOverloads
-    fun validateEmailField(name: String, required: Boolean, pattern: Pattern? = null): Overlay<String>? {
+    fun validateEmailField(name: String, required: Boolean, pattern: Pattern? = null): Overlay<String> {
         return validateStringField(
             name,
             required,
@@ -159,11 +159,11 @@ abstract class ValidatorBase<V> : Validator<V> {
         }
     }
 
-    fun validatePositiveField(name: String, required: Boolean): Overlay<Number>? {
+    fun validatePositiveField(name: String, required: Boolean): Overlay<Number> {
         return validateNumericField(name, required, { x: Number -> NumericUtils.isPositive(x) }, "be positive")
     }
 
-    fun validateNonNegativeField(name: String, required: Boolean): Overlay<Number>? {
+    fun validateNonNegativeField(name: String, required: Boolean): Overlay<Number> {
         return validateNumericField(name, required, { x: Number -> NumericUtils.isNonNegative(x) }, "not be positive")
     }
 
@@ -172,10 +172,10 @@ abstract class ValidatorBase<V> : Validator<V> {
         required: Boolean,
         test: Function<Number, Boolean>?,
         desc: String?
-    ): Overlay<Number>? {
+    ): Overlay<Number> {
         val field = validateField<Number>(name, required, null)
         checkMissing(field, required)
-        if (field?.isPresent == true && test != null) {
+        if (field.isPresent == true && test != null) {
             val n = field.get()!!
             if (!test.apply(n)) {
                 results.addError(Messages.msg(BaseValidationMessages.NumberConstraint, desc!!, n), field)
@@ -191,7 +191,7 @@ abstract class ValidatorBase<V> : Validator<V> {
     ): Overlay<F> {
         val propValue: PropertiesOverlay<F> = value.get() as PropertiesOverlay<F>
         val field = Overlay.of(propValue, name)
-        if(required && field == null) throw IllegalStateException("field $name is required $propValue")
+        if (required && field == null) throw IllegalStateException("field $name is required $propValue")
         checkJsonType(field, getAllowedJsonTypes(field!!), results)
         checkMissing(field, required)
         if (field.isPresent && validator != null) {
@@ -218,9 +218,9 @@ abstract class ValidatorBase<V> : Validator<V> {
         unique: Boolean,
         itemValidator: Validator<X>?
     ) {
-        if(itemValidator != null) ListValidator(itemValidator).validate(list)
+        if (itemValidator != null) ListValidator(itemValidator).validate(list)
         checkListNotEmpty(list, nonEmpty)
-        checkListUnique(list, unique,nonEmpty = nonEmpty)
+        checkListUnique(list, unique, nonEmpty = nonEmpty)
     }
 
     private fun <X> checkListNotEmpty(list: Overlay<List<X>>, nonEmpty: Boolean) {
@@ -234,10 +234,12 @@ abstract class ValidatorBase<V> : Validator<V> {
         }
     }
 
-    private fun <X> checkListUnique(list: Overlay<List<X>>, unique: Boolean,nonEmpty: Boolean) {
+    private fun <X> checkListUnique(list: Overlay<List<X>>, unique: Boolean, nonEmpty: Boolean) {
         if (unique) {
             val listOverlay = Overlay.getListOverlay(list)
-            if(nonEmpty && listOverlay == null){ throw IllegalStateException("list overlay is null while required non empty") }
+            if (nonEmpty && listOverlay == null) {
+                throw IllegalStateException("list overlay is null while required non empty")
+            }
             val seen: MutableSet<X> = HashSet()
             for (i in 0 until (listOverlay?.size() ?: 0)) {
                 val item: X = listOverlay?.get(i)!!
@@ -253,6 +255,14 @@ abstract class ValidatorBase<V> : Validator<V> {
         }
     }
 
+    private fun <X> validateMap(
+        map: Overlay<MutableMap<String, X>>,
+        nonEmpty: Boolean, unique: Boolean,
+        valueValidator: Validator<X>?
+    ) {
+        MapValidator(valueValidator, isNonEmpty = nonEmpty, isUnique = unique).validate(map)
+    }
+
     fun <X> validateMapField(
         name: String, nonEmpty: Boolean, unique: Boolean,
         valueValidator: Validator<X>?
@@ -263,45 +273,6 @@ abstract class ValidatorBase<V> : Validator<V> {
         ) as Overlay<MutableMap<String, X>>
         validateMap(map, nonEmpty, unique, valueValidator)
         return map
-    }
-
-    private fun <X> validateMap(
-        map: Overlay<MutableMap<String, X>>,
-        nonEmpty: Boolean, unique: Boolean,
-        valueValidator: Validator<X>?
-    ) {
-        if(valueValidator != null) MapValidator(valueValidator).validate(map)
-        checkMapNotEmpty(map, nonEmpty)
-        checkMapUnique(map, unique)
-    }
-
-    private fun <X> checkMapNotEmpty(list: Overlay<MutableMap<String, X>>, nonEmpty: Boolean) {
-        if (nonEmpty) {
-            val mapOverlay: MapOverlay<X> = Overlay.getMapOverlay(list)!!
-            if (!list.isPresent) {
-                if (nonEmpty && mapOverlay.size() == 0) {
-                    results.addError(Messages.msg(BaseValidationMessages.EmptyList), list)
-                }
-            }
-        }
-    }
-
-    private fun <X> checkMapUnique(map: Overlay<MutableMap<String, X>>, unique: Boolean) {
-        if (unique) {
-            val mapOverlay: MapOverlay<X> = Overlay.getMapOverlay(map)!!
-            val seen: MutableSet<X> = HashSet()
-            for (key in mapOverlay.keySet()) {
-                val value = mapOverlay[key]!!
-                if (seen.contains(value)) {
-                    results.addError(
-                        Messages.msg(BaseValidationMessages.DuplicateValue, value, key),
-                        Overlay.of<X>(mapOverlay, key)
-                    )
-                } else {
-                    seen.add(value)
-                }
-            }
-        }
     }
 
     fun checkMissing(field: Overlay<*>?, required: Boolean) {
@@ -315,14 +286,14 @@ abstract class ValidatorBase<V> : Validator<V> {
         extensions: MutableMap<String, Any>,
         crumb: String? = null
     ): Overlay<MutableMap<String, Any>> {
-        val mapOverlay = Overlay.of(extensions,parent = null)!!
+        val mapOverlay = Overlay.of(extensions, parent = null)!!
         validateMap(mapOverlay, nonEmpty = false, unique = false, valueValidator = null)
         return mapOverlay
     }
 
-    fun validateFormatField(name: String, required: Boolean, type: String?): Overlay<String>? {
+    fun validateFormatField(name: String, required: Boolean, type: String?): Overlay<String> {
         val field = validateStringField(name, required)
-        if (field?.isPresent == true) {
+        if (field.isPresent == true) {
             var normalType: String? = null
             when (field.get()) {
                 "int32", "int64" -> normalType = "integer"

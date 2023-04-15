@@ -26,7 +26,7 @@ class LinkValidator : ObjectValidatorBase<Link>() {
         validateStringField(LinkImpl.F_description, false)
         val op = checkValidOperation(link)
         op?.let { checkParameters(link, it) }
-        val requestBody: Overlay<Any> = validateField<Any>(LinkImpl.F_requestBody, false, null)!!
+        val requestBody: Overlay<Any> = validateField<Any>(LinkImpl.F_requestBody, false, null)
         checkRequestBody(requestBody)
         validateField<Server>(LinkImpl.F_server, false, ServerValidator())
         validateExtensions(link.getExtensions())

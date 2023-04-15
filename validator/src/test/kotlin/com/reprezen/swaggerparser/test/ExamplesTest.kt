@@ -29,9 +29,7 @@ import java.net.URL
 import java.util.*
 
 @RunWith(Parameterized::class)
-class ExamplesTest(
-    val pair : Pair<URL,String>
-) : Assert() {
+class ExamplesTest(val pair : Pair<URL,String>) : Assert() {
 
 
     val exampleUrl: URL = pair.first
@@ -55,7 +53,6 @@ class ExamplesTest(
         private const val EXAMPLES_BRANCH = "main"
         private const val EXAMPLES_ROOT = "examples/v3.0"
 
-        @OptIn(ExperimentalSerializationApi::class)
         @JvmStatic
         @Parameterized.Parameters(name = "{index}: {1}")
         @Throws(IOException::class)

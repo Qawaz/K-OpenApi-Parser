@@ -16,22 +16,23 @@ import com.reprezen.jsonoverlay.Overlay
 class ValidationResults {
 
     enum class Severity {
+
         NONE, INFO, WARNING, ERROR;
 
-        fun lt(other: Severity?): Boolean {
-            return this.compareTo(other!!) < 0
+        fun lt(other: Severity): Boolean {
+            return this < other
         }
 
-        fun le(other: Severity?): Boolean {
-            return this.compareTo(other!!) <= 0
+        fun le(other: Severity): Boolean {
+            return this <= other
         }
 
-        fun gt(other: Severity?): Boolean {
-            return this.compareTo(other!!) > 0
+        fun gt(other: Severity): Boolean {
+            return this > other
         }
 
-        fun ge(other: Severity?): Boolean {
-            return this.compareTo(other!!) >= 0
+        fun ge(other: Severity): Boolean {
+            return this >= other
         }
 
         companion object {
@@ -40,6 +41,7 @@ class ValidationResults {
     }
 
     private val items: MutableList<ValidationItem> = ArrayList()
+
     fun <V> addInfo(msg: String, context: Overlay<V>) {
         items.add(ValidationItem(Severity.INFO, msg, context))
     }
