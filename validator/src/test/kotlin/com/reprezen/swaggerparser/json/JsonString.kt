@@ -1,4 +1,4 @@
-package com.reprezen.kaizen.oasparser.json
+package com.reprezen.swaggerparser.json
 
 import kotlinx.serialization.json.*
 

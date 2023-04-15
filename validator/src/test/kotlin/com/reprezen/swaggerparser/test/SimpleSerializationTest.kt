@@ -11,17 +11,14 @@
  */
 package com.reprezen.swaggerparser.test
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.google.common.collect.Lists
 import com.google.common.collect.Queues
 import com.reprezen.jsonoverlay.DocumentLoader
 import com.reprezen.kaizen.oasparser.OpenApiParser
-import com.reprezen.kaizen.oasparser.json.equalTo
-import com.reprezen.kaizen.oasparser.json.toIndentedString
 import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
+import com.reprezen.swaggerparser.json.equalTo
+import com.reprezen.swaggerparser.json.toIndentedString
 import com.wakaztahir.jsontoyaml.YamlOrJson
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.*
 import org.junit.Assert
 import org.junit.Test
@@ -38,16 +35,6 @@ object SimpleSerializationTest : Assert() {
     private const val SPEC_REPO = "OAI/OpenAPI-Specification"
     private const val EXAMPLES_BRANCH = "main"
     private const val EXAMPLES_ROOT = "examples/v3.0"
-    private val mapper = ObjectMapper()
-    private val yamlMapper: ObjectMapper = YAMLMapper()
-
-    private fun <T> iterable(iterator: Iterator<T>): Iterable<T> {
-        return object : Iterable<T> {
-            override fun iterator(): Iterator<T> {
-                return iterator
-            }
-        }
-    }
 
     @RunWith(Parameterized::class)
     class ParameterizedTests(val pair: Pair<URL, String>) : Assert() {

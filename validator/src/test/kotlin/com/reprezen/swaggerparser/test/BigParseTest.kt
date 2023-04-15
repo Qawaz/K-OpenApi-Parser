@@ -11,27 +11,19 @@
  */
 package com.reprezen.swaggerparser.test
 
-import com.fasterxml.jackson.core.JsonPointer
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.reprezen.jsonoverlay.DocumentLoader
-import com.reprezen.jsonoverlay.JsonOverlay
 import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.jsonoverlay.toValue
 import com.reprezen.kaizen.oasparser.OpenApiParser
-import com.reprezen.kaizen.oasparser.json.Walker
-import com.reprezen.kaizen.oasparser.json.walk
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.Json
+import com.reprezen.swaggerparser.json.Walker
+import com.reprezen.swaggerparser.json.walk
 import kotlinx.serialization.json.JsonElement
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.yaml.snakeyaml.Yaml
 import java.net.URL
 import java.util.*
-import java.util.function.Predicate
 
 /**
  * Tests basic parser operation by loading a swagger spec and then verifying
