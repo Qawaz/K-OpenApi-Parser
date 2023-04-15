@@ -36,7 +36,6 @@ class LinksTest : Assert() {
     }
 
     private val linksTestRes: String = localFile("linksTest")
-    private val linksTest2Res: String = localFile("linksTest2")
 
     @Test
     @Throws(Exception::class)
