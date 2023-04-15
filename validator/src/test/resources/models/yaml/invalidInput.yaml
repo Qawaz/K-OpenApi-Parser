@@ -95,7 +95,7 @@ paths:
         x-foo: foo
       requestBody:
         description: description
-        required: false
+        required: ture
         content:
           application/json:
             schema:

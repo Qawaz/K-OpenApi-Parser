@@ -2,6 +2,27 @@ package com.reprezen.jsonoverlay
 
 import kotlinx.serialization.json.*
 
+// ---------------- Printing JsonElement as String
+
+internal fun JsonElement.toIndentedString(indent: String = ""): String {
+    return if (this is JsonObject) {
+        entries.joinToString(
+            separator = ",\n",
+            prefix = "{\n",
+            postfix = "\n$indent}",
+            transform = { (k, v) ->
+                buildString {
+                    append(indent + '"' + k + '"')
+                    append(':')
+                    append(v.toIndentedString(indent + "\t"))
+                }
+            }
+        )
+    } else toString()
+}
+
+// ---------------- Functions to make JsonElement (s) Mutable
+
 internal fun Map<String, JsonElement>.withValue(key: String, value: JsonElement): JsonObject {
     return JsonObject(toMutableMap().apply { put(key, value) })
 }
@@ -21,6 +42,8 @@ internal fun Map<String, JsonElement>.withValue(pointer: JsonPointer, value: Jso
     root.putValue(pointer, value)
     return JsonObject(root)
 }
+
+// ---------------- JsonElement to Any and Any to JsonOverlay Conversion
 
 private const val MAX_INT_DIGITS = 10
 private const val MAX_LONG_DIGITS = 19

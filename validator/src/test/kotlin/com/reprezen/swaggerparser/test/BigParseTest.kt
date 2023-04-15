@@ -16,7 +16,14 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.reprezen.jsonoverlay.JsonOverlay
 import com.reprezen.jsonoverlay.Overlay
+import com.reprezen.jsonoverlay.toValue
 import com.reprezen.kaizen.oasparser.OpenApiParser
+import com.reprezen.kaizen.oasparser.json.Walker
+import com.reprezen.kaizen.oasparser.json.walk
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.decodeFromStream
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,52 +40,31 @@ import java.util.function.Predicate
  * @author Andy Lowry
  */
 @RunWith(Parameterized::class)
-class BigParseTest(
-    private val modelUrl: URL
-) : Assert() {
-    //    @JvmField
-//    @Parameterized.Parameter
-//    var modelUrl: URL? = null
+class BigParseTest(private val modelUrl: URL) : Assert() {
+
+    @OptIn(ExperimentalSerializationApi::class)
     @Test
     @Throws(Exception::class)
     fun test() {
-        val parsedYaml = Yaml().load<Any>(modelUrl.openStream())
-        val tree = YAMLMapper().convertValue(parsedYaml, JsonNode::class.java)
+        val tree = Json.decodeFromStream<JsonElement>(modelUrl.openStream())
         val model = OpenApiParser().parse(modelUrl)
-        val valueNodePredicate = Predicate { obj: JsonNode -> obj.isValueNode }
-        val valueChecker = object : JsonTreeWalker.WalkMethod {
-            override fun run(node: JsonNode?, path: JsonPointer?) {
-                require(node != null && path != null)
-                val overlay = model.findByPath(path.toString())
-                assertNotNull("No overlay object found for path: $path", overlay)
+        val walker = object : Walker {
+            override fun walk(node: JsonElement, parent: JsonElement?, pointer: com.reprezen.jsonoverlay.JsonPointer) {
+                val overlay = model.findByPointer(pointer)
+                assertNotNull("No overlay object found for path: $pointer", overlay)
                 val value = Overlay[overlay!!]
-                var fromJson = getValue(node)
+                val fromJson = node.toValue()
                 val msg = String.format(
                     "Wrong overlay value for model '%s' and path '%s': expected '%s', got '%s'",
                     modelUrl.path,
-                    path,
+                    pointer,
                     fromJson,
                     value
                 )
-                if (fromJson is Double) fromJson = fromJson.toFloat()
                 assertEquals(msg, fromJson, value)
             }
         }
-        JsonTreeWalker.walkTree(tree, valueNodePredicate, valueChecker)
-    }
-
-    private fun getValue(node: JsonNode): Any? {
-        return if (node.isNumber) {
-            node.numberValue()
-        } else if (node.isTextual) {
-            node.textValue()
-        } else if (node.isBoolean) {
-            node.booleanValue()
-        } else if (node.isNull) {
-            null
-        } else {
-            throw IllegalArgumentException("Non-value JSON node got through value node filter")
-        }
+        tree.walk(walker = walker, parent = null, pointer = com.reprezen.jsonoverlay.JsonPointer.Empty)
     }
 
     companion object {

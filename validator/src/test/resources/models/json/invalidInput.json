@@ -128,7 +128,7 @@
         ],
         "requestBody": {
           "description": "description",
-          "required": false,
+          "required": "ture",
           "content": {
             "application/json": {
               "schema": {
