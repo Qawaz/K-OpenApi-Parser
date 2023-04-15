@@ -5,20 +5,34 @@ import kotlinx.serialization.json.*
 // ---------------- Printing JsonElement as String
 
 internal fun JsonElement.toIndentedString(indent: String = ""): String {
-    return if (this is JsonObject) {
-        entries.joinToString(
-            separator = ",\n",
-            prefix = "{\n",
-            postfix = "\n$indent}",
-            transform = { (k, v) ->
-                buildString {
-                    append(indent + '"' + k + '"')
-                    append(':')
-                    append(v.toIndentedString(indent + "\t"))
-                }
+    return when (this) {
+        is JsonArray -> {
+            joinToString(prefix = "[\n", postfix = "\n${indent.removePrefix("\t")}]", separator = ",\n") {
+                indent + it.toIndentedString(indent + '\t')
             }
-        )
-    } else toString()
+        }
+
+        is JsonObject -> {
+            entries.joinToString(
+                separator = ",\n",
+                prefix = "{\n",
+                postfix = "\n${indent.removePrefix("\t")}}",
+                transform = { (k, v) ->
+                    buildString {
+                        append(indent + '"' + k + '"')
+                        append(" : ")
+                        append(v.toIndentedString(indent + '\t'))
+                    }
+                }
+            )
+        }
+
+        is JsonPrimitive -> {
+            toString()
+        }
+
+        JsonNull -> toString()
+    }
 }
 
 // ---------------- Functions to make JsonElement (s) Mutable

@@ -34,10 +34,6 @@ class NumberOverlay : ScalarOverlay<Number> {
         refMgr
     )
 
-    override fun toString(): String {
-        return _get().toString()
-    }
-
     override fun _fromJson(json: JsonElement): Number? {
         if (json !is JsonPrimitive || json.contentOrNull == null) return null
         return json.toNumber()

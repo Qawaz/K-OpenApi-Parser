@@ -149,10 +149,6 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>>, KeyValueOverlay {
         }
     }
 
-    override fun toString(): String {
-        return '[' + (_get()?.joinToString(",") { it.toString() } ?: "null") + ']'
-    }
-
     override fun _getFactory(): OverlayFactory<*> {
         return factory
     }

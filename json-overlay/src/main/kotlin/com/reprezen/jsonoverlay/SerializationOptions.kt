@@ -68,7 +68,4 @@ class SerializationOptions {
     val isFollowRefs: Boolean
         get() = options.contains(Option.FOLLOW_REFS)
 
-    companion object {
-        val EMPTY = SerializationOptions()
-    }
 }

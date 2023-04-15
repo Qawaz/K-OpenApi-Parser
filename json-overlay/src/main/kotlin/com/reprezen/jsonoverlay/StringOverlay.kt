@@ -47,10 +47,6 @@ class StringOverlay : ScalarOverlay<String> {
         return Companion.factory
     }
 
-    override fun toString(): String {
-        return _get()?.let { '"' + it +  '"' } ?: "null"
-    }
-
     companion object {
 
         @JvmField

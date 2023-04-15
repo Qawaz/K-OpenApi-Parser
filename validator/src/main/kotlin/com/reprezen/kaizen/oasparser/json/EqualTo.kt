@@ -13,7 +13,7 @@ fun JsonPrimitive.equalTo(other: JsonPrimitive, path: String): Result<String> {
     }
 }
 
-fun JsonArray.equalTo(other: JsonArray, path: String): Result<String> {
+fun JsonArray.equalTo(other: JsonArray, path: String, checkOrder: Boolean): Result<String> {
     if (this.size != other.size) {
         return Result.failure(Throwable("array with path $path has size $size which is not equal to ${other.size}"))
     }
@@ -22,23 +22,36 @@ fun JsonArray.equalTo(other: JsonArray, path: String): Result<String> {
         if (other.getOrNull(i) == null) {
             return Result.failure(Throwable("element in array with path $path/$i couldn't be found in other"))
         }
-        val result = element.equalTo(other[i], "$path/$i")
+        val result = element.equalTo(other[i], "$path/$i", checkOrder = checkOrder)
         if (result.isFailure) return result
         i++
     }
     return successfulCompared(other, path)
 }
 
-fun JsonObject.equalTo(other: JsonObject, path: String): Result<String> {
+fun JsonObject.equalTo(other: JsonObject, path: String, checkOrder: Boolean): Result<String> {
     if (this.size != other.size) {
         return Result.failure(Throwable("object with path $path has size $size which is not equal to ${other.size}"))
     }
     for (entry in this) {
         val otherValue = other[entry.key]
             ?: return Result.failure(Throwable("element in object with path $path/${entry.key} couldn't be found in other"))
-        val result = entry.value.equalTo(otherValue, path = "$path/${entry.key}")
+        val result = entry.value.equalTo(otherValue, path = "$path/${entry.key}", checkOrder = checkOrder)
         if (result.isFailure) return result
     }
+
+    if (checkOrder) {
+        val keysFirst = keys.toList()
+        val keysSecond = other.keys.toList()
+        var i = 0
+        while (i < keys.size) {
+            if (keysFirst[i] != keysSecond[i]) {
+                return Result.failure(Throwable("key ${keysFirst[i]} in object with path $path/${keysFirst[i]} at index $i is not equal to other ${keysSecond[i]} at the same index , violating order of the map"))
+            }
+            i++
+        }
+    }
+
     return successfulCompared(other, path)
 }
 
@@ -59,16 +72,16 @@ private fun JsonElement.successfulCompared(other: JsonElement, path: String): Re
     return Result.success("${stringType()} with path $path is equal to ${other.stringType()}")
 }
 
-fun JsonElement.equalTo(other: JsonElement, path: String): Result<String> {
+fun JsonElement.equalTo(other: JsonElement, path: String, checkOrder: Boolean): Result<String> {
     when (this) {
         is JsonArray -> {
             if (other !is JsonArray) return unComparableError(other, path)
-            return this.equalTo(other, path = path)
+            return this.equalTo(other, path = path,checkOrder = checkOrder)
         }
 
         is JsonObject -> {
             if (other !is JsonObject) return unComparableError(other, path)
-            return this.equalTo(other, path = path)
+            return this.equalTo(other, path = path, checkOrder = checkOrder)
         }
 
         is JsonPrimitive -> {

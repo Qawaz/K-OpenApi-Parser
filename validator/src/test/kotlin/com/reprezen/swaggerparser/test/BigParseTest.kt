@@ -66,6 +66,14 @@ class BigParseTest(private val modelUrl: URL) : Assert() {
         tree.walk(walker = walker, parent = null, pointer = com.reprezen.jsonoverlay.JsonPointer.Empty)
     }
 
+    @Test
+    fun testModelToString(){
+        val model = OpenApiParser().parse(modelUrl)
+        println(
+            model.toString()
+        )
+    }
+
     companion object {
 
         val isJson: Boolean get() = true

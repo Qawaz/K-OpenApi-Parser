@@ -29,10 +29,6 @@ class ObjectOverlay : ScalarOverlay<Any>, KeyValueOverlay {
         }
     }
 
-    override fun toString(): String {
-        return _get().toString()
-    }
-
     override fun _fromJson(json: JsonElement): Any? {
         return json.toValue()
     }

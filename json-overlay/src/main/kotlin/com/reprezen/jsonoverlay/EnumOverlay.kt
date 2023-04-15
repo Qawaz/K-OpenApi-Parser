@@ -53,8 +53,4 @@ abstract class EnumOverlay<V : Enum<V>> : ScalarOverlay<V> {
 
     protected abstract fun getEnumValue(value: String): V?
 
-    override fun toString(): String {
-        return _get().toString()
-    }
-
 }

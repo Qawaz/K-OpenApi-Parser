@@ -174,22 +174,6 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         return null
     }
 
-    override fun toString(): String {
-        var value = "{"
-        for (factory in factoryMap.values) {
-            if (factory.path != "/" && factory.path.isNotEmpty()) {
-                value += "\n${factory.path} : " + _getOverlay(factory, factory.factory).toString()
-                    .replace("\n", "\n\t")
-            }
-        }
-        for (subMap in getSubMaps()) {
-            for (subMapKey in subMap.value._getPropertyNames()) {
-                value += "\n$subMapKey : ${subMap.value._getValueOverlayByPath(subMapKey)}"
-            }
-        }
-        return "$value\n}"
-    }
-
     override fun _getValueOverlayByName(name: String): JsonOverlay<*>? {
         factoryMap[name]?.let { factory ->
             return _getOverlay(factory, factory.factory)

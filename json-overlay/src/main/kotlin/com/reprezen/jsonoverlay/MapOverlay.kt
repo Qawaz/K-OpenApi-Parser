@@ -24,7 +24,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
 
     private val valueFactory: OverlayFactory<V>
     private val keyPattern: Pattern?
-    private val overlays: MutableMap<String, JsonOverlay<V>> = LinkedHashMap()
+    private val overlays: MutableMap<String, JsonOverlay<V>> = mutableMapOf()
 
     private constructor(
         json: JsonElement,
@@ -82,10 +82,6 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         return "-1".also {
             Throwable("returning child path -1 in map overlay child :  $child \n\n\n map : $this").printStackTrace()
         }
-    }
-
-    override fun toString(): String {
-        return '{' + overlays.entries.joinToString(",") { it.key + " : " + it.value } + '}'
     }
 
     override fun _fromJson(json: JsonElement): MutableMap<String, V> {
