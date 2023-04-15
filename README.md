@@ -1,17 +1,24 @@
 # K-OpenAPI-Parser
 
-K-OpenAPI-Parser is a kotlin based parser , which uses [__KATE__](https://github.com/Qawaz/KATE) , which is its own
-template
-engine. This project is a fork , The original project is completely java , This project is in kotlin.
+The K OpenApi Parser is a kotlin-based
+parser for OpenAPI 3.0 offering full compliance with the
+[OpenAPI 3.0 Specification](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md),
+and a highly uniform read/write programming API.
+[OpenAPI](http://openapis.org), is the industry-standard format for machine-readable
+REST API descriptions.
+
+K-OpenAPI-Parser uses [__KATE__](https://github.com/Qawaz/KATE) , which is its own
+template engine. This project is a fork
 
 Both projects are based on `json-overlay` which is the parser generator for `yaml` / `json` based languages , This
-project
-however makes a fork of `json-overlay` as well.
+project however makes a fork of `json-overlay`.
 
 There are some differences between the original
 
 - Original parser generator generates a Java parser , This
   project generates a Kotlin parser
+- Original parser uses jackson for deserialization , This project 
+  uses Kotlinx Serialization
 - Original parser generator uses `javax.annotation.Generated` annotation ,
   This project has its own `@Generated` annotation
 - Original parser generator parses the previously outputted java file and compares
@@ -24,22 +31,19 @@ There are some differences between the original
 
 - The parser and validator libraries are separate
 
-## Overview ##
-
-The K OpenApi Parser is a kotlin-based validating
-parser for OpenAPI 3.0 offering full compliance with the
-[OpenAPI 3.0 Specification](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md),
-and a highly uniform read/write programming API.
-[OpenAPI](http://openapis.org), is the industry-standard format for machine-readable
-REST API descriptions.
+## Features ##
 
 Feature highlights of K OpenAPI Parser include:
 
-* **High Performance**
-* **Read/Write API**
+* **High Performance** - The parser uses Kotlinx Serialization and doesn't convert the streams
+  to strings and instead deserializes from input streams
+
+* **Read/Write API** - The parser provides a read write api from which you can modify the open api spec 
+  and then export it back to json
+
 * **Tolerant Reader** - The parser yields a fully accessible result
-  from any valid JSON or YAML input - whether or not the input is a
-  valid OpenAPI specification.
+  from any valid JSON or YAML input - whether the input is a
+  valid OpenAPI specification or not. Default / null values are returned for
 
 * **Separate validation** - All validation beyond basic
   JSON/YAML parsing can be performed after the initial parse. Validation goes beyond checking what can be
@@ -54,7 +58,7 @@ Feature highlights of K OpenAPI Parser include:
   details of the OpenAPI Specification. We use code generation to
   create interfaces and implementation classes. Manual code can be added to __KATE__ templates.
 
-* **Flexible Reference Handling** - All references are detected and
+* **Flexible Reference Handling** - All references are detected
   during parsing, including references not technically permitted by
   the OpenAPI specification. References are normally traversed
   automatically by the API, but full details of references and
