@@ -10,9 +10,11 @@ repositories {
 dependencies {
 
     api(project(":parser"))
-    api(project(":yaml-parser"))
+
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+
+    testImplementation(project(":yaml-parser"))
 
     testImplementation("junit:junit:4.13.1")
     testImplementation("com.google.guava:guava:30.0-jre")
