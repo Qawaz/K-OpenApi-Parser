@@ -51,7 +51,7 @@ class ReferenceManager {
         this.registry = registry
     }
 
-    fun getManagerFor(url: URL?): ReferenceManager {
+    fun getManagerFor(url: URL): ReferenceManager {
         val normalized = normalize(url, true)
         var manager = registry.getManager(normalized!!)
         if (manager == null) {
@@ -70,10 +70,10 @@ class ReferenceManager {
             val url = URL(docUrl, refString)
             val fragment = url.ref
             val manager = getManagerFor(url)
-            if(refString.startsWith('#')){
-                InternalReference(doc!!,refString, fragment, normalize(url, false).toString(), manager)
+            if (refString.startsWith('#')) {
+                InternalReference(doc!!, refString, fragment, normalize(url, false).toString(), manager)
 //                ReferenceImpl(refString, fragment, normalize(url, false).toString(), manager)
-            }else {
+            } else {
                 ReferenceImpl(refString, fragment, normalize(url, false).toString(), manager)
             }
         } catch (e: MalformedURLException) {
@@ -90,24 +90,21 @@ class ReferenceManager {
     }
 
     companion object {
-        private fun normalize(url: URL?, noFrag: Boolean): URL? {
-            return if (url != null) {
-                var urlString = url.toString()
-                val fragPos = urlString.indexOf("#")
-                if (noFrag && fragPos >= 0) {
-                    urlString = urlString.substring(0, fragPos)
-                }
-                try {
-                    URI(urlString).normalize().toURL()
-                } catch (e: MalformedURLException) {
-                    // oh well, we tried...
-                    url
-                } catch (e: URISyntaxException) {
-                    url
-                }
-            } else {
-                null
+        private fun normalize(url: URL, noFrag: Boolean): URL? {
+            var urlString = url.toString()
+            val fragPos = urlString.indexOf("#")
+            if (noFrag && fragPos >= 0) {
+                urlString = urlString.substring(0, fragPos)
             }
+            return try {
+                URI(urlString).normalize().toURL()
+            } catch (e: MalformedURLException) {
+                // oh well, we tried...
+                url
+            } catch (e: URISyntaxException) {
+                url
+            }
+
         }
     }
 }

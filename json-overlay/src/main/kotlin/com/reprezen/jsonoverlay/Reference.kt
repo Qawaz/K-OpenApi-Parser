@@ -53,19 +53,15 @@ interface Reference {
     }
 }
 
-class InternalReference : Reference {
-
-    override val refString: String
-
-    override val normalizedRef: String?
+class InternalReference(
+    private val root: JsonElement,
+    override val refString: String,
+    override val fragment: String?,
+    override val normalizedRef: String?,
+    override val manager: ReferenceManager
+) : Reference {
 
     override val pointer: JsonPointer?
-
-    override val manager: ReferenceManager
-
-    private val root: JsonElement?
-
-    override val fragment: String?
 
     override val isResolved: Boolean
         get() = true
@@ -81,18 +77,7 @@ class InternalReference : Reference {
     override var invalidReason: ResolutionException? = null
         private set
 
-    constructor(
-        root: JsonElement,
-        refString: String,
-        fragment: String?,
-        normalizedRef: String?,
-        manager: ReferenceManager
-    ) {
-        this.root = root
-        this.refString = refString
-        this.fragment = fragment
-        this.normalizedRef = normalizedRef
-        this.manager = manager
+    init {
         pointer = JsonPointer(refString.removePrefix("#"))
     }
 
@@ -101,7 +86,7 @@ class InternalReference : Reference {
     }
 
     override fun getJson(): JsonElement? {
-        val node = root?.let { pointer?.navigate(it) }
+        val node = root.let { pointer?.navigate(it) }
         if (node == null) {
             invalidReason = ResolutionException(this, Throwable("couldn't navigate to pointer $pointer"))
             return null
