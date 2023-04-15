@@ -32,7 +32,6 @@ class ReferenceManager {
     private var docUrl: URL?
     private var doc: JsonElement? = null
 
-
     @JvmOverloads
     constructor(rootUrl: URL? = null) {
         registry = ReferenceRegistry()
@@ -68,16 +67,15 @@ class ReferenceManager {
     fun getReference(refString: String): Reference {
         return try {
             val url = URL(docUrl, refString)
-            val fragment = url.ref
             val manager = getManagerFor(url)
             if (refString.startsWith('#')) {
-                InternalReference(doc!!, refString, fragment, normalize(url, false).toString(), manager)
+                InternalReference(doc!!, refString, docUrl, manager)
 //                ReferenceImpl(refString, fragment, normalize(url, false).toString(), manager)
             } else {
-                ReferenceImpl(refString, fragment, normalize(url, false).toString(), manager)
+                ReferenceImpl(refString, docUrl,url.ref, manager)
             }
         } catch (e: MalformedURLException) {
-            ReferenceImpl(refString, ResolutionException(null, e), null)
+            ReferenceImpl(refString, docUrl, ResolutionException(null, e), null)
         }
     }
 
@@ -90,11 +88,13 @@ class ReferenceManager {
     }
 
     companion object {
-        private fun normalize(url: URL, noFrag: Boolean): URL? {
+        internal fun normalize(url: URL, noFrag: Boolean): URL? {
             var urlString = url.toString()
-            val fragPos = urlString.indexOf("#")
-            if (noFrag && fragPos >= 0) {
-                urlString = urlString.substring(0, fragPos)
+            if (noFrag) {
+                val fragPos = urlString.indexOf("#")
+                if (fragPos >= 0) {
+                    urlString = urlString.substring(0, fragPos)
+                }
             }
             return try {
                 URI(urlString).normalize().toURL()

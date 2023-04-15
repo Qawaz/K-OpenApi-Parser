@@ -17,12 +17,11 @@ package com.reprezen.jsonoverlay
 import com.reprezen.jsonoverlay.ResolutionException.ReferenceCycleException
 import kotlinx.serialization.json.*
 import java.io.IOException
+import java.net.URL
 
 interface Reference {
 
     val refString: String
-
-    val normalizedRef: String?
 
     val invalidReason: ResolutionException?
 
@@ -30,7 +29,15 @@ interface Reference {
 
     val manager: ReferenceManager?
 
-    val fragment: String?
+    val docUrl : URL?
+
+    val normalizedRef: String? get() {
+        return ReferenceManager.normalize(URL(docUrl, refString), false).toString()
+    }
+
+    val fragment: String? get() {
+        return URL(docUrl, refString).ref
+    }
 
     val isResolved: Boolean
 
@@ -56,8 +63,7 @@ interface Reference {
 class InternalReference(
     private val root: JsonElement,
     override val refString: String,
-    override val fragment: String?,
-    override val normalizedRef: String?,
+    override val docUrl: URL?,
     override val manager: ReferenceManager
 ) : Reference {
 
@@ -114,8 +120,7 @@ class ReferenceImpl : Reference {
     override var refString: String
         private set
 
-    override var normalizedRef: String? = null
-        private set
+    override var docUrl: URL?
 
     override var pointer: JsonPointer? = null
         private set
@@ -130,10 +135,10 @@ class ReferenceImpl : Reference {
     override var invalidReason: ResolutionException? = null
         private set
 
-    constructor(refString: String, fragment: String?, normalizedRef: String?, manager: ReferenceManager) {
+    constructor(refString: String, docUrl: URL?,fragment: String?, manager: ReferenceManager) {
         this.refString = refString
-        this.normalizedRef = normalizedRef
         this.manager = manager
+        this.docUrl = docUrl
         try {
             pointer = if (fragment != null) JsonPointer(fragment) else null
         } catch (e: IllegalArgumentException) {
@@ -142,7 +147,8 @@ class ReferenceImpl : Reference {
         }
     }
 
-    constructor(refString: String, invalidReason: ResolutionException?, manager: ReferenceManager?) {
+    constructor(refString: String, docUrl: URL?,invalidReason: ResolutionException?, manager: ReferenceManager?) {
+        this.docUrl = docUrl
         this.refString = refString
         this.invalidReason = invalidReason
         this.manager = manager
