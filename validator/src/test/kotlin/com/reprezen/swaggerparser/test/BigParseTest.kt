@@ -45,7 +45,7 @@ class BigParseTest(private val modelUrl: URL) : Assert() {
     @OptIn(ExperimentalSerializationApi::class)
     @Test
     @Throws(Exception::class)
-    fun test() {
+    fun testPrimitivesYieldSameValue() {
         val tree = Json.decodeFromStream<JsonElement>(modelUrl.openStream())
         val model = OpenApiParser().parse(modelUrl)
         val walker = object : Walker {

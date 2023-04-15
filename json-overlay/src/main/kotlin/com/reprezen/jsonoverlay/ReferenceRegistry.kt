@@ -14,28 +14,21 @@
  */
 package com.reprezen.jsonoverlay
 
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.booleanOrNull
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.*
 import java.io.IOException
 import java.net.URL
 import java.util.*
 
-class ReferenceRegistry @JvmOverloads constructor(loader: JsonLoader? = null) {
+class ReferenceRegistry {
 
     private val managers: MutableMap<String, ReferenceManager> = HashMap()
-    private val loader: JsonLoader
     private val overlaysByRef: MutableMap<Pair<String, String>, JsonOverlay<*>> = HashMap()
 
     // can't use Pair here because we need to index by JsonNode identity, not
     // using
     // its equals impl
     private val overlaysByJson: MutableMap<JsonElement, MutableMap<String, JsonOverlay<*>>> = IdentityHashMap()
-
-    init {
-        this.loader = loader ?: JsonLoader()
-    }
 
     fun getManager(baseUrl: URL): ReferenceManager? {
         return managers[baseUrl.toString()]
@@ -45,9 +38,10 @@ class ReferenceRegistry @JvmOverloads constructor(loader: JsonLoader? = null) {
         managers[baseUrl.toString()] = manager
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     @Throws(IOException::class)
     fun loadDoc(url: URL): JsonElement {
-        return loader.load(url)
+        return url.openStream().use { input -> Json.decodeFromStream<JsonElement>(input) }
     }
 
     fun getOverlay(normalizedRef: String, factorySig: String): JsonOverlay<*>? {

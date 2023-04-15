@@ -11,18 +11,13 @@
  */
 package com.reprezen.swaggerparser.test
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.google.common.collect.Lists
 import com.google.common.collect.Queues
-import com.reprezen.jsonoverlay.JsonLoader
 import com.reprezen.kaizen.oasparser.OpenApiParser
 import com.reprezen.kaizen.oasparser.getValidationItems
 import com.reprezen.kaizen.oasparser.isValid
-import com.reprezen.kaizen.oasparser.model3.OpenApi3
-import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.*
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -44,8 +39,6 @@ class ExamplesTest(
     @Test
     @Throws(Exception::class)
     fun exampleCanBeParsed() {
-        // TODO TEST EXAMPLES
-        return
         if (!exampleUrl.toString().contains("callback-example")) {
             val model = OpenApiParser().parse(exampleUrl)
             for (item in model.getValidationItems()) {
@@ -60,6 +53,7 @@ class ExamplesTest(
         private const val EXAMPLES_BRANCH = "main"
         private const val EXAMPLES_ROOT = "examples/v3.0"
 
+        @OptIn(ExperimentalSerializationApi::class)
         @JvmStatic
         @Parameterized.Parameters(name = "{index}: {1}")
         @Throws(IOException::class)
@@ -74,7 +68,7 @@ class ExamplesTest(
             dirs.add(URL(request))
             while (!dirs.isEmpty()) {
                 val url = dirs.remove()
-                val tree = JsonLoader().load(url) as JsonArray
+                val tree = url.openStream().use { Json.decodeFromStream<JsonElement>(it) } as JsonArray
                 for (resultItem in tree) {
                     val result = resultItem as JsonObject
                     val type = result["type"]!!.jsonPrimitive.content

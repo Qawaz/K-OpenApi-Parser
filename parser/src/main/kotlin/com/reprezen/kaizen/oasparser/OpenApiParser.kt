@@ -11,14 +11,10 @@
  */
 package com.reprezen.kaizen.oasparser
 
-import com.reprezen.jsonoverlay.JsonLoader
 import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.*
 import java.io.File
 import java.io.IOException
 import java.net.MalformedURLException
@@ -28,23 +24,13 @@ import java.net.URL
 open class OpenApiParser {
 
     open fun parse(spec: String, resolutionBase: URL?): OpenApi3 {
-        return parse(spec, resolutionBase, true)
-    }
-
-    open fun parse(spec: String, resolutionBase: URL?, validate: Boolean): OpenApi3 {
         return try {
-            val loader = JsonLoader()
-            val tree = loader.loadString(resolutionBase, spec)
-            parse(tree, resolutionBase, loader)
+            val tree = Json.parseToJsonElement(spec)
+            parse(tree, resolutionBase)
         } catch (e: IOException) {
             throw OpenApiParserException("Failed to parse spec as JSON or YAML", e)
         }
     }
-
-//    @Throws(Exception::class)
-//    open fun parse(specFile: File): OpenApi3 {
-//        return parse(specFile, true)
-//    }
 
     @Throws(Exception::class)
     open fun parse(specFile: File): OpenApi3 {
@@ -55,11 +41,6 @@ open class OpenApiParser {
         }
     }
 
-//    @Throws(Exception::class)
-//    open fun parse(uri: URI): OpenApi3 {
-//        return parse(uri, true)
-//    }
-
     @Throws(Exception::class)
     open fun parse(uri: URI): OpenApi3 {
         return try {
@@ -69,11 +50,6 @@ open class OpenApiParser {
         }
     }
 
-//    @Throws(Exception::class)
-//    open fun parse(resolutionBase: URL?): OpenApi3 {
-//        return parse(resolutionBase, true)
-//    }
-
     @Throws(Exception::class)
     open fun parse(resolutionBase: URL?): OpenApi3 {
         val manager = ReferenceManager(resolutionBase)
@@ -81,15 +57,7 @@ open class OpenApiParser {
     }
 
     open fun parse(tree: JsonElement?, resolutionBase: URL?): OpenApi3 {
-        return parse(tree, resolutionBase, true)
-    }
-
-    open fun parse(tree: JsonElement?, resolutionBase: URL?, validate: Boolean): OpenApi3 {
-        return parse(tree, resolutionBase, null)
-    }
-
-    fun parse(tree: JsonElement?, resolutionBase: URL?, loader: JsonLoader?): OpenApi3 {
-        val manager = ReferenceManager(resolutionBase, tree, loader)
+        val manager = ReferenceManager(resolutionBase, tree)
         return parse(manager)
     }
 

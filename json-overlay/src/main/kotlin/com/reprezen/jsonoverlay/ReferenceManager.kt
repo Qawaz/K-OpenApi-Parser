@@ -34,15 +34,15 @@ class ReferenceManager {
 
 
     @JvmOverloads
-    constructor(rootUrl: URL? = null, loader: JsonLoader? = null) {
-        registry = ReferenceRegistry(loader)
+    constructor(rootUrl: URL? = null) {
+        registry = ReferenceRegistry()
         docUrl = if (rootUrl != null) normalize(rootUrl, true) else null
         if (docUrl != null) {
             registry.registerManager(docUrl!!, this)
         }
     }
 
-    constructor(rootUrl: URL?, preloadedDoc: JsonElement?, loader: JsonLoader?) : this(rootUrl, loader) {
+    constructor(rootUrl: URL?, preloadedDoc: JsonElement?) : this(rootUrl) {
         doc = preloadedDoc
     }
 

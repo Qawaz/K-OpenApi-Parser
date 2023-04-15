@@ -14,6 +14,7 @@ package com.reprezen.kaizen.oasparser.validate
 import com.reprezen.jsonoverlay.Overlay
 
 class ValidationResults {
+
     enum class Severity {
         NONE, INFO, WARNING, ERROR;
 
@@ -73,5 +74,9 @@ class ValidationResults {
             return severity
         }
 
-    class ValidationItem(val severity: Severity, val msg: String, context: Overlay<*>)
+    class ValidationItem(val severity: Severity, val msg: String, val overlay: Overlay<*>) {
+        override fun toString(): String {
+            return "severity : $severity , message : $msg , overlay : ${overlay::class.qualifiedName}"
+        }
+    }
 }

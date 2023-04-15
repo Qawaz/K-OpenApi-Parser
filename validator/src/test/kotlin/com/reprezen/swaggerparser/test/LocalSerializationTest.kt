@@ -11,44 +11,33 @@
  */
 package com.reprezen.swaggerparser.test
 
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
-import com.google.common.collect.Lists
-import com.google.common.collect.Queues
-import com.reprezen.jsonoverlay.JsonLoader
 import com.reprezen.jsonoverlay.JsonPointer
-import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.jsonoverlay.SerializationOptions
 import com.reprezen.kaizen.oasparser.OpenApiParser
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
 import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
-import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert
 import org.junit.Test
-import org.junit.experimental.runners.Enclosed
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
-import org.skyscreamer.jsonassert.JSONAssert
-import org.skyscreamer.jsonassert.JSONCompareMode
-import java.io.IOException
-import java.net.URL
 import java.util.*
 
 class LocalSerializationTest : Assert() {
 
-    private val isJson : Boolean get() = true
-    private val extension : String get() = if(isJson) "json" else "yaml"
-    private val folderName : String get() = if(isJson) "json" else "yaml"
+    private val isJson: Boolean get() = true
+    private val extension: String get() = if (isJson) "json" else "yaml"
+    private val folderName: String get() = if (isJson) "json" else "yaml"
 
     @Throws(Exception::class)
     private fun parseLocalModel(name: String): OpenApi3 {
         val url = LocalSerializationTest::class.java.getResource("/models/$folderName/$name.$extension")
         return OpenApiParser().parse(url)
+    }
+
+    @Test
+    fun localModelCanBeParsed() {
+        val model = parseLocalModel("invalidInput")
+        assertEquals("description", model.getInfo()?.getDescription())
     }
 
     @Test

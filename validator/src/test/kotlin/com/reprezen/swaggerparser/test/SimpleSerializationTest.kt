@@ -11,30 +11,20 @@
  */
 package com.reprezen.swaggerparser.test
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.google.common.collect.Lists
 import com.google.common.collect.Queues
-import com.reprezen.jsonoverlay.JsonLoader
-import com.reprezen.jsonoverlay.JsonPointer
-import com.reprezen.jsonoverlay.Overlay
-import com.reprezen.jsonoverlay.SerializationOptions
 import com.reprezen.kaizen.oasparser.OpenApiParser
 import com.reprezen.kaizen.oasparser.json.equalTo
-import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
-import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.*
 import org.junit.Assert
 import org.junit.Test
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.skyscreamer.jsonassert.JSONAssert
-import org.skyscreamer.jsonassert.JSONCompareMode
 import java.io.IOException
 import java.net.URL
 import java.util.*
@@ -100,6 +90,7 @@ object SimpleSerializationTest : Assert() {
         }
 
         companion object {
+            @OptIn(ExperimentalSerializationApi::class)
             @JvmStatic
             @Parameterized.Parameters(name = "{index}: {1}")
             @Throws(IOException::class)
@@ -114,7 +105,7 @@ object SimpleSerializationTest : Assert() {
                 dirs.add(URL(request))
                 while (!dirs.isEmpty()) {
                     val url = dirs.remove()
-                    val tree = JsonLoader().load(url) as JsonArray
+                    val tree = url.openStream().use { Json.decodeFromStream<JsonElement>(it) } as JsonArray
                     for (resultItem in tree) {
                         val result = resultItem as JsonObject
                         val type = result["type"]!!.jsonPrimitive.content
