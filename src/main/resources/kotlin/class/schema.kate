@@ -11,7 +11,7 @@
                 return if(overlay.parent is MapOverlay<*>) overlay.pathInParent else null
             }
 
-            override fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
+            override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
                 return if(path.segments.firstOrNull() == "additionalProperties"){
                     val tail = JsonPointer(path.segments.drop(1))
                     if(json != null && tail.navigate(json!!) != null){
