@@ -85,12 +85,5 @@ class ExamplesTest(
             return examples
         }
 
-        private fun <T> iterable(iterator: Iterator<T>): Iterable<T> {
-            return object : Iterable<T> {
-                override fun iterator(): Iterator<T> {
-                    return iterator
-                }
-            }
-        }
     }
 }

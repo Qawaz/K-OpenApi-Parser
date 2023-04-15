@@ -76,7 +76,7 @@ class ValidationResults {
 
     class ValidationItem(val severity: Severity, val msg: String, val overlay: Overlay<*>) {
         override fun toString(): String {
-            return "severity : $severity , message : $msg , overlay : ${overlay::class.qualifiedName}"
+            return "severity : $severity , message : $msg , overlay : ${(overlay.overlay ?: overlay)::class.qualifiedName} , pointer : ${overlay.pathFromRoot}"
         }
     }
 }

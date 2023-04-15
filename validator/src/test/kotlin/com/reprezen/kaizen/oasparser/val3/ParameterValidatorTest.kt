@@ -1,6 +1,6 @@
 package com.reprezen.kaizen.oasparser.val3
 
-import com.reprezen.kaizen.oasparser.OpenApi3Parser
+import com.reprezen.kaizen.oasparser.OpenApiParser
 import com.reprezen.kaizen.oasparser.getValidationItems
 import com.reprezen.kaizen.oasparser.isValid
 import com.reprezen.kaizen.oasparser.validate
@@ -22,7 +22,7 @@ class ParameterValidatorTest {
     @Test
     @Throws(Exception::class)
     fun shouldFail_OnPathParamNotRequired() {
-        val model = OpenApi3Parser().parse(javaClass.getResource(pathParamNotRequiredRes)).also { it.validate() }
+        val model = OpenApiParser().parse(javaClass.getResource(pathParamNotRequiredRes)).also { it.validate() }
         Assert.assertEquals(1, model.getValidationItems().size.toLong())
         Assert.assertEquals(
             Messages.msg(OpenApi3Messages.PathParamReq, "id"),
@@ -34,7 +34,7 @@ class ParameterValidatorTest {
     @Test
     @Throws(Exception::class)
     fun shouldFail_OnInvalidParam() {
-        val model = OpenApi3Parser().parse(javaClass.getResource(invalidParamRes)).also { it.validate() }
+        val model = OpenApiParser().parse(javaClass.getResource(invalidParamRes)).also { it.validate() }
         Assert.assertEquals(1, model.getValidationItems().size)
         Assert.assertEquals(
             Messages.msg(OpenApi3Messages.MissingPathTplt, "id", "/"),
@@ -46,7 +46,7 @@ class ParameterValidatorTest {
     @Test
     @Throws(Exception::class)
     fun shouldPass_OnValidParam() {
-        val model = OpenApi3Parser().parse(javaClass.getResource(validParamRes)).also { it.validate() }
+        val model = OpenApiParser().parse(javaClass.getResource(validParamRes)).also { it.validate() }
         Assert.assertEquals(0, model.getValidationItems().size.toLong())
         Assert.assertTrue(model.isValid())
     }
@@ -54,7 +54,7 @@ class ParameterValidatorTest {
     @Test
     @Throws(Exception::class)
     fun shouldAllow_HybridPathParam() {
-        val model = OpenApi3Parser().parse(javaClass.getResource(hybridParamRes)).also { it.validate() }
+        val model = OpenApiParser().parse(javaClass.getResource(hybridParamRes)).also { it.validate() }
         Assert.assertEquals(0, model.getValidationItems().size.toLong())
         Assert.assertTrue(model.isValid())
     }
@@ -62,7 +62,7 @@ class ParameterValidatorTest {
     @Test
     @Throws(Exception::class)
     fun shouldAllow_MultiHybridPathParam() {
-        val model = OpenApi3Parser().parse(javaClass.getResource(multiHybridParamRes)).also { it.validate() }
+        val model = OpenApiParser().parse(javaClass.getResource(multiHybridParamRes)).also { it.validate() }
         Assert.assertEquals(0, model.getValidationItems().size.toLong())
         Assert.assertTrue(model.isValid())
     }

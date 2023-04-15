@@ -51,7 +51,7 @@ open class OpenApiParser {
     }
 
     @Throws(Exception::class)
-    open fun parse(resolutionBase: URL?): OpenApi3 {
+    open fun parse(resolutionBase: URL): OpenApi3 {
         val manager = ReferenceManager(resolutionBase)
         return parse(manager)
     }
