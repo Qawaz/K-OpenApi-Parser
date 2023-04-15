@@ -11,6 +11,7 @@
  */
 package com.reprezen.kaizen.oasparser
 
+import com.reprezen.jsonoverlay.DocumentLoader
 import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
@@ -21,12 +22,11 @@ import java.net.MalformedURLException
 import java.net.URI
 import java.net.URL
 
-open class OpenApiParser {
+open class OpenApiParser(val loader: DocumentLoader = DocumentLoader.Default) {
 
     open fun parse(spec: String, resolutionBase: URL?): OpenApi3 {
         return try {
-            val tree = Json.parseToJsonElement(spec)
-            parse(tree, resolutionBase)
+            parse(loader.load(spec), resolutionBase)
         } catch (e: IOException) {
             throw OpenApiParserException("Failed to parse spec as JSON or YAML", e)
         }
@@ -52,12 +52,12 @@ open class OpenApiParser {
 
     @Throws(Exception::class)
     open fun parse(resolutionBase: URL): OpenApi3 {
-        val manager = ReferenceManager(resolutionBase)
+        val manager = ReferenceManager(resolutionBase, loader = loader)
         return parse(manager)
     }
 
     open fun parse(tree: JsonElement?, resolutionBase: URL?): OpenApi3 {
-        val manager = ReferenceManager(resolutionBase, tree)
+        val manager = ReferenceManager(resolutionBase, tree, loader = loader)
         return parse(manager)
     }
 

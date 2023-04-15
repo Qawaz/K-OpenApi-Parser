@@ -14,9 +14,8 @@
  */
 package com.reprezen.jsonoverlay
 
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.*
 import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URI
@@ -24,37 +23,31 @@ import java.net.URISyntaxException
 import java.net.URL
 import java.util.*
 
-class ReferenceManager {
+class ReferenceManager(
+    rootUrl: URL? = null,
+    preloadedDoc: JsonElement? = null,
+    registry: ReferenceRegistry = ReferenceRegistry(),
+    val loader : DocumentLoader = DocumentLoader.Default
+) {
 
-    var registry: ReferenceRegistry
+    var registry: ReferenceRegistry = registry
         private set
 
     private var docUrl: URL?
-    private var doc: JsonElement? = null
+    private var doc: JsonElement? = preloadedDoc
 
-    @JvmOverloads
-    constructor(rootUrl: URL? = null) {
-        registry = ReferenceRegistry()
+    init {
         docUrl = if (rootUrl != null) normalize(rootUrl, true) else null
         if (docUrl != null) {
             registry.registerManager(docUrl!!, this)
         }
     }
 
-    constructor(rootUrl: URL?, preloadedDoc: JsonElement?) : this(rootUrl) {
-        doc = preloadedDoc
-    }
-
-    private constructor(baseUrl: URL?, registry: ReferenceRegistry) {
-        docUrl = baseUrl
-        this.registry = registry
-    }
-
     fun getManagerFor(url: URL): ReferenceManager {
         val normalized = normalize(url, true)
         var manager = registry.getManager(normalized!!)
         if (manager == null) {
-            manager = ReferenceManager(normalized, registry)
+            manager = ReferenceManager(url,null, registry)
             registry.registerManager(normalized, manager)
         }
         return manager
@@ -82,7 +75,7 @@ class ReferenceManager {
     @Throws(IOException::class)
     fun loadDoc(): JsonElement {
         if (doc == null) {
-            doc = registry.loadDoc(docUrl!!)
+            doc = loader.load(docUrl!!)
         }
         return doc!!
     }

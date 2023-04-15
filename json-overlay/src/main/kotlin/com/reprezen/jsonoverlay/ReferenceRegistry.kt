@@ -38,12 +38,6 @@ class ReferenceRegistry {
         managers[baseUrl.toString()] = manager
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
-    @Throws(IOException::class)
-    fun loadDoc(url: URL): JsonElement {
-        return url.openStream().use { input -> Json.decodeFromStream<JsonElement>(input) }
-    }
-
     fun getOverlay(normalizedRef: String, factorySig: String): JsonOverlay<*>? {
         return overlaysByRef[Pair(normalizedRef, factorySig)]
     }

@@ -14,6 +14,7 @@ package com.reprezen.swaggerparser.test
 import com.fasterxml.jackson.core.JsonPointer
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
+import com.reprezen.jsonoverlay.DocumentLoader
 import com.reprezen.jsonoverlay.JsonOverlay
 import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.jsonoverlay.toValue
@@ -23,7 +24,6 @@ import com.reprezen.kaizen.oasparser.json.walk
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.decodeFromStream
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -42,11 +42,10 @@ import java.util.function.Predicate
 @RunWith(Parameterized::class)
 class BigParseTest(private val modelUrl: URL) : Assert() {
 
-    @OptIn(ExperimentalSerializationApi::class)
     @Test
     @Throws(Exception::class)
     fun testPrimitivesYieldSameValue() {
-        val tree = Json.decodeFromStream<JsonElement>(modelUrl.openStream())
+        val tree = DocumentLoader.Default.load(modelUrl)
         val model = OpenApiParser().parse(modelUrl)
         val walker = object : Walker {
             override fun walk(node: JsonElement, parent: JsonElement?, pointer: com.reprezen.jsonoverlay.JsonPointer) {

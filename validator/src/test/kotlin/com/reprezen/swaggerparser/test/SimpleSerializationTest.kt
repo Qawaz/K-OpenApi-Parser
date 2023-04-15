@@ -15,9 +15,11 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.google.common.collect.Lists
 import com.google.common.collect.Queues
+import com.reprezen.jsonoverlay.DocumentLoader
 import com.reprezen.kaizen.oasparser.OpenApiParser
 import com.reprezen.kaizen.oasparser.json.equalTo
 import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
+import com.wakaztahir.jsontoyaml.YamlOrJson
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.*
 import org.junit.Assert
@@ -69,17 +71,13 @@ object SimpleSerializationTest : Assert() {
             } else toString()
         }
 
-        @OptIn(ExperimentalSerializationApi::class)
         @Test
         @Throws(Exception::class)
         fun serializeExample() {
             if (!exampleUrl.toString().contains("callback-example")) {
-                if (fileName.contains(".yaml")) {
-                    throw IllegalArgumentException("yaml serialization not supported yet")
-                }
-                val model = OpenApiParser().parse(exampleUrl)
+                val expected = YamlOrJson.Default.load(exampleUrl)
+                val model = OpenApiParser(loader = YamlOrJson.Default).parse(expected, exampleUrl)
                 val serialized = (model as OpenApi3Impl)._toJson()
-                val expected = Json.decodeFromStream<JsonElement>(exampleUrl.openStream()!!)
                 val result = expected.equalTo(serialized, "")
                 result.exceptionOrNull()?.let {
                     it.printStackTrace()
@@ -90,7 +88,6 @@ object SimpleSerializationTest : Assert() {
         }
 
         companion object {
-            @OptIn(ExperimentalSerializationApi::class)
             @JvmStatic
             @Parameterized.Parameters(name = "{index}: {1}")
             @Throws(IOException::class)
@@ -105,7 +102,7 @@ object SimpleSerializationTest : Assert() {
                 dirs.add(URL(request))
                 while (!dirs.isEmpty()) {
                     val url = dirs.remove()
-                    val tree = url.openStream().use { Json.decodeFromStream<JsonElement>(it) } as JsonArray
+                    val tree = DocumentLoader.Default.load(url) as JsonArray
                     for (resultItem in tree) {
                         val result = resultItem as JsonObject
                         val type = result["type"]!!.jsonPrimitive.content

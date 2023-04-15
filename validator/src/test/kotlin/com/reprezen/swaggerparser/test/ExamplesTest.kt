@@ -13,9 +13,11 @@ package com.reprezen.swaggerparser.test
 
 import com.google.common.collect.Lists
 import com.google.common.collect.Queues
+import com.reprezen.jsonoverlay.DocumentLoader
 import com.reprezen.kaizen.oasparser.OpenApiParser
 import com.reprezen.kaizen.oasparser.getValidationItems
 import com.reprezen.kaizen.oasparser.isValid
+import com.wakaztahir.jsontoyaml.YamlOrJson
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.*
 import org.junit.Assert
@@ -40,7 +42,7 @@ class ExamplesTest(
     @Throws(Exception::class)
     fun exampleCanBeParsed() {
         if (!exampleUrl.toString().contains("callback-example")) {
-            val model = OpenApiParser().parse(exampleUrl)
+            val model = OpenApiParser(loader = YamlOrJson.Default).parse(exampleUrl)
             for (item in model.getValidationItems()) {
                 println(item)
             }
@@ -68,7 +70,7 @@ class ExamplesTest(
             dirs.add(URL(request))
             while (!dirs.isEmpty()) {
                 val url = dirs.remove()
-                val tree = url.openStream().use { Json.decodeFromStream<JsonElement>(it) } as JsonArray
+                val tree = DocumentLoader.Default.load(url) as JsonArray
                 for (resultItem in tree) {
                     val result = resultItem as JsonObject
                     val type = result["type"]!!.jsonPrimitive.content

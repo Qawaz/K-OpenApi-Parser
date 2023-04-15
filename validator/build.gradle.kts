@@ -12,6 +12,7 @@ dependencies {
     val jacksonVersion = property("jackson.version") as String
 
     api(project(":parser"))
+    api(project(":yaml-parser"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 

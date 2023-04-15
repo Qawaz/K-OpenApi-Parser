@@ -75,7 +75,7 @@ internal fun String.parseJsonLiteralAsNumber(): Number? {
     }
 }
 
-internal fun JsonPrimitive.toNumber(): Number? {
+fun JsonPrimitive.toNumber(): Number? {
     return content.parseJsonLiteralAsNumber()
 }
 

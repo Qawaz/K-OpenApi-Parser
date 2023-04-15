@@ -14,3 +14,4 @@ rootProject.name = "KOpenAPIParser"
 include("json-overlay")
 include("parser")
 include("validator")
+include("yaml-parser")
