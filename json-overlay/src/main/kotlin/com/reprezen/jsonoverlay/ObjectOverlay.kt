@@ -50,9 +50,9 @@ class ObjectOverlay : ScalarOverlay<Any>, KeyValueOverlay {
 
         @JvmField
         val factory: OverlayFactory<Any> = object : OverlayFactory<Any>() {
-            override fun getOverlayClass(): Class<ObjectOverlay> {
-                return ObjectOverlay::class.java
-            }
+
+            override val signature: String?
+                get() = ObjectOverlay::class.simpleName
 
             override fun _create(value: Any?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): ObjectOverlay {
                 return if (value != null) ObjectOverlay(value, parent, refMgr) else ObjectOverlay(parent, refMgr)

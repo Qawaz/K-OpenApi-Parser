@@ -9,6 +9,7 @@ import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.kaizen.oasparser.ovl3.PathImpl
 import com.reprezen.jsonoverlay.ReferenceManager
+import kotlin.reflect.KClass
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.ObjectOverlay
 import com.reprezen.jsonoverlay.JsonOverlay
@@ -120,12 +121,11 @@ class CallbackImpl : PropertiesOverlay<Callback> ,Callback {
 
 		val factory = object : OverlayFactory<Callback>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in Callback>> {
-				return CallbackImpl::class.java
-			}
+			override val signature: String?
+				get() = CallbackImpl::class.simpleName
 		
-			override fun _create(callback : Callback?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Callback> {
-				return CallbackImpl(callback, parent, refMgr)
+			override fun _create(value : Callback?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Callback> {
+				return CallbackImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Callback> {

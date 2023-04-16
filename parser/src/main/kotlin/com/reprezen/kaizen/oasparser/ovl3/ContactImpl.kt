@@ -6,13 +6,14 @@ import com.reprezen.jsonoverlay.StringOverlay
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
-import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.Builder
-import com.reprezen.jsonoverlay.ObjectOverlay
 import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.ReferenceManager
+import kotlin.reflect.KClass
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.ObjectOverlay
 import com.reprezen.jsonoverlay.JsonOverlay
 import kotlin.collections.Map
-import com.reprezen.jsonoverlay.ReferenceManager
 
 class ContactImpl : PropertiesOverlay<Contact> ,Contact {
 
@@ -116,12 +117,11 @@ class ContactImpl : PropertiesOverlay<Contact> ,Contact {
 
 		val factory = object : OverlayFactory<Contact>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in Contact>> {
-				return ContactImpl::class.java
-			}
+			override val signature: String?
+				get() = ContactImpl::class.simpleName
 		
-			override fun _create(contact : Contact?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Contact> {
-				return ContactImpl(contact, parent, refMgr)
+			override fun _create(value : Contact?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Contact> {
+				return ContactImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Contact> {

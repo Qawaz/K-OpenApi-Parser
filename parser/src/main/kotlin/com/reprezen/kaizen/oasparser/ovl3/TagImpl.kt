@@ -9,6 +9,7 @@ import com.reprezen.jsonoverlay.OverlayFactory
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.ReferenceManager
+import kotlin.reflect.KClass
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.ObjectOverlay
 import com.reprezen.jsonoverlay.JsonOverlay
@@ -117,12 +118,11 @@ class TagImpl : PropertiesOverlay<Tag> ,Tag {
 
 		val factory = object : OverlayFactory<Tag>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in Tag>> {
-				return TagImpl::class.java
-			}
+			override val signature: String?
+				get() = TagImpl::class.simpleName
 		
-			override fun _create(tag : Tag?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Tag> {
-				return TagImpl(tag, parent, refMgr)
+			override fun _create(value : Tag?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Tag> {
+				return TagImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Tag> {

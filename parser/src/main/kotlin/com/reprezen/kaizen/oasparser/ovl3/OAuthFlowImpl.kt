@@ -6,13 +6,14 @@ import com.reprezen.jsonoverlay.StringOverlay
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
-import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.Builder
-import com.reprezen.jsonoverlay.ObjectOverlay
 import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.ReferenceManager
+import kotlin.reflect.KClass
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.ObjectOverlay
 import com.reprezen.jsonoverlay.JsonOverlay
 import kotlin.collections.Map
-import com.reprezen.jsonoverlay.ReferenceManager
 
 class OAuthFlowImpl : PropertiesOverlay<OAuthFlow> ,OAuthFlow {
 
@@ -194,12 +195,11 @@ class OAuthFlowImpl : PropertiesOverlay<OAuthFlow> ,OAuthFlow {
 
 		val factory = object : OverlayFactory<OAuthFlow>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in OAuthFlow>> {
-				return OAuthFlowImpl::class.java
-			}
+			override val signature: String?
+				get() = OAuthFlowImpl::class.simpleName
 		
-			override fun _create(oAuthFlow : OAuthFlow?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<OAuthFlow> {
-				return OAuthFlowImpl(oAuthFlow, parent, refMgr)
+			override fun _create(value : OAuthFlow?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<OAuthFlow> {
+				return OAuthFlowImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<OAuthFlow> {

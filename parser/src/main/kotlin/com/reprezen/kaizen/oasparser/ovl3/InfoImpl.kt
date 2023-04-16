@@ -10,6 +10,7 @@ import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.kaizen.oasparser.ovl3.LicenseImpl
+import kotlin.reflect.KClass
 import com.reprezen.kaizen.oasparser.ovl3.ContactImpl
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.ObjectOverlay
@@ -160,12 +161,11 @@ class InfoImpl : PropertiesOverlay<Info> ,Info {
 
 		val factory = object : OverlayFactory<Info>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in Info>> {
-				return InfoImpl::class.java
-			}
+			override val signature: String?
+				get() = InfoImpl::class.simpleName
 		
-			override fun _create(info : Info?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Info> {
-				return InfoImpl(info, parent, refMgr)
+			override fun _create(value : Info?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Info> {
+				return InfoImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Info> {

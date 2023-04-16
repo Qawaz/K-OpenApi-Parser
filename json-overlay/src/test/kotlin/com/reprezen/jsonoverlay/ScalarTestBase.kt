@@ -38,7 +38,6 @@ abstract class ScalarTestBase<V>(private val factory: OverlayFactory<V>) : Asser
     @Test
     fun testOvlValueFromValue() {
         val ovl = factory.create(value, null, refMgr)
-        assertTrue(factory.getOverlayClass().isAssignableFrom(ovl.javaClass))
         assertEquals(value, ovl._get())
     }
 
@@ -93,10 +92,9 @@ abstract class ScalarTestBase<V>(private val factory: OverlayFactory<V>) : Asser
         assertEquals("#", Overlay.of(ovl).jsonReference)
     }
 
-    fun testWithJson(json: JsonElement, `val`: V?) {
+    fun testWithJson(json: JsonElement, value: V?) {
         val ovl = factory.create(json, null, refMgr)
-        assertTrue(factory.getOverlayClass().isAssignableFrom(ovl.javaClass))
-        assertEquals(`val`, ovl._get())
+        assertEquals(value, ovl._get())
     }
 
 }

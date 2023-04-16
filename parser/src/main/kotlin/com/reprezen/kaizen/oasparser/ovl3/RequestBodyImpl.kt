@@ -9,6 +9,7 @@ import com.reprezen.jsonoverlay.OverlayFactory
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.ReferenceManager
+import kotlin.reflect.KClass
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.kaizen.oasparser.ovl3.MediaTypeImpl
 import com.reprezen.jsonoverlay.ObjectOverlay
@@ -155,12 +156,11 @@ class RequestBodyImpl : PropertiesOverlay<RequestBody> ,RequestBody {
 
 		val factory = object : OverlayFactory<RequestBody>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in RequestBody>> {
-				return RequestBodyImpl::class.java
-			}
+			override val signature: String?
+				get() = RequestBodyImpl::class.simpleName
 		
-			override fun _create(requestBody : RequestBody?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<RequestBody> {
-				return RequestBodyImpl(requestBody, parent, refMgr)
+			override fun _create(value : RequestBody?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<RequestBody> {
+				return RequestBodyImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<RequestBody> {

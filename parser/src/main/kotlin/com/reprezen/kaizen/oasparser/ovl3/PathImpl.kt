@@ -11,6 +11,7 @@ import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.kaizen.oasparser.ovl3.OperationImpl
+import kotlin.reflect.KClass
 import com.reprezen.kaizen.oasparser.ovl3.ServerImpl
 import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl
 import kotlinx.serialization.json.JsonElement
@@ -305,12 +306,11 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 
 		val factory = object : OverlayFactory<Path>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in Path>> {
-				return PathImpl::class.java
-			}
+			override val signature: String?
+				get() = PathImpl::class.simpleName
 		
-			override fun _create(path : Path?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Path> {
-				return PathImpl(path, parent, refMgr)
+			override fun _create(value : Path?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Path> {
+				return PathImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Path> {

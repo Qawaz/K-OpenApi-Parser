@@ -47,9 +47,9 @@ class StringOverlay : ScalarOverlay<String> {
 
         @JvmField
         var factory: OverlayFactory<String> = object : OverlayFactory<String>() {
-            override fun getOverlayClass(): Class<StringOverlay> {
-                return StringOverlay::class.java
-            }
+
+            override val signature: String?
+                get() = StringOverlay::class.simpleName
 
             override fun _create(value: String?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): StringOverlay {
                 return StringOverlay(value, parent, refMgr)

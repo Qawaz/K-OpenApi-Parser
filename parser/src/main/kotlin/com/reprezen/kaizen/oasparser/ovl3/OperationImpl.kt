@@ -13,6 +13,7 @@ import com.reprezen.kaizen.oasparser.ovl3.RequestBodyImpl
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.kaizen.oasparser.ovl3.ResponseImpl
 import com.reprezen.jsonoverlay.ReferenceManager
+import kotlin.reflect.KClass
 import com.reprezen.kaizen.oasparser.ovl3.ServerImpl
 import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl
 import kotlinx.serialization.json.JsonElement
@@ -505,12 +506,11 @@ class OperationImpl : PropertiesOverlay<Operation> ,Operation {
 
 		val factory = object : OverlayFactory<Operation>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in Operation>> {
-				return OperationImpl::class.java
-			}
+			override val signature: String?
+				get() = OperationImpl::class.simpleName
 		
-			override fun _create(operation : Operation?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Operation> {
-				return OperationImpl(operation, parent, refMgr)
+			override fun _create(value : Operation?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Operation> {
+				return OperationImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Operation> {

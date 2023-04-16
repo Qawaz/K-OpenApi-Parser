@@ -1,6 +1,7 @@
 package com.reprezen.jsonoverlay.model.impl
 
 import com.reprezen.jsonoverlay.model.intf.*
+import kotlin.reflect.KClass
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
@@ -25,12 +26,12 @@ class ColorImpl : EnumOverlay<Color> {
 
 	companion object {
 		val factory = object : OverlayFactory<Color>() {
-			override fun getOverlayClass() : Class<out JsonOverlay<in Color>> {
-				return ColorImpl::class.java
-			}
 		
-			override fun _create(color : Color?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Color> {
-				return ColorImpl(color, parent, refMgr)
+			override val signature: String?
+				get() = ColorImpl::class.simpleName
+		
+			override fun _create(value : Color?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Color> {
+				return ColorImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Color> {

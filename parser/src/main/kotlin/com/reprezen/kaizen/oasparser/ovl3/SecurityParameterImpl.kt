@@ -11,6 +11,7 @@ import com.reprezen.jsonoverlay.PropertiesOverlay
 import kotlinx.serialization.json.JsonNull
 import com.reprezen.jsonoverlay.ReferenceManager
 import kotlinx.serialization.json.JsonArray
+import kotlin.reflect.KClass
 import kotlinx.serialization.json.JsonElement
 import kotlin.collections.List
 import com.reprezen.jsonoverlay.JsonOverlay
@@ -84,12 +85,11 @@ class SecurityParameterImpl : PropertiesOverlay<SecurityParameter> ,SecurityPara
 
 		val factory = object : OverlayFactory<SecurityParameter>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in SecurityParameter>> {
-				return SecurityParameterImpl::class.java
-			}
+			override val signature: String?
+				get() = SecurityParameterImpl::class.simpleName
 		
-			override fun _create(securityParameter : SecurityParameter?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<SecurityParameter> {
-				return SecurityParameterImpl(securityParameter, parent, refMgr)
+			override fun _create(value : SecurityParameter?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<SecurityParameter> {
+				return SecurityParameterImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<SecurityParameter> {

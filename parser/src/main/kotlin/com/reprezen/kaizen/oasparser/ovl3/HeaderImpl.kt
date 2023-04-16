@@ -10,6 +10,7 @@ import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
+import kotlin.reflect.KClass
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.kaizen.oasparser.ovl3.MediaTypeImpl
 import com.reprezen.jsonoverlay.ObjectOverlay
@@ -314,12 +315,11 @@ class HeaderImpl : PropertiesOverlay<Header> ,Header {
 
 		val factory = object : OverlayFactory<Header>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in Header>> {
-				return HeaderImpl::class.java
-			}
+			override val signature: String?
+				get() = HeaderImpl::class.simpleName
 		
-			override fun _create(header : Header?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Header> {
-				return HeaderImpl(header, parent, refMgr)
+			override fun _create(value : Header?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Header> {
+				return HeaderImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Header> {

@@ -251,9 +251,8 @@ class PropertiesTests : Assert() {
         companion object {
             var factory: OverlayFactory<Foo> = object : OverlayFactory<Foo>() {
 
-                override fun getOverlayClass(): Class<out JsonOverlay<in Foo>> {
-                    return Foo::class.java
-                }
+                override val signature: String?
+                    get() = Foo::class.simpleName
 
                 override fun _create(
                     value: Foo?,

@@ -45,9 +45,9 @@ class BooleanOverlay : ScalarOverlay<Boolean> {
 
         @JvmField
         var factory: OverlayFactory<Boolean> = object : OverlayFactory<Boolean>() {
-            override fun getOverlayClass(): Class<BooleanOverlay> {
-                return BooleanOverlay::class.java
-            }
+
+            override val signature: String?
+                get() = BooleanOverlay::class.simpleName
 
             override fun _create(value: Boolean?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): BooleanOverlay {
                 return BooleanOverlay(value, parent, refMgr)

@@ -3,6 +3,7 @@ package com.reprezen.kaizen.oasparser.ovl3
 import com.reprezen.kaizen.oasparser.model3.*
 import com.reprezen.jsonoverlay.MapOverlay
 import com.reprezen.jsonoverlay.StringOverlay
+import kotlin.reflect.KClass
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
@@ -87,12 +88,11 @@ class DiscriminatorImpl : PropertiesOverlay<Discriminator> ,Discriminator {
 
 		val factory = object : OverlayFactory<Discriminator>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in Discriminator>> {
-				return DiscriminatorImpl::class.java
-			}
+			override val signature: String?
+				get() = DiscriminatorImpl::class.simpleName
 		
-			override fun _create(discriminator : Discriminator?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Discriminator> {
-				return DiscriminatorImpl(discriminator, parent, refMgr)
+			override fun _create(value : Discriminator?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Discriminator> {
+				return DiscriminatorImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Discriminator> {

@@ -231,6 +231,7 @@ abstract class TypeGenerator(
                 JsonPrimitive::class,
                 JsonArray::class,
                 com.reprezen.jsonoverlay.JsonPointer::class,
+                KClass::class,
                 IJsonOverlay::class,  //
                 JsonOverlay::class,  //
                 IModelPart::class,  //

@@ -9,6 +9,7 @@ import com.reprezen.jsonoverlay.OverlayFactory
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.ReferenceManager
+import kotlin.reflect.KClass
 import com.reprezen.kaizen.oasparser.ovl3.ServerImpl
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.ObjectOverlay
@@ -191,12 +192,11 @@ class LinkImpl : PropertiesOverlay<Link> ,Link {
 
 		val factory = object : OverlayFactory<Link>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in Link>> {
-				return LinkImpl::class.java
-			}
+			override val signature: String?
+				get() = LinkImpl::class.simpleName
 		
-			override fun _create(link : Link?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Link> {
-				return LinkImpl(link, parent, refMgr)
+			override fun _create(value : Link?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Link> {
+				return LinkImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Link> {

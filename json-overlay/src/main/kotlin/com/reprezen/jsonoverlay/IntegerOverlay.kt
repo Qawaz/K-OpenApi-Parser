@@ -46,9 +46,9 @@ class IntegerOverlay : ScalarOverlay<Int> {
     companion object {
         @JvmField
         var factory: OverlayFactory<Int> = object : OverlayFactory<Int>() {
-            override fun getOverlayClass(): Class<IntegerOverlay> {
-                return IntegerOverlay::class.java
-            }
+
+            override val signature: String?
+                get() = IntegerOverlay::class.simpleName
 
             override fun _create(value: Int?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): IntegerOverlay {
                 return IntegerOverlay(value, parent, refMgr)

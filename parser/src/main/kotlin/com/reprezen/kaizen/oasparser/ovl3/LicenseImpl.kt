@@ -6,13 +6,14 @@ import com.reprezen.jsonoverlay.StringOverlay
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
-import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.Builder
-import com.reprezen.jsonoverlay.ObjectOverlay
 import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.ReferenceManager
+import kotlin.reflect.KClass
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.ObjectOverlay
 import com.reprezen.jsonoverlay.JsonOverlay
 import kotlin.collections.Map
-import com.reprezen.jsonoverlay.ReferenceManager
 
 class LicenseImpl : PropertiesOverlay<License> ,License {
 
@@ -104,12 +105,11 @@ class LicenseImpl : PropertiesOverlay<License> ,License {
 
 		val factory = object : OverlayFactory<License>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in License>> {
-				return LicenseImpl::class.java
-			}
+			override val signature: String?
+				get() = LicenseImpl::class.simpleName
 		
-			override fun _create(license : License?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<License> {
-				return LicenseImpl(license, parent, refMgr)
+			override fun _create(value : License?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<License> {
+				return LicenseImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<License> {

@@ -4,6 +4,7 @@ import com.reprezen.jsonoverlay.*
 import kotlinx.serialization.json.JsonElement
 import java.io.File
 import java.util.stream.Collectors
+import kotlin.reflect.KClass
 
 class JavaImplGenerator : TypeGenerator {
 
@@ -32,7 +33,7 @@ class JavaImplGenerator : TypeGenerator {
 
     override fun getCompanionMembers(type: KTypeData.Type): Members {
         val members = Members()
-        if(isEnum(type)){
+        if (isEnum(type)) {
             members.add(getEnumFactoryMember(type))
         } else {
             members.addAll(getFieldNameConstants(type))
@@ -309,16 +310,17 @@ class JavaImplGenerator : TypeGenerator {
             OverlayFactory::class,
             JsonOverlay::class,
             JsonElement::class,
-            ReferenceManager::class
+            ReferenceManager::class,
+            KClass::class
         )
         return ClassMember(
             """val factory = object : OverlayFactory<${type.name}>() {
-        |${"\t"}override fun getOverlayClass() : Class<out JsonOverlay<in ${type.name}>> {
-        |${"\t"}${"\t"}return ${type.implType}::class.java
-        |${"\t"}}
         |
-        |${"\t"}override fun _create(${type.lcName} : ${type.name}?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<${type.name}> {
-        |${"\t"}${"\t"}return ${type.implType}(${type.lcName}, parent, refMgr)
+        |${'\t'}override val signature: String?
+		|${"\t\t"}get() = ${type.implType}::class.simpleName
+        |
+        |${"\t"}override fun _create(value : ${type.name}?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<${type.name}> {
+        |${"\t"}${"\t"}return ${type.implType}(value, parent, refMgr)
         |${"\t"}}
         |
         |${"\t"}override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<${type.name}> {
@@ -340,12 +342,16 @@ class JavaImplGenerator : TypeGenerator {
             OverlayFactory::class,
             JsonElement::class,
             ReferenceManager::class,
-            JsonOverlay::class
+            JsonOverlay::class,
+            KClass::class
         )
         val _createSubTypesImpl = if (getSubTypes(type).isEmpty()) {
-            "return ${type.implType}(${type.lcName}, parent, refMgr)"
+            "return ${type.implType}(value, parent, refMgr)"
         } else {
-            """return getSubtypeOf(${type.lcName})${"\n"}""" + getSubtypeCreate(type, type.lcName) + "  as JsonOverlay<${type.name}>"
+            """return getSubtypeOf(${type.lcName})${"\n"}""" + getSubtypeCreate(
+                type,
+                type.lcName
+            ) + "  as JsonOverlay<${type.name}>"
         }
         val _createSubTypesImpl2 = if (getSubTypes(type).isEmpty()) {
             "return ${type.implType}(json, parent, refMgr)"
@@ -355,11 +361,10 @@ class JavaImplGenerator : TypeGenerator {
         return ClassMember(
             """val factory = object : OverlayFactory<${type.name}>() {
         |
-        |${"\t"}override fun getOverlayClass() : Class<out JsonOverlay<in ${type.name}>> {
-        |${"\t"}${"\t"}return ${type.implType}::class.java
-        |${"\t"}}
+        |${'\t'}override val signature: String?
+		|${"\t\t"}get() = ${type.implType}::class.simpleName
         |
-        |${"\t"}override fun _create(${type.lcName} : ${type.name}?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<${type.name}> {
+        |${"\t"}override fun _create(value : ${type.name}?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<${type.name}> {
         |${"\t"}${"\t"}$_createSubTypesImpl
         |${"\t"}}
         |

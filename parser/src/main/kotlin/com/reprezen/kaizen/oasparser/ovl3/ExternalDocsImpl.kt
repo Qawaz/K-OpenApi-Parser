@@ -6,13 +6,14 @@ import com.reprezen.jsonoverlay.StringOverlay
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
-import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.Builder
-import com.reprezen.jsonoverlay.ObjectOverlay
 import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.ReferenceManager
+import kotlin.reflect.KClass
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.ObjectOverlay
 import com.reprezen.jsonoverlay.JsonOverlay
 import kotlin.collections.Map
-import com.reprezen.jsonoverlay.ReferenceManager
 
 class ExternalDocsImpl : PropertiesOverlay<ExternalDocs> ,ExternalDocs {
 
@@ -102,12 +103,11 @@ class ExternalDocsImpl : PropertiesOverlay<ExternalDocs> ,ExternalDocs {
 
 		val factory = object : OverlayFactory<ExternalDocs>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in ExternalDocs>> {
-				return ExternalDocsImpl::class.java
-			}
+			override val signature: String?
+				get() = ExternalDocsImpl::class.simpleName
 		
-			override fun _create(externalDocs : ExternalDocs?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<ExternalDocs> {
-				return ExternalDocsImpl(externalDocs, parent, refMgr)
+			override fun _create(value : ExternalDocs?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<ExternalDocs> {
+				return ExternalDocsImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<ExternalDocs> {

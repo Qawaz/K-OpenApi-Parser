@@ -50,9 +50,9 @@ class PrimitiveOverlay : ScalarOverlay<Any> {
     companion object {
         @JvmField
         var factory: OverlayFactory<Any> = object : OverlayFactory<Any>() {
-            override fun getOverlayClass(): Class<PrimitiveOverlay> {
-                return PrimitiveOverlay::class.java
-            }
+
+            override val signature: String?
+                get() = PrimitiveOverlay::class.simpleName
 
             override fun _create(value: Any?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): PrimitiveOverlay {
                 return if (value != null) PrimitiveOverlay(value, parent, refMgr) else PrimitiveOverlay(parent, refMgr)

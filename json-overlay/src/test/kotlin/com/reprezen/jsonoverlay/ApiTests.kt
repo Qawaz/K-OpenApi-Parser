@@ -74,6 +74,16 @@ class ApiTests : Assert() {
     }
 
     @Test
+    fun testFactorySignatures(){
+        assertEquals(BooleanOverlay.factory.signature,BooleanOverlay::class.simpleName)
+        assertEquals(IntegerOverlay.factory.signature,IntegerOverlay::class.simpleName)
+        assertEquals(NumberOverlay.factory.signature,NumberOverlay::class.simpleName)
+        assertEquals(ObjectOverlay.factory.signature,ObjectOverlay::class.simpleName)
+        assertEquals(PrimitiveOverlay.factory.signature,PrimitiveOverlay::class.simpleName)
+        assertEquals(StringOverlay.factory.signature,StringOverlay::class.simpleName)
+    }
+
+    @Test
     fun testMapApi() {
         assertTrue(model.hasNamedIntegers())
         assertTrue(model.hasNamedInteger("I"))

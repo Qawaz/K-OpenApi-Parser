@@ -237,9 +237,8 @@ class ScalarTests {
 
                 var factory: OverlayFactory<XEnum> = object : OverlayFactory<XEnum>() {
 
-                    override fun getOverlayClass(): Class<out JsonOverlay<in XEnum>> {
-                        return XEnumOverlay::class.java
-                    }
+                    override val signature: String?
+                        get() = XEnumOverlay::class.simpleName
 
                     override fun _create(
                         value: XEnum?,

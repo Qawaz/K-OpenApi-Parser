@@ -154,11 +154,6 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>>, KeyValueOverlay {
         override val signature: String
             get() = String.format("list[%s]", itemFactory.signature)
 
-        override fun getOverlayClass(): Class<out JsonOverlay<in MutableList<V>>> {
-            val overlayClass: Class<*> = ListOverlay::class.java
-            return overlayClass as Class<out JsonOverlay<MutableList<V>>>
-        }
-
         override fun _create(
             value: MutableList<V>?,
             parent: JsonOverlay<*>?,

@@ -13,6 +13,7 @@ import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.jsonoverlay.IntegerOverlay
 import com.reprezen.jsonoverlay.model.impl.ScalarsImpl
+import kotlin.reflect.KClass
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.model.impl.ItemImpl
 import kotlin.collections.List
@@ -302,12 +303,11 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 
 		val factory = object : OverlayFactory<TestModel>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in TestModel>> {
-				return TestModelImpl::class.java
-			}
+			override val signature: String?
+				get() = TestModelImpl::class.simpleName
 		
-			override fun _create(testModel : TestModel?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<TestModel> {
-				return TestModelImpl(testModel, parent, refMgr)
+			override fun _create(value : TestModel?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<TestModel> {
+				return TestModelImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<TestModel> {

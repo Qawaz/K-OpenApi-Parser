@@ -10,6 +10,7 @@ import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.kaizen.oasparser.ovl3.EncodingPropertyImpl
 import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
+import kotlin.reflect.KClass
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.ObjectOverlay
 import com.reprezen.jsonoverlay.JsonOverlay
@@ -182,12 +183,11 @@ class MediaTypeImpl : PropertiesOverlay<MediaType> ,MediaType {
 
 		val factory = object : OverlayFactory<MediaType>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in MediaType>> {
-				return MediaTypeImpl::class.java
-			}
+			override val signature: String?
+				get() = MediaTypeImpl::class.simpleName
 		
-			override fun _create(mediaType : MediaType?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<MediaType> {
-				return MediaTypeImpl(mediaType, parent, refMgr)
+			override fun _create(value : MediaType?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<MediaType> {
+				return MediaTypeImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<MediaType> {

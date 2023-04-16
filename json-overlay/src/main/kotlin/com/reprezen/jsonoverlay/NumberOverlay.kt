@@ -45,9 +45,9 @@ class NumberOverlay : ScalarOverlay<Number> {
     companion object {
         @JvmField
         var factory: OverlayFactory<Number> = object : OverlayFactory<Number>() {
-            override fun getOverlayClass(): Class<NumberOverlay> {
-                return NumberOverlay::class.java
-            }
+
+            override val signature: String?
+                get() = NumberOverlay::class.simpleName
 
             override fun _create(value: Number?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): NumberOverlay {
                 return NumberOverlay(value, parent, refMgr)

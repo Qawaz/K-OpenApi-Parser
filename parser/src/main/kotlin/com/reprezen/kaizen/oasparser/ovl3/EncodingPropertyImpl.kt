@@ -9,6 +9,7 @@ import com.reprezen.jsonoverlay.OverlayFactory
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.ReferenceManager
+import kotlin.reflect.KClass
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.ObjectOverlay
 import com.reprezen.jsonoverlay.JsonOverlay
@@ -180,12 +181,11 @@ class EncodingPropertyImpl : PropertiesOverlay<EncodingProperty> ,EncodingProper
 
 		val factory = object : OverlayFactory<EncodingProperty>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in EncodingProperty>> {
-				return EncodingPropertyImpl::class.java
-			}
+			override val signature: String?
+				get() = EncodingPropertyImpl::class.simpleName
 		
-			override fun _create(encodingProperty : EncodingProperty?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<EncodingProperty> {
-				return EncodingPropertyImpl(encodingProperty, parent, refMgr)
+			override fun _create(value : EncodingProperty?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<EncodingProperty> {
+				return EncodingPropertyImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<EncodingProperty> {

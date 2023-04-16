@@ -2,6 +2,7 @@ package com.reprezen.jsonoverlay.model.impl
 
 import com.reprezen.jsonoverlay.model.intf.*
 import com.reprezen.jsonoverlay.StringOverlay
+import kotlin.reflect.KClass
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
@@ -46,12 +47,11 @@ class ItemImpl : PropertiesOverlay<Item> ,Item {
 
 		val factory = object : OverlayFactory<Item>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in Item>> {
-				return ItemImpl::class.java
-			}
+			override val signature: String?
+				get() = ItemImpl::class.simpleName
 		
-			override fun _create(item : Item?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Item> {
-				return ItemImpl(item, parent, refMgr)
+			override fun _create(value : Item?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Item> {
+				return ItemImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Item> {

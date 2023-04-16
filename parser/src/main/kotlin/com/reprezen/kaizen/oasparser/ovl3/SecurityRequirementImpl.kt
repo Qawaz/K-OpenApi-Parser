@@ -2,6 +2,7 @@ package com.reprezen.kaizen.oasparser.ovl3
 
 import com.reprezen.kaizen.oasparser.model3.*
 import com.reprezen.jsonoverlay.MapOverlay
+import kotlin.reflect.KClass
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
@@ -73,12 +74,11 @@ class SecurityRequirementImpl : PropertiesOverlay<SecurityRequirement> ,Security
 
 		val factory = object : OverlayFactory<SecurityRequirement>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in SecurityRequirement>> {
-				return SecurityRequirementImpl::class.java
-			}
+			override val signature: String?
+				get() = SecurityRequirementImpl::class.simpleName
 		
-			override fun _create(securityRequirement : SecurityRequirement?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<SecurityRequirement> {
-				return SecurityRequirementImpl(securityRequirement, parent, refMgr)
+			override fun _create(value : SecurityRequirement?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<SecurityRequirement> {
+				return SecurityRequirementImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<SecurityRequirement> {

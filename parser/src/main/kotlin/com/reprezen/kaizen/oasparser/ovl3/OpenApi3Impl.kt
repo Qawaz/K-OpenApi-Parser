@@ -27,6 +27,7 @@ import com.reprezen.kaizen.oasparser.ovl3.RequestBodyImpl
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.kaizen.oasparser.ovl3.PathImpl
 import com.reprezen.kaizen.oasparser.ovl3.ResponseImpl
+import kotlin.reflect.KClass
 import com.reprezen.kaizen.oasparser.ovl3.ParameterImpl
 import kotlinx.serialization.json.JsonElement
 import kotlin.collections.Collection
@@ -749,12 +750,11 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 
 		val factory = object : OverlayFactory<OpenApi3>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in OpenApi3>> {
-				return OpenApi3Impl::class.java
-			}
+			override val signature: String?
+				get() = OpenApi3Impl::class.simpleName
 		
-			override fun _create(openApi3 : OpenApi3?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<OpenApi3> {
-				return OpenApi3Impl(openApi3, parent, refMgr)
+			override fun _create(value : OpenApi3?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<OpenApi3> {
+				return OpenApi3Impl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<OpenApi3> {

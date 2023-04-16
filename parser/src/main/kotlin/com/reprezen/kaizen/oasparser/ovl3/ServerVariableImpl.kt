@@ -10,6 +10,7 @@ import com.reprezen.jsonoverlay.OverlayFactory
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.ReferenceManager
+import kotlin.reflect.KClass
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.ObjectOverlay
 import kotlin.collections.List
@@ -148,12 +149,11 @@ class ServerVariableImpl : PropertiesOverlay<ServerVariable> ,ServerVariable {
 
 		val factory = object : OverlayFactory<ServerVariable>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in ServerVariable>> {
-				return ServerVariableImpl::class.java
-			}
+			override val signature: String?
+				get() = ServerVariableImpl::class.simpleName
 		
-			override fun _create(serverVariable : ServerVariable?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<ServerVariable> {
-				return ServerVariableImpl(serverVariable, parent, refMgr)
+			override fun _create(value : ServerVariable?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<ServerVariable> {
+				return ServerVariableImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<ServerVariable> {

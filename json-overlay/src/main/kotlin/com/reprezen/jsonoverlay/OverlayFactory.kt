@@ -55,13 +55,10 @@ abstract class OverlayFactory<V> {
         return overlay
     }
 
-    open val signature: String?
-        get() = getOverlayClass().simpleName
+    abstract val signature : String?
 
     protected open val isExtendedType: Boolean
-        protected get() = false
-
-    abstract fun getOverlayClass(): Class<out JsonOverlay<in V>>
+        get() = false
 
     protected abstract fun _create(value: V?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): JsonOverlay<V>
 

@@ -9,6 +9,7 @@ import com.reprezen.jsonoverlay.OverlayFactory
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.ReferenceManager
+import kotlin.reflect.KClass
 import com.reprezen.kaizen.oasparser.ovl3.OAuthFlowImpl
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.ObjectOverlay
@@ -275,12 +276,11 @@ class SecuritySchemeImpl : PropertiesOverlay<SecurityScheme> ,SecurityScheme {
 
 		val factory = object : OverlayFactory<SecurityScheme>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in SecurityScheme>> {
-				return SecuritySchemeImpl::class.java
-			}
+			override val signature: String?
+				get() = SecuritySchemeImpl::class.simpleName
 		
-			override fun _create(securityScheme : SecurityScheme?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<SecurityScheme> {
-				return SecuritySchemeImpl(securityScheme, parent, refMgr)
+			override fun _create(value : SecurityScheme?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<SecurityScheme> {
+				return SecuritySchemeImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<SecurityScheme> {

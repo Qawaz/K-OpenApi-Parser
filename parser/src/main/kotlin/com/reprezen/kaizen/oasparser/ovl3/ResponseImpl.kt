@@ -10,6 +10,7 @@ import com.reprezen.kaizen.oasparser.ovl3.HeaderImpl
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.ReferenceManager
+import kotlin.reflect.KClass
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.kaizen.oasparser.ovl3.MediaTypeImpl
 import com.reprezen.kaizen.oasparser.ovl3.LinkImpl
@@ -215,12 +216,11 @@ class ResponseImpl : PropertiesOverlay<Response> ,Response {
 
 		val factory = object : OverlayFactory<Response>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in Response>> {
-				return ResponseImpl::class.java
-			}
+			override val signature: String?
+				get() = ResponseImpl::class.simpleName
 		
-			override fun _create(response : Response?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Response> {
-				return ResponseImpl(response, parent, refMgr)
+			override fun _create(value : Response?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Response> {
+				return ResponseImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Response> {

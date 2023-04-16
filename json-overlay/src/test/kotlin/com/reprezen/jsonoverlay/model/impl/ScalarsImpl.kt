@@ -12,6 +12,7 @@ import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.jsonoverlay.IntegerOverlay
 import com.reprezen.jsonoverlay.PrimitiveOverlay
 import com.reprezen.jsonoverlay.model.impl.ScalarsImpl
+import kotlin.reflect.KClass
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.ObjectOverlay
 import com.reprezen.jsonoverlay.JsonOverlay
@@ -156,12 +157,11 @@ class ScalarsImpl : PropertiesOverlay<Scalars> ,Scalars {
 
 		val factory = object : OverlayFactory<Scalars>() {
 		
-			override fun getOverlayClass() : Class<out JsonOverlay<in Scalars>> {
-				return ScalarsImpl::class.java
-			}
+			override val signature: String?
+				get() = ScalarsImpl::class.simpleName
 		
-			override fun _create(scalars : Scalars?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Scalars> {
-				return ScalarsImpl(scalars, parent, refMgr)
+			override fun _create(value : Scalars?, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Scalars> {
+				return ScalarsImpl(value, parent, refMgr)
 			}
 		
 			override fun _create(json : JsonElement, parent : JsonOverlay<*>?, refMgr : ReferenceManager) : JsonOverlay<Scalars> {
