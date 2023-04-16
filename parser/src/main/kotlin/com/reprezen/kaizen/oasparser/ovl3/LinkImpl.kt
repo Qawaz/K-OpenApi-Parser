@@ -174,11 +174,6 @@ class LinkImpl : PropertiesOverlay<Link> ,Link {
 		return OpenApi3::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<Link> {
-		return Companion.factory
-	}
-
 	companion object {
 		const val F_operationId : String = "operationId"
 

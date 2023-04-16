@@ -106,11 +106,6 @@ class TagImpl : PropertiesOverlay<Tag> ,Tag {
 		return OpenApi3::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<Tag> {
-		return Companion.factory
-	}
-
 	companion object {
 		const val F_name : String = "name"
 

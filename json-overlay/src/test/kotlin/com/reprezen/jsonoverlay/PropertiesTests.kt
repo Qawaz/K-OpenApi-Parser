@@ -248,10 +248,6 @@ class PropertiesTests : Assert() {
         val rootMap: Map<String, Int>
             get() = _getMap("rootMap")
 
-        override fun _getFactory(): OverlayFactory<*> {
-            return Companion.factory
-        }
-
         companion object {
             var factory: OverlayFactory<Foo> = object : OverlayFactory<Foo>() {
 

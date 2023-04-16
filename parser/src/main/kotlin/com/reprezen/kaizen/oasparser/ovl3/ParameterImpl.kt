@@ -311,11 +311,6 @@ class ParameterImpl : PropertiesOverlay<Parameter> ,Parameter {
 		return OpenApi3::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<Parameter> {
-		return Companion.factory
-	}
-
 	companion object {
 		const val F_extensions : String = "extensions"
 

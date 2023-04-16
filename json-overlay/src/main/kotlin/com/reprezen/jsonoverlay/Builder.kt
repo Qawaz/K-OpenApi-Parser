@@ -16,9 +16,9 @@ package com.reprezen.jsonoverlay
 
 import com.reprezen.jsonoverlay.JsonOverlay.Companion._jsonObject
 
-class Builder<V>(private val factory: OverlayFactory<*>, private val modelMember: JsonOverlay<*>) {
+class Builder<V>(private val factory: OverlayFactory<V>, private val modelMember: JsonOverlay<*>) {
     fun build(): JsonOverlay<V> {
-        val refMgr = modelMember?.refMgr ?: ReferenceManager()
-        return factory.create(_jsonObject(mapOf()), null, refMgr) as JsonOverlay<V>
+        val refMgr = modelMember.refMgr
+        return factory.create(_jsonObject(mapOf()), null, refMgr)
     }
 }

@@ -43,10 +43,6 @@ class StringOverlay : ScalarOverlay<String> {
         return if (value != null) JsonPrimitive(value!!) else JsonNull
     }
 
-    override fun _getFactory(): OverlayFactory<*> {
-        return Companion.factory
-    }
-
     companion object {
 
         @JvmField

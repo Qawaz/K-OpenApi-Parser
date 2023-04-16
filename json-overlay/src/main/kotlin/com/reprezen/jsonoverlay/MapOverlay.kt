@@ -170,10 +170,6 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         return !myKeys.hasNext() && !theirKeys.hasNext()
     }
 
-    override fun _getFactory(): OverlayFactory<*> {
-        return factory
-    }
-
     private class MapOverlayFactory<V>(val valueFactory: OverlayFactory<V>, val keyPattern: String?) :
         OverlayFactory<MutableMap<String, V>>() {
 

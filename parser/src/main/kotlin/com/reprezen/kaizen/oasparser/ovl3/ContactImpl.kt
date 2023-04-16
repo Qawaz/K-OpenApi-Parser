@@ -105,11 +105,6 @@ class ContactImpl : PropertiesOverlay<Contact> ,Contact {
 		return OpenApi3::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<Contact> {
-		return Companion.factory
-	}
-
 	companion object {
 		const val F_name : String = "name"
 

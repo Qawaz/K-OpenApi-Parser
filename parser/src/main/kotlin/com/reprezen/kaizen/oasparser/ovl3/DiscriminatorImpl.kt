@@ -80,11 +80,6 @@ class DiscriminatorImpl : PropertiesOverlay<Discriminator> ,Discriminator {
 		return OpenApi3::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<Discriminator> {
-		return Companion.factory
-	}
-
 	companion object {
 		const val F_propertyName : String = "propertyName"
 

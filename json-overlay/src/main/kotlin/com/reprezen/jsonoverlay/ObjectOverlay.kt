@@ -46,10 +46,6 @@ class ObjectOverlay : ScalarOverlay<Any>, KeyValueOverlay {
         return value.toJsonElement()
     }
 
-    override fun _getFactory(): OverlayFactory<*> {
-        return Companion.factory
-    }
-
     companion object {
 
         @JvmField

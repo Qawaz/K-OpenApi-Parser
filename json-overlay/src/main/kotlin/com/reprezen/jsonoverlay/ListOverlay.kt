@@ -149,10 +149,6 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>>, KeyValueOverlay {
         }
     }
 
-    override fun _getFactory(): OverlayFactory<*> {
-        return factory
-    }
-
     private class ListOverlayFactory<V>(val itemFactory: OverlayFactory<V>) : OverlayFactory<MutableList<V>>() {
 
         override val signature: String

@@ -79,11 +79,6 @@ class SecurityParameterImpl : PropertiesOverlay<SecurityParameter> ,SecurityPara
 		return OpenApi3::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<SecurityParameter> {
-		return Companion.factory
-	}
-
 	companion object {
 		const val F_parameters : String = "parameters"
 

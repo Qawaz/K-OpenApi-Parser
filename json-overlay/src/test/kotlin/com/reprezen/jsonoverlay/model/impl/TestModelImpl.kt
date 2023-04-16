@@ -1,26 +1,16 @@
 package com.reprezen.jsonoverlay.model.impl;
 
 import com.reprezen.jsonoverlay.model.intf.*;
-import com.reprezen.jsonoverlay.MapOverlay;
-import java.util.stream.Collectors;
 import com.reprezen.jsonoverlay.StringOverlay;
 import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.ListOverlay;
 import com.reprezen.jsonoverlay.OverlayFactory;
 import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.model.impl.EntryImpl;
 import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.JsonPointer;
 import com.reprezen.jsonoverlay.ReferenceManager;
 import com.reprezen.jsonoverlay.IntegerOverlay;
-import com.reprezen.jsonoverlay.model.impl.ScalarsImpl;
 import kotlinx.serialization.json.JsonElement;
-import com.reprezen.jsonoverlay.model.impl.ItemImpl;
 import kotlin.collections.List;
 import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.model.impl.ColorImpl;
-import kotlin.collections.Map;
 
 class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 
@@ -313,12 +303,7 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 		return TestModel::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<TestModel> {
-		return Companion.factory
-	}
-
-	companion object {
+    companion object {
 		const val F_description : String = "description"
 
 		const val F_width : String = "width"

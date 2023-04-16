@@ -41,10 +41,6 @@ class BooleanOverlay : ScalarOverlay<Boolean> {
         return if (value != null) JsonPrimitive(value!!) else JsonNull
     }
 
-    override fun _getFactory(): OverlayFactory<*> {
-        return Companion.factory
-    }
-
     companion object {
 
         @JvmField

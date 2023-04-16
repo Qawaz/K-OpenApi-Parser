@@ -76,7 +76,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     }
 
     fun builder(): Builder<V> {
-        return Builder(_getFactory(), this)
+        return Builder(factory, this)
     }
 
     /* package */ /* package */
@@ -277,11 +277,6 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
             refOverlay!!.overlay!!
         }
     }
-
-    open fun _getFactory(): OverlayFactory<*> {
-        return factory
-    }
-
 
     override fun hashCode(): Int {
         return if (value != null) value.hashCode() else 0

@@ -62,13 +62,6 @@ class JavaImplGenerator : TypeGenerator {
                 )
             }
         }
-        members.add(
-            ClassMember(
-                """override fun _getFactory() : OverlayFactory<${type.name}> {
-            |${"\t"}return Companion.factory
-            |}""".trimMargin("|")
-            )
-        )
         return members
     }
 

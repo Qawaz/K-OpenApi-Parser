@@ -36,7 +36,7 @@ abstract class OverlayFactory<V> {
             if (overlay == null) {
                 overlay = _create(null as V?, parent, refMgr)
             }
-            overlay = (overlay._getFactory() as OverlayFactory<V>)._create(null as V?, parent, refMgr)
+            overlay = (overlay.factory)._create(null as V?, parent, refMgr)
             overlay._setReference(refOverlay)
         } else {
             val existing = refMgr.registry.getOverlay(json, signature!!)

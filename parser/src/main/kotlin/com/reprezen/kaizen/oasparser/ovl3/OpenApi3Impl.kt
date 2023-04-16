@@ -708,11 +708,6 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 		return OpenApi3::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<OpenApi3> {
-		return Companion.factory
-	}
-
 	companion object {
 		const val F_openApi : String = "openApi"
 

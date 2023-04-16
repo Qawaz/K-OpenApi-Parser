@@ -233,10 +233,6 @@ class ScalarTests {
                 return XEnum.valueOf(value)
             }
 
-            override fun _getFactory(): OverlayFactory<*> {
-                return Companion.factory
-            }
-
             companion object {
 
                 var factory: OverlayFactory<XEnum> = object : OverlayFactory<XEnum>() {

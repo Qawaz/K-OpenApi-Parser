@@ -1,23 +1,18 @@
 package com.reprezen.jsonoverlay.model.impl;
 
 import com.reprezen.jsonoverlay.model.intf.*;
-import java.util.stream.Collectors;
 import com.reprezen.jsonoverlay.StringOverlay;
 import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
 import com.reprezen.jsonoverlay.OverlayFactory;
 import com.reprezen.jsonoverlay.Builder;
 import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.JsonPointer;
 import com.reprezen.jsonoverlay.NumberOverlay;
 import com.reprezen.jsonoverlay.ReferenceManager;
 import com.reprezen.jsonoverlay.IntegerOverlay;
 import com.reprezen.jsonoverlay.PrimitiveOverlay;
-import com.reprezen.jsonoverlay.model.impl.ScalarsImpl;
 import kotlinx.serialization.json.JsonElement;
 import com.reprezen.jsonoverlay.ObjectOverlay;
 import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.model.impl.ColorImpl;
 import com.reprezen.jsonoverlay.BooleanOverlay;
 
 class ScalarsImpl : PropertiesOverlay<Scalars> ,Scalars {
@@ -149,12 +144,7 @@ class ScalarsImpl : PropertiesOverlay<Scalars> ,Scalars {
 		return TestModel::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<Scalars> {
-		return Companion.factory
-	}
-
-	companion object {
+    companion object {
 		const val F_stringValue : String = "stringValue"
 
 		const val F_intValue : String = "intValue"

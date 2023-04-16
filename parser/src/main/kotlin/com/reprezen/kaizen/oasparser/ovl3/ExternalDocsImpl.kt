@@ -93,11 +93,6 @@ class ExternalDocsImpl : PropertiesOverlay<ExternalDocs> ,ExternalDocs {
 		return OpenApi3::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<ExternalDocs> {
-		return Companion.factory
-	}
-
 	companion object {
 		const val F_description : String = "description"
 

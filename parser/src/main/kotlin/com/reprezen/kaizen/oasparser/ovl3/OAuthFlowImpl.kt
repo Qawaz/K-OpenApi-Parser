@@ -179,11 +179,6 @@ class OAuthFlowImpl : PropertiesOverlay<OAuthFlow> ,OAuthFlow {
 		return OpenApi3::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<OAuthFlow> {
-		return Companion.factory
-	}
-
 	companion object {
 		const val F_authorizationUrl : String = "authorizationUrl"
 

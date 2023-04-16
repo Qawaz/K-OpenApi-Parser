@@ -165,11 +165,6 @@ class EncodingPropertyImpl : PropertiesOverlay<EncodingProperty> ,EncodingProper
 		return OpenApi3::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<EncodingProperty> {
-		return Companion.factory
-	}
-
 	companion object {
 		const val F_contentType : String = "contentType"
 

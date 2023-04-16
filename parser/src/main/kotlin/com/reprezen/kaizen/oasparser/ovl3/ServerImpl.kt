@@ -168,11 +168,6 @@ class ServerImpl : PropertiesOverlay<Server> ,Server {
 		return OpenApi3::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<Server> {
-		return Companion.factory
-	}
-
 	companion object {
 		const val F_url : String = "url"
 

@@ -140,11 +140,6 @@ class XmlImpl : PropertiesOverlay<Xml> ,Xml {
 		return OpenApi3::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<Xml> {
-		return Companion.factory
-	}
-
 	companion object {
 		const val F_name : String = "name"
 

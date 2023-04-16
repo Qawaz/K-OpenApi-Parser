@@ -23,12 +23,7 @@ class ColorImpl : EnumOverlay<Color> {
 		return Color.valueOf(value)
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<Color> {
-		return Companion.factory
-	}
-
-	companion object {
+    companion object {
 		val factory = object : OverlayFactory<Color>() {
 			override fun getOverlayClass() : Class<out JsonOverlay<in Color>> {
 				return ColorImpl::class.java

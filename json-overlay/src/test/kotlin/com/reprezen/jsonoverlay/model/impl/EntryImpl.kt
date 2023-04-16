@@ -1,16 +1,13 @@
 package com.reprezen.jsonoverlay.model.impl;
 
 import com.reprezen.jsonoverlay.model.intf.*;
-import java.util.stream.Collectors;
 import com.reprezen.jsonoverlay.StringOverlay;
 import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
 import com.reprezen.jsonoverlay.OverlayFactory;
 import kotlinx.serialization.json.JsonElement;
 import com.reprezen.jsonoverlay.Builder;
 import com.reprezen.jsonoverlay.PropertiesOverlay;
 import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.JsonPointer;
 import com.reprezen.jsonoverlay.ReferenceManager;
 
 class EntryImpl : PropertiesOverlay<Entry> ,Entry {
@@ -43,12 +40,7 @@ class EntryImpl : PropertiesOverlay<Entry> ,Entry {
 		return TestModel::class.java
 	}
 
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun _getFactory() : OverlayFactory<Entry> {
-		return Companion.factory
-	}
-
-	companion object {
+    companion object {
 		const val F_title : String = "title"
 
 		val factory = object : OverlayFactory<Entry>() {

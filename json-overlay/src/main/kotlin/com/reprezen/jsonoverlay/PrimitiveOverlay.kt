@@ -15,8 +15,6 @@
 package com.reprezen.jsonoverlay
 
 import kotlinx.serialization.json.*
-import java.math.BigDecimal
-import java.math.BigInteger
 
 class PrimitiveOverlay : ScalarOverlay<Any> {
 
@@ -47,10 +45,6 @@ class PrimitiveOverlay : ScalarOverlay<Any> {
 
     override fun _toJsonInternal(options: SerializationOptions): JsonElement {
         return value.toJsonElement()
-    }
-
-    override fun _getFactory(): OverlayFactory<*> {
-        return Companion.factory
     }
 
     companion object {
