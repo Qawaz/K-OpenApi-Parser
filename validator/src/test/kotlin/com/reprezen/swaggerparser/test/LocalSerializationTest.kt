@@ -42,14 +42,16 @@ class LocalSerializationTest : Assert() {
     @Test
     fun testRefSchemaIssue() {
         val model = parseLocalModel("refSchemaIssue")
-        val schemas = model.getSchemas()
-        val deviceStateSchema = schemas["LogEntry"]!!.getProperties()["device_state"]!!
-        val paths = model.getPaths()
-        val schema = paths["/v1/logs/list"]!!.getOperations()["post"]!!.getResponses()["200"]!!.getContentMediaTypes()["application/json"]!!.getSchema()!!
-        println((schema as PropertiesOverlay<*>))
-        assertNotNull(schema.getType())
-        assertTrue(Overlay.of(model.getSchema("LogEntry")!!.getProperties())!!.isReference("device_state"))
-        assertTrue((deviceStateSchema as JsonOverlay<*>)._isReference())
+        val schema = model.getSchema("LogEntry")!! as PropertiesOverlay<*>
+        val properties = model.getSchema("LogEntry")!!.getProperties()
+        val propertiesOverlay = Overlay.of(properties)!!
+        println((properties["tag"] as JsonOverlay<*>)._getPathFromRoot())
+        assertTrue(schema._getValueOverlayByPath("properties")!!.findByPath("device_state")!!._isReference())
+//        println(propertiesOverlay.overlay)
+        assertEquals(schema._getValueOverlayByPath("properties"),propertiesOverlay.overlay)
+        val deviceState = Overlay.of(model.getSchema("LogEntry")!!.getProperty("device_state")!!)
+        assertTrue(propertiesOverlay.isReference("device_state"))
+        assertTrue(deviceState.isReference())
     }
 
     @Test

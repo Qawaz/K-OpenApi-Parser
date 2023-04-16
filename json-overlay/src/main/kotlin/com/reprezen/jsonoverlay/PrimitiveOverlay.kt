@@ -18,19 +18,27 @@ import kotlinx.serialization.json.*
 import java.math.BigDecimal
 import java.math.BigInteger
 
-class PrimitiveOverlay private constructor(
-    value: Any?,
-    parent: JsonOverlay<*>?,
-    refMgr: ReferenceManager
-) : ScalarOverlay<Any>(Companion.factory, refMgr) {
+class PrimitiveOverlay : ScalarOverlay<Any> {
 
-    init {
-        if (value != null && value is JsonElement) {
-            load(value, parent)
-        } else {
-            load(value, parent)
-        }
-    }
+    private constructor(parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
+        parent = parent,
+        factory = ObjectOverlay.factory,
+        refMgr = refMgr
+    )
+
+    private constructor(json: JsonElement, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
+        json = json,
+        parent = parent,
+        factory = ObjectOverlay.factory,
+        refMgr = refMgr
+    )
+
+    private constructor(value: Any, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
+        value = value,
+        parent = parent,
+        ObjectOverlay.factory,
+        refMgr
+    )
 
     override fun _fromJson(json: JsonElement): Any? {
         if (json !is JsonPrimitive) return null
@@ -53,7 +61,7 @@ class PrimitiveOverlay private constructor(
             }
 
             override fun _create(value: Any?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): PrimitiveOverlay {
-                return PrimitiveOverlay(value, parent, refMgr)
+                return if (value != null) PrimitiveOverlay(value, parent, refMgr) else PrimitiveOverlay(parent, refMgr)
             }
 
             public override fun _create(

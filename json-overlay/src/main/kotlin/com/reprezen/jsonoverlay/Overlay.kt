@@ -123,10 +123,6 @@ class Overlay<V> {
             return Overlay(overlay)
         }
 
-        fun <V> ofOv(overlay: JsonOverlay<*>): JsonOverlay<*> {
-            return overlay
-        }
-
         fun <V> of(overlay: IJsonOverlay<V>): Overlay<V> {
             return Overlay(overlay)
         }

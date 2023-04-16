@@ -40,15 +40,10 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     private var refOverlay: RefOverlay<V>? = null
     private var creatingRef: Reference? = null
 
-    protected constructor(factory: OverlayFactory<V>, refMgr: ReferenceManager) {
+    protected constructor(parent: JsonOverlay<*>?, factory: OverlayFactory<V>, refMgr: ReferenceManager) {
+        this.parent = parent
         this.factory = factory
         this.refMgr = refMgr
-    }
-
-    protected fun load(value: V?, parent: JsonOverlay<*>?) {
-        json = null
-        this.value = value
-        this.parent = parent
     }
 
     protected constructor(value: V?, parent: JsonOverlay<*>?, factory: OverlayFactory<V>, refMgr: ReferenceManager) {
@@ -57,16 +52,6 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         this.parent = parent
         this.factory = factory
         this.refMgr = refMgr
-    }
-
-    protected fun load(json: JsonElement, parent: JsonOverlay<*>?) {
-        this.json = json
-        if (Reference.isReferenceNode(json)) {
-            refOverlay = RefOverlay(json, parent, factory, refMgr)
-        } else {
-            value = _fromJson(json)
-        }
-        this.parent = parent
     }
 
     protected constructor(
@@ -261,7 +246,6 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     }
 
     /* package */ /* package */
-    @JvmOverloads
     fun _toJson(options: SerializationOptions = SerializationOptions()): JsonElement {
         return if (_isReference()) {
             if (!options.isFollowRefs || refOverlay!!._getReference().isInvalid) {
@@ -275,8 +259,8 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     }
 
     /* package */
-    fun _toJson(vararg options: SerializationOptions.Option): JsonElement {
-        return _toJson(SerializationOptions(*options))
+    fun _toJson(options: SerializationOptions.Option): JsonElement {
+        return _toJson(SerializationOptions(options))
     }
 
     protected abstract fun _toJsonInternal(options: SerializationOptions): JsonElement?

@@ -18,16 +18,25 @@ import kotlinx.serialization.json.*
 
 class ObjectOverlay : ScalarOverlay<Any>, KeyValueOverlay {
 
-    private constructor(value: Any?, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
+    private constructor(parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
+        parent = parent,
+        factory = Companion.factory,
+        refMgr = refMgr
+    )
+
+    private constructor(json: JsonElement, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
+        json = json,
+        parent = parent,
+        factory = Companion.factory,
+        refMgr = refMgr
+    )
+
+    private constructor(value: Any, parent: JsonOverlay<*>?, refMgr: ReferenceManager) : super(
+        value = value,
+        parent = parent,
         Companion.factory,
         refMgr
-    ) {
-        if (value != null && value is JsonElement) {
-            load(value, parent)
-        } else {
-            load(value, parent)
-        }
-    }
+    )
 
     override fun _fromJson(json: JsonElement): Any? {
         return json.toValue()
@@ -50,7 +59,7 @@ class ObjectOverlay : ScalarOverlay<Any>, KeyValueOverlay {
             }
 
             override fun _create(value: Any?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): ObjectOverlay {
-                return ObjectOverlay(value, parent, refMgr)
+                return if (value != null) ObjectOverlay(value, parent, refMgr) else ObjectOverlay(parent, refMgr)
             }
 
             override fun _create(json: JsonElement, parent: JsonOverlay<*>?, refMgr: ReferenceManager): ObjectOverlay {

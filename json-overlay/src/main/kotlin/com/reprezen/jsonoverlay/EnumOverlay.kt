@@ -30,8 +30,8 @@ abstract class EnumOverlay<V : Enum<V>> : ScalarOverlay<V> {
     protected constructor(
         value: V?,
         parent: JsonOverlay<*>?,
-        factory: OverlayFactory<V>?,
-        refMgr: ReferenceManager?
+        factory: OverlayFactory<V>,
+        refMgr: ReferenceManager
     ) : super(value, parent, factory, refMgr)
 
     override fun _fromJson(json: JsonElement): V? {

@@ -19,25 +19,24 @@ import kotlinx.serialization.json.JsonElement
 abstract class ScalarOverlay<V> : JsonOverlay<V> {
 
     protected constructor(
+        parent : JsonOverlay<*>?,
         factory: OverlayFactory<V>,
         refMgr: ReferenceManager
-    ) : super(factory, refMgr)
+    ) : super(parent,factory, refMgr)
 
     protected constructor(
         json: JsonElement,
         parent: JsonOverlay<*>?,
         factory: OverlayFactory<V>,
         refMgr: ReferenceManager
-    ) : super(
-        json, parent, factory, refMgr
-    )
+    ) : super(json, parent, factory, refMgr)
 
     protected constructor(
         value: V?,
         parent: JsonOverlay<*>?,
-        factory: OverlayFactory<V>?,
-        refMgr: ReferenceManager?
-    ) : super(value, parent, factory!!, refMgr!!)
+        factory: OverlayFactory<V>,
+        refMgr: ReferenceManager
+    ) : super(value, parent, factory, refMgr)
 
     override fun _getPathOfChild(child: JsonOverlay<*>): String {
         return ""

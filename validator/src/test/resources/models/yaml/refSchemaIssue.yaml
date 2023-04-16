@@ -208,10 +208,12 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              token:
-                type: string
-              is_encrypted:
-                type: string
+              type: object
+              properties:
+                token:
+                  type: string
+                is_encrypted:
+                  type: string
         description: >-
           Request body for the log file upload request , containing token and
           is_encrypted
@@ -227,10 +229,12 @@ paths:
           content:
             application/json:
               schema:
-                logs:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/DatabaseLogEntry'
+                type: object
+                properties:
+                  logs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DatabaseLogEntry'
         '400':
           description: Error because of bad request
           content:
