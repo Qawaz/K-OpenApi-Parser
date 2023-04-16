@@ -1,14 +1,14 @@
 package com.reprezen.jsonoverlay.model.intf
 
-import com.reprezen.jsonoverlay.model.intf.Item;
-import com.reprezen.jsonoverlay.model.intf.Entry;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.model.intf.Color;
-import com.reprezen.jsonoverlay.model.intf.Scalars;
-import com.reprezen.jsonoverlay.IModelPart;
-import kotlin.collections.List;
-import kotlin.collections.Map;
+import com.reprezen.jsonoverlay.model.intf.Item
+import com.reprezen.jsonoverlay.model.intf.Entry
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.model.intf.Color
+import com.reprezen.jsonoverlay.model.intf.Scalars
+import com.reprezen.jsonoverlay.IModelPart
+import kotlin.collections.List
+import kotlin.collections.Map
 
 interface TestModel : IJsonOverlay<TestModel>, IModelPart<TestModel, TestModel> {
 
@@ -38,9 +38,6 @@ interface TestModel : IJsonOverlay<TestModel>, IModelPart<TestModel, TestModel> 
 	fun getEntries() : MutableMap<String, Entry>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getEntries(elaborate : Boolean) : MutableMap<String, Entry>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasEntries() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -61,9 +58,6 @@ interface TestModel : IJsonOverlay<TestModel>, IModelPart<TestModel, TestModel> 
 	// Item
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getItems() : List<Item>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getItems(elaborate : Boolean) : List<Item>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasItems() : Boolean
@@ -91,9 +85,6 @@ interface TestModel : IJsonOverlay<TestModel>, IModelPart<TestModel, TestModel> 
 	fun getIntegers() : List<Int>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getIntegers(elaborate : Boolean) : List<Int>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasIntegers() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -119,9 +110,6 @@ interface TestModel : IJsonOverlay<TestModel>, IModelPart<TestModel, TestModel> 
 	fun getNamedIntegers() : MutableMap<String, Int>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getNamedIntegers(elaborate : Boolean) : MutableMap<String, Int>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasNamedIntegers() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -144,17 +132,11 @@ interface TestModel : IJsonOverlay<TestModel>, IModelPart<TestModel, TestModel> 
 	fun getColor() : Color?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getColor(elaborate : Boolean) : Color?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setColor(color : Color)
 
 	// Scalar
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getScalars() : MutableMap<String, Scalars>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getScalars(elaborate : Boolean) : MutableMap<String, Scalars>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasScalars() : Boolean

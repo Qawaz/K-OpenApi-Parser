@@ -1,16 +1,24 @@
-package com.reprezen.jsonoverlay.model.impl;
+package com.reprezen.jsonoverlay.model.impl
 
-import com.reprezen.jsonoverlay.model.intf.*;
-import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
-import com.reprezen.jsonoverlay.IntegerOverlay;
-import kotlinx.serialization.json.JsonElement;
-import kotlin.collections.List;
-import com.reprezen.jsonoverlay.JsonOverlay;
+import com.reprezen.jsonoverlay.model.intf.*
+import com.reprezen.jsonoverlay.MapOverlay
+import com.reprezen.jsonoverlay.StringOverlay
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.ListOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.model.impl.EntryImpl
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.ReferenceManager
+import com.reprezen.jsonoverlay.IntegerOverlay
+import com.reprezen.jsonoverlay.model.impl.ScalarsImpl
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.model.impl.ItemImpl
+import kotlin.collections.List
+import com.reprezen.jsonoverlay.JsonOverlay
+import com.reprezen.jsonoverlay.model.impl.ColorImpl
+import kotlin.collections.Map
 
 class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 
@@ -60,11 +68,6 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getEntries(elaborate : Boolean) : MutableMap<String, Entry> {
-		return _getMap("entries")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasEntries() : Boolean {
 		return _isPresent("entries")
 	}
@@ -97,11 +100,6 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Item
 	override fun getItems() : List<Item> {
-		return _getList("items")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getItems(elaborate : Boolean) : List<Item> {
 		return _getList("items")
 	}
 
@@ -147,11 +145,6 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getIntegers(elaborate : Boolean) : List<Int> {
-		return _getList("integers")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasIntegers() : Boolean {
 		return _isPresent("integers")
 	}
@@ -193,11 +186,6 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getNamedIntegers(elaborate : Boolean) : MutableMap<String, Int> {
-		return _getMap("namedIntegers")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasNamedIntegers() : Boolean {
 		return _isPresent("namedIntegers")
 	}
@@ -234,11 +222,6 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getColor(elaborate : Boolean) : Color? {
-		return _get("color")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setColor(color : Color) {
 		_setScalar("color", color)
 	}
@@ -246,11 +229,6 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Scalar
 	override fun getScalars() : MutableMap<String, Scalars> {
-		return _getMap("scalars")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getScalars(elaborate : Boolean) : MutableMap<String, Scalars> {
 		return _getMap("scalars")
 	}
 
@@ -303,7 +281,7 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 		return TestModel::class.java
 	}
 
-    companion object {
+	companion object {
 		const val F_description : String = "description"
 
 		const val F_width : String = "width"
@@ -338,15 +316,6 @@ class TestModelImpl : PropertiesOverlay<TestModel> ,TestModel {
 		
 			override val isExtendedType : Boolean get() = false
 		};
-
-		private fun getSubtypeOf(testModel : TestModel) : Class<out TestModel> {
-			return TestModel::class.java
-		}
-
-		private fun getSubtypeOf(json : JsonElement) : Class<out TestModel> {
-			return TestModel::class.java
-		}
-		
 
 		fun builder(modelMember : JsonOverlay<*>) : Builder<TestModel> {
 			return Builder<TestModel>(factory, modelMember)

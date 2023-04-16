@@ -1,14 +1,15 @@
-package com.reprezen.jsonoverlay.model.impl;
+package com.reprezen.jsonoverlay.model.impl
 
-import com.reprezen.jsonoverlay.model.intf.*;
-import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import kotlinx.serialization.json.JsonElement;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.jsonoverlay.model.intf.*
+import com.reprezen.jsonoverlay.StringOverlay
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.JsonOverlay
+import com.reprezen.jsonoverlay.ReferenceManager
 
 class EntryImpl : PropertiesOverlay<Entry> ,Entry {
 
@@ -40,7 +41,7 @@ class EntryImpl : PropertiesOverlay<Entry> ,Entry {
 		return TestModel::class.java
 	}
 
-    companion object {
+	companion object {
 		const val F_title : String = "title"
 
 		val factory = object : OverlayFactory<Entry>() {
@@ -59,15 +60,6 @@ class EntryImpl : PropertiesOverlay<Entry> ,Entry {
 		
 			override val isExtendedType : Boolean get() = false
 		};
-
-		private fun getSubtypeOf(entry : Entry) : Class<out Entry> {
-			return Entry::class.java
-		}
-
-		private fun getSubtypeOf(json : JsonElement) : Class<out Entry> {
-			return Entry::class.java
-		}
-		
 
 		fun builder(modelMember : JsonOverlay<*>) : Builder<Entry> {
 			return Builder<Entry>(factory, modelMember)

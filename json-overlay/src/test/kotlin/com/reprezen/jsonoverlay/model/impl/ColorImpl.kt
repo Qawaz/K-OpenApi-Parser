@@ -1,14 +1,14 @@
-package com.reprezen.jsonoverlay.model.impl;
+package com.reprezen.jsonoverlay.model.impl
 
-import com.reprezen.jsonoverlay.model.intf.*;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import kotlinx.serialization.json.JsonElement;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.EnumOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
+import com.reprezen.jsonoverlay.model.intf.*
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.EnumOverlay
+import com.reprezen.jsonoverlay.JsonOverlay
+import com.reprezen.jsonoverlay.ReferenceManager
 
 class ColorImpl : EnumOverlay<Color> {
 
@@ -23,7 +23,7 @@ class ColorImpl : EnumOverlay<Color> {
 		return Color.valueOf(value)
 	}
 
-    companion object {
+	companion object {
 		val factory = object : OverlayFactory<Color>() {
 			override fun getOverlayClass() : Class<out JsonOverlay<in Color>> {
 				return ColorImpl::class.java

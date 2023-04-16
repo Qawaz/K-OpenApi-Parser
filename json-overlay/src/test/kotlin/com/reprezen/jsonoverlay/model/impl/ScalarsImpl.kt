@@ -1,19 +1,22 @@
-package com.reprezen.jsonoverlay.model.impl;
+package com.reprezen.jsonoverlay.model.impl
 
-import com.reprezen.jsonoverlay.model.intf.*;
-import com.reprezen.jsonoverlay.StringOverlay;
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.OverlayFactory;
-import com.reprezen.jsonoverlay.Builder;
-import com.reprezen.jsonoverlay.PropertiesOverlay;
-import com.reprezen.jsonoverlay.NumberOverlay;
-import com.reprezen.jsonoverlay.ReferenceManager;
-import com.reprezen.jsonoverlay.IntegerOverlay;
-import com.reprezen.jsonoverlay.PrimitiveOverlay;
-import kotlinx.serialization.json.JsonElement;
-import com.reprezen.jsonoverlay.ObjectOverlay;
-import com.reprezen.jsonoverlay.JsonOverlay;
-import com.reprezen.jsonoverlay.BooleanOverlay;
+import com.reprezen.jsonoverlay.model.intf.*
+import com.reprezen.jsonoverlay.StringOverlay
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.OverlayFactory
+import com.reprezen.jsonoverlay.Builder
+import com.reprezen.jsonoverlay.PropertiesOverlay
+import com.reprezen.jsonoverlay.NumberOverlay
+import com.reprezen.jsonoverlay.ReferenceManager
+import com.reprezen.jsonoverlay.IntegerOverlay
+import com.reprezen.jsonoverlay.PrimitiveOverlay
+import com.reprezen.jsonoverlay.model.impl.ScalarsImpl
+import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.ObjectOverlay
+import com.reprezen.jsonoverlay.JsonOverlay
+import com.reprezen.jsonoverlay.model.impl.ColorImpl
+import com.reprezen.jsonoverlay.BooleanOverlay
 
 class ScalarsImpl : PropertiesOverlay<Scalars> ,Scalars {
 
@@ -101,11 +104,6 @@ class ScalarsImpl : PropertiesOverlay<Scalars> ,Scalars {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getColorValue(elaborate : Boolean) : Color? {
-		return _get("colorValue")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setColorValue(colorValue : Color) {
 		_setScalar("colorValue", colorValue)
 	}
@@ -113,11 +111,6 @@ class ScalarsImpl : PropertiesOverlay<Scalars> ,Scalars {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// EmbeddedScalars
 	override fun getEmbeddedScalars() : Scalars? {
-		return _get("embeddedScalars")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getEmbeddedScalars(elaborate : Boolean) : Scalars? {
 		return _get("embeddedScalars")
 	}
 
@@ -144,7 +137,7 @@ class ScalarsImpl : PropertiesOverlay<Scalars> ,Scalars {
 		return TestModel::class.java
 	}
 
-    companion object {
+	companion object {
 		const val F_stringValue : String = "stringValue"
 
 		const val F_intValue : String = "intValue"
@@ -177,15 +170,6 @@ class ScalarsImpl : PropertiesOverlay<Scalars> ,Scalars {
 		
 			override val isExtendedType : Boolean get() = false
 		};
-
-		private fun getSubtypeOf(scalars : Scalars) : Class<out Scalars> {
-			return Scalars::class.java
-		}
-
-		private fun getSubtypeOf(json : JsonElement) : Class<out Scalars> {
-			return Scalars::class.java
-		}
-		
 
 		fun builder(modelMember : JsonOverlay<*>) : Builder<Scalars> {
 			return Builder<Scalars>(factory, modelMember)

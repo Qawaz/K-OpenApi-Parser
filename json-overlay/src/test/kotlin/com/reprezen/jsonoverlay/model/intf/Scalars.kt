@@ -1,10 +1,10 @@
 package com.reprezen.jsonoverlay.model.intf
 
-import com.reprezen.jsonoverlay.parser.Generated;
-import com.reprezen.jsonoverlay.IJsonOverlay;
-import com.reprezen.jsonoverlay.model.intf.Color;
-import com.reprezen.jsonoverlay.model.intf.Scalars;
-import com.reprezen.jsonoverlay.IModelPart;
+import com.reprezen.jsonoverlay.parser.Generated
+import com.reprezen.jsonoverlay.IJsonOverlay
+import com.reprezen.jsonoverlay.model.intf.Color
+import com.reprezen.jsonoverlay.model.intf.Scalars
+import com.reprezen.jsonoverlay.IModelPart
 
 interface Scalars : IJsonOverlay<Scalars>, IModelPart<TestModel, Scalars> {
 
@@ -58,17 +58,11 @@ interface Scalars : IJsonOverlay<Scalars>, IModelPart<TestModel, Scalars> {
 	fun getColorValue() : Color?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getColorValue(elaborate : Boolean) : Color?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setColorValue(colorValue : Color)
 
 	// EmbeddedScalars
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getEmbeddedScalars() : Scalars?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getEmbeddedScalars(elaborate : Boolean) : Scalars?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setEmbeddedScalars(embeddedScalars : Scalars)

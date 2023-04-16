@@ -1,6 +1,6 @@
 package com.reprezen.jsonoverlay.model.intf;
 
-import com.reprezen.jsonoverlay.parser.Generated;
+import com.reprezen.jsonoverlay.parser.Generated
 
 enum class Color  {
 
