@@ -185,79 +185,67 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         return factoryMap.values.find { it.path == segment }?.let { _getOverlay(it, it.factory) }
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun <T> _getOverlay(name: String): JsonOverlay<T>? {
         return _getValueOverlayByName(name) as? JsonOverlay<T>
     }
 
-    protected fun <T> _setScalar(name: String, value: T?) {
-        var overlay = _getOverlay<T>(name)
-        if (overlay == null && value != null) {
-            overlay = factoryMap[name]?.let {
-                createOverlay(value, it, it.factory as OverlayFactory<T>)
-            }
+    @Suppress("UNCHECKED_CAST")
+    fun <T> _createOverlay(name: String, value: T?): JsonOverlay<T>? {
+        return factoryMap[name]?.let {
+            createOverlay(value, it, it.factory as OverlayFactory<T>)
         }
+    }
+
+    protected fun <T> _setScalar(name: String, value: T?) {
+        val overlay = _getOverlay<T>(name) ?: _createOverlay(name, value)
         overlay?._set(value)
     }
 
-    protected fun <T> _getList(name: String): MutableList<T> {
-        return _get(name) ?: mutableListOf<T>().also { _setList(name, it) }
+    @Suppress("UNCHECKED_CAST")
+    protected fun <T> _getList(name: String): ListOverlay<T> {
+        return (_getOverlay<T>(name) ?: _createOverlay(name, null)) as ListOverlay<T>
     }
 
-    @Suppress("UNCHECKED_CAST")
     protected fun <T> _get(name: String, index: Int): T {
-        val overlay = _getOverlay<T>(name) as ListOverlay<T>
-        return overlay[index]!!
+        return _getList<T>(name)[index]!!
     }
 
-    @Suppress("UNCHECKED_CAST")
     protected fun <T> _setList(name: String, listVal: MutableList<T>) {
-        val overlay = _getOverlay<T>(name) as? ListOverlay<T>
-        overlay?._set(listVal)
+        _getList<T>(name)._set(listVal)
     }
 
-    @Suppress("UNCHECKED_CAST")
     protected fun <T> _set(name: String, index: Int, value: T) {
-        val overlay = _getOverlay<T>(name) as ListOverlay<T>
-        overlay[index] = value
+        _getList<T>(name)[index] = value
     }
 
-    @Suppress("UNCHECKED_CAST")
     protected fun <T> _insert(name: String, index: Int, value: T) {
-        val overlay = _getOverlay<T>(name) as ListOverlay<T>
-        overlay.insert(index, value)
+        _getList<T>(name).add(index, value)
     }
 
-    @Suppress("UNCHECKED_CAST")
     protected fun <T> _add(name: String, value: T) {
-        val overlay = _getOverlay<T>(name) as ListOverlay<T>
-        overlay.add(value)
+        _getList<T>(name).add(value)
     }
 
     protected fun _remove(name: String, index: Int) {
-        val overlay = _getValueOverlayByName(name) as ListOverlay<*>
-        overlay.remove(index)
-    }
-
-    protected fun <T> _getMap(name: String): MutableMap<String, T> {
-        return _get(name) ?: mutableMapOf<String, T>().also { _setMap(name, it) }
+        _getList<Any>(name).removeAt(index)
     }
 
     @Suppress("UNCHECKED_CAST")
+    protected fun <T> _getMap(name: String): MapOverlay<T> {
+        return (_getOverlay<T>(name) ?: _createOverlay(name, null)) as MapOverlay<T>
+    }
+
     protected fun <T> _get(name: String, key: String): T? {
-        val overlay = _getOverlay<T>(name) as MapOverlay<T>
-        return overlay[key]
+        return _getMap<T>(name)[key]
     }
 
-    @Suppress("UNCHECKED_CAST")
     protected fun <T> _setMap(name: String, mapVal: MutableMap<String, T>) {
-        val overlay = _getOverlay<T>(name) as? MapOverlay<T>
-        overlay?._set(mapVal)
+        _getMap<T>(name)._set(mapVal)
     }
 
-    @Suppress("UNCHECKED_CAST")
     protected fun <T> _set(name: String, key: String, value: T) {
-        val overlay = _getOverlay<T>(name) as MapOverlay<in T>
-        overlay[key] = value
+        _getMap<T>(name)[key] = value
     }
 
     protected fun _remove(name: String, key: String) {

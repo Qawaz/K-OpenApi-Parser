@@ -84,7 +84,7 @@ class ParameterValidator : ObjectValidatorBase<Parameter>() {
     }
 
     fun checkExampleExclusion(examples: Overlay<MutableMap<String, Example>>?, example: Overlay<Any>?) {
-        val examplesPresent = examples != null && examples.isPresent && Overlay.getMapOverlay(examples)!!.size() > 0
+        val examplesPresent = examples != null && examples.isPresent && Overlay.getMapOverlay(examples)!!.isNotEmpty()
         val examplePresent = example != null && example.isPresent
         if (examplesPresent && examplePresent) {
             results.addError("ExmplExclusion|The 'example' and 'exmaples' properties may not both appear", value)

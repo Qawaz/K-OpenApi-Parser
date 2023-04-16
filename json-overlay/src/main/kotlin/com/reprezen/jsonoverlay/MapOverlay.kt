@@ -20,34 +20,26 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import java.util.regex.Pattern
 
-class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
+class MapOverlay<V> private constructor(
+    value: MutableMap<String, V>,
+    json: JsonElement?,
+    parent: JsonOverlay<*>?,
+    factory: MapOverlayFactory<V>,
+    refMgr: ReferenceManager,
+) : JsonOverlay<MutableMap<String, V>>(
+    parent = parent,
+    factory = factory,
+    refMgr = refMgr
+), KeyValueOverlay, Map<String, V> by value, MutableMap<String, V> {
 
-    private val valueFactory: OverlayFactory<V>
-    private val keyPattern: Regex?
     private val overlays: MutableMap<String, JsonOverlay<V>> = mutableMapOf()
 
-    private constructor(
-        json: JsonElement,
-        parent: JsonOverlay<*>?, factory: OverlayFactory<MutableMap<String, V>>,
-        refMgr: ReferenceManager
-    ) : super(json, parent, factory, refMgr) {
-        val mapOverlayFactory = factory as MapOverlayFactory<V>
-        valueFactory = mapOverlayFactory.valueFactory
-        val keyPattern = mapOverlayFactory.keyPattern
-        this.keyPattern = if (keyPattern != null) Regex(keyPattern) else null
-        _elaborate()
-    }
+    private val valueFactory: OverlayFactory<V> = factory.valueFactory
+    private val keyPattern: Regex? = if (factory.keyPattern != null) Regex(factory.keyPattern) else null
 
-    private constructor(
-        value: MutableMap<String, V>?,
-        parent: JsonOverlay<*>?,
-        factory: OverlayFactory<MutableMap<String, V>>,
-        refMgr: ReferenceManager
-    ) : super(LinkedHashMap<String, V>(value ?: mapOf()), parent, factory, refMgr) {
-        val mapOverlayFactory = factory as MapOverlayFactory<V>
-        valueFactory = mapOverlayFactory.valueFactory
-        val keyPattern = mapOverlayFactory.keyPattern
-        this.keyPattern = if (keyPattern != null) Regex(keyPattern) else null
+    init {
+        this.value = value
+        this.json = json
         _elaborate()
     }
 
@@ -132,7 +124,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         return valueFactory.create(`val`, this, refMgr)
     }
 
-    operator fun get(key: String): V? {
+    override operator fun get(key: String): V? {
         val valOverlay = overlays[key]
         return valOverlay?._get()
     }
@@ -141,23 +133,24 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         return overlays.keys.toList()
     }
 
-    fun keySet(): Set<String> {
-        return value!!.keys
-    }
+    override val keys: MutableSet<String>
+        get() = value!!.keys
+
+    override val values: MutableCollection<V>
+        get() = value!!.values
 
     operator fun set(key: String, value: V) {
         this.value!![key] = value
         overlays[key] = valueOverlayFor(value)
     }
 
-    fun remove(key: String) {
-        value!!.remove(key)
+    override fun remove(key: String): V? {
         overlays.remove(key)
+        return value!!.remove(key)
     }
 
-    fun size(): Int {
-        return overlays.size
-    }
+    override val size: Int
+        get() = overlays.size
 
     private fun checkOrder(other: MapOverlay<*>): Boolean {
         val myKeys: Iterator<String> = overlays.keys.iterator()
@@ -181,7 +174,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
             parent: JsonOverlay<*>?,
             refMgr: ReferenceManager
         ): JsonOverlay<MutableMap<String, V>> {
-            return MapOverlay<V>(value, parent, this, refMgr)
+            return MapOverlay<V>(value = value ?: mutableMapOf(), json = null, parent = parent, this, refMgr)
         }
 
         override fun _create(
@@ -189,7 +182,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
             parent: JsonOverlay<*>?,
             refMgr: ReferenceManager
         ): JsonOverlay<MutableMap<String, V>> {
-            return MapOverlay<V>(json, parent, this, refMgr)
+            return MapOverlay<V>(value = mutableMapOf(), json = json, parent = parent, this, refMgr)
         }
     }
 
@@ -201,4 +194,29 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
             return MapOverlayFactory(valueFactory, keyPattern)
         }
     }
+
+    override val entries: MutableSet<MutableMap.MutableEntry<String, V>>
+        get() = value!!.entries
+
+    override fun clear() {
+        value!!.clear()
+        overlays.clear()
+    }
+
+    private fun itemOverlayOf(value: V): JsonOverlay<V> {
+        return valueFactory.create(value = value, parent = this, refMgr = refMgr)
+    }
+
+    override fun putAll(from: Map<out String, V>) {
+        value!!.putAll(from)
+        overlays.putAll(from.mapValues { itemOverlayOf(it.value) })
+    }
+
+    override fun put(key: String, value: V): V? {
+        val previous = this.value?.get(key)
+        this.value!![key] = value
+        overlays[key] = itemOverlayOf(value)
+        return previous
+    }
+
 }

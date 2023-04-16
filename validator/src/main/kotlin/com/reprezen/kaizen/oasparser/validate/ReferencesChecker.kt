@@ -17,7 +17,7 @@ import com.reprezen.kaizen.oasparser.validate.msg.Messages
 object ReferencesChecker {
     fun checkReferences(list: ListOverlay<*>, results: ValidationResults) {
         val listAdapter: Overlay<*> = Overlay.of(list)
-        for (i in 0 until list.size()) {
+        for (i in 0 until list.size) {
             if (listAdapter.isReference(i)) {
                 checkReference(listAdapter.getReference(i.toString())!!, results, Overlay.of(list, i))
             }
@@ -26,7 +26,7 @@ object ReferencesChecker {
 
     fun checkReferences(map: MapOverlay<*>, results: ValidationResults) {
         val mapAdapter: Overlay<*> = Overlay.of(map)
-        for (key in map.keySet()) {
+        for (key in map.keys) {
             if (mapAdapter.isReference(key)) {
                 checkReference(mapAdapter.getReference(key)!!, results, Overlay.of(map, key))
             }

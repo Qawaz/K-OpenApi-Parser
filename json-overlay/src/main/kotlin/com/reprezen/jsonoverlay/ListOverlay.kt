@@ -19,28 +19,27 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.jsonArray
 
-class ListOverlay<V> : JsonOverlay<MutableList<V>>, KeyValueOverlay {
-
-    private val itemFactory: OverlayFactory<V>
+class ListOverlay<V> private constructor(
+    list: MutableList<V>,
+    json: JsonElement?,
+    parent: JsonOverlay<*>?,
+    private val itemFactory: OverlayFactory<V>,
+    factory: OverlayFactory<MutableList<V>>,
+    refMgr: ReferenceManager
+) : JsonOverlay<MutableList<V>>(
+    parent = parent,
+    factory = factory,
+    refMgr = refMgr
+), KeyValueOverlay, List<V> by list, MutableList<V> {
 
     private val overlays: MutableList<JsonOverlay<V>> = ArrayList()
 
-    private constructor(
-        json: JsonElement,
-        parent: JsonOverlay<*>?,
-        factory: OverlayFactory<MutableList<V>>,
-        refMgr: ReferenceManager
-    ) : super(json, parent, factory, refMgr) {
-        itemFactory = (factory as ListOverlayFactory<V>).itemFactory
-        _elaborate()
-    }
+    override val size: Int
+        get() = overlays.size
 
-    private constructor(
-        value: MutableList<V>,
-        parent: JsonOverlay<*>?, factory: OverlayFactory<MutableList<V>>,
-        refMgr: ReferenceManager
-    ) : super(value, parent, factory, refMgr) {
-        itemFactory = (factory as ListOverlayFactory<V>).itemFactory
+    init {
+        this.value = list
+        this.json = json
         _elaborate()
     }
 
@@ -86,34 +85,6 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>>, KeyValueOverlay {
         return itemFactory.create(itemValue, this, refMgr)
     }
 
-    operator fun get(index: Int): V? {
-        return overlays.getOrNull(index)?._get()
-    }
-
-    operator fun set(index: Int, itemValue: V) {
-        value!!.set(index, itemValue)
-        overlays[index] = itemOverlayFor(itemValue)
-    }
-
-    fun add(itemValue: V) {
-        value!!.add(itemValue)
-        overlays.add(itemOverlayFor(itemValue))
-    }
-
-    fun insert(index: Int, itemValue: V) {
-        value!!.add(index, itemValue)
-        overlays.add(index, itemOverlayFor(itemValue))
-    }
-
-    fun remove(index: Int) {
-        value!!.removeAt(index)
-        overlays.removeAt(index)
-    }
-
-    fun size(): Int {
-        return overlays.size
-    }
-
     override fun _getPropertyNames(): List<String> {
         return mutableListOf<String>().apply {
             for (i in 0 until size) add(i.toString())
@@ -139,14 +110,88 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>>, KeyValueOverlay {
         return overlays.getOrNull(index)
     }
 
-    override fun hashCode(): Int {
-        return overlays.hashCode()
-    }
-
     override fun _getPathOfChild(child: JsonOverlay<*>): String {
         return (child as? JsonOverlay<V>)?.let { overlays.indexOf(it).toString() } ?: "-1".also {
             Throwable("returning child path -1 for child in list overlay child : $child \n\n\nprops : $this").printStackTrace()
         }
+    }
+
+    // ----- Mutable List Functions
+
+    override operator fun get(index: Int): V {
+        return overlays[index]._get()!!
+    }
+
+    override fun removeAll(elements: Collection<V>): Boolean {
+        for (index in elements.map { value!!.indexOf(it) }) if (index > -1) overlays.removeAt(index)
+        return value!!.removeAll(elements)
+    }
+
+    override fun remove(element: V): Boolean {
+        val index = value!!.indexOf(element)
+        if (index > -1) {
+            overlays.removeAt(index)
+            value!!.removeAt(index)
+        }
+        return true
+    }
+
+    override fun addAll(elements: Collection<V>): Boolean {
+        value!!.addAll(elements)
+        return overlays.addAll(elements.map { itemOverlayFor(it) })
+    }
+
+    override fun addAll(index: Int, elements: Collection<V>): Boolean {
+        value!!.addAll(index, elements)
+        return overlays.addAll(index, elements.map { itemOverlayFor(it) })
+    }
+
+    override operator fun set(index: Int, element: V): V {
+        val previous = value!!.getOrNull(index)
+        value!![index] = element
+        overlays[index] = itemOverlayFor(element)
+        return previous ?: element
+    }
+
+    override fun add(element: V): Boolean {
+        value!!.add(element)
+        overlays.add(itemOverlayFor(element))
+        return true
+    }
+
+    override fun add(index: Int, element: V) {
+        value!!.add(index, element)
+        overlays.add(index, itemOverlayFor(element))
+    }
+
+    override fun removeAt(index: Int): V {
+        overlays.removeAt(index)
+        return value!!.removeAt(index)
+    }
+
+    override fun retainAll(elements: Collection<V>): Boolean {
+        return value!!.retainAll(elements)
+    }
+
+    override fun clear() {
+        overlays.clear()
+        value!!.clear()
+    }
+
+    override fun iterator(): MutableIterator<V> {
+        return value!!.iterator()
+    }
+
+    override fun listIterator(): MutableListIterator<V> {
+        return value!!.listIterator()
+    }
+
+    override fun listIterator(index: Int): MutableListIterator<V> {
+        return value!!.listIterator(index)
+    }
+
+    override fun subList(fromIndex: Int, toIndex: Int): MutableList<V> {
+        return value!!.subList(fromIndex, toIndex)
     }
 
     private class ListOverlayFactory<V>(val itemFactory: OverlayFactory<V>) : OverlayFactory<MutableList<V>>() {
@@ -159,7 +204,7 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>>, KeyValueOverlay {
             parent: JsonOverlay<*>?,
             refMgr: ReferenceManager
         ): JsonOverlay<MutableList<V>> {
-            return ListOverlay(value ?: mutableListOf<V>(), parent, this, refMgr)
+            return ListOverlay(list = value ?: mutableListOf<V>(), json = null, parent, itemFactory, this, refMgr)
         }
 
         override fun _create(
@@ -167,7 +212,7 @@ class ListOverlay<V> : JsonOverlay<MutableList<V>>, KeyValueOverlay {
             parent: JsonOverlay<*>?,
             refMgr: ReferenceManager
         ): JsonOverlay<MutableList<V>> {
-            return ListOverlay<V>(json, parent, this, refMgr)
+            return ListOverlay(list = mutableListOf<V>(), json = json, parent, itemFactory, this, refMgr)
         }
     }
 

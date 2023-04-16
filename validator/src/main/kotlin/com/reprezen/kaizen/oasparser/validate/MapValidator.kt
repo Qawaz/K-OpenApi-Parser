@@ -32,7 +32,7 @@ class MapValidator<T>(
         if (nonEmpty) {
             val mapOverlay: MapOverlay<X> = Overlay.getMapOverlay(list)!!
             if (!list.isPresent) {
-                if (mapOverlay.size() == 0) {
+                if (mapOverlay.isEmpty()) {
                     results.addError(Messages.msg(BaseValidationMessages.EmptyList), list)
                 }
             }
@@ -43,7 +43,7 @@ class MapValidator<T>(
         if (unique) {
             val mapOverlay: MapOverlay<X> = Overlay.getMapOverlay(map)!!
             val seen: MutableSet<X> = HashSet()
-            for (key in mapOverlay.keySet()) {
+            for (key in mapOverlay.keys) {
                 val value = mapOverlay[key]!!
                 if (seen.contains(value)) {
                     results.addError(
@@ -60,7 +60,7 @@ class MapValidator<T>(
     private fun validateValues(valueValidator: Validator<T>) {
         val mapOverlay = Overlay.getMapOverlay(value) ?: return
         if (ValidationContext.visitIfUnvisited(mapOverlay)) {
-            for (key in mapOverlay.keySet()) {
+            for (key in mapOverlay.keys) {
                 val value = Overlay.of<T>(mapOverlay, key)
                 valueValidator.validate(value)
             }

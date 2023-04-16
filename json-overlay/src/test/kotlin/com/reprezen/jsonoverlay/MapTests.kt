@@ -45,19 +45,19 @@ class MapTests : Assert() {
 
     private fun doChecks(overlay: MapOverlay<Int>) {
         // initial content: A=>0, B=>1, ..., C=>10
-        assertEquals(10, overlay.size().toLong())
+        assertEquals(10, overlay.size.toLong())
         checkKeys(overlay, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J")
         overlay.remove("A")
         overlay.remove("E")
         overlay.remove("J")
         // now B=>1, .. D=>4, F=>6, ..., I=>9
-        assertEquals(7, overlay.size().toLong())
+        assertEquals(7, overlay.size.toLong())
         checkKeys(overlay, "B", "C", "D", "F", "G", "H", "I")
         overlay["A"] = 0
         overlay["E"] = 4
         overlay["J"] = 9
         // now complete again, but A, E, and J are final keys
-        assertEquals(10, overlay.size().toLong())
+        assertEquals(10, overlay.size.toLong())
         checkKeys(overlay, "B", "C", "D", "F", "G", "H", "I", "A", "E", "J")
         assertSame(overlay, overlay._getRoot())
         val valueOverlay = overlay._getValueOverlayByName("B")

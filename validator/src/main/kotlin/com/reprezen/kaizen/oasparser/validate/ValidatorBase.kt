@@ -227,7 +227,7 @@ abstract class ValidatorBase<V> : Validator<V> {
         if (nonEmpty) {
             val listOverlay = Overlay.getListOverlay(list)
             if (!list.isPresent) {
-                if (nonEmpty && listOverlay!!.size() == 0) {
+                if (nonEmpty && listOverlay!!.size == 0) {
                     results.addError(Messages.msg(BaseValidationMessages.EmptyList), list)
                 }
             }
@@ -241,7 +241,7 @@ abstract class ValidatorBase<V> : Validator<V> {
                 throw IllegalStateException("list overlay is null while required non empty")
             }
             val seen: MutableSet<X> = HashSet()
-            for (i in 0 until (listOverlay?.size() ?: 0)) {
+            for (i in 0 until (listOverlay?.size ?: 0)) {
                 val item: X = listOverlay?.get(i)!!
                 if (seen.contains(item)) {
                     results.addError(

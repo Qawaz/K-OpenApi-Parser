@@ -33,7 +33,7 @@ class SecurityRequirementValidator : ObjectValidatorBase<SecurityRequirement>() 
         val model: OpenApi3 = value.getModel<OpenApi3>()!!
         val definedSchemes: Set<String> = model.getSecuritySchemes().keys
         val mapOverlay: MapOverlay<SecurityParameter> = Overlay.getMapOverlay(requirements)!!
-        for (name in mapOverlay.keySet()) {
+        for (name in mapOverlay.keys) {
             if (!definedSchemes.contains(name)) {
                 results.addError(
                     msg(OpenApi3Messages.UnkSecScheme, name),
