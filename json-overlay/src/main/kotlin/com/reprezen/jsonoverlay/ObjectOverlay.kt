@@ -67,15 +67,15 @@ class ObjectOverlay : ScalarOverlay<Any>, KeyValueOverlay {
             }
         }
 
-        fun builder(modelMember: JsonOverlay<*>?): Builder<Any> {
+        fun builder(modelMember: JsonOverlay<*>): Builder<Any> {
             return Builder(factory, modelMember)
         }
 
-        fun create(modelMember: JsonOverlay<*>?): JsonOverlay<Any> {
+        fun create(modelMember: JsonOverlay<*>): JsonOverlay<Any> {
             return builder(modelMember).build()
         }
 
-        fun create(value: Any?, modelMember: JsonOverlay<*>?): JsonOverlay<Any> {
+        fun create(value: Any?, modelMember: JsonOverlay<*>): JsonOverlay<Any> {
             val result = create(modelMember)
             result._set(value)
             return result

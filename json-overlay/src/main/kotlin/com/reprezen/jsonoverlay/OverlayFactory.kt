@@ -55,10 +55,6 @@ abstract class OverlayFactory<V> {
         return overlay
     }
 
-    fun isCompatible(overlay: JsonOverlay<*>): Boolean {
-        return getOverlayClass().isAssignableFrom(overlay.javaClass)
-    }
-
     open val signature: String?
         get() = getOverlayClass().simpleName
 

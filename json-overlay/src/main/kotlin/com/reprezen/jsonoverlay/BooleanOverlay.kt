@@ -66,15 +66,15 @@ class BooleanOverlay : ScalarOverlay<Boolean> {
             }
         }
 
-        fun builder(modelMember: JsonOverlay<*>?): Builder<Boolean> {
+        fun builder(modelMember: JsonOverlay<*>): Builder<Boolean> {
             return Builder(factory, modelMember)
         }
 
-        fun create(modelMember: JsonOverlay<*>?): JsonOverlay<Boolean> {
+        fun create(modelMember: JsonOverlay<*>): JsonOverlay<Boolean> {
             return builder(modelMember).build()
         }
 
-        fun create(value: Boolean, modelMember: JsonOverlay<*>?): JsonOverlay<Boolean> {
+        fun create(value: Boolean, modelMember: JsonOverlay<*>): JsonOverlay<Boolean> {
             val result = create(modelMember)
             result._set(value)
             return result

@@ -67,15 +67,15 @@ class IntegerOverlay : ScalarOverlay<Int> {
             }
         }
 
-        fun builder(modelMember: JsonOverlay<*>?): Builder<Int> {
+        fun builder(modelMember: JsonOverlay<*>): Builder<Int> {
             return Builder(factory, modelMember)
         }
 
-        fun create(modelMember: JsonOverlay<*>?): JsonOverlay<Int> {
+        fun create(modelMember: JsonOverlay<*>): JsonOverlay<Int> {
             return builder(modelMember).build()
         }
 
-        fun create(value: Int, modelMember: JsonOverlay<*>?): JsonOverlay<Int> {
+        fun create(value: Int, modelMember: JsonOverlay<*>): JsonOverlay<Int> {
             val result = create(modelMember)
             result._set(value)
             return result

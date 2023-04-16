@@ -68,15 +68,15 @@ class StringOverlay : ScalarOverlay<String> {
             }
         }
 
-        fun builder(modelMember: JsonOverlay<*>?): Builder<String> {
+        fun builder(modelMember: JsonOverlay<*>): Builder<String> {
             return Builder(factory, modelMember)
         }
 
-        fun create(modelMember: JsonOverlay<*>?): JsonOverlay<String> {
+        fun create(modelMember: JsonOverlay<*>): JsonOverlay<String> {
             return builder(modelMember).build()
         }
 
-        fun create(value: String, modelMember: JsonOverlay<*>?): JsonOverlay<String> {
+        fun create(value: String, modelMember: JsonOverlay<*>): JsonOverlay<String> {
             val result = create(modelMember)
             result._set(value)
             return result
