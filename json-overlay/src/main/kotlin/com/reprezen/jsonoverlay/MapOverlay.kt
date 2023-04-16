@@ -23,7 +23,7 @@ import java.util.regex.Pattern
 class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
 
     private val valueFactory: OverlayFactory<V>
-    private val keyPattern: Pattern?
+    private val keyPattern: Regex?
     private val overlays: MutableMap<String, JsonOverlay<V>> = mutableMapOf()
 
     private constructor(
@@ -34,7 +34,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         val mapOverlayFactory = factory as MapOverlayFactory<V>
         valueFactory = mapOverlayFactory.valueFactory
         val keyPattern = mapOverlayFactory.keyPattern
-        this.keyPattern = if (keyPattern != null) Pattern.compile(keyPattern) else null
+        this.keyPattern = if (keyPattern != null) Regex(keyPattern) else null
         _elaborate()
     }
 
@@ -47,7 +47,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         val mapOverlayFactory = factory as MapOverlayFactory<V>
         valueFactory = mapOverlayFactory.valueFactory
         val keyPattern = mapOverlayFactory.keyPattern
-        this.keyPattern = if (keyPattern != null) Pattern.compile(keyPattern) else null
+        this.keyPattern = if (keyPattern != null) Regex(keyPattern) else null
         _elaborate()
     }
 
@@ -112,7 +112,7 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         overlays.clear()
         if (json !is JsonObject) return
         for (item in json!!.jsonObject) {
-            if (keyPattern == null || keyPattern.matcher(item.key).matches()) {
+            if (keyPattern == null || keyPattern.matches(item.key)) {
                 val valOverlay = valueFactory.create(item.value, this, refMgr)
                 overlays[item.key] = valOverlay
                 valOverlay._get()?.let { value!!.put(item.key, it) }

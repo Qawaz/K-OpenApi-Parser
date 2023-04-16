@@ -33,16 +33,16 @@ abstract class ValidatorBase<V> : Validator<V> {
     }
 
     fun validateStringField(name: String, required: Boolean): Overlay<String> {
-        return validateStringField(name, required, null as Pattern?)
+        return validateStringField(name, required, null)
     }
 
-    fun validateStringField(name: String, required: Boolean, pattern: String?): Overlay<String> {
-        return validateStringField(name, required, Pattern.compile(pattern))
+    fun validateStringField(name: String, required: Boolean, pattern: String): Overlay<String> {
+        return validateStringField(name, required, Regex(pattern))
     }
 
     @SafeVarargs
     fun validateStringField(
-        name: String, required: Boolean, pattern: Pattern?,
+        name: String, required: Boolean, pattern: Regex?,
         vararg otherChecks: Consumer<Overlay<String>>
     ): Overlay<String> {
         val field = validateField<String>(name, required, null)
@@ -56,9 +56,10 @@ abstract class ValidatorBase<V> : Validator<V> {
         return field
     }
 
-    fun checkPattern(field: Overlay<String>, pattern: Pattern) {
-        if (!pattern.matcher(field.get()).matches()) {
-            results.addError(Messages.msg(BaseValidationMessages.PatternMatchFail, field.get()!!, pattern), field)
+    fun checkPattern(field: Overlay<String>, pattern: Regex) {
+        val value = field.get()!!
+        if (!pattern.matches(value)) {
+            results.addError(Messages.msg(BaseValidationMessages.PatternMatchFail, value, pattern), field)
         }
     }
 
@@ -77,15 +78,15 @@ abstract class ValidatorBase<V> : Validator<V> {
 
     fun validateUrlField(
         name: String, required: Boolean, allowRelative: Boolean, allowVars: Boolean,
-        pattern: String?
+        pattern: String
     ): Overlay<String> {
-        return validateUrlField(name, required, allowRelative, allowVars, Pattern.compile(pattern))
+        return validateUrlField(name, required, allowRelative, allowVars, Regex(pattern))
     }
 
     @JvmOverloads
     fun validateUrlField(
         name: String, required: Boolean, allowRelative: Boolean, allowVars: Boolean,
-        pattern: Pattern? = null
+        pattern: Regex? = null
     ): Overlay<String> {
         return validateStringField(
             name,
@@ -127,12 +128,12 @@ abstract class ValidatorBase<V> : Validator<V> {
         }
     }
 
-    fun validateUrlField(name: String, required: Boolean, pattern: String?): Overlay<String> {
-        return validateEmailField(name, required, Pattern.compile(pattern))
+    fun validateUrlField(name: String, required: Boolean, pattern: String): Overlay<String> {
+        return validateEmailField(name, required, Regex(pattern))
     }
 
     @JvmOverloads
-    fun validateEmailField(name: String, required: Boolean, pattern: Pattern? = null): Overlay<String> {
+    fun validateEmailField(name: String, required: Boolean, pattern: Regex? = null): Overlay<String> {
         return validateStringField(
             name,
             required,

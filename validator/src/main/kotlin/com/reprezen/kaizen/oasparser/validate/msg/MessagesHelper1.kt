@@ -9,6 +9,7 @@ import java.util.stream.Stream
 import kotlin.collections.HashMap
 
 object MessagesHelper {
+
     private val placeholderPattern = Pattern.compile("%(\\d+)|%\\{(\\d+)\\}")
 
     /**
@@ -82,12 +83,12 @@ object MessagesHelper {
     private val localizationsByClass: HashMap<Class<*>, HashMap<String, Properties?>> = HashMap()
     fun loadLocalizations(msgClass: Class<out Messages?>, locale: Locale): Properties? {
         if (!localizationsByClass.containsKey(msgClass)) {
-            localizationsByClass.put(msgClass, HashMap<String, Properties?>())
+            localizationsByClass[msgClass] = HashMap()
         }
         val localizations: MutableMap<String, Properties?> = localizationsByClass[msgClass]!!
         // try locale-specified variant tag first, then fall back to just the language
         // code
-        for (tag in Arrays.asList(locale.toLanguageTag(), locale.language)) {
+        for (tag in listOf(locale.toLanguageTag(), locale.language)) {
             if (!localizations.containsKey(tag)) {
                 val resource = msgClass.getResource(String.format("localizations/%s/messages.properties", tag))
                 var props: Properties? = null

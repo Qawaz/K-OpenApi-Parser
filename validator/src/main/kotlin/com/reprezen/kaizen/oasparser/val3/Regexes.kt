@@ -11,17 +11,14 @@
  */
 package com.reprezen.kaizen.oasparser.val3
 
-import java.util.regex.Pattern
-
 object Regexes {
-    val PATH_REGEX = Pattern.compile("/.*")
-    val EXT_REGEX = Pattern.compile("x-.+")
-    val NOEXT_REGEX = Pattern.compile("(?!x-).*")
-    val NAME_REGEX = Pattern.compile("[a-zA-Z0-9\\._-]+")
-    val NOEXT_NAME_REGEX = Pattern.compile("(?!x-)[a-zA-Z0-9\\._-]+")
-    val METHOD_REGEX = Pattern.compile("get|put|post|delete|options|head|patch|trace")
-    val PARAM_IN_REGEX = Pattern.compile("path|query|header|cookie")
-    val STYLE_REGEX = Pattern
-        .compile("matrix|label|form|simple|spaceDelimited|pipeDelimited|deepObject")
-    val RESPONSE_REGEX = Pattern.compile("default|(\\d[0-9X]{2})")
+    val PATH_REGEX = Regex("/.*")
+    val EXT_REGEX = Regex("x-.+")
+    val NOEXT_REGEX = Regex("(?!x-).*")
+    val NAME_REGEX = Regex("[a-zA-Z0-9\\._-]+")
+    val NOEXT_NAME_REGEX = Regex("(?!x-)[a-zA-Z0-9\\._-]+")
+    val METHOD_REGEX = Regex("get|put|post|delete|options|head|patch|trace")
+    val PARAM_IN_REGEX = Regex("path|query|header|cookie")
+    val STYLE_REGEX = Regex("matrix|label|form|simple|spaceDelimited|pipeDelimited|deepObject")
+    val RESPONSE_REGEX = Regex("default|(\\d[0-9X]{2})")
 }
