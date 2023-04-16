@@ -18,8 +18,6 @@ import kotlinx.serialization.json.JsonElement
 
 abstract class OverlayFactory<V> {
 
-    private val overlayClass: Class<out IJsonOverlay<in V>> = getOverlayClass()
-
     fun create(value: V?, parent: JsonOverlay<*>?, refMgr: ReferenceManager): JsonOverlay<V> {
         return _create(value, parent, refMgr)
     }
@@ -58,7 +56,7 @@ abstract class OverlayFactory<V> {
     }
 
     fun isCompatible(overlay: JsonOverlay<*>): Boolean {
-        return overlayClass.isAssignableFrom(overlay.javaClass)
+        return getOverlayClass().isAssignableFrom(overlay.javaClass)
     }
 
     open val signature: String?

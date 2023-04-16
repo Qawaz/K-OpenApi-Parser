@@ -180,9 +180,9 @@ class MapOverlay<V> : JsonOverlay<MutableMap<String, V>>, KeyValueOverlay {
         override val signature: String
             get() = String.format("map[%s|%s]", valueFactory.signature, keyPattern ?: "*")
 
-        override fun getOverlayClass(): Class<out JsonOverlay<in Map<String, V>>?> {
+        override fun getOverlayClass(): Class<out JsonOverlay<in Map<String, V>>> {
             val overlayClass: Class<*> = MapOverlay::class.java
-            return overlayClass as Class<out JsonOverlay<Map<String, V>>?>
+            return overlayClass as Class<out JsonOverlay<Map<String, V>>>
         }
 
         override fun _create(
