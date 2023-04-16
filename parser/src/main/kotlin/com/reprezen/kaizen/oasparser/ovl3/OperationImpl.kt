@@ -41,11 +41,6 @@ class OperationImpl : PropertiesOverlay<Operation> ,Operation {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getTags(elaborate : Boolean) : List<String> {
-		return _getList("tags")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasTags() : Boolean {
 		return _isPresent("tags")
 	}
@@ -109,11 +104,6 @@ class OperationImpl : PropertiesOverlay<Operation> ,Operation {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExternalDocs(elaborate : Boolean) : ExternalDocs? {
-		return _get("externalDocs")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExternalDocs(externalDocs : ExternalDocs) {
 		_setScalar("externalDocs", externalDocs)
 	}
@@ -132,11 +122,6 @@ class OperationImpl : PropertiesOverlay<Operation> ,Operation {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Parameter
 	override fun getParameters() : List<Parameter> {
-		return _getList("parameters")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getParameters(elaborate : Boolean) : List<Parameter> {
 		return _getList("parameters")
 	}
 
@@ -182,11 +167,6 @@ class OperationImpl : PropertiesOverlay<Operation> ,Operation {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getRequestBody(elaborate : Boolean) : RequestBody? {
-		return _get("requestBody")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setRequestBody(requestBody : RequestBody) {
 		_setScalar("requestBody", requestBody)
 	}
@@ -194,11 +174,6 @@ class OperationImpl : PropertiesOverlay<Operation> ,Operation {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Response
 	override fun getResponses() : MutableMap<String, Response> {
-		return _getMap("responses")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getResponses(elaborate : Boolean) : MutableMap<String, Response> {
 		return _getMap("responses")
 	}
 
@@ -239,11 +214,6 @@ class OperationImpl : PropertiesOverlay<Operation> ,Operation {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getResponsesExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("responsesExtensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasResponsesExtensions() : Boolean {
 		return _isPresent("responsesExtensions")
 	}
@@ -280,11 +250,6 @@ class OperationImpl : PropertiesOverlay<Operation> ,Operation {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getCallbacks(elaborate : Boolean) : MutableMap<String, Callback> {
-		return _getMap("callbacks")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasCallbacks() : Boolean {
 		return _isPresent("callbacks")
 	}
@@ -317,11 +282,6 @@ class OperationImpl : PropertiesOverlay<Operation> ,Operation {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// CallbacksExtension
 	override fun getCallbacksExtensions() : MutableMap<String, Any> {
-		return _getMap("callbacksExtensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getCallbacksExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("callbacksExtensions")
 	}
 
@@ -378,11 +338,6 @@ class OperationImpl : PropertiesOverlay<Operation> ,Operation {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getSecurityRequirements(elaborate : Boolean) : List<SecurityRequirement> {
-		return _getList("securityRequirements")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasSecurityRequirements() : Boolean {
 		return _isPresent("securityRequirements")
 	}
@@ -424,11 +379,6 @@ class OperationImpl : PropertiesOverlay<Operation> ,Operation {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getServers(elaborate : Boolean) : List<Server> {
-		return _getList("servers")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasServers() : Boolean {
 		return _isPresent("servers")
 	}
@@ -466,11 +416,6 @@ class OperationImpl : PropertiesOverlay<Operation> ,Operation {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

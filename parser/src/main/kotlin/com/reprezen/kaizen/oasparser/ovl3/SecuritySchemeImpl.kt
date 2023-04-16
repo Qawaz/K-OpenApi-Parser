@@ -105,11 +105,6 @@ class SecuritySchemeImpl : PropertiesOverlay<SecurityScheme> ,SecurityScheme {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getImplicitOAuthFlow(elaborate : Boolean) : OAuthFlow? {
-		return _get("implicitOAuthFlow")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setImplicitOAuthFlow(implicitOAuthFlow : OAuthFlow) {
 		_setScalar("implicitOAuthFlow", implicitOAuthFlow)
 	}
@@ -117,11 +112,6 @@ class SecuritySchemeImpl : PropertiesOverlay<SecurityScheme> ,SecurityScheme {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// PasswordOAuthFlow
 	override fun getPasswordOAuthFlow() : OAuthFlow? {
-		return _get("passwordOAuthFlow")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getPasswordOAuthFlow(elaborate : Boolean) : OAuthFlow? {
 		return _get("passwordOAuthFlow")
 	}
 
@@ -137,11 +127,6 @@ class SecuritySchemeImpl : PropertiesOverlay<SecurityScheme> ,SecurityScheme {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getClientCredentialsOAuthFlow(elaborate : Boolean) : OAuthFlow? {
-		return _get("clientCredentialsOAuthFlow")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setClientCredentialsOAuthFlow(clientCredentialsOAuthFlow : OAuthFlow) {
 		_setScalar("clientCredentialsOAuthFlow", clientCredentialsOAuthFlow)
 	}
@@ -153,11 +138,6 @@ class SecuritySchemeImpl : PropertiesOverlay<SecurityScheme> ,SecurityScheme {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getAuthorizationCodeOAuthFlow(elaborate : Boolean) : OAuthFlow? {
-		return _get("authorizationCodeOAuthFlow")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setAuthorizationCodeOAuthFlow(authorizationCodeOAuthFlow : OAuthFlow) {
 		_setScalar("authorizationCodeOAuthFlow", authorizationCodeOAuthFlow)
 	}
@@ -165,11 +145,6 @@ class SecuritySchemeImpl : PropertiesOverlay<SecurityScheme> ,SecurityScheme {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// OAuthFlowsExtension
 	override fun getOAuthFlowsExtensions() : MutableMap<String, Any> {
-		return _getMap("oAuthFlowsExtensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getOAuthFlowsExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("oAuthFlowsExtensions")
 	}
 
@@ -217,11 +192,6 @@ class SecuritySchemeImpl : PropertiesOverlay<SecurityScheme> ,SecurityScheme {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

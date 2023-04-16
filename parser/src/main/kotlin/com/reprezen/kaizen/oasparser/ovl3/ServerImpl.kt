@@ -54,11 +54,6 @@ class ServerImpl : PropertiesOverlay<Server> ,Server {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getServerVariables(elaborate : Boolean) : MutableMap<String, ServerVariable> {
-		return _getMap("serverVariables")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasServerVariables() : Boolean {
 		return _isPresent("serverVariables")
 	}
@@ -95,11 +90,6 @@ class ServerImpl : PropertiesOverlay<Server> ,Server {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getVariablesExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("variablesExtensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasVariablesExtensions() : Boolean {
 		return _isPresent("variablesExtensions")
 	}
@@ -132,11 +122,6 @@ class ServerImpl : PropertiesOverlay<Server> ,Server {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

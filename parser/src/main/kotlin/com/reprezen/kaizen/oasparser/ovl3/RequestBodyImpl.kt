@@ -51,11 +51,6 @@ class RequestBodyImpl : PropertiesOverlay<RequestBody> ,RequestBody {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getContentMediaTypes(elaborate : Boolean) : MutableMap<String, MediaType> {
-		return _getMap("contentMediaTypes")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasContentMediaTypes() : Boolean {
 		return _isPresent("contentMediaTypes")
 	}
@@ -104,11 +99,6 @@ class RequestBodyImpl : PropertiesOverlay<RequestBody> ,RequestBody {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

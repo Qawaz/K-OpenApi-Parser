@@ -35,17 +35,11 @@ interface Info : IJsonOverlay<Info>, IModelPart<OpenApi3, Info> {
 	fun getContact() : Contact?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getContact(elaborate : Boolean) : Contact?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setContact(contact : Contact)
 
 	// License
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getLicense() : License?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getLicense(elaborate : Boolean) : License?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setLicense(license : License)
@@ -60,9 +54,6 @@ interface Info : IJsonOverlay<Info>, IModelPart<OpenApi3, Info> {
 	// Extension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean

@@ -13,9 +13,6 @@ interface SecurityRequirement : IJsonOverlay<SecurityRequirement>, IModelPart<Op
 	fun getRequirements() : MutableMap<String, SecurityParameter>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getRequirements(elaborate : Boolean) : MutableMap<String, SecurityParameter>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasRequirements() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

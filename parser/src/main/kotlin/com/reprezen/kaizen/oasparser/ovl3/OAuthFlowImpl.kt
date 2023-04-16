@@ -64,11 +64,6 @@ class OAuthFlowImpl : PropertiesOverlay<OAuthFlow> ,OAuthFlow {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getScopes(elaborate : Boolean) : MutableMap<String, String> {
-		return _getMap("scopes")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasScopes() : Boolean {
 		return _isPresent("scopes")
 	}
@@ -105,11 +100,6 @@ class OAuthFlowImpl : PropertiesOverlay<OAuthFlow> ,OAuthFlow {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getScopesExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("scopesExtensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasScopesExtensions() : Boolean {
 		return _isPresent("scopesExtensions")
 	}
@@ -142,11 +132,6 @@ class OAuthFlowImpl : PropertiesOverlay<OAuthFlow> ,OAuthFlow {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

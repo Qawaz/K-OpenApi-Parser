@@ -19,9 +19,6 @@ interface EncodingProperty : IJsonOverlay<EncodingProperty>, IModelPart<OpenApi3
 	fun getHeaders() : MutableMap<String, String>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getHeaders(elaborate : Boolean) : MutableMap<String, String>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasHeaders() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -69,9 +66,6 @@ interface EncodingProperty : IJsonOverlay<EncodingProperty>, IModelPart<OpenApi3
 	// Extension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean

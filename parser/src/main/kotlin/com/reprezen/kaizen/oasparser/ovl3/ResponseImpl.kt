@@ -52,11 +52,6 @@ class ResponseImpl : PropertiesOverlay<Response> ,Response {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getHeaders(elaborate : Boolean) : MutableMap<String, Header> {
-		return _getMap("headers")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasHeaders() : Boolean {
 		return _isPresent("headers")
 	}
@@ -89,11 +84,6 @@ class ResponseImpl : PropertiesOverlay<Response> ,Response {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ContentMediaType
 	override fun getContentMediaTypes() : MutableMap<String, MediaType> {
-		return _getMap("contentMediaTypes")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getContentMediaTypes(elaborate : Boolean) : MutableMap<String, MediaType> {
 		return _getMap("contentMediaTypes")
 	}
 
@@ -134,11 +124,6 @@ class ResponseImpl : PropertiesOverlay<Response> ,Response {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getLinks(elaborate : Boolean) : MutableMap<String, Link> {
-		return _getMap("links")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasLinks() : Boolean {
 		return _isPresent("links")
 	}
@@ -171,11 +156,6 @@ class ResponseImpl : PropertiesOverlay<Response> ,Response {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

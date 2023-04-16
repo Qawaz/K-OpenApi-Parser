@@ -30,11 +30,6 @@ class SecurityRequirementImpl : PropertiesOverlay<SecurityRequirement> ,Security
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getRequirements(elaborate : Boolean) : MutableMap<String, SecurityParameter> {
-		return _getMap("requirements")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasRequirements() : Boolean {
 		return _isPresent("requirements")
 	}

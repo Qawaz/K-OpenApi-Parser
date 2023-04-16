@@ -57,17 +57,11 @@ interface SecurityScheme : IJsonOverlay<SecurityScheme>, IModelPart<OpenApi3, Se
 	fun getImplicitOAuthFlow() : OAuthFlow?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getImplicitOAuthFlow(elaborate : Boolean) : OAuthFlow?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setImplicitOAuthFlow(implicitOAuthFlow : OAuthFlow)
 
 	// PasswordOAuthFlow
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getPasswordOAuthFlow() : OAuthFlow?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getPasswordOAuthFlow(elaborate : Boolean) : OAuthFlow?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setPasswordOAuthFlow(passwordOAuthFlow : OAuthFlow)
@@ -77,9 +71,6 @@ interface SecurityScheme : IJsonOverlay<SecurityScheme>, IModelPart<OpenApi3, Se
 	fun getClientCredentialsOAuthFlow() : OAuthFlow?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getClientCredentialsOAuthFlow(elaborate : Boolean) : OAuthFlow?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setClientCredentialsOAuthFlow(clientCredentialsOAuthFlow : OAuthFlow)
 
 	// AuthorizationCodeOAuthFlow
@@ -87,17 +78,11 @@ interface SecurityScheme : IJsonOverlay<SecurityScheme>, IModelPart<OpenApi3, Se
 	fun getAuthorizationCodeOAuthFlow() : OAuthFlow?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getAuthorizationCodeOAuthFlow(elaborate : Boolean) : OAuthFlow?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setAuthorizationCodeOAuthFlow(authorizationCodeOAuthFlow : OAuthFlow)
 
 	// OAuthFlowsExtension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getOAuthFlowsExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getOAuthFlowsExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasOAuthFlowsExtensions() : Boolean
@@ -127,9 +112,6 @@ interface SecurityScheme : IJsonOverlay<SecurityScheme>, IModelPart<OpenApi3, Se
 	// Extension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean

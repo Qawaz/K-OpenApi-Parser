@@ -164,13 +164,6 @@ class JavaImplGenerator : TypeGenerator {
             |${"\t"}return _get("${f.propertyName}")
             |}""".trimMargin("|")
         )
-        if (f.structure == KTypeData.Structure.scalar && !f.isScalarType) {
-            methods.addMember(
-                """override fun get${f.name}(elaborate : Boolean) : ${f.type}? {
-                |${"\t"}return _get("${f.propertyName}")
-                |}""".trimMargin("|")
-            )
-        }
         if (f.isBoolean) {
             methods.addMember(
                 """override fun is${f.name}() : Boolean {
@@ -192,11 +185,6 @@ class JavaImplGenerator : TypeGenerator {
         val methods = Members()
         methods.addMember(
             """// ${f.name}${'\n'}override fun get${f.plural}() : List<${f.type}> {
-            |${"\t"}return _getList("${f.propertyName}")
-            |}""".trimMargin("|")
-        )
-        methods.addMember(
-            """override fun get${f.plural}(elaborate : Boolean) : List<${f.type}> {
             |${"\t"}return _getList("${f.propertyName}")
             |}""".trimMargin("|")
         )
@@ -244,11 +232,6 @@ class JavaImplGenerator : TypeGenerator {
         val methods = Members()
         methods.addMember(
             """// ${f.name}${'\n'}override fun get${f.plural}() : MutableMap<String, ${f.type}> {
-            |${"\t"}return _getMap("${f.propertyName}")
-            |}""".trimMargin("|")
-        )
-        methods.addMember(
-            """override fun get${f.plural}(elaborate : Boolean) : MutableMap<String, ${f.type}> {
             |${"\t"}return _getMap("${f.propertyName}")
             |}""".trimMargin("|")
         )

@@ -29,9 +29,6 @@ interface Link : IJsonOverlay<Link>, IModelPart<OpenApi3, Link> {
 	fun getParameters() : MutableMap<String, String>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getParameters(elaborate : Boolean) : MutableMap<String, String>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasParameters() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -61,9 +58,6 @@ interface Link : IJsonOverlay<Link>, IModelPart<OpenApi3, Link> {
 	fun getServer() : Server?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getServer(elaborate : Boolean) : Server?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setServer(server : Server)
 
 	// RequestBody
@@ -76,9 +70,6 @@ interface Link : IJsonOverlay<Link>, IModelPart<OpenApi3, Link> {
 	// Extension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean

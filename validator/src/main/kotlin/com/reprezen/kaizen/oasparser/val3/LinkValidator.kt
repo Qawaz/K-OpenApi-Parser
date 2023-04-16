@@ -86,7 +86,7 @@ class LinkValidator : ObjectValidatorBase<Link>() {
     }
 
     private fun findOperationByPath(model: OpenApi3, relativePath: String, results: ValidationResults): Operation? {
-        return model.getPath(relativePath)?.getGet(false)
+        return model.getPath(relativePath)?.getGet()
     }
 
     private fun getRelativePath(operationRef: String?, results: ValidationResults): String? {

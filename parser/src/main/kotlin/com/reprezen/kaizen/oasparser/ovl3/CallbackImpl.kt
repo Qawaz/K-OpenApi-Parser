@@ -38,11 +38,6 @@ class CallbackImpl : PropertiesOverlay<Callback> ,Callback {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getCallbackPaths(elaborate : Boolean) : MutableMap<String, Path> {
-		return _getMap("callbackPaths")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasCallbackPaths() : Boolean {
 		return _isPresent("callbackPaths")
 	}
@@ -75,11 +70,6 @@ class CallbackImpl : PropertiesOverlay<Callback> ,Callback {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

@@ -43,11 +43,6 @@ class EncodingPropertyImpl : PropertiesOverlay<EncodingProperty> ,EncodingProper
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getHeaders(elaborate : Boolean) : MutableMap<String, String> {
-		return _getMap("headers")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasHeaders() : Boolean {
 		return _isPresent("headers")
 	}
@@ -123,11 +118,6 @@ class EncodingPropertyImpl : PropertiesOverlay<EncodingProperty> ,EncodingProper
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

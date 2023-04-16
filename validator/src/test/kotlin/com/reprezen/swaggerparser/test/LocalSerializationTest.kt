@@ -11,8 +11,7 @@
  */
 package com.reprezen.swaggerparser.test
 
-import com.reprezen.jsonoverlay.JsonPointer
-import com.reprezen.jsonoverlay.SerializationOptions
+import com.reprezen.jsonoverlay.*
 import com.reprezen.kaizen.oasparser.OpenApiParser
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
 import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
@@ -30,7 +29,7 @@ class LocalSerializationTest : Assert() {
 
     @Throws(Exception::class)
     private fun parseLocalModel(name: String): OpenApi3 {
-        val url = LocalSerializationTest::class.java.getResource("/models/$folderName/$name.$extension")
+        val url = LocalSerializationTest::class.java.getResource("/models/$folderName/$name.$extension")!!
         return OpenApiParser().parse(url)
     }
 
@@ -38,6 +37,19 @@ class LocalSerializationTest : Assert() {
     fun localModelCanBeParsed() {
         val model = parseLocalModel("invalidInput")
         assertEquals("description", model.getInfo()?.getDescription())
+    }
+
+    @Test
+    fun testRefSchemaIssue() {
+        val model = parseLocalModel("refSchemaIssue")
+        val schemas = model.getSchemas()
+        val deviceStateSchema = schemas["LogEntry"]!!.getProperties()["device_state"]!!
+        val paths = model.getPaths()
+        val schema = paths["/v1/logs/list"]!!.getOperations()["post"]!!.getResponses()["200"]!!.getContentMediaTypes()["application/json"]!!.getSchema()!!
+        println((schema as PropertiesOverlay<*>))
+        assertNotNull(schema.getType())
+        assertTrue(Overlay.of(model.getSchema("LogEntry")!!.getProperties())!!.isReference("device_state"))
+        assertTrue((deviceStateSchema as JsonOverlay<*>)._isReference())
     }
 
     @Test

@@ -32,9 +32,6 @@ interface Path : IJsonOverlay<Path>, IModelPart<OpenApi3, Path> {
 	fun getOperations() : MutableMap<String, Operation>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getOperations(elaborate : Boolean) : MutableMap<String, Operation>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasOperations() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -57,17 +54,11 @@ interface Path : IJsonOverlay<Path>, IModelPart<OpenApi3, Path> {
 	fun getGet() : Operation?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getGet(elaborate : Boolean) : Operation?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setGet(get : Operation)
 
 	// Put
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getPut() : Operation?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getPut(elaborate : Boolean) : Operation?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setPut(put : Operation)
@@ -77,17 +68,11 @@ interface Path : IJsonOverlay<Path>, IModelPart<OpenApi3, Path> {
 	fun getPost() : Operation?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getPost(elaborate : Boolean) : Operation?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setPost(post : Operation)
 
 	// Delete
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getDelete() : Operation?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getDelete(elaborate : Boolean) : Operation?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setDelete(delete : Operation)
@@ -97,17 +82,11 @@ interface Path : IJsonOverlay<Path>, IModelPart<OpenApi3, Path> {
 	fun getOptions() : Operation?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getOptions(elaborate : Boolean) : Operation?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setOptions(options : Operation)
 
 	// Head
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getHead() : Operation?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getHead(elaborate : Boolean) : Operation?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setHead(head : Operation)
@@ -117,9 +96,6 @@ interface Path : IJsonOverlay<Path>, IModelPart<OpenApi3, Path> {
 	fun getPatch() : Operation?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getPatch(elaborate : Boolean) : Operation?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setPatch(patch : Operation)
 
 	// Trace
@@ -127,17 +103,11 @@ interface Path : IJsonOverlay<Path>, IModelPart<OpenApi3, Path> {
 	fun getTrace() : Operation?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getTrace(elaborate : Boolean) : Operation?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setTrace(trace : Operation)
 
 	// Server
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getServers() : List<Server>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getServers(elaborate : Boolean) : List<Server>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasServers() : Boolean
@@ -165,9 +135,6 @@ interface Path : IJsonOverlay<Path>, IModelPart<OpenApi3, Path> {
 	fun getParameters() : List<Parameter>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getParameters(elaborate : Boolean) : List<Parameter>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasParameters() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -191,9 +158,6 @@ interface Path : IJsonOverlay<Path>, IModelPart<OpenApi3, Path> {
 	// Extension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean

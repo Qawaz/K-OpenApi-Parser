@@ -66,11 +66,6 @@ class InfoImpl : PropertiesOverlay<Info> ,Info {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getContact(elaborate : Boolean) : Contact? {
-		return _get("contact")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setContact(contact : Contact) {
 		_setScalar("contact", contact)
 	}
@@ -78,11 +73,6 @@ class InfoImpl : PropertiesOverlay<Info> ,Info {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// License
 	override fun getLicense() : License? {
-		return _get("license")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getLicense(elaborate : Boolean) : License? {
 		return _get("license")
 	}
 
@@ -105,11 +95,6 @@ class InfoImpl : PropertiesOverlay<Info> ,Info {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

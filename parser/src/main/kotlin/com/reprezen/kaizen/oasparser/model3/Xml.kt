@@ -53,9 +53,6 @@ interface Xml : IJsonOverlay<Xml>, IModelPart<OpenApi3, Xml> {
 	fun getExtensions() : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

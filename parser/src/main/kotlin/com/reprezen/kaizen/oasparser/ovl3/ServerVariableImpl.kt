@@ -33,11 +33,6 @@ class ServerVariableImpl : PropertiesOverlay<ServerVariable> ,ServerVariable {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getEnumValues(elaborate : Boolean) : List<String> {
-		return _getList("enumValues")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasEnumValues() : Boolean {
 		return _isPresent("enumValues")
 	}
@@ -97,11 +92,6 @@ class ServerVariableImpl : PropertiesOverlay<ServerVariable> ,ServerVariable {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

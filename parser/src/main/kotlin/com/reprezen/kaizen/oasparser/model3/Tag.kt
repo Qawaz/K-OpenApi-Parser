@@ -27,17 +27,11 @@ interface Tag : IJsonOverlay<Tag>, IModelPart<OpenApi3, Tag> {
 	fun getExternalDocs() : ExternalDocs?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExternalDocs(elaborate : Boolean) : ExternalDocs?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setExternalDocs(externalDocs : ExternalDocs)
 
 	// Extension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean

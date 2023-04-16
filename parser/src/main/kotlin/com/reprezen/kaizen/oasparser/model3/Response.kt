@@ -24,9 +24,6 @@ interface Response : IJsonOverlay<Response>, IModelPart<OpenApi3, Response> {
 	fun getHeaders() : MutableMap<String, Header>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getHeaders(elaborate : Boolean) : MutableMap<String, Header>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasHeaders() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -47,9 +44,6 @@ interface Response : IJsonOverlay<Response>, IModelPart<OpenApi3, Response> {
 	// ContentMediaType
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getContentMediaTypes() : MutableMap<String, MediaType>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getContentMediaTypes(elaborate : Boolean) : MutableMap<String, MediaType>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasContentMediaTypes() : Boolean
@@ -74,9 +68,6 @@ interface Response : IJsonOverlay<Response>, IModelPart<OpenApi3, Response> {
 	fun getLinks() : MutableMap<String, Link>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getLinks(elaborate : Boolean) : MutableMap<String, Link>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasLinks() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -97,9 +88,6 @@ interface Response : IJsonOverlay<Response>, IModelPart<OpenApi3, Response> {
 	// Extension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean

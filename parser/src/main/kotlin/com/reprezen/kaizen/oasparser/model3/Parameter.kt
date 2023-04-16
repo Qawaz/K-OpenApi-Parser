@@ -17,9 +17,6 @@ interface Parameter : IJsonOverlay<Parameter>, IModelPart<OpenApi3, Parameter> {
 	fun getExtensions() : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -42,9 +39,6 @@ interface Parameter : IJsonOverlay<Parameter>, IModelPart<OpenApi3, Parameter> {
 	fun getContentMediaTypes() : MutableMap<String, MediaType>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getContentMediaTypes(elaborate : Boolean) : MutableMap<String, MediaType>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasContentMediaTypes() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -65,9 +59,6 @@ interface Parameter : IJsonOverlay<Parameter>, IModelPart<OpenApi3, Parameter> {
 	// Example
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExamples() : MutableMap<String, Example>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExamples(elaborate : Boolean) : MutableMap<String, Example>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExamples() : Boolean
@@ -97,9 +88,6 @@ interface Parameter : IJsonOverlay<Parameter>, IModelPart<OpenApi3, Parameter> {
 	// Schema
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getSchema() : Schema?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getSchema(elaborate : Boolean) : Schema?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setSchema(schema : Schema)

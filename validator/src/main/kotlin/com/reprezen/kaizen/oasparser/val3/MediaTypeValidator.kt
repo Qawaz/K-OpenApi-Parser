@@ -44,7 +44,7 @@ class MediaTypeValidator : ObjectValidatorBase<MediaType>() {
     fun checkEncodingPropsAreProps(mediaType: MediaType, results: ValidationResults) {
         // TODO Q: do allOf, anyOf, oneOf schemas participate? what about
         // additionalProperties?
-        val schema = mediaType.getSchema(false)
+        val schema = mediaType.getSchema()
         if (schema != null) {
             val propNames: Set<String> = schema.getProperties().keys
             val encProps: MutableMap<String, EncodingProperty> = mediaType.getEncodingProperties()

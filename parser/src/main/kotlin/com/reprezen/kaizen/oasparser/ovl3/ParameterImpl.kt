@@ -42,11 +42,6 @@ class ParameterImpl : PropertiesOverlay<Parameter> ,Parameter {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasExtensions() : Boolean {
 		return _isPresent("extensions")
 	}
@@ -83,11 +78,6 @@ class ParameterImpl : PropertiesOverlay<Parameter> ,Parameter {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getContentMediaTypes(elaborate : Boolean) : MutableMap<String, MediaType> {
-		return _getMap("contentMediaTypes")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasContentMediaTypes() : Boolean {
 		return _isPresent("contentMediaTypes")
 	}
@@ -120,11 +110,6 @@ class ParameterImpl : PropertiesOverlay<Parameter> ,Parameter {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Example
 	override fun getExamples() : MutableMap<String, Example> {
-		return _getMap("examples")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExamples(elaborate : Boolean) : MutableMap<String, Example> {
 		return _getMap("examples")
 	}
 
@@ -172,11 +157,6 @@ class ParameterImpl : PropertiesOverlay<Parameter> ,Parameter {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Schema
 	override fun getSchema() : Schema? {
-		return _get("schema")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getSchema(elaborate : Boolean) : Schema? {
 		return _get("schema")
 	}
 

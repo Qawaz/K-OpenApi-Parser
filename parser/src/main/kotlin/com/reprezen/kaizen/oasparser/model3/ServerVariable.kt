@@ -13,9 +13,6 @@ interface ServerVariable : IJsonOverlay<ServerVariable>, IModelPart<OpenApi3, Se
 	fun getEnumValues() : List<String>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getEnumValues(elaborate : Boolean) : List<String>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasEnumValues() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -53,9 +50,6 @@ interface ServerVariable : IJsonOverlay<ServerVariable>, IModelPart<OpenApi3, Se
 	// Extension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean

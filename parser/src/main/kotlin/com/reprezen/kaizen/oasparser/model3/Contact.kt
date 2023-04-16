@@ -33,9 +33,6 @@ interface Contact : IJsonOverlay<Contact>, IModelPart<OpenApi3, Contact> {
 	fun getExtensions() : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

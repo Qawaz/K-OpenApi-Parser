@@ -61,11 +61,6 @@ class LinkImpl : PropertiesOverlay<Link> ,Link {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getParameters(elaborate : Boolean) : MutableMap<String, String> {
-		return _getMap("parameters")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasParameters() : Boolean {
 		return _isPresent("parameters")
 	}
@@ -113,11 +108,6 @@ class LinkImpl : PropertiesOverlay<Link> ,Link {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getServer(elaborate : Boolean) : Server? {
-		return _get("server")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setServer(server : Server) {
 		_setScalar("server", server)
 	}
@@ -136,11 +126,6 @@ class LinkImpl : PropertiesOverlay<Link> ,Link {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

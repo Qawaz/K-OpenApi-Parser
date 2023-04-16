@@ -1,0 +1,260 @@
+openapi: 3.0.0
+components:
+  schemas:
+    Success:
+      type: object
+      properties:
+        success:
+          type: boolean
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    AppInformation:
+      type: object
+      properties:
+        package_name:
+          type: string
+        version:
+          type: string
+        version_number:
+          type: integer
+    UserInformation:
+      type: object
+      properties:
+        user_id:
+          type: string
+        user_email:
+          type: string
+        user_name:
+          type: string
+    DeviceInformation:
+      type: object
+      properties:
+        platform_type:
+          type: string
+        os_name:
+          type: string
+        os_version:
+          type: string
+        info_map:
+          type: object
+          additionalProperties:
+            type: string
+    DisplayInformation:
+      type: object
+      properties:
+        display_name:
+          type: string
+        left:
+          type: integer
+        top:
+          type: integer
+        right:
+          type: integer
+        bottom:
+          type: integer
+        orientation:
+          type: string
+    DeviceStorageInformation:
+      type: object
+      properties:
+        storage_name:
+          type: string
+        free_space:
+          type: integer
+        total_space:
+          type: integer
+    StackTraceElem:
+      type: object
+      properties:
+        file_name:
+          type: string
+        class_name:
+          type: string
+        method_name:
+          type: string
+        line_number:
+          type: integer
+        is_native_method:
+          type: boolean
+    ThreadInformation:
+      type: object
+      properties:
+        thread_id:
+          type: integer
+        thread_name:
+          type: string
+        priority:
+          type: integer
+        is_alive:
+          type: boolean
+        thread_state:
+          type: string
+        is_daemon:
+          type: boolean
+        is_interrupted:
+          type: boolean
+        thread_traces:
+          type: array
+          items:
+            $ref: '#/components/schemas/StackTraceElem'
+    DeviceState:
+      type: object
+      properties:
+        is_connected_to_internet:
+          type: boolean
+        current_thread:
+          $ref: '#/components/schemas/ThreadInformation'
+        other_threads:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThreadInformation'
+        time_zone:
+          type: string
+        storage_information:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeviceStorageInformation'
+        info_map:
+          type: object
+          additionalProperties:
+            type: string
+    LogEntry:
+      type: object
+      properties:
+        device_state:
+          $ref: '#/components/schemas/DeviceState'
+        tag:
+          type: string
+        type:
+          type: string
+        message:
+          type: string
+        stack_trace:
+          type: string
+        values:
+          type: object
+          additionalProperties:
+            type: string
+        time_fired:
+          type: integer
+    DatabaseLogEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        device:
+          $ref: '#/components/schemas/DeviceInformation'
+        app_information:
+          $ref: '#/components/schemas/AppInformation'
+        user_information:
+          $ref: '#/components/schemas/UserInformation'
+        log:
+          type: array
+          items:
+            $ref: '#/components/schemas/LogEntry'
+        created_at:
+          type: integer
+        notes:
+          type: array
+          items:
+            type: string
+        state:
+          type: string
+info:
+  version: 1.0.0
+  title: Logging Backend Schema
+  contact: {}
+paths:
+  /v1/logs/upload:
+    summary: Upload a logs file
+    description: Takes log file and saves it
+    post:
+      summary: ''
+      description: ''
+      parameters: []
+      operationId: uploadLogFile
+      responses:
+        '200':
+          description: The file has been uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '400':
+          description: Bad request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Request Token couldn't be authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: File couldn't be uploaded or processed because of an internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              token:
+                type: string
+              is_encrypted:
+                type: string
+        description: >-
+          Request body for the log file upload request , containing token and
+          is_encrypted
+  /v1/logs/list:
+    post:
+      summary: List logs for a package
+      description: lists the logs for a package
+      parameters: []
+      operationId: listLogs
+      responses:
+        '200':
+          description: Logs are returned
+          content:
+            application/json:
+              schema:
+                logs:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/DatabaseLogEntry'
+        '400':
+          description: Error because of bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: 'Error , request token couldn''t be authorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: There was a server error listing the logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              token: ''
+              package_name: ''
+              page: 0
+        description: Lists the logs for the given package and page

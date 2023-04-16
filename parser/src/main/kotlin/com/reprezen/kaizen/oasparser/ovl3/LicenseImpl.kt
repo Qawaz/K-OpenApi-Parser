@@ -55,11 +55,6 @@ class LicenseImpl : PropertiesOverlay<License> ,License {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasExtensions() : Boolean {
 		return _isPresent("extensions")
 	}

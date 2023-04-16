@@ -33,11 +33,6 @@ class MediaTypeImpl : PropertiesOverlay<MediaType> ,MediaType {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getSchema(elaborate : Boolean) : Schema? {
-		return _get("schema")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setSchema(schema : Schema) {
 		_setScalar("schema", schema)
 	}
@@ -45,11 +40,6 @@ class MediaTypeImpl : PropertiesOverlay<MediaType> ,MediaType {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Example
 	override fun getExamples() : MutableMap<String, Example> {
-		return _getMap("examples")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExamples(elaborate : Boolean) : MutableMap<String, Example> {
 		return _getMap("examples")
 	}
 
@@ -101,11 +91,6 @@ class MediaTypeImpl : PropertiesOverlay<MediaType> ,MediaType {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getEncodingProperties(elaborate : Boolean) : MutableMap<String, EncodingProperty> {
-		return _getMap("encodingProperties")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasEncodingProperties() : Boolean {
 		return _isPresent("encodingProperties")
 	}
@@ -138,11 +123,6 @@ class MediaTypeImpl : PropertiesOverlay<MediaType> ,MediaType {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

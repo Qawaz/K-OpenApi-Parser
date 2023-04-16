@@ -230,11 +230,6 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getRequiredFields(elaborate : Boolean) : List<String> {
-		return _getList("requiredFields")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasRequiredFields() : Boolean {
 		return _isPresent("requiredFields")
 	}
@@ -272,11 +267,6 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Enum
 	override fun getEnums() : List<Any> {
-		return _getList("enums")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getEnums(elaborate : Boolean) : List<Any> {
 		return _getList("enums")
 	}
 
@@ -333,11 +323,6 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getAllOfSchemas(elaborate : Boolean) : List<Schema> {
-		return _getList("allOfSchemas")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasAllOfSchemas() : Boolean {
 		return _isPresent("allOfSchemas")
 	}
@@ -375,11 +360,6 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// OneOfSchema
 	override fun getOneOfSchemas() : List<Schema> {
-		return _getList("oneOfSchemas")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getOneOfSchemas(elaborate : Boolean) : List<Schema> {
 		return _getList("oneOfSchemas")
 	}
 
@@ -425,11 +405,6 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getAnyOfSchemas(elaborate : Boolean) : List<Schema> {
-		return _getList("anyOfSchemas")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasAnyOfSchemas() : Boolean {
 		return _isPresent("anyOfSchemas")
 	}
@@ -471,11 +446,6 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getNotSchema(elaborate : Boolean) : Schema? {
-		return _get("notSchema")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setNotSchema(notSchema : Schema) {
 		_setScalar("notSchema", notSchema)
 	}
@@ -487,11 +457,6 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getItemsSchema(elaborate : Boolean) : Schema? {
-		return _get("itemsSchema")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setItemsSchema(itemsSchema : Schema) {
 		_setScalar("itemsSchema", itemsSchema)
 	}
@@ -499,11 +464,6 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Property
 	override fun getProperties() : MutableMap<String, Schema> {
-		return _getMap("properties")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getProperties(elaborate : Boolean) : MutableMap<String, Schema> {
 		return _getMap("properties")
 	}
 
@@ -540,11 +500,6 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// AdditionalPropertiesSchema
 	override fun getAdditionalPropertiesSchema() : Schema? {
-		return _get("additionalPropertiesSchema")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getAdditionalPropertiesSchema(elaborate : Boolean) : Schema? {
 		return _get("additionalPropertiesSchema")
 	}
 
@@ -625,11 +580,6 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getDiscriminator(elaborate : Boolean) : Discriminator? {
-		return _get("discriminator")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setDiscriminator(discriminator : Discriminator) {
 		_setScalar("discriminator", discriminator)
 	}
@@ -673,11 +623,6 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getXml(elaborate : Boolean) : Xml? {
-		return _get("xml")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setXml(xml : Xml) {
 		_setScalar("xml", xml)
 	}
@@ -685,11 +630,6 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// ExternalDocs
 	override fun getExternalDocs() : ExternalDocs? {
-		return _get("externalDocs")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExternalDocs(elaborate : Boolean) : ExternalDocs? {
 		return _get("externalDocs")
 	}
 
@@ -728,11 +668,6 @@ class SchemaImpl : PropertiesOverlay<Schema> ,Schema {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

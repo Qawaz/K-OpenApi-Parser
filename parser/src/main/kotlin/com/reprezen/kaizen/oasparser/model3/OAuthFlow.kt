@@ -33,9 +33,6 @@ interface OAuthFlow : IJsonOverlay<OAuthFlow>, IModelPart<OpenApi3, OAuthFlow> {
 	fun getScopes() : MutableMap<String, String>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getScopes(elaborate : Boolean) : MutableMap<String, String>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasScopes() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -58,9 +55,6 @@ interface OAuthFlow : IJsonOverlay<OAuthFlow>, IModelPart<OpenApi3, OAuthFlow> {
 	fun getScopesExtensions() : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getScopesExtensions(elaborate : Boolean) : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasScopesExtensions() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -81,9 +75,6 @@ interface OAuthFlow : IJsonOverlay<OAuthFlow>, IModelPart<OpenApi3, OAuthFlow> {
 	// Extension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean

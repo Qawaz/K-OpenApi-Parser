@@ -15,17 +15,11 @@ interface MediaType : IJsonOverlay<MediaType>, IModelPart<OpenApi3, MediaType> {
 	fun getSchema() : Schema?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getSchema(elaborate : Boolean) : Schema?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setSchema(schema : Schema)
 
 	// Example
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExamples() : MutableMap<String, Example>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExamples(elaborate : Boolean) : MutableMap<String, Example>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExamples() : Boolean
@@ -57,9 +51,6 @@ interface MediaType : IJsonOverlay<MediaType>, IModelPart<OpenApi3, MediaType> {
 	fun getEncodingProperties() : MutableMap<String, EncodingProperty>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getEncodingProperties(elaborate : Boolean) : MutableMap<String, EncodingProperty>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasEncodingProperties() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -80,9 +71,6 @@ interface MediaType : IJsonOverlay<MediaType>, IModelPart<OpenApi3, MediaType> {
 	// Extension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean

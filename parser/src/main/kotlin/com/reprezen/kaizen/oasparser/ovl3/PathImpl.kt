@@ -34,20 +34,12 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 		return getOperations()["get"]
 	}
 
-	override fun getGet(elaborate : Boolean) : Operation? {
-		return getOperations(elaborate)["get"]
-	}
-
 	override fun setGet(get : Operation) {
 		getOperations()["get"] = get
 	}
 
 	override fun getPut() : Operation? {
 		return getOperations()["put"]
-	}
-
-	override fun getPut(elaborate : Boolean) : Operation? {
-		return getOperations(elaborate)["put"]
 	}
 
 	override fun setPut(put : Operation) {
@@ -58,20 +50,12 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 		return getOperations()["post"]
 	}
 
-	override fun getPost(elaborate : Boolean) : Operation? {
-		return getOperations(elaborate)["post"]
-	}
-
 	override fun setPost(post : Operation) {
 		getOperations()["post"] = post
 	}
 
 	override fun getDelete() : Operation? {
 		return getOperations()["delete"]
-	}
-
-	override fun getDelete(elaborate : Boolean) : Operation? {
-		return getOperations(elaborate)["delete"]
 	}
 
 	override fun setDelete(delete : Operation) {
@@ -82,20 +66,12 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 		return getOperations()["options"]
 	}
 
-	override fun getOptions(elaborate : Boolean) : Operation? {
-		return getOperations(elaborate)["options"]
-	}
-
 	override fun setOptions(options : Operation) {
 		getOperations()["options"] = options
 	}
 
 	override fun getHead() : Operation? {
 		return getOperations()["head"]
-	}
-
-	override fun getHead(elaborate : Boolean) : Operation? {
-		return getOperations(elaborate)["head"]
 	}
 
 	override fun setHead(head : Operation) {
@@ -106,20 +82,12 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 		return getOperations()["patch"]
 	}
 
-	override fun getPatch(elaborate : Boolean) : Operation? {
-		return getOperations(elaborate)["patch"]
-	}
-
 	override fun setPatch(patch : Operation) {
 		getOperations()["patch"] = patch
 	}
 
 	override fun getTrace() : Operation? {
 		return getOperations()["trace"]
-	}
-
-	override fun getTrace(elaborate : Boolean) : Operation? {
-		return getOperations(elaborate)["trace"]
 	}
 
 	override fun setTrace(trace : Operation) {
@@ -161,11 +129,6 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getOperations(elaborate : Boolean) : MutableMap<String, Operation> {
-		return _getMap("operations")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasOperations() : Boolean {
 		return _isPresent("operations")
 	}
@@ -198,11 +161,6 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Server
 	override fun getServers() : List<Server> {
-		return _getList("servers")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getServers(elaborate : Boolean) : List<Server> {
 		return _getList("servers")
 	}
 
@@ -248,11 +206,6 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getParameters(elaborate : Boolean) : List<Parameter> {
-		return _getList("parameters")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasParameters() : Boolean {
 		return _isPresent("parameters")
 	}
@@ -290,11 +243,6 @@ class PathImpl : PropertiesOverlay<Path> ,Path {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

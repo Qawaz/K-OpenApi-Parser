@@ -36,17 +36,11 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	fun getInfo() : Info?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getInfo(elaborate : Boolean) : Info?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setInfo(info : Info)
 
 	// Server
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getServers() : List<Server>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getServers(elaborate : Boolean) : List<Server>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasServers() : Boolean
@@ -74,9 +68,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	fun getPaths() : MutableMap<String, Path>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getPaths(elaborate : Boolean) : MutableMap<String, Path>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasPaths() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -97,9 +88,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	// PathsExtension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getPathsExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getPathsExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasPathsExtensions() : Boolean
@@ -124,9 +112,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	fun getSchemas() : MutableMap<String, Schema>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getSchemas(elaborate : Boolean) : MutableMap<String, Schema>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasSchemas() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -147,9 +132,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	// Response
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getResponses() : MutableMap<String, Response>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getResponses(elaborate : Boolean) : MutableMap<String, Response>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasResponses() : Boolean
@@ -174,9 +156,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	fun getParameters() : MutableMap<String, Parameter>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getParameters(elaborate : Boolean) : MutableMap<String, Parameter>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasParameters() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -197,9 +176,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	// Example
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExamples() : MutableMap<String, Example>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExamples(elaborate : Boolean) : MutableMap<String, Example>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExamples() : Boolean
@@ -224,9 +200,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	fun getRequestBodies() : MutableMap<String, RequestBody>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getRequestBodies(elaborate : Boolean) : MutableMap<String, RequestBody>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasRequestBodies() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -247,9 +220,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	// Header
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getHeaders() : MutableMap<String, Header>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getHeaders(elaborate : Boolean) : MutableMap<String, Header>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasHeaders() : Boolean
@@ -274,9 +244,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	fun getSecuritySchemes() : MutableMap<String, SecurityScheme>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getSecuritySchemes(elaborate : Boolean) : MutableMap<String, SecurityScheme>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasSecuritySchemes() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -297,9 +264,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	// Link
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getLinks() : MutableMap<String, Link>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getLinks(elaborate : Boolean) : MutableMap<String, Link>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasLinks() : Boolean
@@ -324,9 +288,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	fun getCallbacks() : MutableMap<String, Callback>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getCallbacks(elaborate : Boolean) : MutableMap<String, Callback>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasCallbacks() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -349,9 +310,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	fun getComponentsExtensions() : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getComponentsExtensions(elaborate : Boolean) : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasComponentsExtensions() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -372,9 +330,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	// SecurityRequirement
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getSecurityRequirements() : List<SecurityRequirement>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getSecurityRequirements(elaborate : Boolean) : List<SecurityRequirement>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasSecurityRequirements() : Boolean
@@ -402,9 +357,6 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	fun getTags() : List<Tag>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getTags(elaborate : Boolean) : List<Tag>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasTags() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -430,17 +382,11 @@ interface OpenApi3 : IJsonOverlay<OpenApi3>, IModelPart<OpenApi3, OpenApi3> {
 	fun getExternalDocs() : ExternalDocs?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExternalDocs(elaborate : Boolean) : ExternalDocs?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setExternalDocs(externalDocs : ExternalDocs)
 
 	// Extension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean

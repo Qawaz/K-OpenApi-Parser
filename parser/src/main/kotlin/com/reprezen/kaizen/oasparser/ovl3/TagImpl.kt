@@ -54,11 +54,6 @@ class TagImpl : PropertiesOverlay<Tag> ,Tag {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExternalDocs(elaborate : Boolean) : ExternalDocs? {
-		return _get("externalDocs")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun setExternalDocs(externalDocs : ExternalDocs) {
 		_setScalar("externalDocs", externalDocs)
 	}
@@ -66,11 +61,6 @@ class TagImpl : PropertiesOverlay<Tag> ,Tag {
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	// Extension
 	override fun getExtensions() : MutableMap<String, Any> {
-		return _getMap("extensions")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getExtensions(elaborate : Boolean) : MutableMap<String, Any> {
 		return _getMap("extensions")
 	}
 

@@ -200,7 +200,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     protected fun <T> _getList(name: String): MutableList<T> {
-        return _get(name)!!
+        return _get(name) ?: mutableListOf<T>().also { _setList(name, it) }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -210,9 +210,9 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     @Suppress("UNCHECKED_CAST")
-    protected fun <T> _setList(name: String, listVal: MutableList<T>?) {
-        val overlay = _getOverlay<T>(name) as ListOverlay<T>
-        overlay._set(listVal)
+    protected fun <T> _setList(name: String, listVal: MutableList<T>) {
+        val overlay = _getOverlay<T>(name) as? ListOverlay<T>
+        overlay?._set(listVal)
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -239,7 +239,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     protected fun <T> _getMap(name: String): MutableMap<String, T> {
-        return _get(name) ?: mutableMapOf()
+        return _get(name) ?: mutableMapOf<String, T>().also { _setMap(name, it) }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -249,9 +249,9 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     @Suppress("UNCHECKED_CAST")
-    protected fun <T> _setMap(name: String, mapVal: MutableMap<String, T>?) {
-        val overlay = _getOverlay<T>(name) as MapOverlay<T>
-        overlay._set(mapVal)
+    protected fun <T> _setMap(name: String, mapVal: MutableMap<String, T>) {
+        val overlay = _getOverlay<T>(name) as? MapOverlay<T>
+        overlay?._set(mapVal)
     }
 
     @Suppress("UNCHECKED_CAST")

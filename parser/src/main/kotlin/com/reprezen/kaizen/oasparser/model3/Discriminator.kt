@@ -19,9 +19,6 @@ interface Discriminator : IJsonOverlay<Discriminator>, IModelPart<OpenApi3, Disc
 	fun getMappings() : MutableMap<String, String>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getMappings(elaborate : Boolean) : MutableMap<String, String>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasMappings() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

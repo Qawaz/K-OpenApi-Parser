@@ -41,11 +41,6 @@ class DiscriminatorImpl : PropertiesOverlay<Discriminator> ,Discriminator {
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getMappings(elaborate : Boolean) : MutableMap<String, String> {
-		return _getMap("mappings")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasMappings() : Boolean {
 		return _isPresent("mappings")
 	}

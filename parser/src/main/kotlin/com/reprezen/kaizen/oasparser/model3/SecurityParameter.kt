@@ -12,9 +12,6 @@ interface SecurityParameter : IJsonOverlay<SecurityParameter>, IModelPart<OpenAp
 	fun getParameters() : List<String>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getParameters(elaborate : Boolean) : List<String>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasParameters() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")

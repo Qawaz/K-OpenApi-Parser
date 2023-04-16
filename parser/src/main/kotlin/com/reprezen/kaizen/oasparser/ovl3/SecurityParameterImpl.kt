@@ -36,11 +36,6 @@ class SecurityParameterImpl : PropertiesOverlay<SecurityParameter> ,SecurityPara
 	}
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	override fun getParameters(elaborate : Boolean) : List<String> {
-		return _getList("parameters")
-	}
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	override fun hasParameters() : Boolean {
 		return _isPresent("parameters")
 	}

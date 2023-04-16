@@ -126,9 +126,6 @@ interface Schema : IJsonOverlay<Schema>, IModelPart<OpenApi3, Schema> {
 	fun getRequiredFields() : List<String>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getRequiredFields(elaborate : Boolean) : List<String>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasRequiredFields() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -152,9 +149,6 @@ interface Schema : IJsonOverlay<Schema>, IModelPart<OpenApi3, Schema> {
 	// Enum
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getEnums() : List<Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getEnums(elaborate : Boolean) : List<Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasEnums() : Boolean
@@ -189,9 +183,6 @@ interface Schema : IJsonOverlay<Schema>, IModelPart<OpenApi3, Schema> {
 	fun getAllOfSchemas() : List<Schema>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getAllOfSchemas(elaborate : Boolean) : List<Schema>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasAllOfSchemas() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -215,9 +206,6 @@ interface Schema : IJsonOverlay<Schema>, IModelPart<OpenApi3, Schema> {
 	// OneOfSchema
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getOneOfSchemas() : List<Schema>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getOneOfSchemas(elaborate : Boolean) : List<Schema>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasOneOfSchemas() : Boolean
@@ -245,9 +233,6 @@ interface Schema : IJsonOverlay<Schema>, IModelPart<OpenApi3, Schema> {
 	fun getAnyOfSchemas() : List<Schema>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getAnyOfSchemas(elaborate : Boolean) : List<Schema>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasAnyOfSchemas() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -273,9 +258,6 @@ interface Schema : IJsonOverlay<Schema>, IModelPart<OpenApi3, Schema> {
 	fun getNotSchema() : Schema?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getNotSchema(elaborate : Boolean) : Schema?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setNotSchema(notSchema : Schema)
 
 	// ItemsSchema
@@ -283,17 +265,11 @@ interface Schema : IJsonOverlay<Schema>, IModelPart<OpenApi3, Schema> {
 	fun getItemsSchema() : Schema?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getItemsSchema(elaborate : Boolean) : Schema?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setItemsSchema(itemsSchema : Schema)
 
 	// Property
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getProperties() : MutableMap<String, Schema>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getProperties(elaborate : Boolean) : MutableMap<String, Schema>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasProperties() : Boolean
@@ -316,9 +292,6 @@ interface Schema : IJsonOverlay<Schema>, IModelPart<OpenApi3, Schema> {
 	// AdditionalPropertiesSchema
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getAdditionalPropertiesSchema() : Schema?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getAdditionalPropertiesSchema(elaborate : Boolean) : Schema?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setAdditionalPropertiesSchema(additionalPropertiesSchema : Schema)
@@ -369,9 +342,6 @@ interface Schema : IJsonOverlay<Schema>, IModelPart<OpenApi3, Schema> {
 	fun getDiscriminator() : Discriminator?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getDiscriminator(elaborate : Boolean) : Discriminator?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setDiscriminator(discriminator : Discriminator)
 
 	// ReadOnly
@@ -399,17 +369,11 @@ interface Schema : IJsonOverlay<Schema>, IModelPart<OpenApi3, Schema> {
 	fun getXml() : Xml?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getXml(elaborate : Boolean) : Xml?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setXml(xml : Xml)
 
 	// ExternalDocs
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExternalDocs() : ExternalDocs?
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExternalDocs(elaborate : Boolean) : ExternalDocs?
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun setExternalDocs(externalDocs : ExternalDocs)
@@ -434,9 +398,6 @@ interface Schema : IJsonOverlay<Schema>, IModelPart<OpenApi3, Schema> {
 	// Extension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean

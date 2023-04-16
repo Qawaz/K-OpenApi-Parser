@@ -22,9 +22,6 @@ interface RequestBody : IJsonOverlay<RequestBody>, IModelPart<OpenApi3, RequestB
 	fun getContentMediaTypes() : MutableMap<String, MediaType>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getContentMediaTypes(elaborate : Boolean) : MutableMap<String, MediaType>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasContentMediaTypes() : Boolean
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
@@ -55,9 +52,6 @@ interface RequestBody : IJsonOverlay<RequestBody>, IModelPart<OpenApi3, RequestB
 	// Extension
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun getExtensions() : MutableMap<String, Any>
-
-	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
-	fun getExtensions(elaborate : Boolean) : MutableMap<String, Any>
 
 	@Generated("com.reprezen.jsonoverlay.gen.CodeGenerator")
 	fun hasExtensions() : Boolean

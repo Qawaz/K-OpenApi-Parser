@@ -88,9 +88,6 @@ class JavaInterfaceGenerator : TypeGenerator {
     private fun getScalarMethods(f : KTypeData.Field): Members {
         val methods = Members()
         methods.addMember("fun get${f.name}() : ${f.type}?")
-        if (f.structure === KTypeData.Structure.scalar && !f.isScalarType) {
-            methods.addMember("fun get${f.name}(elaborate : Boolean) : ${f.type}?")
-        }
         if (f.isBoolean) {
             methods.addMember("fun is${f.name}() : Boolean")
         }
@@ -102,7 +99,6 @@ class JavaInterfaceGenerator : TypeGenerator {
         val methods = Members()
         requireTypes(List::class)
         methods.addMember("fun get${f.plural}() : List<${f.type}>")
-        methods.addMember("fun get${f.plural}(elaborate : Boolean) : List<${f.type}>")
         methods.addMember("fun has${f.plural}() : Boolean")
         methods.addMember("fun get${f.name}(index : Int) : ${f.type}")
         methods.addMember("fun set${f.plural}(${f.lcPlural} : MutableList<${f.type}>)")
@@ -117,7 +113,6 @@ class JavaInterfaceGenerator : TypeGenerator {
         requireTypes(Map::class)
         val methods = Members()
         methods.addMember("fun get${f.plural}() : MutableMap<String, ${f.type}>")
-        methods.addMember("fun get${f.plural}(elaborate : Boolean) : MutableMap<String, ${f.type}>")
         methods.addMember("fun has${f.plural}() : Boolean")
         methods.addMember("fun has${f.name}(${f.keyName} : String) : Boolean")
         methods.addMember("fun get${f.name}(${f.keyName} : String) : ${f.type}?")
