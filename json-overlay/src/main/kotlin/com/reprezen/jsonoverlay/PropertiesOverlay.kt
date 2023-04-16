@@ -16,6 +16,7 @@ package com.reprezen.jsonoverlay
 
 import kotlinx.serialization.json.*
 
+@Suppress("FunctionName")
 abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
 
     class FactoryMap(val path: String, val factory: OverlayFactory<*>) {
@@ -107,6 +108,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         //}
     }
 
+    @Suppress("UNCHECKED_CAST")
     protected fun <T> _get(name: String?): T? {
         factoryMap[name]?.let { factory ->
             return (overlays[factory] as? JsonOverlay<T>)?._get() ?: _getOverlay(
@@ -191,7 +193,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> _createOverlay(name: String, value: T?): JsonOverlay<T>? {
+    private fun <T> _createOverlay(name: String, value: T?): JsonOverlay<T>? {
         return factoryMap[name]?.let {
             createOverlay(value, it, it.factory as OverlayFactory<T>)
         }
@@ -253,7 +255,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         overlay.remove(key)
     }
 
-    fun _elaborate() {
+    private fun _elaborate() {
         if (elaborationValue != null) {
             (value as? PropertiesOverlay<*>)?.let { _elaborateValue(it) }
         } else {
