@@ -2,19 +2,17 @@ package com.reprezen.kaizen.oasparser.ovl3
 
 import com.reprezen.kaizen.oasparser.model3.*
 import com.reprezen.jsonoverlay.MapOverlay
-import java.util.stream.Collectors
 import com.reprezen.jsonoverlay.StringOverlay
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
-import com.reprezen.jsonoverlay.Builder
-import com.reprezen.jsonoverlay.PropertiesOverlay
-import com.reprezen.jsonoverlay.JsonPointer
-import com.reprezen.jsonoverlay.ReferenceManager
 import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.ObjectOverlay
+import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.JsonOverlay
 import kotlin.collections.Map
+import com.reprezen.jsonoverlay.ReferenceManager
 
 class ExternalDocsImpl : PropertiesOverlay<ExternalDocs> ,ExternalDocs {
 
@@ -123,15 +121,6 @@ class ExternalDocsImpl : PropertiesOverlay<ExternalDocs> ,ExternalDocs {
 		
 			override val isExtendedType : Boolean get() = false
 		};
-
-		private fun getSubtypeOf(externalDocs : ExternalDocs) : Class<out ExternalDocs> {
-			return ExternalDocs::class.java
-		}
-
-		private fun getSubtypeOf(json : JsonElement) : Class<out ExternalDocs> {
-			return ExternalDocs::class.java
-		}
-		
 
 		fun builder(modelMember : JsonOverlay<*>) : Builder<ExternalDocs> {
 			return Builder<ExternalDocs>(factory, modelMember)

@@ -44,13 +44,13 @@ class LocalSerializationTest : Assert() {
         val model = parseLocalModel("refSchemaIssue")
         val schema = model.getSchema("LogEntry")!! as PropertiesOverlay<*>
         val properties = model.getSchema("LogEntry")!!.getProperties()
-        val propertiesOverlay = Overlay.of(properties)!!
+        val propertiesOverlay = Overlay.of(properties,parent = null)!!
         println((properties["tag"] as JsonOverlay<*>)._getPathFromRoot())
         assertTrue(schema._getValueOverlayByPath("properties")!!.findByPath("device_state")!!._isReference())
 //        println(propertiesOverlay.overlay)
+        assertTrue(propertiesOverlay.isReference("device_state"))
         assertEquals(schema._getValueOverlayByPath("properties"),propertiesOverlay.overlay)
         val deviceState = Overlay.of(model.getSchema("LogEntry")!!.getProperty("device_state")!!)
-        assertTrue(propertiesOverlay.isReference("device_state"))
         assertTrue(deviceState.isReference())
     }
 

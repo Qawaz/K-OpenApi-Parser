@@ -2,13 +2,11 @@ package com.reprezen.kaizen.oasparser.ovl3
 
 import com.reprezen.kaizen.oasparser.model3.*
 import com.reprezen.jsonoverlay.MapOverlay
-import java.util.stream.Collectors
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
-import com.reprezen.jsonoverlay.JsonPointer
 import com.reprezen.kaizen.oasparser.ovl3.EncodingPropertyImpl
 import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
@@ -203,15 +201,6 @@ class MediaTypeImpl : PropertiesOverlay<MediaType> ,MediaType {
 		
 			override val isExtendedType : Boolean get() = false
 		};
-
-		private fun getSubtypeOf(mediaType : MediaType) : Class<out MediaType> {
-			return MediaType::class.java
-		}
-
-		private fun getSubtypeOf(json : JsonElement) : Class<out MediaType> {
-			return MediaType::class.java
-		}
-		
 
 		fun builder(modelMember : JsonOverlay<*>) : Builder<MediaType> {
 			return Builder<MediaType>(factory, modelMember)

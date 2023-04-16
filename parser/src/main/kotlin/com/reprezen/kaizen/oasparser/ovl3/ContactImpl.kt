@@ -2,19 +2,17 @@ package com.reprezen.kaizen.oasparser.ovl3
 
 import com.reprezen.kaizen.oasparser.model3.*
 import com.reprezen.jsonoverlay.MapOverlay
-import java.util.stream.Collectors
 import com.reprezen.jsonoverlay.StringOverlay
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
-import com.reprezen.jsonoverlay.Builder
-import com.reprezen.jsonoverlay.PropertiesOverlay
-import com.reprezen.jsonoverlay.JsonPointer
-import com.reprezen.jsonoverlay.ReferenceManager
 import kotlinx.serialization.json.JsonElement
+import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.ObjectOverlay
+import com.reprezen.jsonoverlay.PropertiesOverlay
 import com.reprezen.jsonoverlay.JsonOverlay
 import kotlin.collections.Map
+import com.reprezen.jsonoverlay.ReferenceManager
 
 class ContactImpl : PropertiesOverlay<Contact> ,Contact {
 
@@ -137,15 +135,6 @@ class ContactImpl : PropertiesOverlay<Contact> ,Contact {
 		
 			override val isExtendedType : Boolean get() = false
 		};
-
-		private fun getSubtypeOf(contact : Contact) : Class<out Contact> {
-			return Contact::class.java
-		}
-
-		private fun getSubtypeOf(json : JsonElement) : Class<out Contact> {
-			return Contact::class.java
-		}
-		
 
 		fun builder(modelMember : JsonOverlay<*>) : Builder<Contact> {
 			return Builder<Contact>(factory, modelMember)

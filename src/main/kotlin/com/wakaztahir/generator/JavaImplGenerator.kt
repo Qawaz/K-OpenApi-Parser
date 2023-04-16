@@ -385,59 +385,11 @@ class JavaImplGenerator : TypeGenerator {
         if (!subTypes.isEmpty() && !type.abstract) {
             subTypes.add(type)
         }
-        members.add(getValueSubtypeSelector(type, subTypes))
-        members.add(getJsonSubtypeSelector(type, subTypes))
         return members
     }
 
     private fun getIsExtendedType(isExtended: Boolean): String {
         return """override val isExtendedType : Boolean get() = ${if (isExtended) "true" else "false"}""".trimMargin("|")
-    }
-
-    private fun getValueSubtypeSelector(
-        t: KTypeData.Type,
-        subTypes: Collection<KTypeData.Type>
-    ): ClassMember {
-        val switchExpr = """${t.lcName}.getClass().getSimpleName()"""
-        val subTypeSwitch = getSubtypeSwitch(t, subTypes, switchExpr) { it.name }
-        return ClassMember(
-            """private fun getSubtypeOf(${t.lcName} : ${t.name}) : Class<out ${t.name}> {
-        |${"\t"}$subTypeSwitch
-        |}""".trimMargin("|")
-        )
-    }
-
-    private fun getJsonSubtypeSelector(
-        t: KTypeData.Type,
-        subTypes: Collection<KTypeData.Type>
-    ): ClassMember {
-        requireTypes(JsonPointer::class, Collectors::class)
-        val switchExpr = """json.at(JsonPointer("/${t.discriminator}")).asText()"""
-        val subTypeSwitch = getSubtypeSwitch(t, subTypes, switchExpr) { it.discriminatorValue }
-        return ClassMember(
-            """private fun getSubtypeOf(json : JsonElement) : Class<out ${t.name}> {
-        |${"\t"}$subTypeSwitch
-        |}
-        |""".trimMargin("|")
-        )
-    }
-
-    private fun getSubtypeSwitch(
-        t: KTypeData.Type,
-        subTypes: Collection<KTypeData.Type>,
-        switchExpr: String,
-        discFn: (KTypeData.Type) -> String
-    ): String {
-        if (subTypes.isEmpty()) return "return ${t.name}::class.java" else {
-            val cases = subTypes.joinToString { sub ->
-                "case \"${discFn(sub)}\":\n\treturn ${sub.name}::class.java\n"
-            }
-            return """switch($switchExpr) {
-        |${"\t"}$cases
-        |${"\t"}default:
-        |${"\t"}${"\t"}return null
-        |}""".trimMargin("|")
-        }
     }
 
     private fun getSubtypeCreate(t: KTypeData.Type, arg0: String): String {

@@ -2,7 +2,6 @@ package com.reprezen.kaizen.oasparser.ovl3
 
 import com.reprezen.kaizen.oasparser.model3.*
 import com.reprezen.jsonoverlay.MapOverlay
-import java.util.stream.Collectors
 import com.reprezen.jsonoverlay.StringOverlay
 import com.reprezen.kaizen.oasparser.ovl3.CallbackImpl
 import com.reprezen.jsonoverlay.parser.Generated
@@ -12,7 +11,6 @@ import com.reprezen.jsonoverlay.OverlayFactory
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.kaizen.oasparser.ovl3.RequestBodyImpl
 import com.reprezen.jsonoverlay.PropertiesOverlay
-import com.reprezen.jsonoverlay.JsonPointer
 import com.reprezen.kaizen.oasparser.ovl3.ResponseImpl
 import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.kaizen.oasparser.ovl3.ServerImpl
@@ -526,15 +524,6 @@ class OperationImpl : PropertiesOverlay<Operation> ,Operation {
 		
 			override val isExtendedType : Boolean get() = false
 		};
-
-		private fun getSubtypeOf(operation : Operation) : Class<out Operation> {
-			return Operation::class.java
-		}
-
-		private fun getSubtypeOf(json : JsonElement) : Class<out Operation> {
-			return Operation::class.java
-		}
-		
 
 		fun builder(modelMember : JsonOverlay<*>) : Builder<Operation> {
 			return Builder<Operation>(factory, modelMember)

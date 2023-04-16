@@ -2,13 +2,11 @@ package com.reprezen.kaizen.oasparser.ovl3
 
 import com.reprezen.kaizen.oasparser.model3.*
 import com.reprezen.jsonoverlay.MapOverlay
-import java.util.stream.Collectors
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
-import com.reprezen.jsonoverlay.JsonPointer
 import com.reprezen.kaizen.oasparser.ovl3.PathImpl
 import com.reprezen.jsonoverlay.ReferenceManager
 import kotlinx.serialization.json.JsonElement
@@ -141,15 +139,6 @@ class CallbackImpl : PropertiesOverlay<Callback> ,Callback {
 		
 			override val isExtendedType : Boolean get() = false
 		};
-
-		private fun getSubtypeOf(callback : Callback) : Class<out Callback> {
-			return Callback::class.java
-		}
-
-		private fun getSubtypeOf(json : JsonElement) : Class<out Callback> {
-			return Callback::class.java
-		}
-		
 
 		fun builder(modelMember : JsonOverlay<*>) : Builder<Callback> {
 			return Builder<Callback>(factory, modelMember)

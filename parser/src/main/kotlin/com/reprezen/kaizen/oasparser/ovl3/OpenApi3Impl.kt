@@ -10,7 +10,6 @@ import com.reprezen.kaizen.oasparser.ovl3.HeaderImpl
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.kaizen.oasparser.ovl3.SecuritySchemeImpl
 import kotlinx.serialization.json.JsonObject
-import com.reprezen.jsonoverlay.JsonPointer
 import kotlinx.serialization.json.JsonNull
 import com.reprezen.jsonoverlay.ReferenceManager
 import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
@@ -21,7 +20,6 @@ import kotlin.collections.List
 import com.reprezen.jsonoverlay.JsonOverlay
 import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.kaizen.oasparser.ovl3.ExampleImpl
-import java.util.stream.Collectors
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.kaizen.oasparser.ovl3.TagImpl
@@ -770,15 +768,6 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
 		
 			override val isExtendedType : Boolean get() = false
 		};
-
-		private fun getSubtypeOf(openApi3 : OpenApi3) : Class<out OpenApi3> {
-			return OpenApi3::class.java
-		}
-
-		private fun getSubtypeOf(json : JsonElement) : Class<out OpenApi3> {
-			return OpenApi3::class.java
-		}
-		
 
 		fun builder(modelMember : JsonOverlay<*>) : Builder<OpenApi3> {
 			return Builder<OpenApi3>(factory, modelMember)

@@ -2,14 +2,12 @@ package com.reprezen.kaizen.oasparser.ovl3
 
 import com.reprezen.kaizen.oasparser.model3.*
 import com.reprezen.jsonoverlay.MapOverlay
-import java.util.stream.Collectors
 import com.reprezen.jsonoverlay.StringOverlay
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
-import com.reprezen.jsonoverlay.JsonPointer
 import com.reprezen.jsonoverlay.ReferenceManager
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.kaizen.oasparser.ovl3.MediaTypeImpl
@@ -176,15 +174,6 @@ class RequestBodyImpl : PropertiesOverlay<RequestBody> ,RequestBody {
 		
 			override val isExtendedType : Boolean get() = false
 		};
-
-		private fun getSubtypeOf(requestBody : RequestBody) : Class<out RequestBody> {
-			return RequestBody::class.java
-		}
-
-		private fun getSubtypeOf(json : JsonElement) : Class<out RequestBody> {
-			return RequestBody::class.java
-		}
-		
 
 		fun builder(modelMember : JsonOverlay<*>) : Builder<RequestBody> {
 			return Builder<RequestBody>(factory, modelMember)

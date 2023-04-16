@@ -1,7 +1,6 @@
 package com.reprezen.kaizen.oasparser.ovl3
 
 import com.reprezen.kaizen.oasparser.model3.*
-import java.util.stream.Collectors
 import com.reprezen.jsonoverlay.StringOverlay
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
@@ -9,7 +8,6 @@ import com.reprezen.jsonoverlay.ListOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
-import com.reprezen.jsonoverlay.JsonPointer
 import kotlinx.serialization.json.JsonNull
 import com.reprezen.jsonoverlay.ReferenceManager
 import kotlinx.serialization.json.JsonArray
@@ -105,15 +103,6 @@ class SecurityParameterImpl : PropertiesOverlay<SecurityParameter> ,SecurityPara
 		
 			override val isExtendedType : Boolean get() = false
 		};
-
-		private fun getSubtypeOf(securityParameter : SecurityParameter) : Class<out SecurityParameter> {
-			return SecurityParameter::class.java
-		}
-
-		private fun getSubtypeOf(json : JsonElement) : Class<out SecurityParameter> {
-			return SecurityParameter::class.java
-		}
-		
 
 		fun builder(modelMember : JsonOverlay<*>) : Builder<SecurityParameter> {
 			return Builder<SecurityParameter>(factory, modelMember)

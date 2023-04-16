@@ -2,7 +2,6 @@ package com.reprezen.kaizen.oasparser.ovl3
 
 import com.reprezen.kaizen.oasparser.model3.*
 import com.reprezen.jsonoverlay.MapOverlay
-import java.util.stream.Collectors
 import com.reprezen.jsonoverlay.StringOverlay
 import com.reprezen.jsonoverlay.parser.Generated
 import com.reprezen.jsonoverlay.IJsonOverlay
@@ -10,7 +9,6 @@ import com.reprezen.jsonoverlay.ListOverlay
 import com.reprezen.jsonoverlay.OverlayFactory
 import com.reprezen.jsonoverlay.Builder
 import com.reprezen.jsonoverlay.PropertiesOverlay
-import com.reprezen.jsonoverlay.JsonPointer
 import com.reprezen.jsonoverlay.ReferenceManager
 import kotlinx.serialization.json.JsonElement
 import com.reprezen.jsonoverlay.ObjectOverlay
@@ -169,15 +167,6 @@ class ServerVariableImpl : PropertiesOverlay<ServerVariable> ,ServerVariable {
 		
 			override val isExtendedType : Boolean get() = false
 		};
-
-		private fun getSubtypeOf(serverVariable : ServerVariable) : Class<out ServerVariable> {
-			return ServerVariable::class.java
-		}
-
-		private fun getSubtypeOf(json : JsonElement) : Class<out ServerVariable> {
-			return ServerVariable::class.java
-		}
-		
 
 		fun builder(modelMember : JsonOverlay<*>) : Builder<ServerVariable> {
 			return Builder<ServerVariable>(factory, modelMember)
