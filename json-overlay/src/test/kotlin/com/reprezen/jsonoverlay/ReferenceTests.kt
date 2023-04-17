@@ -16,6 +16,7 @@ package com.reprezen.jsonoverlay
 
 import com.reprezen.jsonoverlay.ResolutionException.ReferenceCycleException
 import com.reprezen.jsonoverlay.model.TestModelParser
+import com.reprezen.jsonoverlay.model.impl.TestModelImpl
 import com.reprezen.jsonoverlay.model.intf.Color
 import com.reprezen.jsonoverlay.model.intf.Scalars
 import com.reprezen.jsonoverlay.model.intf.TestModel
@@ -29,7 +30,7 @@ import java.io.IOException
 
 class ReferenceTests : Assert() {
 
-    lateinit var model: TestModel
+    lateinit var model: TestModelImpl
 
     private val isJson: Boolean get() = true
     private val refTestRes: String get() = if (isJson) "/json/refTest.json" else "/yaml/refTest.yaml"
@@ -46,7 +47,7 @@ class ReferenceTests : Assert() {
     @Before
     @Throws(IOException::class)
     fun setup() {
-        model = TestModelParser.parse(ReferenceTests::class.java.getResource(refTestRes))
+        model = TestModelParser.parse(ReferenceTests::class.java.getResource(refTestRes)!!) as TestModelImpl
     }
 
     @Test

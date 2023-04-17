@@ -14,6 +14,7 @@ package com.reprezen.swaggerparser.test
 import com.reprezen.jsonoverlay.*
 import com.reprezen.kaizen.oasparser.OpenApiParser
 import com.reprezen.kaizen.oasparser.model3.OpenApi3
+import com.reprezen.kaizen.oasparser.model3.Schema
 import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
 import com.reprezen.kaizen.oasparser.ovl3.SchemaImpl
 import kotlinx.serialization.json.jsonPrimitive
@@ -42,16 +43,35 @@ class LocalSerializationTest : Assert() {
     @Test
     fun testRefSchemaIssue() {
         val model = parseLocalModel("refSchemaIssue")
-        val schema = model.getSchema("LogEntry")!! as PropertiesOverlay<*>
-        val properties = model.getSchema("LogEntry")!!.getProperties()
-        val propertiesOverlay = Overlay.of(properties,parent = null)!!
-        println((properties["tag"] as JsonOverlay<*>)._getPathFromRoot())
+        val schema = model.getSchema("LogEntry")!! as SchemaImpl
+        val properties = schema.getProperties() as MapOverlay
+
+        // Checking using direct path
+        assertTrue(schema.findByPath("properties/device_state")!!._isReference())
+
+        // Checking using other path access methods
+        assertTrue(schema._getValueOverlayByName("properties")!!.findByPath("device_state")!!._isReference())
         assertTrue(schema._getValueOverlayByPath("properties")!!.findByPath("device_state")!!._isReference())
-//        println(propertiesOverlay.overlay)
+
+        // Checking properties direct path
+        assertTrue(properties.findByPath("device_state")!!._isReference())
+
+        // Checking using other path access methods under properties
+        assertTrue(properties._getValueOverlayByName("device_state")!!._isReference())
+        assertTrue(properties._getValueOverlayByPath("device_state")!!._isReference())
+
+        // Checking using direct overlay
+        val directOverlay = Overlay(properties)
+        assertTrue(directOverlay.isReference("device_state"))
+        assertTrue(directOverlay.find("device_state")!!._isReference())
+
+        // Checking using properties overlay
+        val propertiesOverlay = Overlay.of(properties as MutableMap<String, Schema>)!!
         assertTrue(propertiesOverlay.isReference("device_state"))
-        assertEquals(schema._getValueOverlayByPath("properties"),propertiesOverlay.overlay)
-        val deviceState = Overlay.of(model.getSchema("LogEntry")!!.getProperty("device_state")!!)
-        assertTrue(deviceState.isReference())
+        assertTrue(propertiesOverlay.find("device_state")!!._isReference())
+
+        // Checking value is not a reference
+        assertFalse((schema.getProperty("device_state") as SchemaImpl)._isReference())
     }
 
     @Test

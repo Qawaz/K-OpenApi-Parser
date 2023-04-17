@@ -74,20 +74,31 @@ class OverlayAdapterTests : Assert() {
 
         // map reference
         assertFalse(Overlay.of(model!!, "schemas")!!.isReference("user"))
-        assertTrue(
-            Overlay.of(model!!.getSchema("repository")?.getProperties()!!)!!.isReference("owner")
-        )
-        assertEquals(
-            "#/components/schemas/user",
-            Overlay.of(model!!.getSchema("repository")?.getProperties()!!)!!.getReference("owner")!!.refString
-        )
+        val properties = model!!.getSchema("repository")?.getProperties()!!
+        val propsOverlay = Overlay.of(properties)!!
+        val mapOverlay = Overlay(properties as MapOverlay<Schema>)
+
+        assertTrue(propsOverlay.isReference("owner"))
+        assertEquals("#/components/schemas/user", propsOverlay.getReference("owner")!!.refString)
+
+        assertTrue(mapOverlay.isReference("owner"))
+        assertEquals("#/components/schemas/user", mapOverlay.getReference("owner")!!.refString)
 
         // list reference
         val params = model!!.getPath("/2.0/repositories/{username}/{slug}")?.getGet()?.getParameters()!!
-        assertFalse(Overlay.of(params)!!.isReference(0))
+        val paramsOverlay = Overlay.of(params)!!
+        val listOverlay = Overlay(params as ListOverlay)
+
+        assertFalse(paramsOverlay.isReference(0))
         assertEquals("slug", params[0].getName())
-        assertTrue(Overlay.of(params)!!.isReference(1))
-        assertEquals("#/components/parameters/username", Overlay.of(params)!!.getReference(1.toString())!!.refString)
+        assertTrue(paramsOverlay.isReference(1))
+        assertEquals("#/components/parameters/username", paramsOverlay.getReference(1.toString())!!.refString)
+
+        assertFalse(listOverlay.isReference(0))
+        assertEquals("slug", params[0].getName())
+        assertTrue(listOverlay.isReference(1))
+        assertEquals("#/components/parameters/username", listOverlay.getReference(1.toString())!!.refString)
+
     }
 
     companion object {

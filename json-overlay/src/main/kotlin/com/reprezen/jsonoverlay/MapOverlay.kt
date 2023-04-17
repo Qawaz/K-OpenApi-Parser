@@ -18,7 +18,6 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
-import java.util.regex.Pattern
 
 class MapOverlay<V> private constructor(
     value: MutableMap<String, V>,
@@ -47,7 +46,7 @@ class MapOverlay<V> private constructor(
         return overlays[name]
     }
 
-    override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
+    override fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
 //        val debug = path == JsonPointer("/2.0/users/{username}")
 //        if (debug) println("FINDING $path IN MapOverlay")
         overlays[path.toString()]?.let { return it }

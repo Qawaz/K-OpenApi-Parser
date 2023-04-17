@@ -15,6 +15,7 @@ import com.reprezen.jsonoverlay.DocumentLoader
 import com.reprezen.jsonoverlay.Overlay
 import com.reprezen.jsonoverlay.toValue
 import com.reprezen.kaizen.oasparser.OpenApiParser
+import com.reprezen.kaizen.oasparser.ovl3.OpenApi3Impl
 import com.reprezen.swaggerparser.json.Walker
 import com.reprezen.swaggerparser.json.walk
 import kotlinx.serialization.json.JsonElement
@@ -38,7 +39,7 @@ class BigParseTest(private val modelUrl: URL) : Assert() {
     @Throws(Exception::class)
     fun testPrimitivesYieldSameValue() {
         val tree = DocumentLoader.Default.load(modelUrl)
-        val model = OpenApiParser().parse(modelUrl)
+        val model = OpenApiParser().parse(modelUrl) as OpenApi3Impl
         val walker = object : Walker {
             override fun walk(node: JsonElement, parent: JsonElement?, pointer: com.reprezen.jsonoverlay.JsonPointer) {
                 val overlay = model.findByPointer(pointer)

@@ -14,6 +14,6 @@ interface KeyValueOverlay {
         return _getValueOverlayByPath(index.toString())
     }
 
-    fun _findByPath(path: JsonPointer): JsonOverlay<*>?
+    fun findByPointer(path: JsonPointer): JsonOverlay<*>?
 
 }

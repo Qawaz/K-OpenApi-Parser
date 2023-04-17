@@ -14,19 +14,4 @@
  */
 package com.reprezen.jsonoverlay
 
-interface IJsonOverlay<V> {
-
-    fun findByPath(path: String): JsonOverlay<*>? {
-        return findByPointer(JsonPointer(path))
-    }
-
-    fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
-        if (this is KeyValueOverlay) {
-            return this._findByPath(path)
-        } else {
-            Throwable("pointer $path cannot navigate on overlay $this").printStackTrace()
-        }
-        return null
-    }
-
-}
+interface IJsonOverlay<V>

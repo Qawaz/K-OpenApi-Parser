@@ -146,7 +146,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         return elem?.let { createOverlay(it, factoryMap, factory) }
     }
 
-    override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
+    override fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
 //        val debug = path == JsonPointer("/2.0/users/{username}")
 //        if (debug) println("NAVIGATING $path")
         for (entry in factoryMap) {

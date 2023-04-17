@@ -188,21 +188,13 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         return parentPath + '/' + encodePointerPart(childPath)
     }
 
-    /* package */
-//    fun _getPathFromRoot(): String? {
-//        return if (parent != null) {
-//            if (pathInParent.isNullOrEmpty()) {
-//                parent!!._getPathFromRoot()
-//            } else {
-//                val parentPath = parent!!._getPathFromRoot()
-//                if (parentPath != null) parentPath + "/" + encodePointerPart(pathInParent) else null
-//            }
-//        } else if (creatingRef != null) {
-//            creatingRef!!.fragment
-//        } else {
-//            null
-//        }
-//    }
+    fun findByPath(path: String): JsonOverlay<*>? {
+        return findByPointer(JsonPointer(path))
+    }
+
+    open fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
+        return null
+    }
 
     private fun encodePointerPart(part: String?): String {
         // TODO fix this bogus special case

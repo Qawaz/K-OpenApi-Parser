@@ -27,7 +27,7 @@ import java.util.*
 
 class ApiTests : Assert() {
 
-    lateinit var model: TestModel
+    lateinit var model: TestModelImpl
 
     private val isJson: Boolean get() = true
     private val resourcePath: String get() = if (isJson) "/json/apiTestModel.json" else "/yaml/apiTestModel.yaml"
@@ -36,7 +36,7 @@ class ApiTests : Assert() {
     @Before
     @Throws(IOException::class)
     fun setup() {
-        model = TestModelParser.parse(javaClass.getResource(resourcePath))
+        model = TestModelParser.parse(javaClass.getResource(resourcePath)) as TestModelImpl
     }
 
     @Test

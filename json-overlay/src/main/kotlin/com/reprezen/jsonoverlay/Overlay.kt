@@ -83,7 +83,7 @@ class Overlay<V> {
         return propsOverlay?._getValueOverlayByPath(key)?._getReference()
     }
 
-    fun getReference(key : Int) : Reference? {
+    fun getReference(key: Int): Reference? {
         val propsOverlay = overlay as? KeyValueOverlay
         return propsOverlay?._getValueOverlayByIndex(key)?._getReference()
     }
@@ -131,6 +131,7 @@ class Overlay<V> {
             return Overlay(overlay)
         }
 
+        @Deprecated("use direct overlay")
         @Suppress("UNCHECKED_CAST")
         fun <V> of(map: Map<String, V>): Overlay<MutableMap<String, V>>? {
             return map.values.firstOrNull()?.let {
@@ -155,6 +156,7 @@ class Overlay<V> {
             return Overlay(overlay)
         }
 
+        @Deprecated("use direct overlay")
         @Suppress("UNCHECKED_CAST")
         fun <V> of(list: List<V>): Overlay<MutableList<V>>? {
             return list.firstOrNull()?.let { (it as? JsonOverlay<*>)?._getParent() }?.let {

@@ -95,7 +95,7 @@ class ListOverlay<V> private constructor(
         return name.toIntOrNull()?.let { overlays[it] }
     }
 
-    override fun _findByPath(path: JsonPointer): JsonOverlay<*>? {
+    override fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
         val index = path.segments.firstOrNull()?.toIntOrNull()
         if (index != null) {
             _getValueOverlayByIndex(index)?.let {

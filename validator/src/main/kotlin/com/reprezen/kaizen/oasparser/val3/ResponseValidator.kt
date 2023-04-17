@@ -31,7 +31,7 @@ class ResponseValidator : ObjectValidatorBase<Response>() {
             false,
             MediaTypeValidator()
         )
-        MapValidator(valueValidator = LinkValidator(), isNonEmpty = false, isUnique = false).validate(Overlay.of(response.getLinks())!!)
+        validateMapField<Link>(ResponseImpl.F_links, false, false, LinkValidator())
         validateExtensions(response.getExtensions())
     }
 }

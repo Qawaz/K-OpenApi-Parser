@@ -12,6 +12,7 @@ import java.util.*
 import java.util.function.Consumer
 import java.util.function.Function
 import java.util.regex.Pattern
+import kotlin.reflect.KClass
 
 abstract class ValidatorBase<V> : Validator<V> {
 
@@ -358,13 +359,10 @@ abstract class ValidatorBase<V> : Validator<V> {
     }
 
     protected open fun getAllowedJsonTypes(value: Overlay<*>): (JsonElement) -> Boolean {
-        if (allowedJsonTypes == null) {
-            createAllowedJsonTypes()
-        }
         if (value.overlay == null) {
             return { false }
         }
-        return allowedJsonTypes!![if (value.overlay is PropertiesOverlay<*>) PropertiesOverlay::class.java else value.overlay!!.javaClass]!!
+        return allowedJsonTypes[if (value.overlay is PropertiesOverlay<*>) PropertiesOverlay::class else value.overlay!!::class]!!
     }
 
     companion object {
@@ -375,24 +373,23 @@ abstract class ValidatorBase<V> : Validator<V> {
                 return null
             }
         }
-        protected var allowedJsonTypes: Map<Class<*>, (JsonElement) -> Boolean>? = null
-
-        private fun createAllowedJsonTypes() {
-            val types: MutableMap<Class<*>, (JsonElement) -> Boolean> = HashMap()
-            types[StringOverlay::class.java] = { it is JsonPrimitive && it.isString }
-            types[BooleanOverlay::class.java] = { it is JsonPrimitive && it.booleanOrNull != null }
-            types[IntegerOverlay::class.java] = { it is JsonPrimitive && it.intOrNull != null }
-            types[NumberOverlay::class.java] = {
+        protected val allowedJsonTypes: Map<KClass<*>, (JsonElement) -> Boolean> by lazy {
+            val types = HashMap<KClass<*>, (JsonElement) -> Boolean>()
+            types[StringOverlay::class] = { it is JsonPrimitive && it.isString }
+            types[BooleanOverlay::class] = { it is JsonPrimitive && it.booleanOrNull != null }
+            types[IntegerOverlay::class] = { it is JsonPrimitive && it.intOrNull != null }
+            types[NumberOverlay::class] = {
                 it is JsonPrimitive && it.toValue()?.let { o -> o is Number } ?: false
             }
-            types[PrimitiveOverlay::class.java] = {
+            types[PrimitiveOverlay::class] = {
                 it is JsonPrimitive && it.toValue()?.let { o -> o is Number || o is String || o is Boolean } ?: false
             }
-            types[ObjectOverlay::class.java] = { true }
-            types[MapOverlay::class.java] = { it is JsonObject }
-            types[ListOverlay::class.java] = { it is JsonArray }
-            types[PropertiesOverlay::class.java] = { it is JsonObject }
-            allowedJsonTypes = types
+            types[ObjectOverlay::class] = { true }
+            types[MapOverlay::class] = { it is JsonObject }
+            types[ListOverlay::class] = { it is JsonArray }
+            types[PropertiesOverlay::class] = { it is JsonObject }
+            types
         }
+
     }
 }
