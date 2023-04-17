@@ -42,7 +42,7 @@ class BigParseTest(private val modelUrl: URL) : Assert() {
         val model = OpenApiParser().parse(modelUrl) as OpenApi3Impl
         val walker = object : Walker {
             override fun walk(node: JsonElement, parent: JsonElement?, pointer: com.reprezen.jsonoverlay.JsonPointer) {
-                val overlay = model.findByPointer(pointer)
+                val overlay = model._findByPointer(pointer)
                 assertNotNull("No overlay object found for path: $pointer", overlay)
                 val value = Overlay[overlay!!]
                 val fromJson = node.toValue()

@@ -45,7 +45,7 @@ class OpenApi3Impl : PropertiesOverlay<OpenApi3> ,OpenApi3 {
             json = JsonObject(mapOf())
         }
         if (json is JsonObject && !json.containsKey("paths")) {
-            json = JsonObject(json.toMutableMap().apply { put("paths", _jsonObject(mapOf())) })
+            json = JsonObject(json.toMutableMap().apply { put("paths", JsonObject(mapOf())) })
         }
         return json
     }

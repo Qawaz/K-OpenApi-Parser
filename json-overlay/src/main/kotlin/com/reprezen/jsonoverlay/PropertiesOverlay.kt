@@ -146,7 +146,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
         return elem?.let { createOverlay(it, factoryMap, factory) }
     }
 
-    override fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
+    override fun _findByPointer(path: JsonPointer): JsonOverlay<*>? {
 //        val debug = path == JsonPointer("/2.0/users/{username}")
 //        if (debug) println("NAVIGATING $path")
         for (entry in factoryMap) {
@@ -160,7 +160,7 @@ abstract class PropertiesOverlay<V> : JsonOverlay<V>, KeyValueOverlay {
                     return it
                 } else if (it is KeyValueOverlay) {
 //                    if (debug) println("FINDING $remaining IN ${it::class.qualifiedName}")
-                    it.findByPointer(remaining)?.let { next -> return next }
+                    it._findByPointer(remaining)?.let { next -> return next }
 //                    if (debug) println("FINDING /")
 //                    if (remaining.segments.firstOrNull()?.startsWith("/") == true) {
 //                        println("FINDING WITHOUT F-SLASH $remaining")

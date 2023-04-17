@@ -53,7 +53,7 @@ class ListOverlay<V> private constructor(
 
     override fun _toJsonInternal(options: SerializationOptions): JsonElement {
         if (overlays.isEmpty() && !options.isKeepThisEmpty) return JsonNull
-        return _jsonArray(overlays.map { it._toJson(options.plus(SerializationOptions.Option.KEEP_ONE_EMPTY)) })
+        return JsonArray(overlays.map { it._toJson(options.plus(SerializationOptions.Option.KEEP_ONE_EMPTY)) })
     }
 
     fun _elaborate() {
@@ -95,12 +95,12 @@ class ListOverlay<V> private constructor(
         return name.toIntOrNull()?.let { overlays[it] }
     }
 
-    override fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
+    override fun _findByPointer(path: JsonPointer): JsonOverlay<*>? {
         val index = path.segments.firstOrNull()?.toIntOrNull()
         if (index != null) {
             _getValueOverlayByIndex(index)?.let {
                 if (path.segments.size == 1) return it
-                return it.findByPointer(JsonPointer(path.segments.drop(1)))
+                return it._findByPointer(JsonPointer(path.segments.drop(1)))
             }
         }
         return null

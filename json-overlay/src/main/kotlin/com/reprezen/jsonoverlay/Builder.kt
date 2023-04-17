@@ -14,11 +14,11 @@
  */
 package com.reprezen.jsonoverlay
 
-import com.reprezen.jsonoverlay.JsonOverlay.Companion._jsonObject
+import kotlinx.serialization.json.JsonObject
 
 class Builder<V>(private val factory: OverlayFactory<V>, private val modelMember: JsonOverlay<*>) {
     fun build(): JsonOverlay<V> {
         val refMgr = modelMember.refMgr
-        return factory.create(_jsonObject(mapOf()), null, refMgr)
+        return factory.create(JsonObject(mapOf()), null, refMgr)
     }
 }

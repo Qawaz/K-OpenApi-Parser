@@ -97,10 +97,10 @@ class ObjectOverlay : ScalarOverlay<Any>, KeyValueOverlay {
         return null
     }
 
-    override fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
+    override fun _findByPointer(path: JsonPointer): JsonOverlay<*>? {
         path.segments.firstOrNull()?.let { valueOfKey(it) }?.let { ov ->
             if (path.segments.size == 1) return ov
-            return ov.findByPointer(JsonPointer(path.segments.drop(1)))
+            return ov._findByPointer(JsonPointer(path.segments.drop(1)))
         }
         return null
     }

@@ -46,7 +46,7 @@ class MapOverlay<V> private constructor(
         return overlays[name]
     }
 
-    override fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
+    override fun _findByPointer(path: JsonPointer): JsonOverlay<*>? {
 //        val debug = path == JsonPointer("/2.0/users/{username}")
 //        if (debug) println("FINDING $path IN MapOverlay")
         overlays[path.toString()]?.let { return it }
@@ -55,7 +55,7 @@ class MapOverlay<V> private constructor(
             (overlays[key])?.let { ov ->
 //                if(debug) println("FOUND $key , FINDING ${JsonPointer(path.segments.drop(1))} IN ${ov::class.qualifiedName}")
                 if (path.segments.size == 1) return ov
-                return ov.findByPointer(JsonPointer(path.segments.drop(1)))
+                return ov._findByPointer(JsonPointer(path.segments.drop(1)))
             }
 //            if (debug) println("FINDING F-SLASH")
 //            if (key.getOrNull(0) == '/') {
@@ -81,7 +81,7 @@ class MapOverlay<V> private constructor(
 
     override fun _toJsonInternal(options: SerializationOptions): JsonElement {
         if (overlays.isEmpty() && !options.isKeepThisEmpty) return JsonNull
-        return _jsonObject(overlays.mapValues { it.value._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY)) })
+        return JsonObject(overlays.mapValues { it.value._toJson(options.minus(SerializationOptions.Option.KEEP_ONE_EMPTY)) })
     }
 
     fun _elaborate() {

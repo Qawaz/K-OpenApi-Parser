@@ -189,10 +189,10 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     }
 
     fun findByPath(path: String): JsonOverlay<*>? {
-        return findByPointer(JsonPointer(path))
+        return _findByPointer(JsonPointer(path))
     }
 
-    open fun findByPointer(path: JsonPointer): JsonOverlay<*>? {
+    open fun _findByPointer(path: JsonPointer): JsonOverlay<*>? {
         return null
     }
 
@@ -241,7 +241,7 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
     fun _toJson(options: SerializationOptions = SerializationOptions()): JsonElement {
         return if (_isReference()) {
             if (!options.isFollowRefs || refOverlay!!._getReference().isInvalid) {
-                _jsonObject(mapOf("\$ref" to JsonPrimitive(refOverlay!!._getReference().refString)))
+                JsonObject(mapOf("\$ref" to JsonPrimitive(refOverlay!!._getReference().refString)))
             } else {
                 refOverlay!!.overlay!!._toJson(options)
             }
@@ -284,17 +284,4 @@ abstract class JsonOverlay<V> : IJsonOverlay<V> {
         return (json != null || other.json != null) && json == other.json
     }
 
-    companion object {
-
-        @JvmStatic
-        fun _jsonObject(content: Map<String, JsonElement>): JsonObject {
-            return JsonObject(content)
-        }
-
-        @JvmStatic
-        protected fun _jsonArray(content: List<JsonElement>): JsonArray {
-            return JsonArray(content)
-        }
-
-    }
 }
