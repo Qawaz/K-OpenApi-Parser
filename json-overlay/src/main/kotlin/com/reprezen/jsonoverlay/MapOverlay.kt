@@ -76,13 +76,7 @@ class MapOverlay<V> private constructor(
     }
 
     override fun _fromJson(json: JsonElement): MutableMap<String, V> {
-        return object : LinkedHashMap<String, V>() {
-            private val serialVersionUID = 1L
-
-            @get:Suppress("unused")
-            val overlay: MapOverlay<V>
-                get() = this@MapOverlay
-        }
+        return this
     }
 
     override fun _toJsonInternal(options: SerializationOptions): JsonElement {

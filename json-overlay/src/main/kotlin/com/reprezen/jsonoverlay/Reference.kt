@@ -105,7 +105,7 @@ class InternalReference(
             } else {
                 manager.getReference(node).getJson().also {
                     if(it == null){
-                        println("reference node inside reference is null")
+//                        println("reference node inside reference is null")
                     }
                 }
             }
@@ -201,7 +201,7 @@ class ReferenceImpl : Reference {
         }
         return (valid ?: false).also {
             if (!it) {
-                println(pointer)
+//                println(pointer)
                 invalidReason?.printStackTrace()
             }
         }

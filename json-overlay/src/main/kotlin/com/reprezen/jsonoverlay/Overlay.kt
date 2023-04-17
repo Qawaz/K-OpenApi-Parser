@@ -131,79 +131,34 @@ class Overlay<V> {
             return Overlay(overlay)
         }
 
-        @Deprecated("use direct overlay")
-        @Suppress("UNCHECKED_CAST")
-        fun <V> of(map: Map<String, V>): Overlay<MutableMap<String, V>>? {
-            return map.values.firstOrNull()?.let {
-                (it as? JsonOverlay<*>)?._getParent()
-            }?.let { it as? MapOverlay<V> }?.let { Overlay(it) } ?: of(map, parent = null)
-        }
-
-        @Suppress("UNCHECKED_CAST")
-        fun <V> of(
-            map: Map<String, V>,
-            parent: JsonOverlay<*>?,
-            refMgr: ReferenceManager = parent?.refMgr ?: ReferenceManager()
-        ): Overlay<MutableMap<String, V>>? {
-            val overlay = map.toJsonOverlay(
-                parent = parent,
-                refMgr = refMgr
-            ) as? MapOverlay<V>
-            return if (overlay != null) Overlay(overlay) else null
+        fun <V> of(map: Map<String, V>): Overlay<MutableMap<String, V>> {
+            return of(map as MapOverlay<V>)
         }
 
         fun <V> of(overlay: ListOverlay<V>): Overlay<MutableList<V>> {
             return Overlay(overlay)
         }
 
-        @Deprecated("use direct overlay")
-        @Suppress("UNCHECKED_CAST")
-        fun <V> of(list: List<V>): Overlay<MutableList<V>>? {
-            return list.firstOrNull()?.let { (it as? JsonOverlay<*>)?._getParent() }?.let {
-                it as? ListOverlay<V>
-            }?.let { Overlay(it) } ?: of(list = list, parent = null)
-        }
-
-        fun <V> of(
-            list: List<V>,
-            parent: JsonOverlay<*>?,
-            refMgr: ReferenceManager = parent?.refMgr ?: ReferenceManager()
-        ): Overlay<MutableList<V>>? {
-            val overlay = list.toJsonOverlay(
-                parent = parent,
-                refMgr = refMgr
-            ) as? ListOverlay<V>
-            return if (overlay != null) Overlay(overlay) else null
+        fun <V> of(list: List<V>): Overlay<MutableList<V>> {
+            return of(list as ListOverlay<V>)
         }
 
         fun <V> of(mapOverlay: MapOverlay<V>, key: String): Overlay<V> {
             return Overlay(mapOverlay, key)
         }
 
-        fun <V> of(mapOverlay: Overlay<MutableMap<String, V>>, key: String): Overlay<V> {
-            return of(mapOverlay.overlay as MapOverlay<V>, key)
-        }
-
-        fun <V> of(map: MutableMap<String, V>, key: String): Overlay<V>? {
-            return map[key]?.let { it as? JsonOverlay<V> }?.let { Overlay(it) }
-                ?: of(map, parent = null)?.let { of(it, key) }
-        }
-
-        fun <V> of(map: MutableMap<String, V>, key: String, parent: JsonOverlay<*>): Overlay<V>? {
-            return of(map, parent = parent)?.let { of(it, key) }
+        @Suppress("UNCHECKED_CAST")
+        fun <V> of(map: MutableMap<String, V>, key: String): Overlay<V> {
+            return map[key]?.let { it as? JsonOverlay<V> }?.let { Overlay(it) } ?: of(map as MapOverlay<V>, key)
         }
 
         fun <V> of(list: ListOverlay<V>, index: Int): Overlay<V> {
             return Overlay(list, index)
         }
 
-        fun <V> of(list: List<V>, index: Int): Overlay<V>? {
-            return (list.getOrNull(index) as? JsonOverlay<V>)?.let { Overlay(it) }
-                ?: of(list, parent = null)?.let { of(it.overlay as ListOverlay<V>, index) }
-        }
-
-        fun <V> of(list: List<V>, index: Int, parent: JsonOverlay<*>): Overlay<V>? {
-            return of(list, parent = parent)?.let { of(it.overlay as ListOverlay<V>, index) }
+        @Suppress("UNCHECKED_CAST")
+        fun <V> of(list: List<V>, index: Int): Overlay<V> {
+            return (list.getOrNull(index) as? JsonOverlay<V>)?.let { Overlay(it) } ?: of(list as ListOverlay<V>, index)
         }
 
         fun <X> of(props: IJsonOverlay<X>, fieldName: String): Overlay<X>? {

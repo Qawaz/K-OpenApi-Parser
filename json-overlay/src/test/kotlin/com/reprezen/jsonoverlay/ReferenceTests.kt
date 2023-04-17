@@ -96,11 +96,10 @@ class ReferenceTests : Assert() {
     @Test
     fun checkBadRefs() {
         assertNull(model.getScalar("badPointer"))
-        checkBadRef(Overlay.of(model.getScalars(), parent = model as JsonOverlay<*>)?.getReference("badPointer"))
-        checkBadRef(Overlay.of(model.getScalars(), parent = model as JsonOverlay<*>)?.getReference("cycle"))
+        checkBadRef(Overlay.of(model.getScalars()).getReference("badPointer"))
+        checkBadRef(Overlay.of(model.getScalars()).getReference("cycle"))
         assertTrue(
-            Overlay.of(model.getScalars(), parent = model as JsonOverlay<*>)
-                ?.getReference("cycle").let { it == null || it.invalidReason is ReferenceCycleException }
+            Overlay.of(model.getScalars()).getReference("cycle").let { it == null || it.invalidReason is ReferenceCycleException }
         )
     }
 
@@ -144,12 +143,12 @@ class ReferenceTests : Assert() {
         val url = javaClass.getResource(refTestRes)!!.toString()
         val ext = javaClass.getResource(externalTestRes)!!.toString()
         assertEquals(url, Overlay.of(model).jsonReference)
-        assertNotNull(Overlay.of(model.getScalars(), "s1", parent = model as JsonOverlay<*>).also {
+        assertNotNull(Overlay.of(model.getScalars(), "s1").also {
 //            println((model.getScalars()["s1"]!! as PropertiesOverlay<*>))
         })
         assertEquals(
             "$url#/scalars/s1",
-            Overlay.of(model.getScalars(), "s1", parent = model as JsonOverlay<*>)?.jsonReference
+            Overlay.of(model.getScalars(), "s1").jsonReference
         )
         assertEquals(
             "$url#/scalars/s1/stringValue",

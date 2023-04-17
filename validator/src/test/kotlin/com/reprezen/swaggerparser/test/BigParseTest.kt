@@ -62,9 +62,7 @@ class BigParseTest(private val modelUrl: URL) : Assert() {
     @Test
     fun testModelToString(){
         val model = OpenApiParser().parse(modelUrl)
-        println(
-            model.toString()
-        )
+        model.toString()
     }
 
     companion object {

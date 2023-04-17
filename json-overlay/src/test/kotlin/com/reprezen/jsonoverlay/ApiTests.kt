@@ -102,15 +102,9 @@ class ApiTests : Assert() {
 
     @Test
     fun testPathInParent() {
-        assertEquals("description", Overlay.of(model as TestModelImpl, "description")?.pathInParent)
-        assertEquals(
-            "0", Overlay.of(model.getItems(), 0, parent = model as JsonOverlay<*>)?.pathInParent
-        )
-        assertEquals(
-            "A", Overlay.of(
-                model.getEntries(), "A", parent = model as JsonOverlay<*>
-            )?.pathInParent
-        )
+        assertEquals("description", Overlay.of(model, "description")?.pathInParent)
+        assertEquals("0", Overlay.of(model.getItems(), 0).pathInParent)
+        assertEquals("A", Overlay.of(model.getEntries(), "A").pathInParent)
     }
 
     @Test
@@ -119,30 +113,14 @@ class ApiTests : Assert() {
         assertSame(model, Overlay.of(model, "description")?.root)
         assertSame(model, Overlay.of(model, "integers")?.root)
         assertSame(model, Overlay.of(model, "namedIntegers")?.root)
-        assertSame(
-            model, Overlay.of(
-                model.getEntries(), "A", parent = model as JsonOverlay<*>
-            )?.root
-        )
-        assertSame(
-            model, Overlay.of(
-                model.getItems(), 0, parent = model as JsonOverlay<*>
-            )?.root
-        )
+        assertSame(model, Overlay.of(model.getEntries(), "A").root)
+        assertSame(model, Overlay.of(model.getItems(), 0).root)
         assertSame(model, Overlay.of(model).getModel())
         assertSame(model, Overlay.of(model, "description")?.getModel())
         assertSame(model, Overlay.of(model, "integers")?.getModel())
         assertSame(model, Overlay.of(model, "namedIntegers")?.getModel())
-        assertSame(
-            model, Overlay.of(
-                model.getEntries(), "A", parent = model as JsonOverlay<*>
-            )?.getModel()
-        )
-        assertSame(
-            model, Overlay.of(
-                model.getItems(), 0, parent = model as JsonOverlay<*>
-            )?.getModel()
-        )
+        assertSame(model, Overlay.of(model.getEntries(), "A").getModel())
+        assertSame(model, Overlay.of(model.getItems(), 0).getModel())
     }
 
     @Test
@@ -155,15 +133,11 @@ class ApiTests : Assert() {
         )
         assertEquals(
             hashSetOf("title"),
-            Overlay.of(
-                model.getEntries(), "A", parent = model as JsonOverlay<*>
-            )?.propertyNames?.toSet()
+            Overlay.of(model.getEntries(), "A").propertyNames?.toSet()
         )
         assertEquals(
             hashSetOf("title"),
-            Overlay.of(
-                model.getItems(), 0, parent = model as JsonOverlay<*>
-            )?.propertyNames?.toSet()
+            Overlay.of(model.getItems(), 0).propertyNames?.toSet()
         )
     }
 
@@ -187,18 +161,18 @@ class ApiTests : Assert() {
         assertEquals(2, model.getNamedIntegers()["II"])
 
         // Testing
-        assertEquals(Overlay.of(model.getNamedIntegers(), "I")?.overlay, model.findByPath("/namedIntegers/I"))
-        assertEquals(Overlay.of(model.getNamedIntegers(), "II")?.overlay, model.findByPath("/namedIntegers/II"))
-        assertNotEquals(Overlay.of(model.getNamedIntegers(), "I")?.overlay, model.findByPath("/namedIntegers/II"))
+        assertEquals(Overlay.of(model.getNamedIntegers(), "I").overlay, model.findByPath("/namedIntegers/I"))
+        assertEquals(Overlay.of(model.getNamedIntegers(), "II").overlay, model.findByPath("/namedIntegers/II"))
+        assertNotEquals(Overlay.of(model.getNamedIntegers(), "I").overlay, model.findByPath("/namedIntegers/II"))
     }
 
     @Test
     fun testItemsAndFind() {
 
         // Testing instances
-        assertSame(Overlay.of(model.getItems(), 0)?.overlay, model.findByPath("/items/0"))
-        assertSame(Overlay.of(model.getItems(), 1)?.overlay, model.findByPath("/items/1"))
-        assertNotSame(Overlay.of(model.getItems(), 1)?.overlay, model.findByPath("/items/0"))
+        assertSame(Overlay.of(model.getItems(), 0).overlay, model.findByPath("/items/0"))
+        assertSame(Overlay.of(model.getItems(), 1).overlay, model.findByPath("/items/1"))
+        assertNotSame(Overlay.of(model.getItems(), 1).overlay, model.findByPath("/items/0"))
 
         // Testing overlay
         assertSame(model.getItems()[0], model.findByPath("/items/0"))
@@ -220,19 +194,13 @@ class ApiTests : Assert() {
         assertEquals("/color", Overlay.of(model, "color")?.pathFromRoot)
         assertEquals(
             "/items/0", Overlay.of(
-                model.getItems(), 0, parent = model as JsonOverlay<*>
-            )?.pathFromRoot
+                model.getItems(), 0
+            ).pathFromRoot
         )
         assertEquals("/items/0/title", Overlay.of(model.getItem(0), "title")?.pathFromRoot)
+        assertEquals("/entries", Overlay.of(model.getEntries() as MapOverlay<*>).pathFromRoot)
         assertEquals(
-            "/entries", Overlay.of(
-                model.getEntries(), parent = model as JsonOverlay<*>
-            )?.pathFromRoot
-        )
-        assertEquals(
-            "/entries/A", Overlay.of(
-                model.getEntries(), "A", parent = model as JsonOverlay<*>
-            )?.pathFromRoot
+            "/entries/A", Overlay.of(model.getEntries(), "A").pathFromRoot
         )
     }
 
@@ -244,19 +212,19 @@ class ApiTests : Assert() {
         assertEquals("$url#/color", Overlay.of(model, "color")?.jsonReference)
         assertEquals(
             "$url#/items/0", Overlay.of(
-                model.getItems(), index = 0, parent = model as JsonOverlay<*>
-            )?.jsonReference
+                model.getItems(), index = 0
+            ).jsonReference
         )
         assertEquals("$url#/items/0/title", Overlay.of(model.getItem(0), "title")?.jsonReference)
         assertEquals(
             "$url#/entries", Overlay.of(
-                model.getEntries(), parent = model as JsonOverlay<*>
-            )?.jsonReference
+                model.getEntries()
+            ).jsonReference
         )
         assertEquals(
             "$url#/entries/A", Overlay.of(
-                model.getEntries(), "A", parent = model as JsonOverlay<*>
-            )?.jsonReference
+                model.getEntries(), "A"
+            ).jsonReference
         )
     }
 
@@ -270,7 +238,7 @@ class ApiTests : Assert() {
     private fun checkIntegersPaths() {
         for (i in model.getIntegers().indices) {
             assertEquals(
-                i.toString(), Overlay.of(model.getIntegers(), i, parent = model as JsonOverlay<*>)?.pathInParent
+                i.toString(), Overlay.of(model.getIntegers(), i).pathInParent
             )
         }
     }
@@ -284,7 +252,7 @@ class ApiTests : Assert() {
     }
 
     private fun checkScalarFind(field: String, path: String) {
-        println("${Overlay.of(model, field)?.overlay} to ${model.findByPath(path)}")
+//        println("${Overlay.of(model, field)?.overlay} to ${model.findByPath(path)}")
         assertSame(Overlay.of(model, field)?.overlay, Overlay.of(model).find(path))
     }
 }

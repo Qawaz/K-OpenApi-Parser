@@ -60,13 +60,8 @@ class LocalSerializationTest : Assert() {
         assertTrue(properties._getValueOverlayByName("device_state")!!._isReference())
         assertTrue(properties._getValueOverlayByPath("device_state")!!._isReference())
 
-        // Checking using direct overlay
-        val directOverlay = Overlay(properties)
-        assertTrue(directOverlay.isReference("device_state"))
-        assertTrue(directOverlay.find("device_state")!!._isReference())
-
         // Checking using properties overlay
-        val propertiesOverlay = Overlay.of(properties as MutableMap<String, Schema>)!!
+        val propertiesOverlay = Overlay.of(properties)
         assertTrue(propertiesOverlay.isReference("device_state"))
         assertTrue(propertiesOverlay.find("device_state")!!._isReference())
 

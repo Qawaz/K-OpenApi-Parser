@@ -21,7 +21,7 @@ class MapValidator<T>(
     private val isNonEmpty: Boolean,
     private val isUnique: Boolean
 ) : ValidatorBase<MutableMap<String, T>>() {
-    
+
     override fun runValidations() {
         if (valueValidator != null) validateValues(valueValidator)
         checkMapNotEmpty(value, isNonEmpty)
@@ -61,7 +61,10 @@ class MapValidator<T>(
         val mapOverlay = Overlay.getMapOverlay(value) ?: return
         if (ValidationContext.visitIfUnvisited(mapOverlay)) {
             for (key in mapOverlay.keys) {
-                val value = Overlay.of<T>(mapOverlay, key)
+                var value = Overlay.of<T>(mapOverlay, key)
+                if(value.isReference()){
+                    value = Overlay.of(value.overlay!!._getRefOverlay()!!.overlay!!)
+                }
                 valueValidator.validate(value)
             }
         }

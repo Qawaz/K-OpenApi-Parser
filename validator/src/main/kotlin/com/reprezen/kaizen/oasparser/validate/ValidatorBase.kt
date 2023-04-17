@@ -287,14 +287,14 @@ abstract class ValidatorBase<V> : Validator<V> {
         extensions: MutableMap<String, Any>,
         crumb: String? = null
     ): Overlay<MutableMap<String, Any>> {
-        val mapOverlay = Overlay.of(extensions, parent = null)!!
+        val mapOverlay = Overlay.of(extensions)
         validateMap(mapOverlay, nonEmpty = false, unique = false, valueValidator = null)
         return mapOverlay
     }
 
     fun validateFormatField(name: String, required: Boolean, type: String?): Overlay<String> {
         val field = validateStringField(name, required)
-        if (field.isPresent == true) {
+        if (field.isPresent) {
             var normalType: String? = null
             when (field.get()) {
                 "int32", "int64" -> normalType = "integer"
@@ -341,7 +341,7 @@ abstract class ValidatorBase<V> : Validator<V> {
             if (verify(json)) {
                 return
             }
-            val allowed = allowedJsonTypes!!.map { "${it.key} verifies " + if (it.value(json)) "true" else "false" }
+            val allowed = allowedJsonTypes.map { "${it.key} verifies " + if (it.value(json)) "true" else "false" }
                 .joinToString(",")
             results!!.addError(
                 Messages.msg(

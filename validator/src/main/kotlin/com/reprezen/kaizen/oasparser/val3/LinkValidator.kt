@@ -42,7 +42,8 @@ class LinkValidator : ObjectValidatorBase<Link>() {
             results.addError(msg(OpenApi3Messages.OpIdAndOpRefInLink), value)
         }
         if (opId != null) {
-            op = findOperationById(Overlay.of(link).getModel<OpenApi3>()!!, opId)
+
+            op = findOperationById((link as LinkImpl)._getRoot() as OpenApi3, opId)
             if (op == null) {
                 results.addError(msg(OpenApi3Messages.OpIdNotFound, opId), value)
             }

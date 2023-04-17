@@ -62,7 +62,8 @@ class RefOverlay<V> {
                 }
                 if (target == null) {
                     val json = reference.getJson()!!
-                    target = factory.create(json, null, reference.manager!!)
+                    val parent = if(reference is InternalReference) parent else null
+                    target = factory.create(json, parent, reference.manager!!)
                     target!!._setCreatingRef(reference)
                     refMgr.registry.register(reference.normalizedRef!!, factory.signature!!, target!!)
                 }
