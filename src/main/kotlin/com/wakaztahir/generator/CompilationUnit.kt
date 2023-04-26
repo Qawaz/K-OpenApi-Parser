@@ -1,5 +1,6 @@
 package com.wakaztahir.generator
 
+import com.wakaztahir.kate.model.KATEType
 import com.wakaztahir.kate.model.StringValue
 import com.wakaztahir.kate.model.model.KATEListImpl
 import com.wakaztahir.kate.model.model.MutableKATEObject
@@ -18,8 +19,8 @@ class CompilationUnit(private var packageDec: String, val type: TypeDeclaration)
 
     fun toMutableKATEObject(): MutableKATEObject {
         return type.toMutableKTEObject().apply {
-            putValue("packageName", packageDec)
-            putValue("imports", KATEListImpl(imports.map { StringValue(it) }))
+            insertValue("packageName", packageDec)
+            insertValue("imports", KATEListImpl(imports.map { StringValue(it) },itemType = KATEType.String))
         }
     }
 

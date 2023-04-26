@@ -1,6 +1,7 @@
 package com.wakaztahir.generator
 
 import com.wakaztahir.kate.model.BooleanValue
+import com.wakaztahir.kate.model.KATEType
 import com.wakaztahir.kate.model.StringValue
 import com.wakaztahir.kate.model.model.KATEListImpl
 import com.wakaztahir.kate.model.model.MutableKATEObject
@@ -51,12 +52,12 @@ class ClassOrInterfaceDeclaration(
 
     override fun toMutableKTEObject(): MutableKATEObject {
         return MutableKATEObject {
-            putValue("name", name)
-            putValue("extends", KATEListImpl(extended.map { StringValue(it) }))
-            putValue("implements", KATEListImpl(implemented.map { StringValue(it) }))
-            putValue("isPublic", BooleanValue(isPublic))
-            putValue("ClassMembers", members.joinToString("\n\n") { it.format(1) })
-            putValue("CompanionMembers", companionMembers.joinToString("\n\n") { it.format(2) })
+            insertValue("name", name)
+            insertValue("extends", KATEListImpl(extended.map { StringValue(it) }, itemType = KATEType.String))
+            insertValue("implements", KATEListImpl(implemented.map { StringValue(it) }, itemType = KATEType.String))
+            insertValue("isPublic", BooleanValue(isPublic))
+            insertValue("ClassMembers", members.joinToString("\n\n") { it.format(1) })
+            insertValue("CompanionMembers", companionMembers.joinToString("\n\n") { it.format(2) })
         }
     }
 
@@ -85,11 +86,11 @@ class EnumDeclaration(override val name: String, val isPublic: Boolean) : TypeDe
 
     override fun toMutableKTEObject(): MutableKATEObject {
         return MutableKATEObject {
-            putValue("name", name)
-            putValue("isPublic", BooleanValue(isPublic))
-            putValue("EnumEntries", "\t" + entries.joinToString(",\n\t"))
-            putValue("ClassMembers", members.joinToString("\n\n") { it.format(1) })
-            putValue("CompanionMembers", companionMembers.joinToString("\n\n") { it.format(2) })
+            insertValue("name", name)
+            insertValue("isPublic", BooleanValue(isPublic))
+            insertValue("EnumEntries", "\t" + entries.joinToString(",\n\t"))
+            insertValue("ClassMembers", members.joinToString("\n\n") { it.format(1) })
+            insertValue("CompanionMembers", companionMembers.joinToString("\n\n") { it.format(2) })
         }
     }
 

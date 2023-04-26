@@ -10,7 +10,7 @@ dependencies {
     val jacksonVersion = property("jackson.version") as String
 
     implementation(project(":json-overlay"))
-    implementation("com.wakaztahir:kate:1.0.7")
+    implementation("com.wakaztahir:kate:1.0.16")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
